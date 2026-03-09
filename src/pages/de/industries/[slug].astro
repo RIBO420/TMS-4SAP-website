@@ -1,0 +1,809 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../../components/global/Breadcrumbs.astro';
+import SectionHeader from '../../../components/ui/SectionHeader.astro';
+import StatBar from '../../../components/ui/StatBar.astro';
+import CTABanner from '../../../components/ui/CTABanner.astro';
+import { modules as allModules } from '../../../data/modules';
+
+/* ===================================================================
+   Industry Data (German)
+   =================================================================== */
+
+interface IndustryChallenge {
+  title: string;
+  description: string;
+}
+
+interface IndustryCapability {
+  title: string;
+  description: string;
+}
+
+interface IndustryStat {
+  value: string;
+  label: string;
+}
+
+interface IndustryData {
+  slug: string;
+  title: string;
+  tagline: string;
+  metaDescription: string;
+  intro: string;
+  challenges: IndustryChallenge[];
+  relevantModuleSlugs: string[];
+  capabilities: IndustryCapability[];
+  stats: IndustryStat[];
+  ctaTitle: string;
+  ctaTitleAccent: string;
+  ctaDescription: string;
+}
+
+const industriesData: IndustryData[] = [
+  {
+    slug: 'kunststof',
+    title: 'ERP für die Kunststoffverarbeitung',
+    tagline: 'Vom Spritzguss bis zur Extrusion — vollständige Produktionssteuerung',
+    metaDescription:
+      'TMS bietet Kunststoffherstellern ein umfassendes ERP mit Werkzeuglebenszyklusverwaltung, Mehrkavitätenplanung, Chargenrückverfolgbarkeit und Maschinenintegration für Spritzguss und Extrusion.',
+    intro:
+      'Die Kunststoffverarbeitung erfordert ein Maß an Prozesskontrolle, das generische ERP-Systeme schlicht nicht liefern können. Von der Verwaltung hunderter Werkzeuge auf mehreren Spritzgießmaschinen über die Verfolgung der Mehrkavitäten-Produktionsleistung bis hin zur lückenlosen Chargenrückverfolgbarkeit durch komplexe Materialflüsse — die Branche benötigt speziell entwickelte Werkzeuge. TMS gibt Kunststoffherstellern die digitale Grundlage, um jeden Aspekt der Produktion zu steuern — vom Rohmaterialeingang bis zum Versand der Fertigwaren.',
+    challenges: [
+      {
+        title: 'Komplexes Werkzeugmanagement',
+        description:
+          'Die Verfolgung hunderter Werkzeuge über mehrere Maschinen, die Überwachung des Kavitätenstatus, der Schusszähler, der Wartungspläne und der Werkzeugkosten erfordert ein System, das für die Komplexität der Kunststoffproduktion gebaut ist.',
+      },
+      {
+        title: 'Mehrkavitäten-Produktionsplanung',
+        description:
+          'Die Planung der Produktion mit Mehrkavitätenwerkzeugen bei unterschiedlichen Zykluszeiten, Rüstanforderungen und gekoppelten Fertigungsaufträgen erfordert eine intelligente Planung, die kunststoffspezifische Randbedingungen versteht.',
+      },
+      {
+        title: 'Materialrückverfolgbarkeit & Chargensteuerung',
+        description:
+          'Die lückenlose Rückverfolgbarkeit von Rohgranulat-Chargen über Mischen, Trocknen und Spritzgießen bis zu Fertigteilen ist entscheidend für die Qualitätssicherung und die Einhaltung von Kundenanforderungen.',
+      },
+      {
+        title: 'Maschinenintegration',
+        description:
+          'Die Anbindung von Spritzgießmaschinen, Extrudern und Peripheriegeräten zur Erfassung von Zyklusdaten, Schussgewichten, Prozessparametern und Alarmbedingungen in Echtzeit.',
+      },
+    ],
+    relevantModuleSlugs: ['pps', 'aps', 'mes', 'pdc', 'qm', 'pdm'],
+    capabilities: [
+      {
+        title: 'Werkzeuglebenszyklusverwaltung',
+        description:
+          'Verfolgen Sie jedes Werkzeug von der Inbetriebnahme bis zur Ausmusterung. Überwachen Sie Schusszähler, planen Sie vorbeugende Wartung anhand von Zyklusschwellenwerten, protokollieren Sie Reparaturen und ordnen Sie Werkzeugkosten den Fertigungsaufträgen zu. TMS führt eine vollständige Historie für jedes Werkzeug in Ihrem Betrieb.',
+      },
+      {
+        title: 'Gekoppelte Fertigungsauftragsabwicklung',
+        description:
+          'Verwalten Sie Mehrkavitätenwerkzeuge, die gleichzeitig verschiedene Teile produzieren. TMS erstellt automatisch gekoppelte Fertigungsaufträge, teilt den Ausstoß nach Kavität auf und verfolgt den Ausschuss pro Kavitätsposition — für eine präzise Stückkostenkalkulation und Ausbeuteanalyse.',
+      },
+      {
+        title: 'Maschinenschnittstelle für Spritzguss',
+        description:
+          'Verbinden Sie sich direkt mit Ihren Spritzgießanlagen über standardisierte Schnittstellen (Euromap 63/77, OPC-UA). Erfassen Sie Zykluszeiten, Schussgewichte, Prozessparameter und Maschinenstatus in Echtzeit für volle Produktionstransparenz.',
+      },
+      {
+        title: 'Mehrstufige Chargenrückverfolgbarkeit',
+        description:
+          'Verfolgen Sie Materialien vorwärts vom Rohgranulateingang über Mischen, Masterbatch-Zugabe und Produktion bis zu Fertigwaren. Verfolgen Sie rückwärts von jedem Fertigteil, um jede verwendete Materialcharge zu identifizieren. Vollständige Rückverfolgbarkeit in Sekunden, nicht Stunden.',
+      },
+      {
+        title: 'Ausschussanalyse nach Fehlerart',
+        description:
+          'Kategorisieren und analysieren Sie Ausschuss nach Fehlerart — Gratbildung, Kurzschüsse, Einfallstellen, Verzug und mehr. Korrelieren Sie Fehlerquoten mit Maschinenparametern, Materialchargen und Bediener-Schichten, um Ursachen zu identifizieren und kontinuierliche Verbesserung voranzutreiben.',
+      },
+      {
+        title: 'Farb- und Materialwechselmanagement',
+        description:
+          'Optimieren Sie Produktionssequenzen, um Farb- und Materialwechsel zu minimieren. TMS berücksichtigt Spülanforderungen, Trocknungszeiten und Kontaminationsrisiken bei der Planung, reduziert Abfall und maximiert die Maschinenverfügbarkeit.',
+      },
+    ],
+    stats: [
+      { value: '100%', label: 'Rückverfolgbarkeit' },
+      { value: 'Echtzeit', label: 'OEE-Überwachung' },
+      { value: 'Automatisiert', label: 'Planung' },
+      { value: 'SAP', label: 'Integriert' },
+    ],
+    ctaTitle: 'Bereit, Ihre Kunststoffproduktion zu',
+    ctaTitleAccent: 'digitalisieren?',
+    ctaDescription:
+      'Erfahren Sie, wie TMS Werkzeugmanagement, gekoppelte Aufträge und Chargenrückverfolgbarkeit für Kunststoffhersteller handhabt. Buchen Sie eine persönliche Demo.',
+  },
+  {
+    slug: 'automotive',
+    title: 'ERP für Automobilzulieferer',
+    tagline: 'Den Anforderungen der Serienproduktion und OEM-Vorgaben gerecht werden',
+    metaDescription:
+      'TMS liefert Automobilzulieferer-ERP mit IATF 16949-Konformität, EDI-Integration, Abrufplanung, SPC und vollständiger Chargen- und Losverfolgung für Rückrufe.',
+    intro:
+      'Automobilzulieferer stehen unter enormem Druck: anspruchsvolle OEM-Kunden, strenge Qualitätsstandards, enge Lieferfenster und Null-Toleranz bei Produktionsausfällen. Die Einhaltung von IATF 16949 ist keine Option, und die Fähigkeit, innerhalb von Stunden auf Rückrufanfragen zu reagieren, kann darüber entscheiden, ob Sie Ihre Verträge behalten. TMS bietet Automobilzulieferern die integrierte Produktionsmanagement-Plattform, die sie benötigen, um diese Anforderungen zu erfüllen und gleichzeitig profitabel zu bleiben.',
+    challenges: [
+      {
+        title: 'IATF 16949-Konformität',
+        description:
+          'Die Erfüllung der strengen Qualitätsmanagementsystem-Anforderungen von IATF 16949 erfordert dokumentierte Prozesse, kontrollierte Aufzeichnungen, statistische Prozesskontrolle und Workflows zur kontinuierlichen Verbesserung, die in Ihren täglichen Betrieb integriert sind.',
+      },
+      {
+        title: 'EDI-Kommunikation mit OEMs',
+        description:
+          'Automobil-OEMs erwarten elektronischen Datenaustausch für Prognosen, Abrufe, Lieferpläne und Rechnungen. Manuelle Verarbeitung ist keine Option, wenn Sie täglich hunderte EDI-Nachrichten empfangen.',
+      },
+      {
+        title: 'Abrufplanung & JIT-Lieferung',
+        description:
+          'Das Management schwankender Abrufpläne, Just-in-Time-Lieferanforderungen und Konsignationslager-Vereinbarungen erfordert Planungssysteme, die auf tägliche Planänderungen reagieren können, ohne die Produktion zu stören.',
+      },
+      {
+        title: 'Vollständige Chargenrückverfolgbarkeit für Rückrufe',
+        description:
+          'Wenn ein OEM einen Rückruf auslöst, müssen Sie jede betroffene Charge, jede Lieferung und jeden Kunden innerhalb von Stunden identifizieren — nicht Tagen. Unvollständige Rückverfolgbarkeit gefährdet Ihren gesamten Lieferantenstatus.',
+      },
+    ],
+    relevantModuleSlugs: ['pps', 'aps', 'mes', 'pdc', 'qm', 'bi'],
+    capabilities: [
+      {
+        title: 'EDI-Integration für automatisierte Auftragsabwicklung',
+        description:
+          'Verarbeiten Sie eingehende EDI-Nachrichten (DELFOR, DELJIT, DESADV) automatisch. TMS wandelt OEM-Prognosen und -Abrufe in Fertigungsaufträge um, aktualisiert Lieferpläne und erstellt Versand- und Rechnungsdokumente — manueller Datenerfassungsaufwand wird nahezu eliminiert.',
+      },
+      {
+        title: 'IATF 16949 Qualitätsmanagement-Workflows',
+        description:
+          'Integrierte Workflows unterstützen APQP, PPAP, Kontrollpläne, FMEA-Verfolgung und 8D-Problemlösung. TMS pflegt die dokumentierte Nachweiskette, die Auditoren verlangen, mit automatischen Erinnerungen für Kalibrierungen, Reviews und Korrekturmaßnahmen.',
+      },
+      {
+        title: 'Abrufplanung und Liefermanagement',
+        description:
+          'Verwalten Sie komplexe Abrufstrukturen mit mehreren Lieferterminen pro Auftragsposition. TMS synchronisiert Abrufpläne mit der Produktionsplanung, berechnet den erforderlichen Kapazitäts- und Materialbedarf und erstellt Versanddokumente, die auf jedes Lieferfenster abgestimmt sind.',
+      },
+      {
+        title: 'Statistische Prozesskontrolle (SPC)',
+        description:
+          'Überwachen Sie qualitätskritische Merkmale in Echtzeit mit integrierten SPC-Regelkarten. TMS berechnet Cp, Cpk und Prozessfähigkeitsindizes automatisch, löst Alarme bei Prozessdrift aus und dokumentiert alles für Kundenaudits.',
+      },
+      {
+        title: 'Vollständige Los- und Chargenrückverfolgbarkeit',
+        description:
+          'Verfolgen Sie jedes Fertigteil zurück durch jeden Produktionsschritt, jede Materialcharge, jede Maschine, jeden Bediener und jede Qualitätsprüfung. Vorwärtsverfolgen Sie von jedem Rohmaterial zu jeder betroffenen Lieferung. Erstellen Sie Rückrufberichte in Minuten, die die gesamte Lieferkette abdecken.',
+      },
+    ],
+    stats: [
+      { value: 'IATF 16949', label: 'Bereit' },
+      { value: 'EDI', label: 'Integriert' },
+      { value: 'Vollständig', label: 'Rückverfolgbarkeit' },
+      { value: 'SPC', label: 'Integriert' },
+    ],
+    ctaTitle: 'Bereit, OEM-Anforderungen',
+    ctaTitleAccent: 'souverän zu erfüllen?',
+    ctaDescription:
+      'Entdecken Sie, wie TMS Automobilzulieferer mit EDI, IATF 16949-Konformität und Echtzeit-Produktionsübersicht unterstützt. Vereinbaren Sie noch heute Ihre Demo.',
+  },
+  {
+    slug: 'metaalbewerking',
+    title: 'ERP für Metallbearbeitung & Zerspanung',
+    tagline: 'Präzisionsplanung für CNC-, Dreh- und Fräsbearbeitungen',
+    metaDescription:
+      'TMS bietet Metallbearbeitungs-ERP mit Mehroperationen-Arbeitsplänen, Werkzeuglebenszyklusverfolgung, CNC-Datenerfassung, Echtzeit-Auftragskalkulation und Kapazitätsoptimierung für Zerspanungsbetriebe.',
+    intro:
+      'Metallbearbeitungs- und Zerspanungsbetriebe stehen vor einer einzigartigen Planungsherausforderung: Jeder Auftrag kann Dutzende von Operationen über verschiedene Maschinentypen umfassen, jeweils mit eigenen Rüstzeiten, Werkzeuganforderungen und Kapazitätsbeschränkungen. Präzise Angebote hängen davon ab, Ihre tatsächlichen Kosten zu kennen, und die Rentabilität davon, teure CNC-Anlagen optimal auszulasten. TMS gibt Metallbearbeitungsbetrieben die Präzisionsplanung und Echtzeit-Transparenz, die sie für einen profitablen Betrieb benötigen.',
+    challenges: [
+      {
+        title: 'Komplexe Mehroperationen-Arbeitspläne',
+        description:
+          'Ein einzelnes Teil kann Drehen, Fräsen, Bohren, Schleifen, Wärmebehandlung und Oberflächenveredelung erfordern — jeweils mit spezifischen Maschinenanforderungen, Rüstzeiten und Reihenfolgebeschränkungen, die die Planung äußerst komplex machen.',
+      },
+      {
+        title: 'Werkzeug- und Vorrichtungsmanagement',
+        description:
+          'Die Verfolgung von Schneidwerkzeugen, Wendeschneidplatten, Vorrichtungen und Messmitteln über mehrere Maschinen und Aufträge — einschließlich Verschleißverfolgung, Nachschleifplänen und Ersatzbestellungen — ist eine ständige betriebliche Herausforderung.',
+      },
+      {
+        title: 'Kapazitätsplanung über Maschinengruppen',
+        description:
+          'Die Auslastungsverteilung über CNC-Drehmaschinen, Fräszentren, Schleifmaschinen und externe Bearbeitungen unter Berücksichtigung von Rüstzeiten, Losgrößen und Lieferterminen erfordert hochentwickelte Planungswerkzeuge.',
+      },
+      {
+        title: 'Genauigkeit der Auftragskalkulation',
+        description:
+          'Ohne genaue Zeiterfassung pro Operation und Echtzeit-Materialverbrauchsdaten wird die Auftragskalkulation zum Ratespiel — was zu unterbewerteten Angeboten und erodierten Margen bei komplexen Mehroperationen-Arbeiten führt.',
+      },
+    ],
+    relevantModuleSlugs: ['pps', 'aps', 'mes', 'pdc', 'qm', 'bi'],
+    capabilities: [
+      {
+        title: 'Mehroperationen-Arbeitsplanverwaltung',
+        description:
+          'Definieren Sie komplexe Arbeitspläne mit unbegrenzten Operationen, Alternativmaschinen, parallelen Bearbeitungsschritten und Fremdbearbeitungen. TMS berücksichtigt Operationsabhängigkeiten, Überlappungszuschläge und Mindesttransportmengen, um Ihren realen Produktionsfluss exakt abzubilden.',
+      },
+      {
+        title: 'Werkzeug- und Vorrichtungslebenszyklusverfolgung',
+        description:
+          'Verfolgen Sie jedes Schneidwerkzeug, jede Wendeschneidplatte, Vorrichtung und jedes Messmittel in Ihrem Betrieb. Überwachen Sie den Werkzeugverschleiß gegen die erwartete Standzeit, planen Sie Nachschliff und Ersatz, und beziehen Sie Werkzeugkosten automatisch in die Auftragskalkulation ein. Wissen Sie genau, wo sich jedes Werkzeug befindet und wann es Aufmerksamkeit benötigt.',
+      },
+      {
+        title: 'CNC-Maschinendatenerfassung',
+        description:
+          'Verbinden Sie Ihre CNC-Maschinen, um Laufzeiten, Rüstzeiten, Stückzahlen und Maschinenzustände automatisch zu erfassen. Eliminieren Sie manuelle Zeiterfassung, verbessern Sie die Datengenauigkeit und erhalten Sie Echtzeit-Transparenz über Maschinenauslastung und OEE in Ihrem gesamten Shopfloor.',
+      },
+      {
+        title: 'Echtzeit-Auftragskalkulation',
+        description:
+          'Sehen Sie, wie sich die Ist-Kosten im Vergleich zu den Plankosten entwickeln, während jede Operation abgeschlossen wird. TMS erfasst Arbeitsstunden, Maschinenzeit, Materialverbrauch, Werkzeugkosten und Fremdbearbeitungen in Echtzeit — für genaue Margentransparenz, bevor der Auftrag versendet wird.',
+      },
+      {
+        title: 'Kapazitätsoptimierung über Maschinengruppen',
+        description:
+          'Visualisieren und optimieren Sie die Kapazitätsauslastung über alle Maschinengruppen mit interaktiven Gantt-Diagrammen. TMS berücksichtigt Rüstzeiten, Lossplitting, Alternativmaschinen und Lieferterminprioritäten, um den Durchsatz und die Termintreue zu maximieren.',
+      },
+    ],
+    stats: [
+      { value: 'Multi-Op', label: 'Arbeitsplan' },
+      { value: 'Echtzeit', label: 'Kalkulation' },
+      { value: 'Maschine', label: 'Angebunden' },
+      { value: 'Kapazität', label: 'Optimiert' },
+    ],
+    ctaTitle: 'Bereit für Präzision in der',
+    ctaTitleAccent: 'Produktionsplanung?',
+    ctaDescription:
+      'Erfahren Sie, wie TMS Mehroperationen-Arbeitspläne, Echtzeit-Auftragskalkulation und Kapazitätsplanung für Metallbearbeitungsbetriebe handhabt. Fordern Sie Ihre Demo an.',
+  },
+  {
+    slug: 'elektronica',
+    title: 'ERP für die Elektronikfertigung',
+    tagline: 'Von der Leiterplattenbestückung bis zur Endprüfung — integrierte Produktionssteuerung',
+    metaDescription:
+      'TMS liefert Elektronikfertigungs-ERP mit Multi-Teilenummernverwaltung, Stücklisten-Import aus CAD/EDA, Bauteilrückverfolgbarkeit auf Rollenebene und SMT-Pick-and-Place-Integration.',
+    intro:
+      'Die Elektronikfertigung verbindet hohe Bauteilvielfalt mit strengen Rückverfolgbarkeitsanforderungen und schnellen Technologiezyklen. Eine einzelne Leiterplattenbaugruppe kann hunderte Bauteile von Dutzenden von Lieferanten enthalten, jeweils mit mehreren zugelassenen Alternativen. Diese Komplexität zu beherrschen — vom Stücklisten-Import über SMT-Bestückung, Löten, Prüfung bis zur Endmontage — erfordert ein ERP-System, das die Elektronikbranche versteht. TMS bietet diese spezialisierte Grundlage.',
+    challenges: [
+      {
+        title: 'Multi-Hersteller-Teilenummern',
+        description:
+          'Eine einzelne Bauteilposition auf einer Stückliste kann zugelassene Teile von drei oder mehr Herstellern haben, jeweils mit unterschiedlichen Teilenummern, Verpackungen und Lieferzeiten. Die Verwaltung dieser Alternativen über hunderte Bauteile ist eine tägliche Herausforderung.',
+      },
+      {
+        title: 'Stücklisten-Import aus CAD/EDA-Tools',
+        description:
+          'Die Entwicklung erstellt Stücklisten in Altium Designer, KiCad oder ähnlichen EDA-Tools. Die manuelle Neuerfassung in Ihrem ERP-System ist fehleranfällig und zeitaufwendig, besonders wenn sich Designs während der Prototypenphase häufig ändern.',
+      },
+      {
+        title: 'Bauteilrückverfolgbarkeit auf Rollen-/Spulenebene',
+        description:
+          'Kunden und Vorschriften verlangen zunehmend Rückverfolgbarkeit bis zur einzelnen Rolle oder Spule. Generische Chargenverfolgung reicht nicht aus, wenn Sie wissen müssen, welche Rolle in welchem Feeder für einen bestimmten Produktionslauf geladen war.',
+      },
+      {
+        title: 'SMT-Pick-and-Place-Integration',
+        description:
+          'Die Anbindung Ihrer SMT-Linien an Ihr ERP — Feeder-Rüstung teilen, Bauteilbestückung verifizieren und Bestückungsdaten erfassen — ist essenziell für Qualität und Rückverfolgbarkeit, wird aber von generischen Fertigungssystemen selten unterstützt.',
+      },
+    ],
+    relevantModuleSlugs: ['pps', 'aps', 'mes', 'pdc', 'qm', 'pdm'],
+    capabilities: [
+      {
+        title: 'Multi-Teilenummernverwaltung pro Bauteil',
+        description:
+          'Definieren Sie mehrere zugelassene Hersteller und Teilenummern für jede Bauteilposition. TMS berücksichtigt automatisch Verfügbarkeit, Preise und Lieferzeiten über alle Alternativen bei der Materialbedarfsplanung und stellt sicher, dass Sie immer die beste Beschaffungsoption haben.',
+      },
+      {
+        title: 'Stücklisten-Import aus Altium, KiCad und Excel',
+        description:
+          'Importieren Sie Stücklisten direkt aus Ihren EDA-Tools mit intelligenter Zuordnung von Bauteil-Designatoren, Werten und Footprints zu Ihren TMS-Stammdaten. Verarbeiten Sie Designrevisionen mit automatischem Stücklistenvergleich, der Änderungen für die technische Prüfung hervorhebt.',
+      },
+      {
+        title: 'Pick-and-Place-Maschinenintegration',
+        description:
+          'Verbinden Sie Ihre SMT-Pick-and-Place-Anlagen mit TMS für Feeder-Rüstungsverifikation, Bauteilverbrauchsverfolgung und Bestückungsdatenerfassung. Verhindern Sie Falschbestückungsfehler und gewährleisten Sie vollständige Rückverfolgbarkeit von der Rolle bis zur Leiterplattenposition.',
+      },
+      {
+        title: 'Rückverfolgbarkeit auf Rollen- und Spulenebene',
+        description:
+          'Verfolgen Sie Bauteile auf der Ebene einzelner Rollen und Spulen durch Wareneingang, Lagerung, Kommissionierung, Bestückung und Montage. Wissen Sie genau, welche Rollen bei jedem Fertigungsauftrag verbraucht wurden, und verfolgen Sie jedes Bauteilproblem bis zur Quelle zurück.',
+      },
+      {
+        title: 'Mindestbestellmengen- und Lieferzeitmanagement',
+        description:
+          'Verwalten Sie Mindestbestellmengen, Verpackungseinheiten und unterschiedliche Lieferzeiten über mehrere Lieferanten und Hersteller. TMS optimiert den Einkauf durch Bedarfsbündelung, Einhaltung von MOQ-Beschränkungen und Ausbalancieren der Bestandsinvestition gegenüber dem Produktionsbedarf.',
+      },
+      {
+        title: 'Prüfergebnis-Integration',
+        description:
+          'Erfassen Sie ICT-, Funktionstest- und AOI-Ergebnisse direkt in TMS. Verknüpfen Sie Prüfergebnisse mit individuellen Seriennummern oder Chargenbezeichnern, verfolgen Sie First-Pass-Yield nach Produkt und Produktionslinie, und erstellen Sie die Prüfdokumentation, die Ihre Kunden verlangen.',
+      },
+    ],
+    stats: [
+      { value: 'BOM', label: 'Integration' },
+      { value: 'Bauteil', label: 'Rückverfolgung' },
+      { value: 'Multi-Source', label: 'Teile' },
+      { value: 'SMT', label: 'Angebunden' },
+    ],
+    ctaTitle: 'Bereit, Ihre Elektronikproduktion zu',
+    ctaTitleAccent: 'optimieren?',
+    ctaDescription:
+      'Entdecken Sie, wie TMS Bauteilkomplexität, Stücklisten-Imports und Rückverfolgbarkeit auf Rollenebene für Elektronikhersteller verwaltet. Buchen Sie Ihre Demo.',
+  },
+];
+
+/* ===================================================================
+   Static Paths
+   =================================================================== */
+
+export function getStaticPaths() {
+  return [
+    { params: { slug: 'kunststof' } },
+    { params: { slug: 'automotive' } },
+    { params: { slug: 'metaalbewerking' } },
+    { params: { slug: 'elektronica' } },
+  ];
+}
+
+/* ===================================================================
+   Page Data
+   =================================================================== */
+
+const { slug } = Astro.params;
+const industry = industriesData.find((i) => i.slug === slug);
+
+if (!industry) {
+  return Astro.redirect('/de/industries');
+}
+
+const relevantModules = allModules.filter((m) =>
+  industry.relevantModuleSlugs.includes(m.slug)
+);
+
+// Friendly display name for breadcrumbs
+const displayNames: Record<string, string> = {
+  kunststof: 'Kunststoffverarbeitung',
+  automotive: 'Automobilzulieferer',
+  metaalbewerking: 'Metallbearbeitung & Zerspanung',
+  elektronica: 'Elektronikfertigung',
+};
+
+const displayName = displayNames[slug!] || industry.title;
+---
+
+<BaseLayout
+  title={`${industry.title} | TMS 4SAP`}
+  description={industry.metaDescription}
+  lang="de"
+>
+  <!-- Hero -->
+  <section class="ind-hero">
+    <div class="ind-hero-bg" aria-hidden="true"></div>
+    <div class="container">
+      <div class="breadcrumbs-wrap">
+        <Breadcrumbs
+          items={[
+            { label: 'Branchen', href: '/de/industries' },
+            { label: displayName, href: `/de/industries/${slug}` },
+          ]}
+        />
+      </div>
+      <div class="ind-hero-content" data-animate>
+        <span class="section-tag">Branchenlösung</span>
+        <h1 class="ind-hero-title">{industry.title}</h1>
+        <p class="ind-hero-tagline">{industry.tagline}</p>
+        <p class="ind-hero-intro">{industry.intro}</p>
+        <div class="ind-hero-actions">
+          <a href="/de/demo" class="btn btn-primary btn-lg">Demo buchen</a>
+          <a href="/de/contact" class="btn btn-ghost btn-lg">Vertrieb kontaktieren</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Challenges -->
+  <section class="section">
+    <div class="container">
+      <SectionHeader
+        tag="Herausforderungen"
+        title="Die Probleme,"
+        titleAccent="denen Sie begegnen"
+        description="Dies sind die spezifischen Herausforderungen, an denen generische ERP-Systeme in Ihrer Branche scheitern. TMS wurde entwickelt, um jede einzelne zu lösen."
+      />
+      <div class="challenges-grid">
+        {industry.challenges.map((challenge, idx) => (
+          <div class="challenge-card" data-animate>
+            <span class="challenge-number">{String(idx + 1).padStart(2, '0')}</span>
+            <h3 class="challenge-title">{challenge.title}</h3>
+            <p class="challenge-desc">{challenge.description}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Relevant Modules -->
+  <section class="section section-modules-bg">
+    <div class="container">
+      <SectionHeader
+        tag="So löst TMS es"
+        title="Die richtigen Module für"
+        titleAccent="Ihre Produktion"
+        description="TMS bietet eine modulare Plattform. Hier sind die Module, die für Ihre Branche am relevantesten sind — jedes speziell für Fertigungsabläufe entwickelt."
+      />
+      <div class="modules-grid">
+        {relevantModules.map((mod) => (
+          <a href={`/de/modules/${mod.slug}`} class="rel-module-card" data-animate>
+            <div class="rel-module-icon">
+              <span class="rel-module-abbr">{mod.abbr}</span>
+            </div>
+            <div class="rel-module-body">
+              <h3 class="rel-module-name">{mod.name}</h3>
+              <p class="rel-module-desc">{mod.description}</p>
+              <span class="rel-module-link">
+                Mehr erfahren <span aria-hidden="true">&rarr;</span>
+              </span>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Stats Bar -->
+  <StatBar stats={industry.stats} />
+
+  <!-- Key Capabilities -->
+  <section class="section">
+    <div class="container">
+      <SectionHeader
+        tag="Kernfunktionen"
+        title="Entwickelt für"
+        titleAccent="Ihre Workflows"
+        description="Detaillierte Funktionen, die die spezifischen Anforderungen Ihrer Fertigungsumgebung adressieren."
+      />
+      <div class="capabilities-list">
+        {industry.capabilities.map((cap, idx) => (
+          <div class="capability-item" data-animate>
+            <div class="capability-marker">
+              <span class="capability-index">{String(idx + 1).padStart(2, '0')}</span>
+              {idx < industry.capabilities.length - 1 && (
+                <div class="capability-line" aria-hidden="true"></div>
+              )}
+            </div>
+            <div class="capability-content">
+              <h3 class="capability-title">{cap.title}</h3>
+              <p class="capability-desc">{cap.description}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <CTABanner
+    title={industry.ctaTitle}
+    titleAccent={industry.ctaTitleAccent}
+    description={industry.ctaDescription}
+    primaryCTA={{ label: 'Demo buchen', href: '/de/demo' }}
+    secondaryCTA={{ label: 'Broschüre herunterladen', href: '/de/downloads' }}
+  />
+</BaseLayout>
+
+<style>
+  /* ============================================
+     HERO
+     ============================================ */
+  .ind-hero {
+    position: relative;
+    padding-top: clamp(7rem, 12vw, 10rem);
+    padding-bottom: clamp(3rem, 6vw, 5rem);
+    overflow: hidden;
+  }
+
+  .ind-hero-bg {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+      ellipse 70% 50% at 50% 0%,
+      rgba(245, 158, 11, 0.04) 0%,
+      transparent 70%
+    );
+    pointer-events: none;
+  }
+
+  /* Subtle dot grid */
+  .ind-hero-bg::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(circle, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    background-size: 32px 32px;
+    -webkit-mask-image: radial-gradient(ellipse 60% 50% at 50% 30%, black 10%, transparent 60%);
+    mask-image: radial-gradient(ellipse 60% 50% at 50% 30%, black 10%, transparent 60%);
+  }
+
+  .breadcrumbs-wrap {
+    position: relative;
+    z-index: 1;
+  }
+
+  .ind-hero-content {
+    position: relative;
+    z-index: 1;
+    max-width: 740px;
+  }
+
+  .ind-hero-title {
+    font-size: clamp(2.25rem, 5vw, 3.5rem);
+    font-weight: 700;
+    line-height: 1.08;
+    letter-spacing: -0.03em;
+    margin-top: 12px;
+  }
+
+  .ind-hero-tagline {
+    font-size: clamp(1.0625rem, 1.5vw, 1.1875rem);
+    color: var(--amber);
+    font-weight: 500;
+    margin-top: 16px;
+    line-height: 1.5;
+  }
+
+  .ind-hero-intro {
+    font-size: clamp(0.9375rem, 1.2vw, 1rem);
+    color: var(--text-muted);
+    line-height: 1.7;
+    margin-top: 20px;
+    max-width: 640px;
+  }
+
+  .ind-hero-actions {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-top: 32px;
+  }
+
+  /* ============================================
+     CHALLENGES
+     ============================================ */
+  .challenges-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+
+  .challenge-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    transition: all 0.3s var(--ease);
+  }
+
+  .challenge-card:hover {
+    background: var(--bg-card-hover);
+    border-color: var(--border-hover);
+  }
+
+  .challenge-number {
+    font-family: var(--font-heading);
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: var(--amber);
+    letter-spacing: 0.04em;
+  }
+
+  .challenge-title {
+    font-family: var(--font-heading);
+    font-size: 1.125rem;
+    font-weight: 600;
+    line-height: 1.3;
+    letter-spacing: -0.01em;
+  }
+
+  .challenge-desc {
+    font-size: 0.9375rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+
+  @media (max-width: 700px) {
+    .challenges-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* ============================================
+     RELEVANT MODULES
+     ============================================ */
+  .section-modules-bg {
+    background: var(--bg-surface);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .modules-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+
+  .rel-module-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 24px;
+    display: flex;
+    gap: 16px;
+    transition: all 0.3s var(--ease);
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .rel-module-card:hover {
+    background: var(--bg-card-hover);
+    border-color: var(--border-hover);
+    transform: translateY(-2px);
+  }
+
+  .rel-module-icon {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--amber-dim);
+    border-radius: var(--radius-sm);
+    flex-shrink: 0;
+  }
+
+  .rel-module-abbr {
+    font-family: var(--font-heading);
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--amber);
+    letter-spacing: 0.06em;
+  }
+
+  .rel-module-body {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-width: 0;
+  }
+
+  .rel-module-name {
+    font-family: var(--font-heading);
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 1.3;
+    letter-spacing: -0.01em;
+  }
+
+  .rel-module-desc {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .rel-module-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: var(--amber);
+    margin-top: 4px;
+    transition: gap 0.2s var(--ease);
+  }
+
+  .rel-module-card:hover .rel-module-link {
+    gap: 10px;
+  }
+
+  @media (max-width: 900px) {
+    .modules-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 600px) {
+    .modules-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .rel-module-card {
+      flex-direction: column;
+    }
+  }
+
+  /* ============================================
+     CAPABILITIES
+     ============================================ */
+  .capabilities-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .capability-item {
+    display: flex;
+    gap: 24px;
+    align-items: stretch;
+  }
+
+  .capability-marker {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-shrink: 0;
+    width: 40px;
+  }
+
+  .capability-index {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background: var(--amber-dim);
+    border: 1px solid rgba(245, 158, 11, 0.2);
+    border-radius: 50%;
+    font-family: var(--font-heading);
+    font-size: 0.8125rem;
+    font-weight: 700;
+    color: var(--amber);
+    flex-shrink: 0;
+  }
+
+  .capability-line {
+    width: 1px;
+    flex-grow: 1;
+    background: var(--border);
+    margin: 8px 0;
+  }
+
+  .capability-content {
+    padding-bottom: 40px;
+    padding-top: 6px;
+  }
+
+  .capability-item:last-child .capability-content {
+    padding-bottom: 0;
+  }
+
+  .capability-title {
+    font-family: var(--font-heading);
+    font-size: 1.125rem;
+    font-weight: 600;
+    line-height: 1.3;
+    letter-spacing: -0.01em;
+    margin-bottom: 8px;
+  }
+
+  .capability-desc {
+    font-size: 0.9375rem;
+    color: var(--text-muted);
+    line-height: 1.7;
+  }
+
+  @media (max-width: 600px) {
+    .capability-item {
+      gap: 16px;
+    }
+
+    .capability-content {
+      padding-bottom: 32px;
+    }
+  }
+</style>

@@ -1,0 +1,577 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import HeroInner from '../components/ui/HeroInner.astro';
+import SectionHeader from '../components/ui/SectionHeader.astro';
+import CTABanner from '../components/ui/CTABanner.astro';
+
+const supportTiers = [
+  {
+    icon: 'sales',
+    title: 'Sales Contact',
+    description: 'Planning to implement TMS? Our sales team guides you through the process, from initial assessment to proposal.',
+    details: [
+      { label: 'Phone', value: '+31 43 234 00 50' },
+    ],
+    link: { label: 'Get in Touch', href: '/contact' },
+  },
+  {
+    icon: 'technical',
+    title: 'Technical Support',
+    description: 'Existing customers get direct access to our support team for technical issues, configuration questions, and troubleshooting.',
+    details: [
+      { label: 'Hours', value: 'Mon\u2013Fri 08:00\u201317:00 CET' },
+      { label: 'Phone', value: '+31 43 234 00 51' },
+    ],
+    link: null,
+  },
+  {
+    icon: 'demo',
+    title: 'Online Presentation',
+    description: 'See TMS in action with a free, personalized demo tailored to your industry and production environment.',
+    details: [
+      { label: 'Duration', value: 'Approx. 60 minutes' },
+    ],
+    link: { label: 'Book a Demo', href: '/demo' },
+  },
+];
+
+const faqItems = [
+  {
+    question: 'What SAP versions does TMS support?',
+    answer: 'TMS is certified for SAP Business One 10.0 and above, including the latest service packs and patch levels. We maintain backward compatibility and test every TMS release against current SAP Business One versions to ensure seamless operation.',
+  },
+  {
+    question: 'How long does implementation take?',
+    answer: 'A typical TMS implementation takes 3 to 6 months depending on scope, number of modules, and the complexity of your manufacturing processes. Our phased approach ensures each module is fully operational before moving to the next, minimizing disruption to your production.',
+  },
+  {
+    question: 'Can I start with just one module?',
+    answer: 'Yes, TMS is fully modular. Many customers begin with a single module such as PPS or MES and expand over time as their needs evolve. Each module integrates natively with SAP Business One and works independently, so you can adopt at your own pace.',
+  },
+  {
+    question: 'Is training included?',
+    answer: 'Yes, comprehensive training is included in every implementation. We provide role-based training for end users, power users, and administrators. Additional training sessions and refresher courses are available as part of our ongoing support packages.',
+  },
+  {
+    question: 'What about data migration?',
+    answer: 'Full data migration support is included. Our team helps you migrate master data, BOMs, routings, and historical records from your existing systems. We provide validation tools and parallel-run periods to ensure data integrity before go-live.',
+  },
+  {
+    question: 'Do you offer a trial version?',
+    answer: 'We offer guided trial environments where you can explore TMS with your own data in a sandbox setup. Contact our sales team to arrange a personalized trial experience tailored to your manufacturing processes.',
+  },
+  {
+    question: 'What support is included?',
+    answer: 'All TMS licenses include standard support with guaranteed response times under our SLA. Enterprise support packages offer extended hours, priority escalation, and a dedicated account manager. Our support team consists of manufacturing ERP specialists who understand your domain.',
+  },
+  {
+    question: 'Can TMS integrate with our existing machines?',
+    answer: 'Yes. The MES and PDC modules are designed to connect with a wide range of manufacturing equipment via OPC-UA, Modbus, REST APIs, and custom connectors. We support integration with PLCs, CNC machines, scales, label printers, and other shop-floor devices.',
+  },
+];
+---
+
+<BaseLayout
+  title="Support | TMS 4SAP"
+  description="Get help with TMS 4SAP: sales inquiries, technical support for existing customers, and online demo scheduling."
+>
+  <HeroInner
+    breadcrumbs={[
+      { label: 'Home', href: '/' },
+      { label: 'Support', href: '/support' },
+    ]}
+    tag="Support"
+    title="Service &"
+    titleAccent="Support"
+    description="We're here to help you succeed with TMS 4SAP"
+  />
+
+  <!-- Support tiers -->
+  <section class="support-tiers section">
+    <div class="container">
+      <div class="tiers-grid">
+        {supportTiers.map((tier) => (
+          <article class="tier-card" data-animate>
+            <div class="tier-icon" aria-hidden="true">
+              {tier.icon === 'sales' && (
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+                </svg>
+              )}
+              {tier.icon === 'technical' && (
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="3" />
+                  <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z" />
+                </svg>
+              )}
+              {tier.icon === 'demo' && (
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="2" y="3" width="20" height="14" rx="2" ry="2" />
+                  <line x1="8" y1="21" x2="16" y2="21" />
+                  <line x1="12" y1="17" x2="12" y2="21" />
+                </svg>
+              )}
+            </div>
+            <h3 class="tier-title">{tier.title}</h3>
+            <p class="tier-desc">{tier.description}</p>
+            <ul class="tier-details" role="list">
+              {tier.details.map((detail) => (
+                <li class="tier-detail">
+                  <span class="tier-detail-label">{detail.label}</span>
+                  <span class="tier-detail-value">{detail.value}</span>
+                </li>
+              ))}
+            </ul>
+            {tier.link && (
+              <a href={tier.link.href} class="btn btn-primary btn-sm tier-link">
+                {tier.link.label}
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <line x1="5" y1="12" x2="19" y2="12" />
+                  <polyline points="12 5 19 12 12 19" />
+                </svg>
+              </a>
+            )}
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ section -->
+  <section class="faq-section section">
+    <div class="container">
+      <SectionHeader
+        tag="FAQ"
+        title="Frequently Asked"
+        titleAccent="Questions"
+        description="Find answers to the most common questions about TMS 4SAP, implementation, and support."
+      />
+
+      <div class="faq-list" role="list">
+        {faqItems.map((item, index) => (
+          <div class="faq-item" data-animate role="listitem">
+            <button
+              class="faq-trigger"
+              aria-expanded="false"
+              aria-controls={`faq-panel-${index}`}
+              id={`faq-button-${index}`}
+            >
+              <span class="faq-question">{item.question}</span>
+              <span class="faq-chevron" aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="6 9 12 15 18 9" />
+                </svg>
+              </span>
+            </button>
+            <div
+              class="faq-panel"
+              id={`faq-panel-${index}`}
+              role="region"
+              aria-labelledby={`faq-button-${index}`}
+              hidden
+            >
+              <p class="faq-answer">{item.answer}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Remote support -->
+  <section class="remote-section section">
+    <div class="container">
+      <div class="remote-card" data-animate>
+        <div class="remote-content">
+          <div class="remote-icon" aria-hidden="true">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="3" width="20" height="14" rx="2" ry="2" />
+              <line x1="8" y1="21" x2="16" y2="21" />
+              <line x1="12" y1="17" x2="12" y2="21" />
+              <path d="M8 10l2 2 4-4" />
+            </svg>
+          </div>
+          <div class="remote-text">
+            <h2 class="remote-title">Need immediate assistance?</h2>
+            <p class="remote-desc">Our support engineers can connect to your system remotely to diagnose and resolve issues in real time. Download the remote support tool to get started.</p>
+          </div>
+        </div>
+        <div class="remote-actions">
+          <a
+            href="#"
+            class="btn btn-primary"
+            data-tool="remote-support"
+            aria-label="Download remote support tool"
+          >
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+              <polyline points="7 10 12 15 17 10" />
+              <line x1="12" y1="15" x2="12" y2="3" />
+            </svg>
+            Download Remote Support Tool
+          </a>
+          <p class="remote-note">Windows &amp; macOS supported. No installation required.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <CTABanner
+    title="Ready to get"
+    titleAccent="started?"
+    description="Whether you need a product demo, implementation guidance, or technical support, our team is ready to help."
+    primaryCTA={{ label: 'Book a Demo', href: '/demo' }}
+    secondaryCTA={{ label: 'Contact Sales', href: '/contact' }}
+  />
+</BaseLayout>
+
+<script>
+  function initFaqAccordion() {
+    const triggers = document.querySelectorAll<HTMLButtonElement>('.faq-trigger');
+
+    triggers.forEach((trigger) => {
+      trigger.addEventListener('click', () => {
+        const expanded = trigger.getAttribute('aria-expanded') === 'true';
+        const panelId = trigger.getAttribute('aria-controls');
+        if (!panelId) return;
+        const panel = document.getElementById(panelId);
+        if (!panel) return;
+
+        if (expanded) {
+          // Collapse
+          trigger.setAttribute('aria-expanded', 'false');
+          panel.style.maxHeight = panel.scrollHeight + 'px';
+          // Force reflow so the browser registers the starting height
+          panel.offsetHeight;
+          panel.style.maxHeight = '0';
+          panel.addEventListener('transitionend', function handler() {
+            panel.hidden = true;
+            panel.style.maxHeight = '';
+            panel.removeEventListener('transitionend', handler);
+          });
+        } else {
+          // Expand
+          trigger.setAttribute('aria-expanded', 'true');
+          panel.hidden = false;
+          panel.style.maxHeight = '0';
+          // Force reflow
+          panel.offsetHeight;
+          panel.style.maxHeight = panel.scrollHeight + 'px';
+          panel.addEventListener('transitionend', function handler() {
+            panel.style.maxHeight = '';
+            panel.removeEventListener('transitionend', handler);
+          });
+        }
+      });
+    });
+  }
+
+  initFaqAccordion();
+  document.addEventListener('astro:page-load', initFaqAccordion);
+</script>
+
+<style>
+  /* ---- Support tiers ---- */
+  .tiers-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+
+  .tier-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    transition: all 0.3s var(--ease);
+  }
+
+  .tier-card:hover {
+    background: var(--bg-card-hover);
+    border-color: var(--border-hover);
+    transform: translateY(-2px);
+  }
+
+  .tier-icon {
+    width: 52px;
+    height: 52px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--amber-dim);
+    border-radius: var(--radius-sm);
+    color: var(--amber);
+    flex-shrink: 0;
+  }
+
+  .tier-title {
+    font-family: var(--font-heading);
+    font-size: 1.25rem;
+    font-weight: 600;
+    line-height: 1.2;
+    color: var(--text);
+  }
+
+  .tier-desc {
+    font-size: 0.9375rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+    flex-grow: 1;
+  }
+
+  .tier-details {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding-top: 12px;
+    border-top: 1px solid var(--border);
+  }
+
+  .tier-detail {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .tier-detail-label {
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .tier-detail-value {
+    font-size: 0.9375rem;
+    color: var(--text);
+    font-weight: 500;
+  }
+
+  .tier-link {
+    align-self: flex-start;
+    margin-top: 4px;
+  }
+
+  /* ---- Stagger tier cards ---- */
+  .tiers-grid [data-animate]:nth-child(1) { transition-delay: 0ms; }
+  .tiers-grid [data-animate]:nth-child(2) { transition-delay: 100ms; }
+  .tiers-grid [data-animate]:nth-child(3) { transition-delay: 200ms; }
+
+  /* ---- FAQ ---- */
+  .faq-section {
+    border-top: 1px solid var(--border);
+  }
+
+  .faq-list {
+    max-width: 800px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .faq-item {
+    border-bottom: 1px solid var(--border);
+  }
+
+  .faq-item:first-child {
+    border-top: 1px solid var(--border);
+  }
+
+  .faq-trigger {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 20px 0;
+    background: none;
+    border: none;
+    cursor: pointer;
+    text-align: left;
+    font-family: var(--font-body);
+    transition: color 0.2s var(--ease);
+  }
+
+  .faq-trigger:hover {
+    color: var(--amber);
+  }
+
+  .faq-trigger:focus-visible {
+    outline: 2px solid var(--amber);
+    outline-offset: 4px;
+    border-radius: var(--radius-sm);
+  }
+
+  .faq-question {
+    font-family: var(--font-heading);
+    font-size: 1.0625rem;
+    font-weight: 600;
+    line-height: 1.3;
+    color: inherit;
+  }
+
+  .faq-chevron {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    color: var(--text-dim);
+    transition: transform 0.3s var(--ease), color 0.2s var(--ease);
+  }
+
+  .faq-trigger:hover .faq-chevron {
+    color: var(--amber);
+  }
+
+  .faq-trigger[aria-expanded="true"] .faq-chevron {
+    transform: rotate(180deg);
+    color: var(--amber);
+  }
+
+  .faq-panel {
+    overflow: hidden;
+    transition: max-height 0.35s var(--ease);
+  }
+
+  .faq-answer {
+    font-size: 0.9375rem;
+    color: var(--text-muted);
+    line-height: 1.7;
+    padding-bottom: 24px;
+    max-width: 720px;
+  }
+
+  /* ---- Stagger FAQ items ---- */
+  .faq-list [data-animate]:nth-child(1) { transition-delay: 0ms; }
+  .faq-list [data-animate]:nth-child(2) { transition-delay: 60ms; }
+  .faq-list [data-animate]:nth-child(3) { transition-delay: 120ms; }
+  .faq-list [data-animate]:nth-child(4) { transition-delay: 180ms; }
+  .faq-list [data-animate]:nth-child(5) { transition-delay: 240ms; }
+  .faq-list [data-animate]:nth-child(6) { transition-delay: 300ms; }
+  .faq-list [data-animate]:nth-child(7) { transition-delay: 360ms; }
+  .faq-list [data-animate]:nth-child(8) { transition-delay: 420ms; }
+
+  /* ---- Remote support ---- */
+  .remote-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-xl);
+    padding: clamp(2rem, 4vw, 3rem);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: clamp(2rem, 4vw, 3rem);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .remote-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 15%;
+    right: 15%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent 0%, var(--amber) 50%, transparent 100%);
+    opacity: 0.3;
+  }
+
+  .remote-content {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    flex: 1;
+  }
+
+  .remote-icon {
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--amber-dim);
+    border-radius: var(--radius);
+    color: var(--amber);
+    flex-shrink: 0;
+  }
+
+  .remote-text {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .remote-title {
+    font-family: var(--font-heading);
+    font-size: clamp(1.25rem, 2.5vw, 1.5rem);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+  }
+
+  .remote-desc {
+    font-size: 0.9375rem;
+    color: var(--text-muted);
+    line-height: 1.7;
+    max-width: 520px;
+  }
+
+  .remote-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 8px;
+    flex-shrink: 0;
+  }
+
+  .remote-note {
+    font-size: 0.75rem;
+    color: var(--text-dim);
+  }
+
+  /* ---- Responsive ---- */
+  @media (max-width: 960px) {
+    .tiers-grid {
+      grid-template-columns: 1fr;
+      max-width: 520px;
+      margin: 0 auto;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .remote-card {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .remote-actions {
+      align-items: flex-start;
+      width: 100%;
+    }
+
+    .remote-actions .btn {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .remote-content {
+      flex-direction: column;
+    }
+
+    .faq-question {
+      font-size: 0.9375rem;
+    }
+  }
+</style>

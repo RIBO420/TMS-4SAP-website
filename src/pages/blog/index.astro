@@ -1,0 +1,237 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import HeroInner from '../../components/ui/HeroInner.astro';
+import BlogPostCard from '../../components/cards/BlogPostCard.astro';
+import CTABanner from '../../components/ui/CTABanner.astro';
+
+const categories = ['All', 'Product', 'Industry', 'Engineering', 'Company'] as const;
+
+const posts = [
+  {
+    slug: 'what-is-mes-manufacturing-execution-system',
+    title: 'What is MES? A Complete Guide to Manufacturing Execution Systems',
+    description:
+      'Learn what a Manufacturing Execution System (MES) does, why it matters for modern factories, and how it bridges the gap between ERP planning and shop-floor reality.',
+    date: '2026-02-15',
+    author: 'TMS Editorial',
+    category: 'Product',
+  },
+  {
+    slug: 'iatf-16949-erp-automotive',
+    title: 'How ERP Software Supports IATF 16949 Compliance in Automotive',
+    description:
+      'Discover how integrated ERP systems help automotive manufacturers maintain IATF 16949 compliance through traceability, quality management, and audit-ready documentation.',
+    date: '2026-01-20',
+    author: 'TMS Editorial',
+    category: 'Industry',
+  },
+  {
+    slug: 'industry-4-0-sap-business-one',
+    title: 'Industry 4.0 and SAP Business One: Bridging the Gap with TMS',
+    description:
+      'Explore how TMS modules transform SAP Business One into a full Industry 4.0 platform with real-time data capture, advanced analytics, and smart manufacturing capabilities.',
+    date: '2026-03-01',
+    author: 'TMS Editorial',
+    category: 'Engineering',
+  },
+];
+---
+
+<BaseLayout
+  title="Blog | TMS 4SAP"
+  description="Expert articles on ERP, production planning, MES, and Industry 4.0 for manufacturing professionals."
+>
+  <HeroInner
+    breadcrumbs={[
+      { label: 'Home', href: '/' },
+      { label: 'Blog', href: '/blog' },
+    ]}
+    tag="Blog"
+    title="Manufacturing"
+    titleAccent="Insights"
+    description="Expert articles on ERP, production planning, and Industry 4.0"
+  />
+
+  <!-- Category filter -->
+  <section class="filter-section">
+    <div class="container">
+      <div class="filter-bar" role="tablist" aria-label="Filter blog posts by category">
+        {categories.map((cat) => (
+          <button
+            class:list={['filter-pill', { 'filter-pill--active': cat === 'All' }]}
+            role="tab"
+            aria-selected={cat === 'All' ? 'true' : 'false'}
+            data-category={cat.toLowerCase()}
+          >
+            {cat}
+          </button>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Blog grid -->
+  <section class="blog-listing section">
+    <div class="container">
+      <div class="blog-grid" role="tabpanel" aria-label="Blog posts">
+        {posts.map((post) => (
+          <div class="blog-grid-item" data-post-category={post.category.toLowerCase()}>
+            <BlogPostCard
+              title={post.title}
+              description={post.description}
+              date={post.date}
+              author={post.author}
+              category={post.category}
+              slug={post.slug}
+            />
+          </div>
+        ))}
+      </div>
+
+      <!-- Empty state for filtered results -->
+      <div class="blog-empty" aria-live="polite" hidden>
+        <p class="blog-empty-text">No articles found in this category yet.</p>
+      </div>
+    </div>
+  </section>
+
+  <CTABanner
+    title="Ready to modernize your"
+    titleAccent="manufacturing?"
+    description="Book a free 1-hour demo with our experts and see how TMS 4SAP can transform your production floor."
+    primaryCTA={{ label: 'Book a Demo', href: '/demo' }}
+    secondaryCTA={{ label: 'Download Brochure', href: '/downloads' }}
+  />
+</BaseLayout>
+
+<script>
+  function initBlogFilter() {
+    const pills = document.querySelectorAll<HTMLButtonElement>('.filter-pill');
+    const items = document.querySelectorAll<HTMLDivElement>('.blog-grid-item');
+    const emptyState = document.querySelector<HTMLDivElement>('.blog-empty');
+
+    pills.forEach((pill) => {
+      pill.addEventListener('click', () => {
+        // Update active state
+        pills.forEach((p) => {
+          p.classList.remove('filter-pill--active');
+          p.setAttribute('aria-selected', 'false');
+        });
+        pill.classList.add('filter-pill--active');
+        pill.setAttribute('aria-selected', 'true');
+
+        const category = pill.dataset.category;
+        let visibleCount = 0;
+
+        items.forEach((item) => {
+          if (category === 'all' || item.dataset.postCategory === category) {
+            item.style.display = '';
+            visibleCount++;
+          } else {
+            item.style.display = 'none';
+          }
+        });
+
+        // Toggle empty state
+        if (emptyState) {
+          emptyState.hidden = visibleCount > 0;
+        }
+      });
+    });
+  }
+
+  initBlogFilter();
+  document.addEventListener('astro:page-load', initBlogFilter);
+</script>
+
+<style>
+  /* ---- Filter bar ---- */
+  .filter-section {
+    padding-bottom: 0;
+  }
+
+  .filter-bar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .filter-pill {
+    display: inline-flex;
+    align-items: center;
+    padding: 8px 20px;
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    cursor: pointer;
+    transition: all 0.2s var(--ease);
+    white-space: nowrap;
+  }
+
+  .filter-pill:hover {
+    color: var(--text);
+    border-color: var(--border-hover);
+    background: rgba(255, 255, 255, 0.03);
+  }
+
+  .filter-pill--active {
+    background: var(--amber);
+    color: #09090B;
+    border-color: var(--amber);
+    font-weight: 600;
+  }
+
+  .filter-pill--active:hover {
+    background: var(--amber-hover);
+    border-color: var(--amber-hover);
+    color: #09090B;
+  }
+
+  /* ---- Blog grid ---- */
+  .blog-listing {
+    padding-top: clamp(2rem, 4vw, 3rem);
+  }
+
+  .blog-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+
+  @media (max-width: 960px) {
+    .blog-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 640px) {
+    .blog-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .filter-bar {
+      gap: 6px;
+    }
+
+    .filter-pill {
+      padding: 6px 16px;
+      font-size: 0.8125rem;
+    }
+  }
+
+  /* ---- Empty state ---- */
+  .blog-empty {
+    text-align: center;
+    padding: 4rem 0;
+  }
+
+  .blog-empty-text {
+    font-size: 1.0625rem;
+    color: var(--text-dim);
+  }
+</style>

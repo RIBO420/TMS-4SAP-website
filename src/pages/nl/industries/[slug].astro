@@ -1,0 +1,809 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../../components/global/Breadcrumbs.astro';
+import SectionHeader from '../../../components/ui/SectionHeader.astro';
+import StatBar from '../../../components/ui/StatBar.astro';
+import CTABanner from '../../../components/ui/CTABanner.astro';
+import { modules as allModules } from '../../../data/modules';
+
+/* ===================================================================
+   Industry Data (Dutch)
+   =================================================================== */
+
+interface IndustryChallenge {
+  title: string;
+  description: string;
+}
+
+interface IndustryCapability {
+  title: string;
+  description: string;
+}
+
+interface IndustryStat {
+  value: string;
+  label: string;
+}
+
+interface IndustryData {
+  slug: string;
+  title: string;
+  tagline: string;
+  metaDescription: string;
+  intro: string;
+  challenges: IndustryChallenge[];
+  relevantModuleSlugs: string[];
+  capabilities: IndustryCapability[];
+  stats: IndustryStat[];
+  ctaTitle: string;
+  ctaTitleAccent: string;
+  ctaDescription: string;
+}
+
+const industriesData: IndustryData[] = [
+  {
+    slug: 'kunststof',
+    title: 'ERP voor kunststofproductie',
+    tagline: 'Van spuitgieten tot extrusie — volledige productiecontrole',
+    metaDescription:
+      'TMS biedt kunststofproducenten een compleet ERP met matrijslevenscyclusbeheer, multi-cavity planning, batchtraceerbaarheid en machine-integratie voor spuitgieten en extrusie.',
+    intro:
+      'Kunststofproductie vereist een niveau van procesbeheersing dat generieke ERP-systemen eenvoudigweg niet kunnen leveren. Van het beheren van honderden matrijzen over meerdere spuitgietmachines tot het volgen van multi-cavity productie-output en het onderhouden van volledige batchtraceerbaarheid door complexe materiaalstromen — de industrie heeft doelgerichte tools nodig. TMS geeft kunststofproducenten de digitale basis om elk aspect van de productie te beheersen — van grondstofinkoop tot expeditie van eindproducten.',
+    challenges: [
+      {
+        title: 'Complex matrijsbeheer',
+        description:
+          'Het volgen van honderden matrijzen over meerdere machines, het monitoren van caviteitstatus, schottellingen, onderhoudsschema\'s en gereedschapskosten vereist een systeem dat gebouwd is voor de complexiteit van kunststofproductie.',
+      },
+      {
+        title: 'Multi-cavity productieplanning',
+        description:
+          'Het plannen van productie over multi-cavity gereedschappen met variërende cyclustijden, omstelvereisten en gekoppelde productieorders vereist intelligente planning die kunststofspecifieke beperkingen begrijpt.',
+      },
+      {
+        title: 'Materiaaltraceerbaarheid & batchcontrole',
+        description:
+          'Het onderhouden van volledige traceerbaarheid van grondstofpartijen door menging, drogen en spuitgieten tot eindproducten is essentieel voor kwaliteitsborging en compliance-eisen van klanten.',
+      },
+      {
+        title: 'Machine-integratie',
+        description:
+          'Het verbinden van spuitgietmachines, extruders en randapparatuur om cyclusdata, schotgewichten, procesparameters en alarmmeldingen in realtime vast te leggen.',
+      },
+    ],
+    relevantModuleSlugs: ['pps', 'aps', 'mes', 'pdc', 'qm', 'pdm'],
+    capabilities: [
+      {
+        title: 'Matrijslevenscyclusbeheer',
+        description:
+          'Volg elke matrijs van ingebruikname tot uitfasering. Monitor schottellingen, plan preventief onderhoud op basis van cyclusdrempels, registreer reparaties en wijs gereedschapskosten toe aan productieorders. TMS onderhoudt een complete historie voor elk gereedschap in uw werkplaats.',
+      },
+      {
+        title: 'Gekoppelde productieorderafhandeling',
+        description:
+          'Beheer multi-cavity matrijzen die tegelijkertijd verschillende onderdelen produceren. TMS maakt automatisch gekoppelde productieorders aan, splitst output per caviteit en volgt uitval per caviteitpositie — voor nauwkeurige kostprijscalculatie en opbrengstanalyse per onderdeel.',
+      },
+      {
+        title: 'Machine-interface voor spuitgieten',
+        description:
+          'Verbind rechtstreeks met uw spuitgietapparatuur via gestandaardiseerde interfaces (Euromap 63/77, OPC-UA). Leg cyclustijden, schotgewichten, procesparameters en machinestatus in realtime vast voor volledige productietransparantie.',
+      },
+      {
+        title: 'Meervoudige batchtraceerbaarheid',
+        description:
+          'Traceer materialen voorwaarts van grondstofontvangt door menging, masterbatch-toevoeging en productie tot eindproducten. Traceer achterwaarts vanuit elk eindproduct om elke gebruikte materiaalpartij te identificeren. Volledige traceerbaarheid in seconden, niet uren.',
+      },
+      {
+        title: 'Uitvalanalyse per defecttype',
+        description:
+          'Categoriseer en analyseer uitval per defecttype — braam, korte schoten, zinkplekken, vervorming en meer. Correleer defectpercentages met machineparameters, materiaalpartijen en operatorploegen om grondoorzaken te identificeren en continue verbetering te stimuleren.',
+      },
+      {
+        title: 'Kleur- en materiaalwisselbeheer',
+        description:
+          'Optimaliseer productiesequenties om kleur- en materiaalwissels te minimaliseren. TMS houdt rekening met spoelvereisten, droogtijden en contaminatierisico\'s bij het plannen, waardoor afval wordt verminderd en de machinebeschikbaarheid wordt gemaximaliseerd.',
+      },
+    ],
+    stats: [
+      { value: '100%', label: 'Traceerbaarheid' },
+      { value: 'Realtime', label: 'OEE-monitoring' },
+      { value: 'Geautomatiseerd', label: 'Planning' },
+      { value: 'SAP', label: 'Geïntegreerd' },
+    ],
+    ctaTitle: 'Klaar om uw',
+    ctaTitleAccent: 'kunststofproductie te digitaliseren?',
+    ctaDescription:
+      'Ontdek hoe TMS matrijsbeheer, gekoppelde orders en batchtraceerbaarheid afhandelt voor kunststofproducenten. Boek een persoonlijke demo.',
+  },
+  {
+    slug: 'automotive',
+    title: 'ERP voor automotive toeleveranciers',
+    tagline: 'Voldoe aan de eisen van serieproductie en OEM-vereisten',
+    metaDescription:
+      'TMS levert automotive toeleveranciers-ERP met IATF 16949-compliance, EDI-integratie, afroepplanning, SPC en volledige lot- en batchtraceerbaarheid voor recalls.',
+    intro:
+      'Automotive toeleveranciers opereren onder intense druk: veeleisende OEM-klanten, strenge kwaliteitsnormen, krappe leveringsvensters en nultolerantie voor productiefouten. IATF 16949-compliance is niet optioneel, en het vermogen om binnen uren op recallvragen te reageren kan bepalen of u uw contracten behoudt. TMS biedt automotive toeleveranciers het geïntegreerde productiebeheerplatform dat nodig is om aan deze eisen te voldoen met behoud van winstgevendheid.',
+    challenges: [
+      {
+        title: 'IATF 16949-compliance',
+        description:
+          'Het voldoen aan de strenge eisen van het IATF 16949-kwaliteitsmanagementsysteem vereist gedocumenteerde processen, beheerde registraties, statistische procesbeheersing en workflows voor continue verbetering die in uw dagelijkse operatie zijn ingebouwd.',
+      },
+      {
+        title: 'EDI-communicatie met OEM\'s',
+        description:
+          'Automotive OEM\'s verwachten elektronische gegevensuitwisseling voor prognoses, afroepen, leveringsschema\'s en facturering. Handmatige verwerking is geen optie wanneer u dagelijks honderden EDI-berichten ontvangt.',
+      },
+      {
+        title: 'Afroepplanning & JIT-levering',
+        description:
+          'Het beheren van fluctuerende afroepschema\'s, just-in-time leveringsvereisten en consignatieovereenkomsten vereist planningssystemen die kunnen reageren op dagelijkse schemawijzigingen zonder de productie te verstoren.',
+      },
+      {
+        title: 'Volledige batchtraceerbaarheid voor recalls',
+        description:
+          'Wanneer een OEM een recall uitvaardigt, moet u elk getroffen lot, elke levering en elke klant binnen uren identificeren — niet dagen. Onvolledige traceerbaarheid brengt uw volledige leveranciersstatus in gevaar.',
+      },
+    ],
+    relevantModuleSlugs: ['pps', 'aps', 'mes', 'pdc', 'qm', 'bi'],
+    capabilities: [
+      {
+        title: 'EDI-integratie voor geautomatiseerde orderverwerking',
+        description:
+          'Verwerk inkomende EDI-berichten (DELFOR, DELJIT, DESADV) automatisch. TMS converteert OEM-prognoses en afroepen naar productieorders, werkt leveringsschema\'s bij en genereert ASN- en factuurdocumenten — waardoor handmatige gegevensinvoer tot vrijwel nul wordt gereduceerd.',
+      },
+      {
+        title: 'IATF 16949 kwaliteitsmanagement-workflows',
+        description:
+          'Ingebouwde workflows ondersteunen APQP, PPAP, Control Plans, FMEA-tracking en 8D-probleemoplossing. TMS onderhoudt het gedocumenteerde bewijspad dat auditors vereisen, met automatische herinneringen voor kalibratie, reviews en corrigerende maatregelen.',
+      },
+      {
+        title: 'Afroepplanning en leveringsbeheer',
+        description:
+          'Beheer complexe afroepstructuren met meerdere leverdatums per orderregel. TMS synchroniseert afroepschema\'s met productieplanning, berekent benodigde capaciteit en materialen en genereert verzenddocumenten afgestemd op elk leveringsvenster.',
+      },
+      {
+        title: 'Statistische procesbeheersing (SPC)',
+        description:
+          'Monitor kritische kwaliteitskenmerken in realtime met ingebouwde SPC-grafieken. TMS berekent Cp, Cpk en procescapaciteitsindices automatisch, geeft waarschuwingen wanneer processen afdrijven en documenteert alles voor klantaudits.',
+      },
+      {
+        title: 'Volledige lot- en batchtraceerbaarheid',
+        description:
+          'Traceer elk eindproduct terug door elke productiestap, materiaalpartij, machine, operator en kwaliteitsinspectie. Traceer voorwaarts vanuit elke grondstof naar elke getroffen levering. Genereer recallrapporten in minuten, dekkend de volledige toeleveringsketen.',
+      },
+    ],
+    stats: [
+      { value: 'IATF 16949', label: 'Gereed' },
+      { value: 'EDI', label: 'Geïntegreerd' },
+      { value: 'Volledig', label: 'Traceerbaarheid' },
+      { value: 'SPC', label: 'Ingebouwd' },
+    ],
+    ctaTitle: 'Klaar om aan OEM-eisen te voldoen',
+    ctaTitleAccent: 'met vertrouwen?',
+    ctaDescription:
+      'Ontdek hoe TMS automotive toeleveranciers ondersteunt met EDI, IATF 16949-compliance en realtime productiezichtbaarheid. Plan vandaag nog uw demo.',
+  },
+  {
+    slug: 'metaalbewerking',
+    title: 'ERP voor metaalbewerking & verspaning',
+    tagline: 'Precisieplanning voor CNC-, draai- en freesoperaties',
+    metaDescription:
+      'TMS biedt metaalbewerking-ERP met meerbewerkingsroutering, gereedschapslevenscyclustracking, CNC-datacollectie, realtime kostprijscalculatie en capaciteitsoptimalisatie voor verspanende operaties.',
+    intro:
+      'Metaalbewerking en verspaning staan voor een unieke planningsuitdaging: elk werk kan tientallen bewerkingen over verschillende machinetypen omvatten, elk met eigen insteltijden, gereedschapsvereisten en capaciteitsbeperkingen. Nauwkeurig offreren hangt af van het kennen van uw werkelijke kosten, en winstgevendheid draait om het optimaal benutten van dure CNC-apparatuur. TMS geeft metaalbewerkingsbedrijven de precisieplanning en realtime zichtbaarheid die nodig is voor een winstgevende operatie.',
+    challenges: [
+      {
+        title: 'Complexe meerbewerkingsroutering',
+        description:
+          'Een enkel onderdeel kan draaien, frezen, boren, slijpen, warmtebehandeling en oppervlakteafwerking vereisen — elk met specifieke machinevereisten, insteltijden en volgordebeperking die planning extreem complex maken.',
+      },
+      {
+        title: 'Gereedschaps- en opspanmiddelbeheer',
+        description:
+          'Het bijhouden van snijgereedschappen, wisselplaten, opspanmiddelen en meetinstrumenten over meerdere machines en opdrachten — inclusief slijtagetracking, herslijpschema\'s en vervangingsbestellingen — is een constante operationele uitdaging.',
+      },
+      {
+        title: 'Capaciteitsplanning over machinegroepen',
+        description:
+          'Het balanceren van werkbelasting over CNC-draaibanken, freescentra, slijpmachines en externe bewerkingen, rekening houdend met insteltijden, seriegrootten en levertijden, vereist geavanceerde planningstools.',
+      },
+      {
+        title: 'Nauwkeurigheid van kostprijscalculatie',
+        description:
+          'Zonder nauwkeurige tijdregistratie per bewerking en realtime materiaalverbruiksdata wordt kostprijscalculatie giswerk — wat leidt tot te lage offertes en uitgehold rendement op complex meerbewerkingswerk.',
+      },
+    ],
+    relevantModuleSlugs: ['pps', 'aps', 'mes', 'pdc', 'qm', 'bi'],
+    capabilities: [
+      {
+        title: 'Meerbewerkingsrouteringbeheer',
+        description:
+          'Definieer complexe routeringen met onbeperkte bewerkingen, alternatieve machines, parallelle verwerkingsstappen en externe bewerkingen. TMS verwerkt bewerkingsafhankelijkheden, overlaptoelagen en minimale overdrachthoeveelheden om uw werkelijke productiestroom nauwkeurig te modelleren.',
+      },
+      {
+        title: 'Gereedschaps- en opspanmiddellevenscyclustracking',
+        description:
+          'Volg elk snijgereedschap, elke wisselplaat, elk opspanmiddel en meetinstrument in uw werkplaats. Monitor gereedschapslijtage tegen verwachte levensduur, plan herslijp- en vervangingsmomenten en neem gereedschapskosten automatisch op in werkcalculaties. Weet precies waar elk gereedschap is en wanneer het aandacht nodig heeft.',
+      },
+      {
+        title: 'CNC-machinedatacollectie',
+        description:
+          'Verbind met uw CNC-machines om looptijden, insteltijden, stuksaantallen en machinestaten automatisch vast te leggen. Elimineer handmatige tijdregistratie, verbeter de datanauwkeurigheid en krijg realtime zichtbaarheid in machinebezetting en OEE over uw gehele werkvloer.',
+      },
+      {
+        title: 'Realtime kostprijscalculatie',
+        description:
+          'Zie werkelijke kosten oplopen ten opzichte van geschatte kosten naarmate elke bewerking wordt afgerond. TMS volgt arbeidsuren, machinetijd, materiaalverbruik, gereedschapskosten en externe bewerkingen in realtime — voor nauwkeurige margevisibiliteit voordat het werk wordt verzonden.',
+      },
+      {
+        title: 'Capaciteitsoptimalisatie over machinegroepen',
+        description:
+          'Visualiseer en optimaliseer capaciteitsbelasting over alle machinegroepen met interactieve Gantt-diagrammen. TMS houdt rekening met insteltijden, serieopdeling, alternatieve machines en levertijdprioriteiten om doorvoer en tijdige levering te maximaliseren.',
+      },
+    ],
+    stats: [
+      { value: 'Multi-Op', label: 'Routering' },
+      { value: 'Realtime', label: 'Calculatie' },
+      { value: 'Machine', label: 'Verbonden' },
+      { value: 'Capaciteit', label: 'Geoptimaliseerd' },
+    ],
+    ctaTitle: 'Klaar voor precisie',
+    ctaTitleAccent: 'productieplanning?',
+    ctaDescription:
+      'Ontdek hoe TMS meerbewerkingsroutering, realtime kostprijscalculatie en capaciteitsplanning afhandelt voor metaalbewerkingsbedrijven. Vraag uw demo aan.',
+  },
+  {
+    slug: 'elektronica',
+    title: 'ERP voor elektronicaproductie',
+    tagline: 'Van PCB-assemblage tot eindtest — geïntegreerde productiecontrole',
+    metaDescription:
+      'TMS levert elektronicaproductie-ERP met multi-onderdeelnummerbeheer, stuklijstimport vanuit CAD/EDA, componenttraceerbaarheid op reelniveau en SMT pick-and-place integratie.',
+    intro:
+      'Elektronicaproductie combineert een hoge componentvariëteit met strenge traceerbaarheidseisen en snelle technologiecycli. Een enkele PCB-assemblage kan honderden componenten van tientallen leveranciers bevatten, elk met meerdere goedgekeurde alternatieven. Het beheersen van deze complexiteit — van stuklijstimport via SMT-plaatsing, solderen, testen en eindassemblage — vereist een ERP-systeem dat de elektronica-industrie begrijpt. TMS biedt die gespecialiseerde basis.',
+    challenges: [
+      {
+        title: 'Multi-fabrikant onderdeelnummers',
+        description:
+          'Een enkele componentpositie op een stuklijst kan goedgekeurde onderdelen van drie of meer fabrikanten hebben, elk met verschillende onderdeelnummers, verpakkingen en levertijden. Het beheren van deze alternatieven over honderden componenten is een dagelijkse uitdaging.',
+      },
+      {
+        title: 'Stuklijstimport vanuit CAD/EDA-tools',
+        description:
+          'Engineering maakt stuklijsten in Altium Designer, KiCad of vergelijkbare EDA-tools. Het handmatig herinvoeren hiervan in uw ERP-systeem is foutgevoelig en tijdrovend, vooral wanneer ontwerpen frequent veranderen tijdens prototyping.',
+      },
+      {
+        title: 'Componenttraceerbaarheid op reel-/spoelniveau',
+        description:
+          'Klanten en regelgeving vereisen steeds vaker traceerbaarheid tot op het individuele reel- of spoelniveau. Generieke batchtracking is onvoldoende wanneer u precies moet weten welke reel op welke feeder was geladen voor een specifieke productierun.',
+      },
+      {
+        title: 'SMT pick-and-place integratie',
+        description:
+          'Het verbinden van uw SMT-lijnen met uw ERP — het delen van feederopstellingen, het verifiëren van componentbelading en het vastleggen van plaatsingsgegevens — is essentieel voor kwaliteit en traceerbaarheid maar wordt zelden ondersteund door generieke productiesystemen.',
+      },
+    ],
+    relevantModuleSlugs: ['pps', 'aps', 'mes', 'pdc', 'qm', 'pdm'],
+    capabilities: [
+      {
+        title: 'Multi-onderdeelnummerbeheer per component',
+        description:
+          'Definieer meerdere goedgekeurde fabrikanten en onderdeelnummers voor elke componentpositie. TMS houdt automatisch rekening met beschikbaarheid, prijzen en levertijden over alle alternatieven bij het plannen van materiaalbehoeften, zodat u altijd de beste inkoopoptie heeft.',
+      },
+      {
+        title: 'Stuklijstimport vanuit Altium, KiCad en Excel',
+        description:
+          'Importeer stuklijsten rechtstreeks vanuit uw EDA-tools met intelligente mapping van componentdesignators, waarden en footprints naar uw TMS-stamgegevens. Verwerk ontwerpherzieningen met geautomatiseerde stuklijstvergelijking die wijzigingen markeert voor engineering review.',
+      },
+      {
+        title: 'Pick-and-place machine-integratie',
+        description:
+          'Verbind uw SMT pick-and-place apparatuur met TMS voor feederopstellingsverificatie, componentverbruikstracking en plaatsingsgegevensvastlegging. Voorkom foute componentbelading en behoud volledige traceerbaarheid van reel tot bordpositie.',
+      },
+      {
+        title: 'Reel- en spoelniveau traceerbaarheid',
+        description:
+          'Volg componenten op het individuele reel- en spoelniveau door ontvangst, opslag, kitting, plaatsing en assemblage. Weet precies welke reels zijn verbruikt bij elke productieorder en traceer elk componentprobleem terug naar de bron.',
+      },
+      {
+        title: 'MOQ- en levertijdbeheer',
+        description:
+          'Verwerk minimale bestelhoeveelheden, verpakkingseenheden en variërende levertijden over meerdere leveranciers en fabrikanten. TMS optimaliseert inkoop door vraagbundeling, respect voor MOQ-beperkingen en balancering van voorraadinvestering tegen productiebehoefte.',
+      },
+      {
+        title: 'Testresultaatintegratie',
+        description:
+          'Leg ICT-, functionele test- en AOI-resultaten rechtstreeks vast in TMS. Koppel testuitkomsten aan individuele serienummers of batch-identificatoren, volg first-pass yield per product en productielijn en genereer de testdocumentatie die uw klanten vereisen.',
+      },
+    ],
+    stats: [
+      { value: 'Stuklijst', label: 'Integratie' },
+      { value: 'Component', label: 'Tracering' },
+      { value: 'Multi-bron', label: 'Onderdelen' },
+      { value: 'SMT', label: 'Verbonden' },
+    ],
+    ctaTitle: 'Klaar om uw',
+    ctaTitleAccent: 'elektronicaproductie te stroomlijnen?',
+    ctaDescription:
+      'Ontdek hoe TMS componentcomplexiteit, stuklijstimports en reelniveau-traceerbaarheid beheert voor elektronicaproducenten. Boek uw demo.',
+  },
+];
+
+/* ===================================================================
+   Static Paths
+   =================================================================== */
+
+export function getStaticPaths() {
+  return [
+    { params: { slug: 'kunststof' } },
+    { params: { slug: 'automotive' } },
+    { params: { slug: 'metaalbewerking' } },
+    { params: { slug: 'elektronica' } },
+  ];
+}
+
+/* ===================================================================
+   Page Data
+   =================================================================== */
+
+const { slug } = Astro.params;
+const industry = industriesData.find((i) => i.slug === slug);
+
+if (!industry) {
+  return Astro.redirect('/nl/industries');
+}
+
+const relevantModules = allModules.filter((m) =>
+  industry.relevantModuleSlugs.includes(m.slug)
+);
+
+// Friendly display name for breadcrumbs
+const displayNames: Record<string, string> = {
+  kunststof: 'Kunststofproductie',
+  automotive: 'Automotive toeleveranciers',
+  metaalbewerking: 'Metaalbewerking & Verspaning',
+  elektronica: 'Elektronica productie',
+};
+
+const displayName = displayNames[slug!] || industry.title;
+---
+
+<BaseLayout
+  title={`${industry.title} | TMS 4SAP`}
+  description={industry.metaDescription}
+  lang="nl"
+>
+  <!-- Hero -->
+  <section class="ind-hero">
+    <div class="ind-hero-bg" aria-hidden="true"></div>
+    <div class="container">
+      <div class="breadcrumbs-wrap">
+        <Breadcrumbs
+          items={[
+            { label: 'Industrieën', href: '/nl/industries' },
+            { label: displayName, href: `/nl/industries/${slug}` },
+          ]}
+        />
+      </div>
+      <div class="ind-hero-content" data-animate>
+        <span class="section-tag">Industrieoplossing</span>
+        <h1 class="ind-hero-title">{industry.title}</h1>
+        <p class="ind-hero-tagline">{industry.tagline}</p>
+        <p class="ind-hero-intro">{industry.intro}</p>
+        <div class="ind-hero-actions">
+          <a href="/nl/demo" class="btn btn-primary btn-lg">Demo aanvragen</a>
+          <a href="/nl/contact" class="btn btn-ghost btn-lg">Neem contact op</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Challenges -->
+  <section class="section">
+    <div class="container">
+      <SectionHeader
+        tag="Uitdagingen"
+        title="De problemen"
+        titleAccent="waarmee u te maken heeft"
+        description="Dit zijn de specifieke uitdagingen waardoor generieke ERP-systemen tekortschieten in uw industrie. TMS is ontworpen om elk ervan aan te pakken."
+      />
+      <div class="challenges-grid">
+        {industry.challenges.map((challenge, idx) => (
+          <div class="challenge-card" data-animate>
+            <span class="challenge-number">{String(idx + 1).padStart(2, '0')}</span>
+            <h3 class="challenge-title">{challenge.title}</h3>
+            <p class="challenge-desc">{challenge.description}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Relevant Modules -->
+  <section class="section section-modules-bg">
+    <div class="container">
+      <SectionHeader
+        tag="Hoe TMS het oplost"
+        title="De juiste modules voor"
+        titleAccent="uw productie"
+        description="TMS biedt een modulair platform. Hier zijn de modules die het meest relevant zijn voor uw industrie, elk doelgericht gebouwd voor productieactiviteiten."
+      />
+      <div class="modules-grid">
+        {relevantModules.map((mod) => (
+          <a href={`/nl/modules/${mod.slug}`} class="rel-module-card" data-animate>
+            <div class="rel-module-icon">
+              <span class="rel-module-abbr">{mod.abbr}</span>
+            </div>
+            <div class="rel-module-body">
+              <h3 class="rel-module-name">{mod.name}</h3>
+              <p class="rel-module-desc">{mod.description}</p>
+              <span class="rel-module-link">
+                Meer informatie <span aria-hidden="true">&rarr;</span>
+              </span>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Stats Bar -->
+  <StatBar stats={industry.stats} />
+
+  <!-- Key Capabilities -->
+  <section class="section">
+    <div class="container">
+      <SectionHeader
+        tag="Kernmogelijkheden"
+        title="Gebouwd voor"
+        titleAccent="uw workflows"
+        description="Gedetailleerde mogelijkheden die inspelen op de specifieke eisen van uw productieomgeving."
+      />
+      <div class="capabilities-list">
+        {industry.capabilities.map((cap, idx) => (
+          <div class="capability-item" data-animate>
+            <div class="capability-marker">
+              <span class="capability-index">{String(idx + 1).padStart(2, '0')}</span>
+              {idx < industry.capabilities.length - 1 && (
+                <div class="capability-line" aria-hidden="true"></div>
+              )}
+            </div>
+            <div class="capability-content">
+              <h3 class="capability-title">{cap.title}</h3>
+              <p class="capability-desc">{cap.description}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <CTABanner
+    title={industry.ctaTitle}
+    titleAccent={industry.ctaTitleAccent}
+    description={industry.ctaDescription}
+    primaryCTA={{ label: 'Demo aanvragen', href: '/nl/demo' }}
+    secondaryCTA={{ label: 'Brochure downloaden', href: '/nl/downloads' }}
+  />
+</BaseLayout>
+
+<style>
+  /* ============================================
+     HERO
+     ============================================ */
+  .ind-hero {
+    position: relative;
+    padding-top: clamp(7rem, 12vw, 10rem);
+    padding-bottom: clamp(3rem, 6vw, 5rem);
+    overflow: hidden;
+  }
+
+  .ind-hero-bg {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+      ellipse 70% 50% at 50% 0%,
+      rgba(245, 158, 11, 0.04) 0%,
+      transparent 70%
+    );
+    pointer-events: none;
+  }
+
+  /* Subtle dot grid */
+  .ind-hero-bg::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(circle, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    background-size: 32px 32px;
+    -webkit-mask-image: radial-gradient(ellipse 60% 50% at 50% 30%, black 10%, transparent 60%);
+    mask-image: radial-gradient(ellipse 60% 50% at 50% 30%, black 10%, transparent 60%);
+  }
+
+  .breadcrumbs-wrap {
+    position: relative;
+    z-index: 1;
+  }
+
+  .ind-hero-content {
+    position: relative;
+    z-index: 1;
+    max-width: 740px;
+  }
+
+  .ind-hero-title {
+    font-size: clamp(2.25rem, 5vw, 3.5rem);
+    font-weight: 700;
+    line-height: 1.08;
+    letter-spacing: -0.03em;
+    margin-top: 12px;
+  }
+
+  .ind-hero-tagline {
+    font-size: clamp(1.0625rem, 1.5vw, 1.1875rem);
+    color: var(--amber);
+    font-weight: 500;
+    margin-top: 16px;
+    line-height: 1.5;
+  }
+
+  .ind-hero-intro {
+    font-size: clamp(0.9375rem, 1.2vw, 1rem);
+    color: var(--text-muted);
+    line-height: 1.7;
+    margin-top: 20px;
+    max-width: 640px;
+  }
+
+  .ind-hero-actions {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-top: 32px;
+  }
+
+  /* ============================================
+     CHALLENGES
+     ============================================ */
+  .challenges-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+
+  .challenge-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    transition: all 0.3s var(--ease);
+  }
+
+  .challenge-card:hover {
+    background: var(--bg-card-hover);
+    border-color: var(--border-hover);
+  }
+
+  .challenge-number {
+    font-family: var(--font-heading);
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: var(--amber);
+    letter-spacing: 0.04em;
+  }
+
+  .challenge-title {
+    font-family: var(--font-heading);
+    font-size: 1.125rem;
+    font-weight: 600;
+    line-height: 1.3;
+    letter-spacing: -0.01em;
+  }
+
+  .challenge-desc {
+    font-size: 0.9375rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+
+  @media (max-width: 700px) {
+    .challenges-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* ============================================
+     RELEVANT MODULES
+     ============================================ */
+  .section-modules-bg {
+    background: var(--bg-surface);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .modules-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+
+  .rel-module-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 24px;
+    display: flex;
+    gap: 16px;
+    transition: all 0.3s var(--ease);
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .rel-module-card:hover {
+    background: var(--bg-card-hover);
+    border-color: var(--border-hover);
+    transform: translateY(-2px);
+  }
+
+  .rel-module-icon {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--amber-dim);
+    border-radius: var(--radius-sm);
+    flex-shrink: 0;
+  }
+
+  .rel-module-abbr {
+    font-family: var(--font-heading);
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--amber);
+    letter-spacing: 0.06em;
+  }
+
+  .rel-module-body {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-width: 0;
+  }
+
+  .rel-module-name {
+    font-family: var(--font-heading);
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 1.3;
+    letter-spacing: -0.01em;
+  }
+
+  .rel-module-desc {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .rel-module-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: var(--amber);
+    margin-top: 4px;
+    transition: gap 0.2s var(--ease);
+  }
+
+  .rel-module-card:hover .rel-module-link {
+    gap: 10px;
+  }
+
+  @media (max-width: 900px) {
+    .modules-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 600px) {
+    .modules-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .rel-module-card {
+      flex-direction: column;
+    }
+  }
+
+  /* ============================================
+     CAPABILITIES
+     ============================================ */
+  .capabilities-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .capability-item {
+    display: flex;
+    gap: 24px;
+    align-items: stretch;
+  }
+
+  .capability-marker {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-shrink: 0;
+    width: 40px;
+  }
+
+  .capability-index {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background: var(--amber-dim);
+    border: 1px solid rgba(245, 158, 11, 0.2);
+    border-radius: 50%;
+    font-family: var(--font-heading);
+    font-size: 0.8125rem;
+    font-weight: 700;
+    color: var(--amber);
+    flex-shrink: 0;
+  }
+
+  .capability-line {
+    width: 1px;
+    flex-grow: 1;
+    background: var(--border);
+    margin: 8px 0;
+  }
+
+  .capability-content {
+    padding-bottom: 40px;
+    padding-top: 6px;
+  }
+
+  .capability-item:last-child .capability-content {
+    padding-bottom: 0;
+  }
+
+  .capability-title {
+    font-family: var(--font-heading);
+    font-size: 1.125rem;
+    font-weight: 600;
+    line-height: 1.3;
+    letter-spacing: -0.01em;
+    margin-bottom: 8px;
+  }
+
+  .capability-desc {
+    font-size: 0.9375rem;
+    color: var(--text-muted);
+    line-height: 1.7;
+  }
+
+  @media (max-width: 600px) {
+    .capability-item {
+      gap: 16px;
+    }
+
+    .capability-content {
+      padding-bottom: 32px;
+    }
+  }
+</style>

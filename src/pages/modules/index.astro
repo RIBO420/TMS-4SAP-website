@@ -1,0 +1,171 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import HeroInner from '../../components/ui/HeroInner.astro';
+import SectionHeader from '../../components/ui/SectionHeader.astro';
+import ModuleCard from '../../components/cards/ModuleCard.astro';
+import CTABanner from '../../components/ui/CTABanner.astro';
+import PlaceholderImage from '../../components/ui/PlaceholderImage.astro';
+import { modules } from '../../data/modules';
+
+const breadcrumbs = [
+  { label: 'Home', href: '/' },
+  { label: 'Modules', href: '/modules' },
+];
+---
+
+<BaseLayout
+  title="System Modules"
+  description="Explore the 9 integrated TMS modules for SAP Business One: production planning, advanced scheduling, MES, data capture, quality, product data, BI, variant configuration, and document management."
+>
+  <HeroInner
+    breadcrumbs={breadcrumbs}
+    tag="Core Platform"
+    title="System"
+    titleAccent="Modules"
+    description="Nine specialized modules working in concert within SAP Business One to digitalize every aspect of your manufacturing operation — from planning and scheduling to quality control and business intelligence."
+  />
+
+  <section class="section" style="padding-top: 0; padding-bottom: 0;">
+    <div class="container">
+      <PlaceholderImage aspect="21:9" label="Modules overview — Platform screenshot" />
+    </div>
+  </section>
+
+  <!-- All Modules Grid -->
+  <section class="section" id="modules-grid">
+    <div class="container">
+      <div class="modules-grid">
+        {modules.map((mod) => (
+          <ModuleCard module={mod} />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Integrated Approach Section -->
+  <section class="section integrated-section">
+    <div class="container">
+      <SectionHeader
+        tag="Seamless Integration"
+        title="One Platform,"
+        titleAccent="Zero Silos"
+        description="Every module shares a single data layer within SAP Business One, eliminating duplicate entry and ensuring real-time consistency across your entire operation."
+      />
+      <div class="pillars-grid">
+        <div class="pillar-card" data-animate>
+          <div class="pillar-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            </svg>
+          </div>
+          <h3>Single Source of Truth</h3>
+          <p>All modules read from and write to a unified SAP Business One database. A production order created in PPS automatically flows to MES, PDC, and QM without manual intervention.</p>
+        </div>
+        <div class="pillar-card" data-animate>
+          <div class="pillar-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"/>
+              <polyline points="12 6 12 12 16 14"/>
+            </svg>
+          </div>
+          <h3>Real-Time Data Flow</h3>
+          <p>Shop floor events captured by PDC are instantly reflected in MES dashboards, BI reports, and QM inspection triggers. No batch synchronization, no overnight updates.</p>
+        </div>
+        <div class="pillar-card" data-animate>
+          <div class="pillar-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="7" width="20" height="14" rx="2" ry="2"/>
+              <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
+            </svg>
+          </div>
+          <h3>Modular Adoption</h3>
+          <p>Start with the modules you need most and expand over time. Each module delivers standalone value while becoming more powerful as you activate additional capabilities.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Banner -->
+  <CTABanner
+    title="Ready to see TMS"
+    titleAccent="in action?"
+    description="Book a personalized demo and discover how 9 integrated modules can transform your manufacturing operations."
+    primaryCTA={{ label: 'Book a Demo', href: '/demo' }}
+    secondaryCTA={{ label: 'Download Brochure', href: '/downloads' }}
+  />
+</BaseLayout>
+
+<style>
+  /* Pillars / Integrated approach grid */
+  .integrated-section {
+    border-top: 1px solid var(--border);
+  }
+
+  .pillars-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+
+  .pillar-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 32px 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    transition: all 0.3s var(--ease);
+  }
+
+  .pillar-card:hover {
+    background: var(--bg-card-hover);
+    border-color: var(--border-hover);
+    transform: translateY(-2px);
+  }
+
+  .pillar-icon {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--amber-dim);
+    border-radius: var(--radius-sm);
+    color: var(--amber);
+    flex-shrink: 0;
+  }
+
+  .pillar-card h3 {
+    font-family: var(--font-heading);
+    font-size: 1.125rem;
+    font-weight: 600;
+    line-height: 1.3;
+    letter-spacing: -0.01em;
+  }
+
+  .pillar-card p {
+    font-size: 0.9375rem;
+    color: var(--text-muted);
+    line-height: 1.7;
+  }
+
+  /* Tablet (768px) */
+  @media (max-width: 768px) {
+    .pillars-grid {
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+
+    .pillar-card {
+      padding: 24px 20px;
+    }
+  }
+
+  /* iPhone (375px - 430px) */
+  @media (max-width: 480px) {
+    .pillar-card {
+      padding: 20px 16px;
+    }
+  }
+</style>

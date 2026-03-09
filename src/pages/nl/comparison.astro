@@ -1,0 +1,482 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import HeroInner from '../../components/ui/HeroInner.astro';
+import SectionHeader from '../../components/ui/SectionHeader.astro';
+import CTABanner from '../../components/ui/CTABanner.astro';
+
+const breadcrumbs = [
+  { label: 'Home', href: '/nl' },
+  { label: 'Vergelijking', href: '/nl/comparison' },
+];
+
+/**
+ * Comparison matrix data.
+ * Statuses: 'full' = checkmark, 'partial' = dash, 'none' = X
+ */
+type CellStatus = 'full' | 'partial' | 'none';
+
+interface ComparisonRow {
+  criteria: string;
+  tms: CellStatus;
+  erp: CellStatus;
+  mes: CellStatus;
+  spreadsheet: CellStatus;
+}
+
+const rows: ComparisonRow[] = [
+  { criteria: 'Productieplanning',         tms: 'full',    erp: 'partial', mes: 'partial', spreadsheet: 'partial' },
+  { criteria: 'Materiaalplanning',         tms: 'full',    erp: 'full',    mes: 'none',    spreadsheet: 'partial' },
+  { criteria: 'Shopfloormonitoring',       tms: 'full',    erp: 'none',    mes: 'full',    spreadsheet: 'none'    },
+  { criteria: 'Kwaliteitsmanagement',      tms: 'full',    erp: 'none',    mes: 'partial', spreadsheet: 'none'    },
+  { criteria: 'Dataregistratie',           tms: 'full',    erp: 'none',    mes: 'partial', spreadsheet: 'none'    },
+  { criteria: 'Productdatabeheer',         tms: 'full',    erp: 'partial', mes: 'none',    spreadsheet: 'none'    },
+  { criteria: 'Business Intelligence',     tms: 'full',    erp: 'partial', mes: 'partial', spreadsheet: 'partial' },
+  { criteria: 'Configuratiebeheer',        tms: 'full',    erp: 'none',    mes: 'none',    spreadsheet: 'none'    },
+  { criteria: 'SAP-integratie',            tms: 'full',    erp: 'full',    mes: 'partial', spreadsheet: 'none'    },
+  { criteria: 'Enkele database',           tms: 'full',    erp: 'full',    mes: 'none',    spreadsheet: 'none'    },
+  { criteria: 'Realtime data',             tms: 'full',    erp: 'partial', mes: 'full',    spreadsheet: 'none'    },
+  { criteria: 'Implementatietijd',         tms: 'full',    erp: 'partial', mes: 'partial', spreadsheet: 'full'    },
+];
+
+const advantages = [
+  {
+    icon: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>',
+    title: 'Native SAP-integratie',
+    description: 'TMS is speciaal gebouwd voor SAP Business One, van de grond af aan. Het is geen bolt-on of connector van derden. Data stroomt bidirectioneel in realtime via een gedeelde database, waardoor synchronisatieproblemen en datadiscrepanties die bolt-on oplossingen kenmerken worden ge\u00ebllimineerd.',
+  },
+  {
+    icon: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>',
+    title: 'Alles-in-\u00e9\u00e9n platform',
+    description: 'Negen doelgerichte modules in \u00e9\u00e9n ge\u00efntegreerd systeem. Van productieplanning en shopfloormonitoring tot kwaliteitsmanagement en business intelligence \u2014 elke functie deelt \u00e9\u00e9n datalaag. Geen datasilo\u2019s, geen dubbele invoer, geen afstemming meer nodig.',
+  },
+  {
+    icon: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 20a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8l-7 5V8l-7 5V4a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"/></svg>',
+    title: 'Branchespecifiek',
+    description: 'Vooraf geconfigureerd voor de workflows en vereisten van kunststofverwerking, automotive toeleveranciers, metaalbewerking en elektronicaproductie. U krijgt branche best practices direct meegeleverd in plaats van maanden te besteden aan maatwerkconfiguratie.',
+  },
+];
+---
+
+<BaseLayout
+  lang="nl"
+  title="Waarom TMS | Vergelijking"
+  description="Ontdek hoe TMS 4SAP zich verhoudt tot generieke ERP-systemen, standalone MES-oplossingen en spreadsheet-gebaseerde planning. Ontdek waarom fabrikanten kiezen voor TMS voor SAP Business One."
+>
+  <!-- Hero -->
+  <HeroInner
+    breadcrumbs={breadcrumbs}
+    tag="Waarom TMS"
+    title="Waarom kiezen voor"
+    titleAccent="TMS?"
+    description="Ontdek hoe TMS zich verhoudt tot alternatieve benaderingen voor het beheren van productieprocessen binnen SAP Business One."
+  />
+
+  <!-- Comparison Table -->
+  <section class="section comparison-section">
+    <div class="container">
+      <SectionHeader
+        tag="Functievergelijking"
+        title="Gedetailleerde"
+        titleAccent="Vergelijking"
+        description="Een zij-aan-zij overzicht van TMS versus drie veelvoorkomende alternatieven die fabrikanten overwegen."
+      />
+
+      <div class="table-wrapper" role="region" aria-label="Functievergelijkingstabel" tabindex="0">
+        <table class="comparison-table" aria-label="TMS functievergelijking met Generiek ERP, Standalone MES en Spreadsheetplanning">
+          <thead>
+            <tr>
+              <th class="criteria-col" scope="col">Functie</th>
+              <th class="tms-col" scope="col">
+                <span class="col-label-highlight">TMS 4SAP</span>
+              </th>
+              <th scope="col">
+                <span class="col-label">Generiek ERP</span>
+                <span class="col-sublabel">SAP B1 zonder productie-add-on</span>
+              </th>
+              <th scope="col">
+                <span class="col-label">Standalone MES</span>
+                <span class="col-sublabel">Apart systeem</span>
+              </th>
+              <th scope="col">
+                <span class="col-label">Spreadsheets</span>
+                <span class="col-sublabel">Excel-gebaseerde planning</span>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {rows.map((row, i) => (
+              <tr class={i % 2 === 0 ? 'row-even' : 'row-odd'}>
+                <td class="criteria-cell">{row.criteria}</td>
+                <td class="tms-cell">
+                  {row.tms === 'full' && (
+                    <span class="status-full" aria-label="Volledig ondersteund">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                    </span>
+                  )}
+                </td>
+                <td>
+                  {row.erp === 'full' && (
+                    <span class="status-other-full" aria-label="Ondersteund">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                    </span>
+                  )}
+                  {row.erp === 'partial' && (
+                    <span class="status-partial" aria-label="Gedeeltelijk ondersteund">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                    </span>
+                  )}
+                  {row.erp === 'none' && (
+                    <span class="status-none" aria-label="Niet beschikbaar">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                    </span>
+                  )}
+                </td>
+                <td>
+                  {row.mes === 'full' && (
+                    <span class="status-other-full" aria-label="Ondersteund">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                    </span>
+                  )}
+                  {row.mes === 'partial' && (
+                    <span class="status-partial" aria-label="Gedeeltelijk ondersteund">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                    </span>
+                  )}
+                  {row.mes === 'none' && (
+                    <span class="status-none" aria-label="Niet beschikbaar">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                    </span>
+                  )}
+                </td>
+                <td>
+                  {row.spreadsheet === 'full' && (
+                    <span class="status-other-full" aria-label="Ondersteund">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                    </span>
+                  )}
+                  {row.spreadsheet === 'partial' && (
+                    <span class="status-partial" aria-label="Gedeeltelijk ondersteund">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                    </span>
+                  )}
+                  {row.spreadsheet === 'none' && (
+                    <span class="status-none" aria-label="Niet beschikbaar">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                    </span>
+                  )}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Legend -->
+      <div class="table-legend" aria-hidden="true">
+        <div class="legend-item">
+          <span class="status-full"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+          <span>Volledig ondersteund</span>
+        </div>
+        <div class="legend-item">
+          <span class="status-partial"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/></svg></span>
+          <span>Gedeeltelijk / beperkt</span>
+        </div>
+        <div class="legend-item">
+          <span class="status-none"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span>
+          <span>Niet beschikbaar</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Key Advantages -->
+  <section class="section advantages-section">
+    <div class="container">
+      <SectionHeader
+        tag="Belangrijkste onderscheidende factoren"
+        title="Het TMS"
+        titleAccent="Voordeel"
+        description="Drie fundamentele redenen waarom fabrikanten kiezen voor TMS boven alternatieve benaderingen."
+      />
+
+      <div class="advantages-grid">
+        {advantages.map((adv) => (
+          <div class="advantage-card" data-animate>
+            <div class="advantage-icon">
+              <Fragment set:html={adv.icon} />
+            </div>
+            <h3>{adv.title}</h3>
+            <p>{adv.description}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Banner -->
+  <CTABanner
+    title="Klaar om het verschil te zien?"
+    titleAccent="Boek een demo"
+    description="Ervaar zelf hoe TMS beter presteert dan generiek ERP, standalone MES en spreadsheet-gebaseerde benaderingen voor productiebeheer."
+    primaryCTA={{ label: 'Boek een Demo', href: '/nl/demo' }}
+    secondaryCTA={{ label: 'Download Brochure', href: '/nl/downloads' }}
+  />
+</BaseLayout>
+
+<style>
+  /* ---- Comparison Section ---- */
+  .comparison-section {
+    padding-top: clamp(2rem, 4vw, 3rem);
+  }
+
+  /* ---- Table Wrapper (horizontal scroll on mobile) ---- */
+  .table-wrapper {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    background: var(--bg-card);
+  }
+
+  /* ---- Table ---- */
+  .comparison-table {
+    width: 100%;
+    min-width: 700px;
+    border-collapse: collapse;
+    font-size: 0.9375rem;
+  }
+
+  .comparison-table thead {
+    border-bottom: 1px solid var(--border);
+  }
+
+  .comparison-table th {
+    padding: 20px 16px;
+    text-align: center;
+    font-family: var(--font-heading);
+    font-weight: 600;
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    vertical-align: bottom;
+    white-space: nowrap;
+  }
+
+  .comparison-table th.criteria-col {
+    text-align: left;
+    min-width: 200px;
+    position: sticky;
+    left: 0;
+    z-index: 2;
+    background: var(--bg-card);
+  }
+
+  .comparison-table th.tms-col {
+    background: rgba(245, 158, 11, 0.04);
+  }
+
+  .col-label-highlight {
+    display: block;
+    font-family: var(--font-heading);
+    font-size: 0.9375rem;
+    font-weight: 700;
+    color: var(--amber);
+    letter-spacing: -0.01em;
+  }
+
+  .col-label {
+    display: block;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: var(--text-muted);
+  }
+
+  .col-sublabel {
+    display: block;
+    font-size: 0.6875rem;
+    font-weight: 400;
+    color: var(--text-dim);
+    margin-top: 2px;
+    white-space: normal;
+    max-width: 130px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .comparison-table td {
+    padding: 14px 16px;
+    text-align: center;
+    vertical-align: middle;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .comparison-table tr:last-child td {
+    border-bottom: none;
+  }
+
+  .criteria-cell {
+    text-align: left;
+    font-weight: 500;
+    color: var(--text);
+    position: sticky;
+    left: 0;
+    z-index: 1;
+    background: var(--bg-card);
+  }
+
+  .tms-cell {
+    background: rgba(245, 158, 11, 0.04);
+  }
+
+  /* ---- Striped rows ---- */
+  .row-even td {
+    background-color: transparent;
+  }
+
+  .row-odd td {
+    background-color: rgba(255, 255, 255, 0.015);
+  }
+
+  /* Preserve sticky + tms column colors on striped rows */
+  .row-odd .criteria-cell {
+    background-color: var(--bg-card);
+  }
+
+  .row-odd .tms-cell {
+    background-color: rgba(245, 158, 11, 0.05);
+  }
+
+  /* ---- Status Icons ---- */
+  .status-full {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: rgba(245, 158, 11, 0.12);
+    color: var(--amber);
+  }
+
+  .status-other-full {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: rgba(161, 161, 170, 0.1);
+    color: var(--text-muted);
+  }
+
+  .status-partial {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: rgba(234, 179, 8, 0.08);
+    color: var(--amber-hover);
+    opacity: 0.7;
+  }
+
+  .status-none {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: rgba(113, 113, 122, 0.08);
+    color: var(--text-dim);
+    opacity: 0.5;
+  }
+
+  /* ---- Legend ---- */
+  .table-legend {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 24px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.8125rem;
+    color: var(--text-dim);
+  }
+
+  /* ---- Advantages Section ---- */
+  .advantages-section {
+    border-top: 1px solid var(--border);
+  }
+
+  .advantages-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+
+  .advantage-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 32px 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    transition: all 0.3s var(--ease);
+  }
+
+  .advantage-card:hover {
+    background: var(--bg-card-hover);
+    border-color: var(--border-hover);
+    transform: translateY(-2px);
+  }
+
+  .advantage-icon {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--amber-dim);
+    border-radius: var(--radius-sm);
+    color: var(--amber);
+    flex-shrink: 0;
+  }
+
+  .advantage-card h3 {
+    font-family: var(--font-heading);
+    font-size: 1.125rem;
+    font-weight: 600;
+    line-height: 1.3;
+    letter-spacing: -0.01em;
+  }
+
+  .advantage-card p {
+    font-size: 0.9375rem;
+    color: var(--text-muted);
+    line-height: 1.7;
+  }
+
+  /* ---- Responsive ---- */
+  @media (max-width: 900px) {
+    .advantages-grid {
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .table-wrapper {
+      margin-left: -4%;
+      margin-right: -4%;
+      border-radius: var(--radius);
+    }
+  }
+</style>

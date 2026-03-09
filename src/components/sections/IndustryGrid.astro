@@ -1,0 +1,44 @@
+---
+import { industries } from "@data/industries";
+import IndustryCard from "@components/cards/IndustryCard.astro";
+import SectionHeader from "@components/ui/SectionHeader.astro";
+---
+
+<section id="industries" class="section">
+  <div class="container">
+    <div data-animate>
+      <SectionHeader
+        tag="Verticals"
+        title="Industry"
+        titleAccent="Solutions"
+        description="Purpose-built manufacturing workflows for the industries that need them most."
+      />
+    </div>
+
+    <div class="industry-grid">
+      {industries.map((industry) => (
+        <IndustryCard industry={industry} />
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .industry-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+
+  @media (max-width: 1024px) {
+    .industry-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 640px) {
+    .industry-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

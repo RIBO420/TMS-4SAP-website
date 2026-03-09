@@ -1,0 +1,825 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import HeroInner from '../components/ui/HeroInner.astro';
+import CTABanner from '../components/ui/CTABanner.astro';
+import PlaceholderImage from '../components/ui/PlaceholderImage.astro';
+
+const stops = [
+  {
+    number: 1,
+    id: 'planning',
+    title: 'Start with Planning',
+    module: 'PPS',
+    description:
+      'Every successful manufacturing operation begins with a solid plan. The TMS Production Planning & Scheduling module transforms how you manage production orders, allocate resources, and sequence operations. Replace manual spreadsheets with intelligent scheduling that accounts for machine capacity, material availability, and delivery deadlines in real time.',
+    features: [
+      {
+        title: 'Production Order Management',
+        desc: 'Create, release, and track production orders directly from SAP Business One sales orders with full BOM explosion and routing.',
+      },
+      {
+        title: 'Finite Capacity Scheduling',
+        desc: 'Visual Gantt-based scheduling that respects machine capacity, shift calendars, and operator skills for realistic production plans.',
+      },
+      {
+        title: 'What-If Simulations',
+        desc: 'Test alternative scheduling scenarios before committing. Evaluate the impact of rush orders, machine downtime, or resource changes.',
+      },
+    ],
+    icon: '<svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><path d="M8 14h.01"/><path d="M12 14h.01"/><path d="M16 14h.01"/><path d="M8 18h.01"/><path d="M12 18h.01"/></svg>',
+  },
+  {
+    number: 2,
+    id: 'materials',
+    title: 'Optimize Materials',
+    module: 'APS',
+    description:
+      'Material shortages and excess inventory are two sides of the same coin, and both cost you money. The Advanced Planning & Scheduling module brings intelligence to your material requirements planning, ensuring the right materials arrive at the right workstation at precisely the right time.',
+    features: [
+      {
+        title: 'MRP with Intelligence',
+        desc: 'Go beyond basic MRP. Factor in lead time variability, supplier reliability, and historical consumption patterns for smarter procurement.',
+      },
+      {
+        title: 'Stock Optimization',
+        desc: 'Maintain optimal inventory levels with dynamic safety stock calculations, reorder points, and ABC/XYZ classification.',
+      },
+      {
+        title: 'Demand Forecasting',
+        desc: 'Use historical data and trend analysis to predict future demand. Align production capacity and procurement with market needs.',
+      },
+    ],
+    icon: '<svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>',
+  },
+  {
+    number: 3,
+    id: 'shopfloor',
+    title: 'Connect the Shop Floor',
+    module: 'MES + PDC',
+    description:
+      'The gap between planning and reality lives on the shop floor. The Manufacturing Execution System and Production Data Capture modules bridge this divide with real-time visibility into every machine, operator, and order. Know exactly what is happening in production at any moment, not hours later from a paper report.',
+    features: [
+      {
+        title: 'Real-Time Monitoring',
+        desc: 'Live dashboards showing machine status, order progress, OEE, and throughput. Identify bottlenecks before they become problems.',
+      },
+      {
+        title: 'Operator Terminals',
+        desc: 'Touch-screen terminals at every workstation for clock-in/out, operation reporting, scrap registration, and digital work instructions.',
+      },
+      {
+        title: 'Machine Integration',
+        desc: 'Connect directly to PLCs and CNC controllers via OPC-UA. Capture cycle times, quantities, and machine states automatically.',
+      },
+    ],
+    icon: '<svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/><path d="M6 8h.01"/><path d="M10 8h.01"/><path d="M14 8h.01"/></svg>',
+  },
+  {
+    number: 4,
+    id: 'quality',
+    title: 'Ensure Quality',
+    module: 'QM',
+    description:
+      'Quality is not an afterthought; it is woven into every step of production. The Quality Management module enforces inspection plans, captures measurements, and ensures full traceability from raw material to finished goods. Meet the strictest industry standards, from IATF 16949 in automotive to FDA requirements in medical devices.',
+    features: [
+      {
+        title: 'Inspection Planning',
+        desc: 'Define inspection plans by item, operation, or production stage. Set sampling rules, measurement specifications, and acceptance criteria.',
+      },
+      {
+        title: 'Full Traceability',
+        desc: 'Trace every component, batch, and serial number through the entire production chain. Instant recall capability when needed.',
+      },
+      {
+        title: 'Compliance & Certificates',
+        desc: 'Generate Certificates of Analysis (CoA), maintain audit trails, and produce documentation required by IATF, ISO, and industry standards.',
+      },
+    ],
+    icon: '<svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>',
+  },
+  {
+    number: 5,
+    id: 'product-data',
+    title: 'Manage Product Data',
+    module: 'PDM + DMS',
+    description:
+      'Engineering and production speak different languages, until now. The Product Data Management and Document Management modules create a single source of truth for BOMs, drawings, specifications, and revision histories. Eliminate the chaos of file servers, email attachments, and outdated printouts on the shop floor.',
+    features: [
+      {
+        title: 'CAD Integration',
+        desc: 'Import BOMs directly from SolidWorks, AutoCAD, Inventor, and other CAD systems. Keep engineering and production BOMs synchronized.',
+      },
+      {
+        title: 'Document Control',
+        desc: 'Centralized repository with version control, approval workflows, and access permissions. Always the latest revision, never a stale copy.',
+      },
+      {
+        title: 'Engineering Changes',
+        desc: 'Manage ECOs with structured workflows. Track change impact, require sign-off from relevant stakeholders, and roll out to production seamlessly.',
+      },
+    ],
+    icon: '<svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>',
+  },
+  {
+    number: 6,
+    id: 'analytics',
+    title: 'Analyze & Decide',
+    module: 'BI + VC',
+    description:
+      'Data without insight is just noise. The Business Intelligence and Variant Configuration modules transform raw production data into actionable dashboards and enable complex product configuration with ease. Make decisions based on facts, spot trends early, and give sales the power to configure products correctly the first time.',
+    features: [
+      {
+        title: 'Production Dashboards',
+        desc: 'Pre-built and customizable dashboards for OEE, scrap rates, delivery performance, and throughput. Real-time data, not yesterday\'s report.',
+      },
+      {
+        title: 'KPI Tracking',
+        desc: 'Define, measure, and visualize your most important manufacturing KPIs. Set targets, monitor trends, and trigger alerts on deviations.',
+      },
+      {
+        title: 'Product Configuration',
+        desc: 'Guide sales and customers through complex product variants with rule-based configuration. Automatically generate correct BOMs and routings.',
+      },
+    ],
+    icon: '<svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/><line x1="2" y1="20" x2="22" y2="20"/></svg>',
+  },
+];
+---
+
+<BaseLayout
+  title="Product Tour | TMS 4SAP"
+  description="Explore all TMS modules at your own pace. Walk through Production Planning, MES, Quality, PDM, BI, and more in this interactive product tour."
+>
+  <HeroInner
+    breadcrumbs={[
+      { label: 'Home', href: '/' },
+      { label: 'Product Tour', href: '/product-tour' },
+    ]}
+    tag="Interactive Tour"
+    title="Take the"
+    titleAccent="Product Tour"
+    description="Explore TMS modules at your own pace. Discover how each component works together to transform your manufacturing operations."
+  />
+
+  <!-- Tour layout: sidebar + content -->
+  <div class="tour-layout">
+    <!-- Sticky sidebar navigation -->
+    <nav class="tour-sidebar" aria-label="Tour navigation">
+      <ol class="tour-nav-list">
+        {stops.map((stop) => (
+          <li>
+            <a
+              href={`#${stop.id}`}
+              class="tour-nav-item"
+              data-tour-nav={stop.id}
+              aria-label={`Step ${stop.number}: ${stop.title}`}
+            >
+              <span class="tour-nav-dot" aria-hidden="true">{stop.number}</span>
+              <span class="tour-nav-label">{stop.title}</span>
+            </a>
+          </li>
+        ))}
+      </ol>
+    </nav>
+
+    <!-- Tour content -->
+    <div class="tour-content">
+      {stops.map((stop) => (
+        <section class="tour-stop" id={stop.id} data-tour-stop={stop.id}>
+          <div class="tour-stop-header" data-animate>
+            <span class="tour-step-number" aria-hidden="true">{String(stop.number).padStart(2, '0')}</span>
+            <div class="tour-stop-meta">
+              <span class="tour-module-badge">{stop.module}</span>
+              <h2 class="tour-stop-title">{stop.title}</h2>
+            </div>
+          </div>
+
+          <p class="tour-stop-description" data-animate>{stop.description}</p>
+
+          <div class="tour-stop-body">
+            <div class="tour-features-grid">
+              {stop.features.map((feature) => (
+                <div class="tour-feature-card" data-animate>
+                  <div class="tour-feature-icon" aria-hidden="true">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <polyline points="20 6 9 17 4 12" />
+                    </svg>
+                  </div>
+                  <h3 class="tour-feature-title">{feature.title}</h3>
+                  <p class="tour-feature-desc">{feature.desc}</p>
+                </div>
+              ))}
+            </div>
+
+            <div class="tour-visual" data-animate aria-hidden="true">
+              <div class="tour-visual-inner">
+                <Fragment set:html={stop.icon} />
+                <span class="tour-visual-label">{stop.module}</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="tour-visual-placeholder" data-animate>
+            <PlaceholderImage aspect="16:9" label={`${stop.module} — Interface preview`} />
+          </div>
+        </section>
+      ))}
+
+      <!-- Final CTA -->
+      <section class="tour-final-cta" data-animate>
+        <div class="tour-final-cta-inner">
+          <h2 class="tour-final-title">Ready to see it live?</h2>
+          <p class="tour-final-desc">
+            You have explored the full TMS suite. Now let our experts walk you through a personalized demo using your own production scenarios.
+          </p>
+          <a href="/demo" class="btn btn-primary btn-lg">
+            Book a Personalized Demo
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12" />
+              <polyline points="12 5 19 12 12 19" />
+            </svg>
+          </a>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <CTABanner
+    title="Transform your"
+    titleAccent="manufacturing"
+    description="Book a free 1-hour demo with our experts and see how TMS 4SAP can modernize your production floor."
+    primaryCTA={{ label: 'Book a Demo', href: '/demo' }}
+    secondaryCTA={{ label: 'Download Brochure', href: '/downloads' }}
+  />
+</BaseLayout>
+
+<script>
+  function initTourNav() {
+    const navItems = document.querySelectorAll<HTMLAnchorElement>('[data-tour-nav]');
+    const sections = document.querySelectorAll<HTMLElement>('[data-tour-stop]');
+
+    if (!navItems.length || !sections.length) return;
+
+    // Track active section with IntersectionObserver
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const id = (entry.target as HTMLElement).dataset.tourStop;
+            navItems.forEach((item) => {
+              const isActive = item.dataset.tourNav === id;
+              item.classList.toggle('tour-nav-item--active', isActive);
+              item.setAttribute('aria-current', isActive ? 'step' : 'false');
+            });
+          }
+        });
+      },
+      {
+        threshold: 0,
+        rootMargin: '-20% 0px -60% 0px',
+      }
+    );
+
+    sections.forEach((section) => observer.observe(section));
+
+    // Smooth scroll on click
+    navItems.forEach((item) => {
+      item.addEventListener('click', (e) => {
+        e.preventDefault();
+        const targetId = item.dataset.tourNav;
+        const target = document.getElementById(targetId || '');
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+
+    // Set initial active state
+    if (navItems[0]) {
+      navItems[0].classList.add('tour-nav-item--active');
+      navItems[0].setAttribute('aria-current', 'step');
+    }
+  }
+
+  initTourNav();
+  document.addEventListener('astro:page-load', initTourNav);
+</script>
+
+<style>
+  /* ============================================
+     TOUR VISUAL PLACEHOLDER
+     ============================================ */
+  .tour-visual-placeholder {
+    margin-top: 32px;
+  }
+
+  /* ============================================
+     TOUR LAYOUT
+     ============================================ */
+  .tour-layout {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    gap: 48px;
+    width: min(1200px, 92%);
+    margin: 0 auto;
+    padding-bottom: clamp(3rem, 6vw, 5rem);
+    position: relative;
+  }
+
+  /* ============================================
+     SIDEBAR NAVIGATION
+     ============================================ */
+  .tour-sidebar {
+    position: sticky;
+    top: 100px;
+    height: fit-content;
+    padding: 24px 0;
+  }
+
+  .tour-nav-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    position: relative;
+  }
+
+  /* Vertical track line */
+  .tour-nav-list::before {
+    content: '';
+    position: absolute;
+    left: 17px;
+    top: 20px;
+    bottom: 20px;
+    width: 1px;
+    background: var(--border);
+  }
+
+  .tour-nav-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 10px 12px;
+    border-radius: var(--radius-sm);
+    transition: all 0.2s var(--ease);
+    position: relative;
+    text-decoration: none;
+  }
+
+  .tour-nav-item:hover {
+    background: rgba(255, 255, 255, 0.03);
+  }
+
+  .tour-nav-dot {
+    width: 34px;
+    height: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    font-family: var(--font-heading);
+    font-size: 0.8125rem;
+    font-weight: 600;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    color: var(--text-dim);
+    transition: all 0.3s var(--ease);
+    flex-shrink: 0;
+    position: relative;
+    z-index: 1;
+  }
+
+  .tour-nav-label {
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: var(--text-dim);
+    transition: color 0.2s var(--ease);
+    line-height: 1.3;
+  }
+
+  /* Active state */
+  .tour-nav-item--active .tour-nav-dot {
+    background: var(--amber);
+    border-color: var(--amber);
+    color: #09090B;
+    box-shadow: 0 0 16px rgba(245, 158, 11, 0.25);
+  }
+
+  .tour-nav-item--active .tour-nav-label {
+    color: var(--text);
+  }
+
+  .tour-nav-item:hover .tour-nav-label {
+    color: var(--text-muted);
+  }
+
+  .tour-nav-item--active:hover .tour-nav-label {
+    color: var(--text);
+  }
+
+  /* ============================================
+     TOUR CONTENT
+     ============================================ */
+  .tour-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  /* ============================================
+     TOUR STOP
+     ============================================ */
+  .tour-stop {
+    padding: clamp(3rem, 6vw, 5rem) 0;
+    border-bottom: 1px solid var(--border);
+    scroll-margin-top: 90px;
+  }
+
+  .tour-stop:last-of-type {
+    border-bottom: none;
+  }
+
+  .tour-stop-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    margin-bottom: 20px;
+  }
+
+  .tour-step-number {
+    font-family: var(--font-heading);
+    font-size: clamp(3rem, 6vw, 4.5rem);
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -0.03em;
+    color: var(--amber);
+    flex-shrink: 0;
+    opacity: 0.35;
+  }
+
+  .tour-stop-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding-top: 8px;
+  }
+
+  .tour-module-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 12px;
+    background: var(--amber-dim);
+    border: 1px solid rgba(245, 158, 11, 0.2);
+    border-radius: 100px;
+    font-family: var(--font-heading);
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--amber);
+    width: fit-content;
+  }
+
+  .tour-stop-title {
+    font-size: clamp(1.5rem, 3vw, 2.25rem);
+    font-weight: 700;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+  }
+
+  .tour-stop-description {
+    font-size: 1.0625rem;
+    color: var(--text-muted);
+    line-height: 1.7;
+    max-width: 680px;
+    margin-bottom: 32px;
+  }
+
+  /* ============================================
+     TOUR STOP BODY: Features + Visual
+     ============================================ */
+  .tour-stop-body {
+    display: grid;
+    grid-template-columns: 1fr 280px;
+    gap: 32px;
+    align-items: start;
+  }
+
+  .tour-features-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .tour-feature-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    transition: all 0.3s var(--ease);
+  }
+
+  .tour-feature-card:hover {
+    background: var(--bg-card-hover);
+    border-color: var(--border-hover);
+    transform: translateX(4px);
+  }
+
+  .tour-feature-icon {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--amber-dim);
+    border-radius: var(--radius-sm);
+    color: var(--amber);
+    flex-shrink: 0;
+    margin-bottom: 4px;
+  }
+
+  .tour-feature-title {
+    font-family: var(--font-heading);
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 1.3;
+  }
+
+  .tour-feature-desc {
+    font-size: 0.9375rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+
+  /* Visual placeholder */
+  .tour-visual {
+    position: sticky;
+    top: 120px;
+  }
+
+  .tour-visual-inner {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    aspect-ratio: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    color: var(--amber);
+    opacity: 0.6;
+    transition: all 0.4s var(--ease);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .tour-visual-inner::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 50% 40%, rgba(245, 158, 11, 0.06) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  .tour-stop:hover .tour-visual-inner {
+    opacity: 1;
+    border-color: rgba(245, 158, 11, 0.2);
+  }
+
+  .tour-visual-label {
+    font-family: var(--font-heading);
+    font-size: 0.875rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+  }
+
+  /* ============================================
+     FINAL CTA
+     ============================================ */
+  .tour-final-cta {
+    padding: clamp(3rem, 6vw, 5rem) 0;
+  }
+
+  .tour-final-cta-inner {
+    background: linear-gradient(135deg, var(--bg-card) 0%, rgba(245, 158, 11, 0.04) 100%);
+    border: 1px solid rgba(245, 158, 11, 0.15);
+    border-radius: var(--radius-xl);
+    padding: clamp(2.5rem, 5vw, 4rem);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .tour-final-cta-inner::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 15%;
+    right: 15%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent 0%, var(--amber) 50%, transparent 100%);
+    opacity: 0.4;
+  }
+
+  .tour-final-title {
+    font-family: var(--font-heading);
+    font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+  }
+
+  .tour-final-desc {
+    font-size: 1.0625rem;
+    color: var(--text-muted);
+    line-height: 1.7;
+    max-width: 520px;
+  }
+
+  .tour-final-cta .btn {
+    margin-top: 8px;
+  }
+
+  /* ============================================
+     RESPONSIVE
+     ============================================ */
+  @media (max-width: 960px) {
+    .tour-layout {
+      grid-template-columns: 1fr;
+      gap: 0;
+    }
+
+    .tour-sidebar {
+      position: relative;
+      top: 0;
+      padding: 0 0 24px;
+      border-bottom: 1px solid var(--border);
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .tour-nav-list {
+      flex-direction: row;
+      gap: 8px;
+      min-width: max-content;
+    }
+
+    .tour-nav-list::before {
+      display: none;
+    }
+
+    .tour-nav-item {
+      flex-direction: column;
+      gap: 6px;
+      padding: 8px 12px;
+      text-align: center;
+    }
+
+    .tour-nav-label {
+      font-size: 0.6875rem;
+      white-space: nowrap;
+    }
+
+    .tour-nav-dot {
+      width: 30px;
+      height: 30px;
+      font-size: 0.75rem;
+    }
+
+    .tour-stop-body {
+      grid-template-columns: 1fr;
+    }
+
+    .tour-visual {
+      position: relative;
+      top: 0;
+    }
+
+    .tour-visual-inner {
+      aspect-ratio: 16 / 9;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .tour-stop-header {
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .tour-step-number {
+      font-size: 2.5rem;
+    }
+
+    .tour-stop-meta {
+      padding-top: 0;
+    }
+
+    .tour-feature-card {
+      padding: 20px;
+    }
+  }
+
+  /* iPhone / small mobile */
+  @media (max-width: 480px) {
+    .tour-layout {
+      width: min(1200px, 96%);
+      padding-bottom: 2rem;
+    }
+
+    .tour-stop {
+      padding: 2rem 0;
+    }
+
+    .tour-step-number {
+      font-size: 2rem;
+      opacity: 0.25;
+    }
+
+    .tour-stop-title {
+      font-size: 1.25rem;
+    }
+
+    .tour-stop-description {
+      font-size: 0.9375rem;
+      margin-bottom: 24px;
+    }
+
+    .tour-module-badge {
+      font-size: 0.625rem;
+      padding: 3px 10px;
+    }
+
+    .tour-feature-card {
+      padding: 16px;
+    }
+
+    .tour-feature-icon {
+      width: 32px;
+      height: 32px;
+    }
+
+    .tour-feature-title {
+      font-size: 0.9375rem;
+    }
+
+    .tour-feature-desc {
+      font-size: 0.875rem;
+    }
+
+    .tour-visual-inner {
+      aspect-ratio: 4 / 3;
+    }
+
+    .tour-visual-placeholder {
+      margin-top: 20px;
+    }
+
+    /* Sidebar horizontal scroll navigation */
+    .tour-sidebar {
+      padding: 0 0 16px;
+    }
+
+    .tour-nav-item {
+      padding: 6px 10px;
+    }
+
+    .tour-nav-dot {
+      width: 26px;
+      height: 26px;
+      font-size: 0.6875rem;
+    }
+
+    .tour-nav-label {
+      font-size: 0.625rem;
+    }
+
+    /* Final CTA */
+    .tour-final-cta {
+      padding: 2rem 0;
+    }
+
+    .tour-final-cta-inner {
+      padding: 2rem 1.25rem;
+    }
+
+    .tour-final-title {
+      font-size: 1.5rem;
+    }
+
+    .tour-final-desc {
+      font-size: 0.9375rem;
+    }
+  }
+</style>

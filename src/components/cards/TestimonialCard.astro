@@ -1,0 +1,162 @@
+---
+interface Props {
+  quote: string;
+  author: string;
+  role: string;
+  company: string;
+}
+
+const { quote, author, role, company } = Astro.props;
+---
+
+<blockquote class="testimonial-card" data-animate>
+  <svg
+    class="testimonial-quote-icon"
+    width="32"
+    height="32"
+    viewBox="0 0 24 24"
+    fill="currentColor"
+    aria-hidden="true"
+  >
+    <path
+      d="M3 21c3 0 7-1 7-8V5c0-1.25-.76-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"
+    ></path>
+    <path
+      d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2h.75c0 2.25.25 4-2.75 4v3c0 1 0 1 1 1z"
+    ></path>
+  </svg>
+  <p class="testimonial-text">{quote}</p>
+  <footer class="testimonial-footer">
+    <div class="testimonial-avatar" aria-hidden="true">
+      {author.charAt(0)}
+    </div>
+    <div class="testimonial-meta">
+      <cite class="testimonial-author">{author}</cite>
+      <span class="testimonial-role">{role}, {company}</span>
+    </div>
+  </footer>
+</blockquote>
+
+<style>
+  .testimonial-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    transition: all 0.3s var(--ease);
+    cursor: default;
+  }
+
+  .testimonial-card:hover {
+    background: var(--bg-card-hover);
+    border-color: rgba(245, 158, 11, 0.2);
+    box-shadow: 0 8px 24px rgba(245, 158, 11, 0.04), 0 0 0 1px rgba(245, 158, 11, 0.08);
+  }
+
+  .testimonial-quote-icon {
+    color: var(--amber);
+    opacity: 0.3;
+    flex-shrink: 0;
+  }
+
+  .testimonial-text {
+    font-size: 1rem;
+    color: var(--text-muted);
+    line-height: 1.7;
+    flex-grow: 1;
+    font-style: italic;
+  }
+
+  .testimonial-footer {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 4px;
+  }
+
+  .testimonial-avatar {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--amber-dim);
+    border-radius: 50%;
+    color: var(--amber);
+    font-family: var(--font-heading);
+    font-weight: 600;
+    font-size: 1rem;
+    flex-shrink: 0;
+  }
+
+  .testimonial-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .testimonial-author {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 0.9375rem;
+    color: var(--text);
+  }
+
+  .testimonial-role {
+    font-size: 0.8125rem;
+    color: var(--text-dim);
+  }
+
+  /* Tablet */
+  @media (max-width: 768px) {
+    .testimonial-card {
+      padding: 22px;
+      gap: 14px;
+    }
+
+    .testimonial-text {
+      font-size: 0.9375rem;
+    }
+  }
+
+  /* iPhone (375px-430px) */
+  @media (max-width: 480px) {
+    .testimonial-card {
+      padding: 16px;
+      gap: 12px;
+    }
+
+    .testimonial-quote-icon {
+      width: 24px;
+      height: 24px;
+    }
+
+    .testimonial-text {
+      font-size: 0.875rem;
+      line-height: 1.6;
+    }
+
+    .testimonial-footer {
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .testimonial-avatar {
+      width: 36px;
+      height: 36px;
+      font-size: 0.875rem;
+    }
+
+    .testimonial-author {
+      font-size: 0.875rem;
+    }
+
+    .testimonial-role {
+      font-size: 0.75rem;
+      word-break: break-word;
+    }
+  }
+</style>

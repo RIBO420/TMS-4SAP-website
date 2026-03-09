@@ -1,0 +1,625 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import HeroInner from '../../components/ui/HeroInner.astro';
+import CTABanner from '../../components/ui/CTABanner.astro';
+
+const moduleOptions = [
+  { value: 'pps', label: 'PPS - Produktionsplanung & Steuerung' },
+  { value: 'aps', label: 'APS - Erweiterte Planung & Steuerung' },
+  { value: 'mes', label: 'MES - Manufacturing Execution System' },
+  { value: 'pdc', label: 'BDE - Betriebsdatenerfassung' },
+  { value: 'qm', label: 'QM - Qualitätsmanagement' },
+  { value: 'pdm', label: 'PDM - Produktdatenmanagement' },
+  { value: 'bi', label: 'BI - Business Intelligence' },
+  { value: 'vc', label: 'VC - Variantenkonfigurator' },
+  { value: 'dms', label: 'DMS - Dokumentenmanagement' },
+];
+
+const benefits = [
+  {
+    title: 'Kostenlos & unverbindlich',
+    description: 'Keine Kosten, keine Verpflichtung. Überzeugen Sie sich vom Mehrwert, bevor Sie eine Entscheidung treffen.',
+    icon: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"></path><path d="m9 12 2 2 4-4"></path></svg>',
+  },
+  {
+    title: 'Von Experten geleitet',
+    description: 'Individuell auf Ihre Branche zugeschnitten durch unsere Fertigungsspezialisten.',
+    icon: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>',
+  },
+  {
+    title: '60 Minuten',
+    description: 'Umfassender Überblick über die Module, die für Ihre Betriebsabläufe am relevantesten sind.',
+    icon: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>',
+  },
+  {
+    title: 'Ihre Fragen beantwortet',
+    description: 'Bringen Sie Ihre spezifischen Herausforderungen mit. Wir gehen sie Punkt für Punkt durch.',
+    icon: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"></path><path d="M12 8v4"></path><path d="M12 16h.01"></path></svg>',
+  },
+];
+---
+
+<BaseLayout
+  lang="de"
+  title="Demo buchen | TMS 4SAP"
+  description="Buchen Sie eine kostenlose, unverbindliche Online-Demonstration von TMS 4SAP. Unsere Fertigungsexperten führen Sie durch eine 60-minütige Präsentation, die auf Ihre Branche zugeschnitten ist."
+>
+  <!-- Hero -->
+  <HeroInner
+    breadcrumbs={[
+      { label: 'Startseite', href: '/de/' },
+      { label: 'Demo buchen', href: '/de/demo' },
+    ]}
+    tag="Demo buchen"
+    title="TMS in Aktion erleben"
+    description="Buchen Sie eine kostenlose, unverbindliche Online-Präsentation mit unseren Fertigungsexperten. Entdecken Sie, wie TMS 4SAP nahtlos in SAP integriert wird, um Ihre Produktion zu optimieren."
+  />
+
+  <!-- Two-Column: Value Proposition + Form -->
+  <section class="section demo-section">
+    <div class="container">
+      <div class="demo-grid">
+        <!-- LEFT: Value Proposition -->
+        <div class="demo-value" data-animate>
+          <h2>Warum eine <span class="text-amber">Präsentation buchen?</span></h2>
+          <p class="demo-subtitle">
+            In 60 Minuten führen unsere Fertigungsexperten Sie durch eine Live-TMS-4SAP-Umgebung,
+            die auf Ihre Branche und Produktionsherausforderungen zugeschnitten ist. Keine Folien, kein Marketing — nur das echte Produkt.
+          </p>
+
+          <div class="benefits-list">
+            {benefits.map((benefit) => (
+              <div class="benefit-item">
+                <div class="benefit-icon" set:html={benefit.icon} />
+                <div class="benefit-body">
+                  <h3 class="benefit-title">{benefit.title}</h3>
+                  <p class="benefit-desc">{benefit.description}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div class="trust-indicator" data-animate>
+            <div class="trust-bar" aria-hidden="true"></div>
+            <p class="trust-text">
+              Vertraut von Fertigungsunternehmen in ganz Europa — von Kunststoff und
+              Automobil bis hin zu Metallbearbeitung und Elektronik.
+            </p>
+          </div>
+        </div>
+
+        <!-- RIGHT: Booking Form -->
+        <div class="demo-form-card" data-animate>
+          <div class="form-card-header">
+            <h3 class="form-card-title">Präsentation buchen</h3>
+            <p class="form-card-subtitle">Füllen Sie die Details aus und wir planen Ihre Demo innerhalb von 2 Werktagen.</p>
+          </div>
+
+          <form class="demo-form" id="demoForm" novalidate>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="demo-name">Vollständiger Name <span class="required" aria-label="required">*</span></label>
+                <input type="text" id="demo-name" name="name" placeholder="Ihr vollständiger Name" required autocomplete="name" />
+              </div>
+              <div class="form-group">
+                <label for="demo-email">Geschäftliche E-Mail <span class="required" aria-label="required">*</span></label>
+                <input type="email" id="demo-email" name="email" placeholder="sie@unternehmen.de" required autocomplete="email" />
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="demo-company">Unternehmen <span class="required" aria-label="required">*</span></label>
+                <input type="text" id="demo-company" name="company" placeholder="Ihr Unternehmensname" required autocomplete="organization" />
+              </div>
+              <div class="form-group">
+                <label for="demo-size">Unternehmensgröße</label>
+                <select id="demo-size" name="companySize">
+                  <option value="" disabled selected>Größe auswählen</option>
+                  <option value="1-50">1 &ndash; 50 Mitarbeiter</option>
+                  <option value="51-200">51 &ndash; 200 Mitarbeiter</option>
+                  <option value="201-500">201 &ndash; 500 Mitarbeiter</option>
+                  <option value="500+">500+ Mitarbeiter</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="demo-industry">Branche</label>
+                <select id="demo-industry" name="industry">
+                  <option value="" disabled selected>Branche auswählen</option>
+                  <option value="plastics">Kunststoff</option>
+                  <option value="automotive">Automobil</option>
+                  <option value="metal-working">Metallbearbeitung</option>
+                  <option value="electronics">Elektronik</option>
+                  <option value="other">Sonstiges</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="demo-date">Bevorzugtes Datum</label>
+                <input type="date" id="demo-date" name="preferredDate" />
+              </div>
+            </div>
+
+            <!-- Modules of Interest -->
+            <fieldset class="form-fieldset">
+              <legend>Module von Interesse</legend>
+              <div class="checkbox-grid">
+                {moduleOptions.map((mod) => (
+                  <label class="checkbox-label">
+                    <input type="checkbox" name="modules" value={mod.value} />
+                    <span class="checkbox-custom" aria-hidden="true">
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="20 6 9 17 4 12"></polyline>
+                      </svg>
+                    </span>
+                    <span class="checkbox-text">{mod.label}</span>
+                  </label>
+                ))}
+              </div>
+            </fieldset>
+
+            <div class="form-group">
+              <label for="demo-notes">Zusätzliche Anmerkungen</label>
+              <textarea id="demo-notes" name="notes" placeholder="Gibt es bestimmte Themen, Herausforderungen oder Fragen, die wir behandeln sollen?" rows="4"></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-lg btn-full">Präsentation buchen</button>
+
+            <!-- Success message -->
+            <div class="form-success" id="demoSuccess" role="alert" aria-live="polite">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                <polyline points="22 4 12 14.01 9 11.01"></polyline>
+              </svg>
+              <span>Vielen Dank! Wir werden Sie innerhalb von 2 Werktagen kontaktieren, um Ihre Demo zu bestätigen.</span>
+            </div>
+
+            <p class="form-alt-contact">
+              Oder rufen Sie uns direkt an:
+              <a href="tel:+31432340050" class="form-phone-link">+31 43 234 00 50</a>
+            </p>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Banner -->
+  <CTABanner
+    title="Noch nicht bereit für eine Demo?"
+    titleAccent="Beginnen Sie mit einer Broschüre"
+    description="Laden Sie unsere Produktbroschüre herunter und erfahren Sie, wie die TMS-4SAP-Module zusammenarbeiten, um Ihre Fertigungsabläufe zu optimieren."
+    primaryCTA={{ label: 'Broschüre herunterladen', href: '/de/downloads' }}
+    secondaryCTA={{ label: 'Vertrieb kontaktieren', href: '/de/contact' }}
+  />
+</BaseLayout>
+
+<script>
+  function initDemoForm() {
+    const form = document.getElementById('demoForm') as HTMLFormElement | null;
+    const success = document.getElementById('demoSuccess');
+
+    if (!form || !success) return;
+
+    // Set minimum date to today
+    const dateInput = form.querySelector('input[type="date"]') as HTMLInputElement | null;
+    if (dateInput) {
+      const today = new Date().toISOString().split('T')[0];
+      dateInput.setAttribute('min', today);
+    }
+
+    form.addEventListener('submit', (e: Event) => {
+      e.preventDefault();
+
+      // Basic validation
+      const requiredFields = form.querySelectorAll('[required]') as NodeListOf<HTMLInputElement | HTMLTextAreaElement>;
+      let valid = true;
+
+      requiredFields.forEach((field) => {
+        field.classList.remove('field-error');
+        if (!field.value.trim()) {
+          field.classList.add('field-error');
+          valid = false;
+        }
+      });
+
+      const emailField = form.querySelector('[type="email"]') as HTMLInputElement | null;
+      if (emailField && emailField.value && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailField.value)) {
+        emailField.classList.add('field-error');
+        valid = false;
+      }
+
+      if (!valid) return;
+
+      // Show success
+      success.classList.add('visible');
+      form.querySelectorAll('input, textarea, select, button[type="submit"]').forEach((el) => {
+        (el as HTMLInputElement).disabled = true;
+      });
+
+      // Reset after 3 seconds
+      setTimeout(() => {
+        form.reset();
+        success.classList.remove('visible');
+        form.querySelectorAll('input, textarea, select, button[type="submit"]').forEach((el) => {
+          (el as HTMLInputElement).disabled = false;
+          (el as HTMLInputElement).classList.remove('field-error');
+        });
+        // Re-check checkboxes default state
+        form.querySelectorAll('input[type="checkbox"]').forEach((cb) => {
+          (cb as HTMLInputElement).checked = false;
+        });
+      }, 3000);
+    });
+  }
+
+  initDemoForm();
+  document.addEventListener('astro:page-load', initDemoForm);
+</script>
+
+<style>
+  /* ---- Demo Section ---- */
+  .demo-section {
+    padding-top: clamp(2rem, 4vw, 3rem);
+  }
+
+  .demo-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.15fr;
+    gap: clamp(2rem, 5vw, 4rem);
+    align-items: start;
+  }
+
+  /* ---- Value Proposition ---- */
+  .demo-value h2 {
+    font-size: clamp(1.75rem, 3vw, 2.5rem);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    margin-bottom: 16px;
+  }
+
+  .demo-subtitle {
+    font-size: 1rem;
+    color: var(--text-muted);
+    line-height: 1.7;
+    max-width: 480px;
+    margin-bottom: 40px;
+  }
+
+  /* ---- Benefits ---- */
+  .benefits-list {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    margin-bottom: 48px;
+  }
+
+  .benefit-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .benefit-icon {
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--amber-dim);
+    border-radius: var(--radius-sm);
+    color: var(--amber);
+    flex-shrink: 0;
+  }
+
+  .benefit-body {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .benefit-title {
+    font-family: var(--font-heading);
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 1.3;
+    letter-spacing: -0.01em;
+  }
+
+  .benefit-desc {
+    font-size: 0.9375rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+
+  /* ---- Trust Indicator ---- */
+  .trust-indicator {
+    padding-top: 32px;
+    border-top: 1px solid var(--border);
+  }
+
+  .trust-bar {
+    width: 40px;
+    height: 3px;
+    background: var(--amber);
+    border-radius: 2px;
+    margin-bottom: 16px;
+  }
+
+  .trust-text {
+    font-size: 0.9375rem;
+    color: var(--text-dim);
+    line-height: 1.6;
+    max-width: 400px;
+  }
+
+  /* ---- Form Card ---- */
+  .demo-form-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-xl);
+    padding: clamp(1.5rem, 3vw, 2.5rem);
+    position: sticky;
+    top: 100px;
+  }
+
+  .form-card-header {
+    margin-bottom: 28px;
+  }
+
+  .form-card-title {
+    font-family: var(--font-heading);
+    font-size: 1.25rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    margin-bottom: 8px;
+  }
+
+  .form-card-subtitle {
+    font-size: 0.9375rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+
+  .demo-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .form-group label {
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: var(--text-muted);
+  }
+
+  .required {
+    color: var(--amber);
+  }
+
+  .form-group input,
+  .form-group textarea,
+  .form-group select {
+    padding: 12px 16px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    font-size: 0.9375rem;
+    color: var(--text);
+    transition: border-color 0.2s var(--ease), box-shadow 0.2s var(--ease);
+    outline: none;
+    font-family: var(--font-body);
+  }
+
+  .form-group input[type="date"] {
+    color-scheme: dark;
+  }
+
+  .form-group select {
+    appearance: none;
+    -webkit-appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='%2371717A' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 16px center;
+    padding-right: 40px;
+    cursor: pointer;
+  }
+
+  .form-group select option {
+    background: var(--bg);
+    color: var(--text);
+  }
+
+  .form-group input::placeholder,
+  .form-group textarea::placeholder {
+    color: var(--text-dim);
+  }
+
+  .form-group input:focus,
+  .form-group textarea:focus,
+  .form-group select:focus {
+    border-color: var(--amber);
+    box-shadow: 0 0 0 3px var(--amber-dim);
+  }
+
+  .form-group textarea {
+    resize: vertical;
+    min-height: 100px;
+  }
+
+  /* Field error state */
+  .form-group input:global(.field-error),
+  .form-group textarea:global(.field-error),
+  .form-group select:global(.field-error) {
+    border-color: #ef4444;
+    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+  }
+
+  /* ---- Fieldset / Checkboxes ---- */
+  .form-fieldset {
+    border: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .form-fieldset legend {
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    margin-bottom: 12px;
+    padding: 0;
+  }
+
+  .checkbox-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+
+  .checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 12px;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: background 0.15s var(--ease);
+    user-select: none;
+  }
+
+  .checkbox-label:hover {
+    background: rgba(255, 255, 255, 0.03);
+  }
+
+  /* Hide native checkbox */
+  .checkbox-label input[type="checkbox"] {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  .checkbox-custom {
+    width: 18px;
+    height: 18px;
+    border: 1.5px solid var(--border);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: all 0.15s var(--ease);
+    background: var(--bg);
+  }
+
+  .checkbox-custom svg {
+    opacity: 0;
+    transform: scale(0.5);
+    transition: all 0.15s var(--ease);
+    color: #09090B;
+  }
+
+  .checkbox-label input[type="checkbox"]:checked + .checkbox-custom {
+    background: var(--amber);
+    border-color: var(--amber);
+  }
+
+  .checkbox-label input[type="checkbox"]:checked + .checkbox-custom svg {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  .checkbox-label input[type="checkbox"]:focus-visible + .checkbox-custom {
+    box-shadow: 0 0 0 3px var(--amber-dim);
+    border-color: var(--amber);
+  }
+
+  .checkbox-text {
+    font-size: 0.8125rem;
+    color: var(--text-muted);
+    line-height: 1.3;
+  }
+
+  .checkbox-label:hover .checkbox-text {
+    color: var(--text);
+  }
+
+  /* ---- Success message ---- */
+  .form-success {
+    display: none;
+    align-items: center;
+    gap: 12px;
+    padding: 16px;
+    background: rgba(34, 197, 94, 0.08);
+    border: 1px solid rgba(34, 197, 94, 0.2);
+    border-radius: var(--radius-sm);
+    font-size: 0.9375rem;
+    color: #4ade80;
+  }
+
+  .form-success:global(.visible) {
+    display: flex;
+  }
+
+  .form-success svg {
+    flex-shrink: 0;
+    color: #4ade80;
+  }
+
+  /* ---- Alt Contact ---- */
+  .form-alt-contact {
+    text-align: center;
+    font-size: 0.875rem;
+    color: var(--text-dim);
+  }
+
+  .form-phone-link {
+    color: var(--amber);
+    font-weight: 500;
+    transition: color 0.2s var(--ease);
+  }
+
+  .form-phone-link:hover {
+    color: var(--amber-hover);
+  }
+
+  /* ---- Responsive ---- */
+  @media (max-width: 960px) {
+    .demo-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .demo-form-card {
+      position: static;
+    }
+
+    .checkbox-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .form-row {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

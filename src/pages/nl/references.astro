@@ -1,0 +1,450 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import HeroInner from '@components/ui/HeroInner.astro';
+import StatBar from '@components/ui/StatBar.astro';
+import SectionHeader from '@components/ui/SectionHeader.astro';
+import CTABanner from '@components/ui/CTABanner.astro';
+
+const breadcrumbs = [
+  { label: 'Home', href: '/nl' },
+  { label: 'Referenties', href: '/nl/references' },
+];
+
+const stats = [
+  { value: '500+', label: 'Implementaties' },
+  { value: '98%', label: 'Tevredenheid' },
+  { value: '12', label: 'Landen' },
+  { value: '15+', label: 'Jaar' },
+];
+
+interface Reference {
+  company: string;
+  industry: string;
+  country: string;
+  quote: string;
+  modules: string[];
+}
+
+const industries = ['Alle', 'Kunststoffen', 'Automotive', 'Metaalbewerking', 'Elektronica'];
+
+const references: Reference[] = [
+  {
+    company: 'Precision Plastics BV',
+    industry: 'Kunststoffen',
+    country: 'Nederland',
+    quote: 'TMS heeft onze spuitgietplanning getransformeerd. We zijn van spreadsheets en whiteboards overgestapt naar een volledig digitale planningsworkflow — cyclustijdoptimalisatie en matrijswissels worden nu automatisch gepland.',
+    modules: ['PPS', 'APS', 'MES'],
+  },
+  {
+    company: 'AutoParts GmbH',
+    industry: 'Automotive',
+    country: 'Duitsland',
+    quote: 'IATF 16949 compliance werd beheerbaar. TMS kwaliteitsmanagement registreert elke inspectie, elke afwijking en elke corrigerende maatregel — auditors waarderen de traceerbaarheid enorm.',
+    modules: ['QM', 'PDC', 'BI'],
+  },
+  {
+    company: 'MetalCraft Industries',
+    industry: 'Metaalbewerking',
+    country: 'België',
+    quote: 'Real-time nacalculatie heeft alles veranderd. We zien nu werkelijke versus geschatte uren per werkorder terwijl de opdracht loopt, niet weken nadat deze is verzonden.',
+    modules: ['MES', 'PDC', 'PPS', 'BI'],
+  },
+  {
+    company: 'CircuitBoard Systems',
+    industry: 'Elektronica',
+    country: 'Nederland',
+    quote: 'Componenttraceerbaarheid op reelniveau was ononderhandelbaar voor onze luchtvaartklanten. TMS gaf ons lot-tracking en genealogie van inkomende goederen tot en met de eindtest.',
+    modules: ['QM', 'PDM', 'MES'],
+  },
+  {
+    company: 'FormTech Kunststoffen',
+    industry: 'Kunststoffen',
+    country: 'Nederland',
+    quote: '40% reductie in planningstijd. Onze planners besteedden vroeger de helft van hun dag aan het jongleren met orders en machinetoewijzingen — APS genereert nu geoptimaliseerde planningen in minuten.',
+    modules: ['APS', 'PPS', 'PDC'],
+  },
+  {
+    company: 'TurboGear Automotive',
+    industry: 'Automotive',
+    country: 'Duitsland',
+    quote: 'EDI-integratie heeft handmatige invoer geëlimineerd. Leveringsschema\'s van OEM\'s stromen rechtstreeks in onze planning. Verzendbonnen gaan automatisch retour. Geen papier, geen overtypen.',
+    modules: ['PPS', 'APS', 'DMS'],
+  },
+  {
+    company: 'StaalWerk Engineering',
+    industry: 'Metaalbewerking',
+    country: 'Nederland',
+    quote: 'OEE-zichtbaarheid leidde tot 15% verbetering in ons eerste jaar. Toen operators real-time prestaties op de werkvloerdisplays konden zien, begonnen ze zelf bij te sturen.',
+    modules: ['MES', 'BI', 'PDC'],
+  },
+  {
+    company: 'MicroElec BV',
+    industry: 'Elektronica',
+    country: 'België',
+    quote: 'BOM-import vanuit Altium bespaart wekelijks uren. Engineers ontwerpen in hun eigen tool en TMS haalt automatisch de volledige componentenlijst met alternatieven en specificaties op.',
+    modules: ['PDM', 'VC', 'PPS'],
+  },
+  {
+    company: 'DuraPlast GmbH',
+    industry: 'Kunststoffen',
+    country: 'Duitsland',
+    quote: 'Kwaliteitsmanagement met volledige batchtracering geeft ons volledig vertrouwen. Als een klant naar een specifieke partij vraagt, kunnen we binnen seconden elke grondstof, elke parameter en elk testresultaat opvragen.',
+    modules: ['QM', 'MES', 'DMS', 'BI'],
+  },
+];
+
+const countryFlags: Record<string, string> = {
+  'Nederland': 'NL',
+  'Duitsland': 'DE',
+  'België': 'BE',
+};
+---
+
+<BaseLayout
+  lang="nl"
+  title="Referenties | TMS 4SAP"
+  description="Ontdek hoe meer dan 500 productiebedrijven in heel Europa op TMS vertrouwen voor de digitalisering van productieplanning, kwaliteitsmanagement en werkvloeruitvoering."
+>
+  <HeroInner
+    breadcrumbs={breadcrumbs}
+    tag="Klantreferenties"
+    title="Klant"
+    titleAccent="successen"
+    description="Ontdek hoe productiebedrijven in heel Europa op TMS vertrouwen om hun productieprocessen te transformeren met geïntegreerde planning, uitvoering en kwaliteitsmanagement."
+  />
+
+  <StatBar stats={stats} />
+
+  <!-- Filter Bar -->
+  <section class="filter-section">
+    <div class="container">
+      <div class="filter-bar" role="toolbar" aria-label="Filter referenties op branche">
+        {industries.map((ind) => (
+          <button
+            class:list={['filter-btn', { active: ind === 'Alle' }]}
+            data-filter={ind}
+            aria-pressed={ind === 'Alle' ? 'true' : 'false'}
+          >
+            {ind}
+          </button>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- References Grid -->
+  <section class="section references-section">
+    <div class="container">
+      <div class="references-grid" role="list" aria-label="Klantreferenties">
+        {references.map((ref) => (
+          <article
+            class="reference-card"
+            data-industry={ref.industry}
+            data-animate
+            role="listitem"
+          >
+            <div class="reference-header">
+              <div class="reference-meta">
+                <span class="reference-industry-tag">{ref.industry}</span>
+                <span class="reference-country">
+                  <span class="country-code">{countryFlags[ref.country]}</span>
+                  {ref.country}
+                </span>
+              </div>
+            </div>
+            <h3 class="reference-company">{ref.company}</h3>
+            <blockquote class="reference-quote">
+              <p>&ldquo;{ref.quote}&rdquo;</p>
+            </blockquote>
+            <div class="reference-modules">
+              {ref.modules.map((mod) => (
+                <a href={`/nl/modules/${mod.toLowerCase()}`} class="module-tag">{mod}</a>
+              ))}
+            </div>
+          </article>
+        ))}
+      </div>
+
+      <!-- Empty state for filtered results -->
+      <div class="empty-state" hidden aria-live="polite">
+        <p>Geen referenties gevonden voor de geselecteerde branche.</p>
+      </div>
+    </div>
+  </section>
+
+  <CTABanner
+    title="Sluit u aan bij 500+ producenten"
+    titleAccent="die kozen voor TMS"
+    description="Ontdek hoe TMS uw productieprocessen kan transformeren. Boek een gepersonaliseerde demo of neem contact op met ons team."
+    primaryCTA={{ label: 'Demo aanvragen', href: '/nl/demo' }}
+    secondaryCTA={{ label: 'Neem contact op', href: '/nl/contact' }}
+  />
+</BaseLayout>
+
+<style>
+  /* --- Filter Section --- */
+  .filter-section {
+    padding: 32px 0 0;
+  }
+
+  .filter-bar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    padding: 16px 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .filter-btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 8px 18px;
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    cursor: pointer;
+    transition: all 0.2s var(--ease);
+    white-space: nowrap;
+  }
+
+  .filter-btn:hover {
+    color: var(--text);
+    border-color: var(--border-hover);
+    background: rgba(255, 255, 255, 0.03);
+  }
+
+  .filter-btn:focus-visible {
+    outline: 2px solid var(--amber);
+    outline-offset: 2px;
+  }
+
+  .filter-btn.active {
+    color: #09090B;
+    background: var(--amber);
+    border-color: var(--amber);
+  }
+
+  .filter-btn.active:hover {
+    background: var(--amber-hover);
+    border-color: var(--amber-hover);
+  }
+
+  /* --- References Grid --- */
+  .references-section {
+    padding-top: clamp(2rem, 4vw, 3rem);
+  }
+
+  .references-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+
+  /* --- Reference Card --- */
+  .reference-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    transition: all 0.3s var(--ease);
+  }
+
+  .reference-card:hover {
+    background: var(--bg-card-hover);
+    border-color: var(--border-hover);
+    transform: translateY(-2px);
+  }
+
+  .reference-card.hidden {
+    display: none;
+  }
+
+  .reference-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+  }
+
+  .reference-meta {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .reference-industry-tag {
+    display: inline-flex;
+    align-items: center;
+    padding: 3px 10px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--amber);
+    background: var(--amber-dim);
+    border: 1px solid rgba(245, 158, 11, 0.15);
+    border-radius: 100px;
+  }
+
+  .reference-country {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.8125rem;
+    color: var(--text-dim);
+  }
+
+  .country-code {
+    font-family: var(--font-heading);
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    color: var(--text-muted);
+    padding: 1px 6px;
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+  }
+
+  .reference-company {
+    font-family: var(--font-heading);
+    font-size: 1.125rem;
+    font-weight: 600;
+    line-height: 1.3;
+    color: var(--text);
+  }
+
+  .reference-quote {
+    flex-grow: 1;
+  }
+
+  .reference-quote p {
+    font-size: 0.9375rem;
+    color: var(--text-muted);
+    line-height: 1.7;
+    font-style: italic;
+  }
+
+  .reference-modules {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: auto;
+    padding-top: 8px;
+    border-top: 1px solid var(--border);
+  }
+
+  .module-tag {
+    display: inline-flex;
+    align-items: center;
+    padding: 3px 10px;
+    font-family: var(--font-heading);
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    text-decoration: none;
+    transition: all 0.2s var(--ease);
+  }
+
+  .module-tag:hover {
+    color: var(--amber);
+    border-color: rgba(245, 158, 11, 0.3);
+    background: var(--amber-dim);
+  }
+
+  /* --- Empty State --- */
+  .empty-state {
+    text-align: center;
+    padding: 4rem 0;
+    color: var(--text-dim);
+    font-size: 1rem;
+  }
+
+  /* --- Stagger Animations --- */
+  .references-grid [data-animate]:nth-child(1) { transition-delay: 0ms; }
+  .references-grid [data-animate]:nth-child(2) { transition-delay: 80ms; }
+  .references-grid [data-animate]:nth-child(3) { transition-delay: 160ms; }
+  .references-grid [data-animate]:nth-child(4) { transition-delay: 240ms; }
+  .references-grid [data-animate]:nth-child(5) { transition-delay: 320ms; }
+  .references-grid [data-animate]:nth-child(6) { transition-delay: 400ms; }
+  .references-grid [data-animate]:nth-child(7) { transition-delay: 480ms; }
+  .references-grid [data-animate]:nth-child(8) { transition-delay: 560ms; }
+  .references-grid [data-animate]:nth-child(9) { transition-delay: 640ms; }
+
+  /* --- Responsive --- */
+  @media (max-width: 900px) {
+    .references-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 600px) {
+    .references-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .filter-bar {
+      gap: 6px;
+    }
+
+    .filter-btn {
+      padding: 6px 14px;
+      font-size: 0.8125rem;
+    }
+  }
+</style>
+
+<script>
+  function initFilters() {
+    const filterBtns = document.querySelectorAll<HTMLButtonElement>('.filter-btn');
+    const cards = document.querySelectorAll<HTMLElement>('.reference-card');
+    const emptyState = document.querySelector<HTMLElement>('.empty-state');
+
+    if (!filterBtns.length || !cards.length) return;
+
+    filterBtns.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const filter = btn.dataset.filter;
+        if (!filter) return;
+
+        // Update active button
+        filterBtns.forEach((b) => {
+          b.classList.remove('active');
+          b.setAttribute('aria-pressed', 'false');
+        });
+        btn.classList.add('active');
+        btn.setAttribute('aria-pressed', 'true');
+
+        // Filter cards
+        let visibleCount = 0;
+        cards.forEach((card) => {
+          const industry = card.dataset.industry;
+          const shouldShow = filter === 'Alle' || industry === filter;
+          card.classList.toggle('hidden', !shouldShow);
+          if (shouldShow) visibleCount++;
+        });
+
+        // Toggle empty state
+        if (emptyState) {
+          emptyState.hidden = visibleCount > 0;
+        }
+      });
+    });
+  }
+
+  initFilters();
+  document.addEventListener('astro:page-load', initFilters);
+</script>

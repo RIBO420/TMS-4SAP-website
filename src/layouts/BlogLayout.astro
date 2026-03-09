@@ -1,0 +1,81 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import CTABanner from '@components/ui/CTABanner.astro';
+import '@styles/utilities.css';
+
+export interface Props {
+  title: string;
+  description: string;
+  publishDate: string;
+  author: string;
+  category: string;
+  heroImage?: string;
+}
+
+const {
+  title,
+  description,
+  publishDate,
+  author,
+  category,
+  heroImage,
+} = Astro.props;
+
+/** Format the publish date for display. */
+const formattedDate = new Date(publishDate).toLocaleDateString('nl-NL', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+});
+---
+
+<BaseLayout title={`${title} | Blog | The Manufacturing Suite`} description={description}>
+  <!-- Breadcrumbs -->
+  <nav class="container breadcrumbs" aria-label="Breadcrumb">
+    <a href="/">Home</a>
+    <span class="breadcrumbs-separator" aria-hidden="true">/</span>
+    <a href="/blog">Blog</a>
+    <span class="breadcrumbs-separator" aria-hidden="true">/</span>
+    <span class="breadcrumbs-current" aria-current="page">{title}</span>
+  </nav>
+
+  <!-- Article header -->
+  <header class="article-header">
+    <span class="article-category">{category}</span>
+    <h1 class="article-title">{title}</h1>
+    <div class="article-meta">
+      <span>{author}</span>
+      <span class="article-meta-separator" aria-hidden="true"></span>
+      <time datetime={publishDate}>{formattedDate}</time>
+    </div>
+  </header>
+
+  <!-- Hero image -->
+  {heroImage && (
+    <div class="article-hero-image">
+      <img src={heroImage} alt="" loading="eager" />
+    </div>
+  )}
+
+  <!-- Article body -->
+  <article class="container">
+    <div class="reading-width prose">
+      <slot />
+    </div>
+  </article>
+
+  <!-- Related posts -->
+  <section class="related-posts" aria-labelledby="related-posts-heading">
+    <div class="container">
+      <h2 id="related-posts-heading">Related posts</h2>
+      <div class="related-posts-grid">
+        <div class="related-posts-placeholder">
+          More articles coming soon. Check back for the latest insights on manufacturing technology.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <CTABanner />
+</BaseLayout>

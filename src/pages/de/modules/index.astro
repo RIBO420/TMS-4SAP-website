@@ -1,0 +1,153 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import HeroInner from '../../../components/ui/HeroInner.astro';
+import SectionHeader from '../../../components/ui/SectionHeader.astro';
+import ModuleCard from '../../../components/cards/ModuleCard.astro';
+import CTABanner from '../../../components/ui/CTABanner.astro';
+import { modules } from '../../../data/modules';
+
+const breadcrumbs = [
+  { label: 'Startseite', href: '/de' },
+  { label: 'Module', href: '/de/modules' },
+];
+---
+
+<BaseLayout
+  lang="de"
+  title="Systemmodule"
+  description="Entdecken Sie die 9 integrierten TMS-Module für SAP Business One: Produktionsplanung, erweiterte Terminierung, MES, Betriebsdatenerfassung, Qualitätsmanagement, Produktdatenmanagement, BI, Variantenkonfiguration und Dokumentenmanagement."
+>
+  <HeroInner
+    breadcrumbs={breadcrumbs}
+    tag="Kernplattform"
+    title="System"
+    titleAccent="Module"
+    description="Neun spezialisierte Module arbeiten innerhalb von SAP Business One zusammen, um jeden Aspekt Ihrer Fertigung zu digitalisieren — von Planung und Terminierung bis hin zu Qualitätskontrolle und Business Intelligence."
+  />
+
+  <!-- All Modules Grid -->
+  <section class="section" id="modules-grid">
+    <div class="container">
+      <div class="modules-grid">
+        {modules.map((mod) => (
+          <ModuleCard module={mod} />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Integrated Approach Section -->
+  <section class="section integrated-section">
+    <div class="container">
+      <SectionHeader
+        tag="Nahtlose Integration"
+        title="Eine Plattform,"
+        titleAccent="keine Datensilos"
+        description="Jedes Modul nutzt eine gemeinsame Datenschicht innerhalb von SAP Business One — ohne doppelte Eingaben und mit Echtzeitkonsistenz über Ihren gesamten Betrieb hinweg."
+      />
+      <div class="pillars-grid">
+        <div class="pillar-card" data-animate>
+          <div class="pillar-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            </svg>
+          </div>
+          <h3>Eine einzige Datenquelle</h3>
+          <p>Alle Module lesen und schreiben in einer einheitlichen SAP Business One-Datenbank. Ein in PPS erstellter Fertigungsauftrag fließt automatisch an MES, BDE und QM — ohne manuellen Eingriff.</p>
+        </div>
+        <div class="pillar-card" data-animate>
+          <div class="pillar-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"/>
+              <polyline points="12 6 12 12 16 14"/>
+            </svg>
+          </div>
+          <h3>Echtzeit-Datenfluss</h3>
+          <p>Von der BDE erfasste Ereignisse spiegeln sich sofort in MES-Dashboards, BI-Berichten und QM-Prüfauslösern wider. Keine Batch-Synchronisation, keine nächtlichen Updates.</p>
+        </div>
+        <div class="pillar-card" data-animate>
+          <div class="pillar-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="7" width="20" height="14" rx="2" ry="2"/>
+              <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
+            </svg>
+          </div>
+          <h3>Modularer Aufbau</h3>
+          <p>Starten Sie mit den Modulen, die Sie am dringendsten benötigen, und erweitern Sie schrittweise. Jedes Modul liefert eigenständigen Mehrwert und wird leistungsfähiger, wenn weitere Module aktiviert werden.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Banner -->
+  <CTABanner
+    title="Bereit, TMS"
+    titleAccent="in Aktion zu sehen?"
+    description="Buchen Sie eine persönliche Demo und entdecken Sie, wie 9 integrierte Module Ihre Fertigungsprozesse transformieren können."
+    primaryCTA={{ label: 'Demo buchen', href: '/de/demo' }}
+    secondaryCTA={{ label: 'Broschüre herunterladen', href: '/de/downloads' }}
+  />
+</BaseLayout>
+
+<style>
+  /* Pillars / Integrated approach grid */
+  .integrated-section {
+    border-top: 1px solid var(--border);
+  }
+
+  .pillars-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+
+  .pillar-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 32px 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    transition: all 0.3s var(--ease);
+  }
+
+  .pillar-card:hover {
+    background: var(--bg-card-hover);
+    border-color: var(--border-hover);
+    transform: translateY(-2px);
+  }
+
+  .pillar-icon {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--amber-dim);
+    border-radius: var(--radius-sm);
+    color: var(--amber);
+    flex-shrink: 0;
+  }
+
+  .pillar-card h3 {
+    font-family: var(--font-heading);
+    font-size: 1.125rem;
+    font-weight: 600;
+    line-height: 1.3;
+    letter-spacing: -0.01em;
+  }
+
+  .pillar-card p {
+    font-size: 0.9375rem;
+    color: var(--text-muted);
+    line-height: 1.7;
+  }
+
+  @media (max-width: 900px) {
+    .pillars-grid {
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+  }
+</style>

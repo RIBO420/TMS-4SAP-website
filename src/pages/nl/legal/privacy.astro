@@ -1,0 +1,296 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import CTABanner from '../../../components/ui/CTABanner.astro';
+import '../../../styles/utilities.css';
+
+const title = 'Privacybeleid';
+const lastUpdated = '2026-03-01';
+const formattedDate = new Date(lastUpdated).toLocaleDateString('nl-NL', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+});
+---
+
+<BaseLayout
+  lang="nl"
+  title="Privacybeleid | TMS 4SAP"
+  description="Lees hoe TheManufacturingSuite BV uw persoonsgegevens verzamelt, gebruikt en beschermt. Lees ons Privacybeleid voor meer informatie over uw rechten onder de AVG."
+>
+  <!-- Breadcrumbs -->
+  <nav class="container breadcrumbs" aria-label="Broodkruimelpad">
+    <a href="/nl">Home</a>
+    <span class="breadcrumbs-separator" aria-hidden="true">/</span>
+    <a href="/nl/legal/privacy">Juridisch</a>
+    <span class="breadcrumbs-separator" aria-hidden="true">/</span>
+    <span class="breadcrumbs-current" aria-current="page">{title}</span>
+  </nav>
+
+  <!-- Legal content -->
+  <section class="section legal-section">
+    <div class="container">
+      <div class="legal-width">
+        <!-- Page header -->
+        <header class="legal-header">
+          <h1>{title}</h1>
+          <p class="legal-last-updated">
+            Laatst bijgewerkt: <time datetime={lastUpdated}>{formattedDate}</time>
+          </p>
+        </header>
+
+        <!-- Prose content -->
+        <div class="prose">
+
+          <h2 id="introduction">1. Inleiding</h2>
+          <p>
+            Dit Privacybeleid beschrijft hoe <strong>TheManufacturingSuite BV</strong> ("TMS," "wij," "ons" of "onze"),
+            gevestigd te Il Flore, Avenue Ceramique 221, 6221 KX Maastricht, Nederland, uw persoonsgegevens verzamelt,
+            gebruikt, opslaat en beschermt wanneer u onze website bezoekt, onze diensten gebruikt of anderszins met
+            ons communiceert.
+          </p>
+          <p>
+            Wij zetten ons in voor de bescherming van uw privacy en de transparante verwerking van uw gegevens.
+            Dit beleid is opgesteld in overeenstemming met de Algemene Verordening Gegevensbescherming (AVG) en
+            andere toepasselijke wetgeving inzake gegevensbescherming.
+          </p>
+
+          <h2 id="data-collection">2. Welke gegevens wij verzamelen</h2>
+          <p>Wij kunnen de volgende categorie\u00ebn persoonsgegevens verzamelen en verwerken:</p>
+          <ul>
+            <li>
+              <strong>Contactformuliergegevens:</strong> Wanneer u een contactformulier invult, een demo aanvraagt
+              of een brochure downloadt, verzamelen wij uw naam, e-mailadres, bedrijfsnaam, telefoonnummer en de
+              inhoud van uw bericht.
+            </li>
+            <li>
+              <strong>Website-analysegegevens:</strong> Wij verzamelen geanonimiseerde gegevens over hoe u onze
+              website gebruikt, waaronder bezochte pagina's, bestede tijd per pagina, verwijzingsbronnen, browsertype,
+              besturingssysteem en apparaatinformatie.
+            </li>
+            <li>
+              <strong>Cookies en trackingtechnologie\u00ebn:</strong> Wij gebruiken cookies en vergelijkbare
+              technologie\u00ebn om uw browse-ervaring te verbeteren, websiteverkeer te analyseren en gepersonaliseerde
+              inhoud aan te bieden. Zie sectie 8 voor alle details.
+            </li>
+            <li>
+              <strong>Zakelijke correspondentie:</strong> Wanneer u met ons communiceert via e-mail, telefoon of
+              andere kanalen, kunnen wij deze communicatie bewaren om uw vragen te beantwoorden en onze administratie
+              bij te houden.
+            </li>
+          </ul>
+
+          <h2 id="data-use">3. Hoe wij uw gegevens gebruiken</h2>
+          <p>Wij gebruiken uw persoonsgegevens voor de volgende doeleinden:</p>
+          <ul>
+            <li>
+              <strong>Beantwoorden van vragen:</strong> Om uw vragen te beantwoorden, gevraagde informatie over onze
+              producten en diensten te verstrekken en demo-aanvragen op te volgen.
+            </li>
+            <li>
+              <strong>Verbeteren van onze website:</strong> Om gebruikspatronen te analyseren, technische problemen
+              te diagnosticeren en de gebruikerservaring van onze website en digitale eigendommen te verbeteren.
+            </li>
+            <li>
+              <strong>Marketingcommunicatie:</strong> Met uw uitdrukkelijke toestemming kunnen wij u nieuwsbrieven,
+              productupdates, evenementuitnodigingen en andere marketingmaterialen sturen. U kunt zich op elk moment
+              afmelden door op de link "uitschrijven" te klikken in elke marketing-e-mail of door rechtstreeks
+              contact met ons op te nemen.
+            </li>
+            <li>
+              <strong>Uitvoering van overeenkomsten:</strong> Om onze softwareoplossingen te leveren,
+              implementatieondersteuning te bieden en onze contractuele verplichtingen jegens klanten en partners
+              na te komen.
+            </li>
+            <li>
+              <strong>Wettelijke naleving:</strong> Om te voldoen aan toepasselijke wet- en regelgeving en
+              juridische procedures.
+            </li>
+          </ul>
+
+          <h2 id="legal-basis">4. Rechtsgrondslag voor verwerking</h2>
+          <p>Wij verwerken uw persoonsgegevens op basis van een of meer van de volgende rechtsgronden:</p>
+          <ul>
+            <li>
+              <strong>Gerechtvaardigd belang:</strong> Wij verwerken bepaalde gegevens wanneer dit noodzakelijk is
+              voor onze gerechtvaardigde bedrijfsbelangen, zoals het verbeteren van onze website, het analyseren
+              van gebruikspatronen en het beschermen van onze systemen, mits deze belangen niet zwaarder wegen dan
+              uw rechten en vrijheden.
+            </li>
+            <li>
+              <strong>Toestemming:</strong> Wanneer u ons uitdrukkelijke toestemming hebt gegeven om uw gegevens
+              voor een specifiek doel te verwerken, zoals het ontvangen van marketingcommunicatie of het inschakelen
+              van niet-essenti\u00eble cookies.
+            </li>
+            <li>
+              <strong>Uitvoering van een overeenkomst:</strong> Wanneer verwerking noodzakelijk is voor de uitvoering
+              van een overeenkomst met u of om op uw verzoek stappen te ondernemen voorafgaand aan het sluiten van
+              een overeenkomst, zoals het reageren op een demo-aanvraag of het leveren van onze softwarediensten.
+            </li>
+            <li>
+              <strong>Wettelijke verplichting:</strong> Wanneer verwerking noodzakelijk is om te voldoen aan een
+              wettelijke verplichting waaraan wij zijn onderworpen, zoals belastingrapportage of regelgevende
+              vereisten.
+            </li>
+          </ul>
+
+          <h2 id="data-sharing">5. Gegevens delen</h2>
+          <p>
+            Wij verkopen, verhandelen of verhuren uw persoonsgegevens <strong>niet</strong> aan derden. Wij delen
+            uw gegevens uitsluitend in de volgende beperkte omstandigheden:
+          </p>
+          <ul>
+            <li>
+              <strong>Dienstverleners:</strong> Wij werken samen met vertrouwde externe verwerkers die ons helpen
+              bij het exploiteren van onze website, het uitvoeren van onze bedrijfsactiviteiten en het bedienen van
+              u (bijv. hostingproviders, e-maildienstverleners, analyseplatformen). Deze partners zijn contractueel
+              verplicht uw gegevens vertrouwelijk te behandelen en uitsluitend te verwerken zoals door ons
+              ge\u00efnstrueerd.
+            </li>
+            <li>
+              <strong>Wettelijke vereisten:</strong> Wij kunnen uw gegevens openbaar maken indien dit vereist is
+              door wet- of regelgeving, juridische procedures of overheidsverzoeken.
+            </li>
+            <li>
+              <strong>Bedrijfsoverdrachten:</strong> In het geval van een fusie, overname of verkoop van activa
+              kunnen uw gegevens worden overgedragen als onderdeel van de transactie. Wij zullen u op de hoogte
+              stellen van een dergelijke wijziging en ervoor zorgen dat de normen voor gegevensbescherming worden
+              gehandhaafd.
+            </li>
+          </ul>
+
+          <h2 id="data-retention">6. Bewaartermijnen</h2>
+          <p>Wij bewaren uw persoonsgegevens uitsluitend zolang als noodzakelijk om de in dit beleid genoemde doeleinden te vervullen:</p>
+          <ul>
+            <li>
+              <strong>Contactformuliergegevens:</strong> Bewaard tot maximaal <strong>2 jaar</strong> na de datum
+              van uw laatste interactie met ons, tenzij een langere bewaartermijn vereist is om contractuele of
+              wettelijke redenen.
+            </li>
+            <li>
+              <strong>Website-analysegegevens:</strong> Bewaard tot maximaal <strong>26 maanden</strong>, waarna
+              deze automatisch worden geanonimiseerd of verwijderd.
+            </li>
+            <li>
+              <strong>Toestemmingsregistraties voor marketing:</strong> Bewaard zolang de toestemming geldig blijft,
+              plus een redelijke periode daarna om naleving aan te tonen.
+            </li>
+            <li>
+              <strong>Contractuele gegevens:</strong> Bewaard gedurende de looptijd van het contract en tot 7 jaar
+              daarna, zoals vereist door de Nederlandse fiscale wetgeving.
+            </li>
+          </ul>
+
+          <h2 id="your-rights">7. Uw rechten</h2>
+          <p>
+            Op grond van de AVG hebt u de volgende rechten met betrekking tot uw persoonsgegevens. U kunt elk van
+            deze rechten uitoefenen door contact met ons op te nemen via
+            <a href="mailto:privacy@themanufacturingsuite.com">privacy@themanufacturingsuite.com</a>.
+          </p>
+          <ul>
+            <li>
+              <strong>Recht op inzage:</strong> U hebt het recht een kopie op te vragen van de persoonsgegevens
+              die wij van u bewaren.
+            </li>
+            <li>
+              <strong>Recht op rectificatie:</strong> U hebt het recht te verzoeken om correctie van onjuiste of
+              onvolledige persoonsgegevens.
+            </li>
+            <li>
+              <strong>Recht op verwijdering:</strong> U hebt het recht te verzoeken om verwijdering van uw
+              persoonsgegevens wanneer er geen dwingende reden is om de verwerking voort te zetten.
+            </li>
+            <li>
+              <strong>Recht op dataportabiliteit:</strong> U hebt het recht uw persoonsgegevens te ontvangen in een
+              gestructureerd, gangbaar en machineleesbaar formaat en deze over te dragen aan een andere
+              verwerkingsverantwoordelijke.
+            </li>
+            <li>
+              <strong>Recht van bezwaar:</strong> U hebt het recht bezwaar te maken tegen de verwerking van uw
+              persoonsgegevens wanneer wij ons baseren op gerechtvaardigd belang als rechtsgrondslag.
+            </li>
+            <li>
+              <strong>Recht op beperking van verwerking:</strong> U hebt het recht te verzoeken dat wij de
+              verwerking van uw persoonsgegevens beperken onder bepaalde omstandigheden.
+            </li>
+            <li>
+              <strong>Recht om toestemming in te trekken:</strong> Wanneer de verwerking is gebaseerd op
+              toestemming, hebt u het recht deze toestemming op elk moment in te trekken, zonder dat dit afbreuk
+              doet aan de rechtmatigheid van de verwerking die v\u00f3\u00f3r de intrekking heeft plaatsgevonden.
+            </li>
+          </ul>
+          <p>
+            Wij zullen binnen 30 dagen op uw verzoek reageren. Als u niet tevreden bent met ons antwoord, hebt u
+            het recht een klacht in te dienen bij de <em>Autoriteit Persoonsgegevens</em>.
+          </p>
+
+          <h2 id="cookies">8. Cookies</h2>
+          <p>
+            Onze website maakt gebruik van cookies en vergelijkbare trackingtechnologie\u00ebn om u te onderscheiden
+            van andere gebruikers en een betere browse-ervaring te bieden. Cookies zijn kleine tekstbestanden die
+            door uw browser op uw apparaat worden opgeslagen.
+          </p>
+          <p>Wij gebruiken de volgende categorie\u00ebn cookies:</p>
+          <ul>
+            <li>
+              <strong>Essenti\u00eble cookies:</strong> Vereist voor de basisfunctionaliteit van de website. Deze
+              cookies maken kernfunctionaliteit mogelijk zoals paginanavigatie, beveiliging en
+              toegankelijkheidsfuncties. Ze kunnen niet worden uitgeschakeld.
+            </li>
+            <li>
+              <strong>Analytische cookies:</strong> Helpen ons te begrijpen hoe bezoekers onze website gebruiken
+              door anoniem informatie te verzamelen en te rapporteren. Wij gebruiken deze inzichten om de structuur
+              en inhoud van onze website te verbeteren. Analytische cookies worden alleen geplaatst met uw
+              toestemming.
+            </li>
+            <li>
+              <strong>Marketingcookies:</strong> Worden gebruikt om bezoekers te volgen over websites heen en om
+              advertenties weer te geven die relevant en boeiend zijn. Marketingcookies worden alleen geplaatst
+              met uw uitdrukkelijke toestemming.
+            </li>
+          </ul>
+          <p>
+            <strong>Beheer van uw cookievoorkeuren:</strong> Wanneer u onze website voor het eerst bezoekt, krijgt
+            u een cookietoestemmingsbanner te zien waarin u kunt kiezen welke categorie\u00ebn cookies u accepteert.
+            U kunt uw cookievoorkeuren op elk moment wijzigen door uw browsercookies te wissen en onze website
+            opnieuw te bezoeken, of door rechtstreeks contact met ons op te nemen.
+          </p>
+          <p>
+            U kunt cookies ook beheren via uw browserinstellingen. De meeste browsers stellen u in staat cookies
+            te weigeren of te verwijderen. Houd er rekening mee dat het uitschakelen van bepaalde cookies de
+            functionaliteit van onze website kan be\u00efnvloeden.
+          </p>
+
+          <h2 id="contact">9. Contact voor privacykwesties</h2>
+          <p>
+            Als u vragen, opmerkingen of verzoeken hebt met betrekking tot dit Privacybeleid of de manier waarop
+            wij uw persoonsgegevens verwerken, neem dan contact met ons op:
+          </p>
+          <ul>
+            <li><strong>E-mail:</strong> <a href="mailto:privacy@themanufacturingsuite.com">privacy@themanufacturingsuite.com</a></li>
+            <li><strong>Telefoon:</strong> <a href="tel:+31432340050">+31 43 234 00 50</a></li>
+            <li>
+              <strong>Post:</strong> TheManufacturingSuite BV, t.a.v. Privacy Officer,
+              Il Flore, Avenue Ceramique 221, 6221 KX Maastricht, Nederland
+            </li>
+          </ul>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Banner -->
+  <CTABanner
+    title="Vragen over onze"
+    titleAccent="gegevensverwerking?"
+    description="Ons team beantwoordt graag al uw vragen over hoe wij met uw persoonsgegevens omgaan. Neem direct contact met ons op."
+    primaryCTA={{ label: 'Neem Contact Op', href: '/nl/contact' }}
+    secondaryCTA={{ label: 'Terug naar Home', href: '/nl' }}
+  />
+</BaseLayout>
+
+<style>
+  .legal-section {
+    padding-top: clamp(1rem, 2vw, 2rem);
+  }
+</style>

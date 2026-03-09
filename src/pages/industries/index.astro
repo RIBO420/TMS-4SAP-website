@@ -1,0 +1,500 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/global/Breadcrumbs.astro';
+import SectionHeader from '../../components/ui/SectionHeader.astro';
+import CTABanner from '../../components/ui/CTABanner.astro';
+import PlaceholderImage from '../../components/ui/PlaceholderImage.astro';
+
+const industries = [
+  {
+    slug: 'kunststof',
+    name: 'Plastics Manufacturing',
+    tagline: 'Injection Molding & Extrusion',
+    description:
+      'Full production control for plastics manufacturers. From mold lifecycle management to multi-cavity planning and complete batch traceability.',
+  },
+  {
+    slug: 'automotive',
+    name: 'Automotive Suppliers',
+    tagline: 'OEM-Ready Series Production',
+    description:
+      'Meet the demands of IATF 16949 compliance, EDI communication with OEMs, call-off scheduling, and full batch traceability for recalls.',
+  },
+  {
+    slug: 'metaalbewerking',
+    name: 'Metal Working & Machining',
+    tagline: 'CNC, Turning & Milling',
+    description:
+      'Precision planning for complex multi-operation routings, tool and fixture management, and real-time job costing across machine groups.',
+  },
+  {
+    slug: 'elektronica',
+    name: 'Electronics Manufacturing',
+    tagline: 'PCB Assembly & Testing',
+    description:
+      'Integrated production control from BOM import to final testing, with component traceability at reel level and pick-and-place integration.',
+  },
+];
+---
+
+<BaseLayout
+  title="Industry Solutions | TMS 4SAP"
+  description="TMS adapts to your specific manufacturing environment. Explore industry-tailored ERP solutions for plastics, automotive, metal working, and electronics."
+>
+  <!-- Hero -->
+  <section class="hero-inner">
+    <div class="container">
+      <div class="breadcrumbs-wrap">
+        <Breadcrumbs items={[{ label: 'Industries', href: '/industries' }]} />
+      </div>
+      <div class="hero-inner-content">
+        <span class="section-tag">Industry Solutions</span>
+        <h1 class="hero-inner-title">
+          Manufacturing ERP, <span class="text-amber">tailored to your industry</span>
+        </h1>
+        <p class="hero-inner-desc">
+          TMS adapts to your specific manufacturing environment. Whether you produce plastic components, automotive parts, precision metal work, or electronic assemblies, our modular ERP platform speaks your language.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top: 0; padding-bottom: 0;">
+    <div class="container">
+      <PlaceholderImage aspect="21:9" label="Manufacturing industries — Banner image" />
+    </div>
+  </section>
+
+  <!-- Intro -->
+  <section class="section">
+    <div class="container">
+      <div class="intro-block" data-animate>
+        <p class="intro-text">
+          Every manufacturing vertical faces unique challenges -- from regulatory compliance and traceability requirements to specialized machine integration and complex production planning. Generic ERP systems force you to adapt your processes to the software. TMS takes the opposite approach: our modular architecture lets you configure the exact capabilities your industry demands, without unnecessary complexity or costly customization.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Industry Grid -->
+  <section class="section industry-overview-section">
+    <div class="container">
+      <SectionHeader
+        tag="Verticals"
+        title="Choose your"
+        titleAccent="industry"
+        description="Select your manufacturing vertical to see how TMS addresses your specific challenges with purpose-built modules and workflows."
+      />
+      <div class="industry-overview-grid">
+        {industries.map((ind) => (
+          <a href={`/industries/${ind.slug}`} class="ind-card" data-animate>
+            <span class="ind-tagline">{ind.tagline}</span>
+            <h3 class="ind-title">{ind.name}</h3>
+            <p class="ind-desc">{ind.description}</p>
+            <span class="ind-link">
+              Explore solutions <span aria-hidden="true">&rarr;</span>
+            </span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Unified Platform -->
+  <section class="section">
+    <div class="container">
+      <div class="unified-block" data-animate>
+        <div class="unified-content">
+          <span class="section-tag">Unified Approach</span>
+          <h2>One Platform, <span class="text-amber">Multiple Industries</span></h2>
+          <p class="unified-desc">
+            While each industry vertical has unique requirements, every TMS deployment is built on the same proven platform. This means your team benefits from a consistent user experience, shared data models, and seamless module integration -- regardless of your specific manufacturing processes.
+          </p>
+          <p class="unified-desc">
+            Need to expand into a new vertical? Your existing TMS investment carries over. The same core platform that runs your plastics production can be extended to cover an electronics assembly line, with shared master data and unified reporting across all divisions.
+          </p>
+          <ul class="unified-list">
+            <li>
+              <strong>Consistent UX</strong> -- Same interface patterns across all modules, reducing training time
+            </li>
+            <li>
+              <strong>Shared master data</strong> -- One source of truth for customers, materials, and resources
+            </li>
+            <li>
+              <strong>Modular activation</strong> -- Enable only the modules you need, when you need them
+            </li>
+            <li>
+              <strong>SAP Business One integration</strong> -- Native connector ensures seamless data flow to your financial core
+            </li>
+          </ul>
+        </div>
+        <div class="unified-visual">
+          <div class="unified-diagram">
+            <div class="unified-center">
+              <span class="unified-center-label">TMS Core</span>
+            </div>
+            <div class="unified-orbit">
+              <span class="unified-orbit-item" style="--angle: 0deg;">PPS</span>
+              <span class="unified-orbit-item" style="--angle: 60deg;">APS</span>
+              <span class="unified-orbit-item" style="--angle: 120deg;">MES</span>
+              <span class="unified-orbit-item" style="--angle: 180deg;">QM</span>
+              <span class="unified-orbit-item" style="--angle: 240deg;">PDC</span>
+              <span class="unified-orbit-item" style="--angle: 300deg;">BI</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <CTABanner
+    title="Not sure which solution fits?"
+    titleAccent="Let's talk."
+    description="Book a free consultation with our manufacturing ERP specialists. We will map TMS to your specific production environment."
+    primaryCTA={{ label: 'Book a Demo', href: '/demo' }}
+    secondaryCTA={{ label: 'Contact Us', href: '/contact' }}
+  />
+</BaseLayout>
+
+<style>
+  /* Hero */
+  .hero-inner {
+    position: relative;
+    padding-top: clamp(7rem, 12vw, 10rem);
+    padding-bottom: clamp(3rem, 6vw, 5rem);
+    overflow: hidden;
+  }
+
+  .hero-inner::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+      ellipse 70% 50% at 50% 0%,
+      rgba(245, 158, 11, 0.04) 0%,
+      transparent 70%
+    );
+    pointer-events: none;
+  }
+
+  .breadcrumbs-wrap {
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero-inner-content {
+    position: relative;
+    z-index: 1;
+    max-width: 720px;
+  }
+
+  .hero-inner-title {
+    font-size: clamp(2.25rem, 5vw, 3.5rem);
+    font-weight: 700;
+    line-height: 1.08;
+    letter-spacing: -0.03em;
+    margin-top: 12px;
+  }
+
+  .hero-inner-desc {
+    font-size: clamp(1rem, 1.4vw, 1.125rem);
+    color: var(--text-muted);
+    line-height: 1.7;
+    max-width: 580px;
+    margin-top: 20px;
+  }
+
+  /* Intro */
+  .intro-block {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .intro-text {
+    font-size: clamp(1rem, 1.3vw, 1.0625rem);
+    color: var(--text-muted);
+    line-height: 1.8;
+  }
+
+  /* Industry Grid */
+  .industry-overview-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+
+  .ind-card {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 32px;
+    transition: all 0.3s var(--ease);
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .ind-card:hover {
+    background: var(--bg-card-hover);
+    border-color: rgba(245, 158, 11, 0.3);
+    transform: translateY(-2px);
+  }
+
+  .ind-tagline {
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: var(--amber);
+    line-height: 1.4;
+  }
+
+  .ind-title {
+    font-family: var(--font-heading);
+    font-size: 1.375rem;
+    font-weight: 600;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+  }
+
+  .ind-desc {
+    font-size: 0.9375rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+    flex-grow: 1;
+  }
+
+  .ind-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--amber);
+    margin-top: 4px;
+    transition: gap 0.2s var(--ease);
+  }
+
+  .ind-card:hover .ind-link {
+    gap: 10px;
+  }
+
+  /* Tablet (768px) */
+  @media (max-width: 768px) {
+    .industry-overview-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+
+    .ind-card {
+      padding: 24px;
+    }
+  }
+
+  /* iPhone (375px - 430px) */
+  @media (max-width: 480px) {
+    .industry-overview-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .ind-card {
+      padding: 20px;
+    }
+
+    .ind-link {
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+    }
+
+    .hero-inner {
+      padding-top: clamp(5rem, 10vw, 7rem);
+      padding-bottom: clamp(2rem, 5vw, 3rem);
+    }
+  }
+
+  /* Unified Platform */
+  .unified-block {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(2rem, 5vw, 4rem);
+    align-items: center;
+  }
+
+  .unified-content h2 {
+    font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+    margin-top: 12px;
+  }
+
+  .unified-desc {
+    font-size: 1rem;
+    color: var(--text-muted);
+    line-height: 1.7;
+    margin-top: 16px;
+  }
+
+  .unified-list {
+    list-style: none;
+    padding: 0;
+    margin-top: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .unified-list li {
+    font-size: 0.9375rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+    padding-left: 20px;
+    position: relative;
+  }
+
+  .unified-list li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 10px;
+    width: 6px;
+    height: 6px;
+    background: var(--amber);
+    border-radius: 50%;
+  }
+
+  .unified-list li strong {
+    color: var(--text);
+    font-weight: 600;
+  }
+
+  /* Unified Visual Diagram */
+  .unified-visual {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .unified-diagram {
+    position: relative;
+    width: 280px;
+    height: 280px;
+  }
+
+  .unified-center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80px;
+    height: 80px;
+    background: var(--amber-dim);
+    border: 1px solid rgba(245, 158, 11, 0.25);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .unified-center-label {
+    font-family: var(--font-heading);
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--amber);
+    text-align: center;
+    line-height: 1.2;
+  }
+
+  .unified-orbit {
+    position: absolute;
+    inset: 0;
+  }
+
+  .unified-orbit::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 220px;
+    height: 220px;
+    border: 1px solid var(--border);
+    border-radius: 50%;
+  }
+
+  .unified-orbit-item {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 44px;
+    height: 44px;
+    margin: -22px 0 0 -22px;
+    transform: rotate(var(--angle)) translateX(110px) rotate(calc(-1 * var(--angle)));
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-heading);
+    font-size: 0.6875rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    letter-spacing: 0.04em;
+  }
+
+  /* Tablet (768px) — Unified block */
+  @media (max-width: 768px) {
+    .unified-block {
+      grid-template-columns: 1fr;
+    }
+
+    .unified-visual {
+      order: -1;
+    }
+
+    .unified-diagram {
+      width: 240px;
+      height: 240px;
+    }
+
+    .unified-orbit::before {
+      width: 190px;
+      height: 190px;
+    }
+
+    .unified-orbit-item {
+      transform: rotate(var(--angle)) translateX(95px) rotate(calc(-1 * var(--angle)));
+    }
+  }
+
+  /* iPhone (375px - 430px) — Unified block */
+  @media (max-width: 480px) {
+    .unified-diagram {
+      width: 200px;
+      height: 200px;
+    }
+
+    .unified-orbit::before {
+      width: 160px;
+      height: 160px;
+    }
+
+    .unified-orbit-item {
+      width: 38px;
+      height: 38px;
+      margin: -19px 0 0 -19px;
+      transform: rotate(var(--angle)) translateX(80px) rotate(calc(-1 * var(--angle)));
+      font-size: 0.5625rem;
+    }
+
+    .unified-center {
+      width: 64px;
+      height: 64px;
+    }
+
+    .unified-list li {
+      font-size: 0.875rem;
+    }
+  }
+</style>

@@ -1,0 +1,38 @@
+---
+export interface Props {
+  variant?: 'primary' | 'ghost' | 'outline';
+  size?: 'sm' | 'md' | 'lg';
+  href?: string;
+  fullWidth?: boolean;
+  type?: 'button' | 'submit' | 'reset';
+  class?: string;
+}
+
+const {
+  variant = 'primary',
+  size = 'md',
+  href,
+  fullWidth = false,
+  type = 'button',
+  class: extraClass,
+  ...rest
+} = Astro.props;
+
+const variantClass = variant === 'outline' ? 'btn-ghost' : `btn-${variant}`;
+const sizeClass = size !== 'md' ? `btn-${size}` : '';
+const fullClass = fullWidth ? 'btn-full' : '';
+
+const classes = ['btn', variantClass, sizeClass, fullClass, extraClass]
+  .filter(Boolean)
+  .join(' ');
+---
+
+{href ? (
+  <a href={href} class={classes} {...rest}>
+    <slot />
+  </a>
+) : (
+  <button type={type} class={classes} {...rest}>
+    <slot />
+  </button>
+)}

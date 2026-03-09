@@ -1,0 +1,640 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import HeroInner from '@components/ui/HeroInner.astro';
+import SectionHeader from '@components/ui/SectionHeader.astro';
+import CTABanner from '@components/ui/CTABanner.astro';
+---
+
+<BaseLayout
+  title="Careers | TMS 4SAP"
+  description="Join TheManufacturingSuite team in Maastricht. Explore open positions in software development, consulting, and support. Help shape the future of manufacturing technology."
+>
+  <!-- Hero -->
+  <HeroInner
+    breadcrumbs={[
+      { label: 'Home', href: '/' },
+      { label: 'Careers', href: '/careers' },
+    ]}
+    tag="Careers"
+    title="Join Our"
+    titleAccent="Team"
+    description="Help us shape the future of manufacturing technology. We are building software that powers production floors around the world -- and we need talented people to do it."
+  />
+
+  <!-- Why TMS? -->
+  <section class="section why-section">
+    <div class="container">
+      <SectionHeader
+        tag="Why TMS?"
+        title="More Than a"
+        titleAccent="Workplace"
+        description="We believe in building an environment where talented people can do their best work. Here is what you can expect when you join TMS."
+      />
+
+      <div class="benefits-grid" data-animate>
+        <!-- Innovation -->
+        <div class="benefit-card">
+          <div class="benefit-icon" aria-hidden="true">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 2v4" /><path d="m6.34 7.34 2.83 2.83" /><path d="M2 12h4" /><path d="m6.34 16.66 2.83-2.83" /><path d="M12 18v4" /><path d="m14.83 14.83 2.83 2.83" /><path d="M18 12h4" /><path d="m14.83 9.17 2.83-2.83" />
+            </svg>
+          </div>
+          <h3 class="benefit-title">Innovation</h3>
+          <p class="benefit-desc">
+            Work on cutting-edge manufacturing technology that sits at the intersection of ERP systems, production
+            planning, and real-time shop floor execution. Our tech stack combines SAP ABAP, modern web frameworks,
+            and advanced scheduling algorithms.
+          </p>
+        </div>
+
+        <!-- Growth -->
+        <div class="benefit-card">
+          <div class="benefit-icon" aria-hidden="true">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M2 20h20" /><path d="m5.5 16.5 2-4.5" /><path d="m7.5 12 3.5-6" /><path d="m11 6 3.5 6" /><path d="m14.5 12 2 4.5" /><circle cx="12" cy="5" r="1" />
+            </svg>
+          </div>
+          <h3 class="benefit-title">Growth</h3>
+          <p class="benefit-desc">
+            Personal development is a priority, not an afterthought. We invest in certifications, training programs,
+            conference attendance, and internal knowledge-sharing sessions. Your career path is yours to define --
+            we provide the support to get you there.
+          </p>
+        </div>
+
+        <!-- Flexibility -->
+        <div class="benefit-card">
+          <div class="benefit-icon" aria-hidden="true">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect width="18" height="18" x="3" y="3" rx="2" /><path d="M3 9h18" /><path d="M9 3v18" />
+            </svg>
+          </div>
+          <h3 class="benefit-title">Flexibility</h3>
+          <p class="benefit-desc">
+            We offer hybrid work options with a mix of office days at our Maastricht headquarters and remote work.
+            Flexible hours mean you can structure your day around your life, not the other way around. Results
+            matter more than clock hours.
+          </p>
+        </div>
+
+        <!-- Impact -->
+        <div class="benefit-card">
+          <div class="benefit-icon" aria-hidden="true">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10" /><path d="m2 12 5.1 2.5" /><path d="m22 12-5.1 2.5" /><path d="m8 12 4-8 4 8" /><path d="M12 2a14.5 14.5 0 0 0 0 20" /><path d="M12 2a14.5 14.5 0 0 1 0 20" />
+            </svg>
+          </div>
+          <h3 class="benefit-title">Impact</h3>
+          <p class="benefit-desc">
+            Your work directly touches real production floors worldwide -- from plastics manufacturers in the Netherlands
+            to automotive suppliers across Europe. Every feature you build, every customer you support, has a tangible
+            effect on how goods are made.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Open Positions -->
+  <section class="section positions-section">
+    <div class="container">
+      <SectionHeader
+        tag="Open Positions"
+        title="Find Your"
+        titleAccent="Role"
+        description="We are looking for people who are passionate about technology and manufacturing. Explore our current openings below."
+      />
+
+      <div class="positions-list">
+        <!-- Position 1: Senior Software Developer -->
+        <article class="position-card" data-animate>
+          <div class="position-header">
+            <div class="position-meta">
+              <span class="position-badge">Full-time</span>
+              <span class="position-location">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" /><circle cx="12" cy="10" r="3" />
+                </svg>
+                Maastricht / Remote
+              </span>
+            </div>
+            <h3 class="position-title">Senior Software Developer</h3>
+          </div>
+          <div class="position-body">
+            <p class="position-desc">
+              We are looking for an experienced software developer to join our core product team. You will design
+              and build new features for TMS 4SAP, working across the full stack from SAP ABAP backend logic to
+              modern web-based frontends. You will collaborate closely with our product managers and implementation
+              consultants to translate customer needs into robust, scalable solutions.
+            </p>
+            <div class="position-requirements">
+              <h4>What we are looking for:</h4>
+              <ul>
+                <li>5+ years of professional software development experience</li>
+                <li>Strong knowledge of SAP ABAP and SAP Business One SDK</li>
+                <li>Experience with modern web technologies (JavaScript/TypeScript, HTML, CSS)</li>
+                <li>Understanding of manufacturing processes and ERP concepts</li>
+                <li>Familiarity with SQL Server or HANA database administration</li>
+                <li>Fluent in English; Dutch or German is a plus</li>
+              </ul>
+            </div>
+          </div>
+          <div class="position-footer">
+            <a href="mailto:careers@themanufacturingsuite.com?subject=Application%3A%20Senior%20Software%20Developer" class="btn btn-primary">
+              Apply Now
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M5 12h14" /><path d="m12 5 7 7-7 7" />
+              </svg>
+            </a>
+          </div>
+        </article>
+
+        <!-- Position 2: Implementation Consultant -->
+        <article class="position-card" data-animate>
+          <div class="position-header">
+            <div class="position-meta">
+              <span class="position-badge">Full-time</span>
+              <span class="position-location">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" /><circle cx="12" cy="10" r="3" />
+                </svg>
+                Maastricht + Travel
+              </span>
+            </div>
+            <h3 class="position-title">Implementation Consultant</h3>
+          </div>
+          <div class="position-body">
+            <p class="position-desc">
+              As an Implementation Consultant, you will be the primary point of contact for customers during their
+              TMS 4SAP rollout. You will manage the full implementation lifecycle -- from requirements gathering and
+              process mapping to system configuration, testing, and go-live support. This is a customer-facing role
+              that combines technical expertise with strong communication skills.
+            </p>
+            <div class="position-requirements">
+              <h4>What we are looking for:</h4>
+              <ul>
+                <li>3+ years of experience in ERP or manufacturing software implementation</li>
+                <li>Hands-on experience with SAP Business One or similar ERP systems</li>
+                <li>Strong project management skills and ability to manage multiple projects simultaneously</li>
+                <li>Excellent communication and presentation skills</li>
+                <li>Willingness to travel to customer sites across Europe (approximately 30-40%)</li>
+                <li>Understanding of manufacturing workflows: production planning, BOM management, quality control</li>
+                <li>Fluent in English and Dutch; German is a strong advantage</li>
+              </ul>
+            </div>
+          </div>
+          <div class="position-footer">
+            <a href="mailto:careers@themanufacturingsuite.com?subject=Application%3A%20Implementation%20Consultant" class="btn btn-primary">
+              Apply Now
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M5 12h14" /><path d="m12 5 7 7-7 7" />
+              </svg>
+            </a>
+          </div>
+        </article>
+
+        <!-- Position 3: Technical Support Engineer -->
+        <article class="position-card" data-animate>
+          <div class="position-header">
+            <div class="position-meta">
+              <span class="position-badge">Full-time</span>
+              <span class="position-location">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" /><circle cx="12" cy="10" r="3" />
+                </svg>
+                Maastricht
+              </span>
+            </div>
+            <h3 class="position-title">Technical Support Engineer</h3>
+          </div>
+          <div class="position-body">
+            <p class="position-desc">
+              Join our support team as a Technical Support Engineer and become the trusted advisor our customers
+              rely on for day-to-day assistance. You will diagnose and resolve technical issues, guide users through
+              complex workflows, and collaborate with our development team to escalate and track bugs. Your goal is
+              to ensure our customers get maximum value from TMS 4SAP.
+            </p>
+            <div class="position-requirements">
+              <h4>What we are looking for:</h4>
+              <ul>
+                <li>2+ years of experience in technical support, helpdesk, or a similar customer-facing technical role</li>
+                <li>Working knowledge of SQL (queries, troubleshooting, data analysis)</li>
+                <li>Experience with ERP systems, manufacturing software, or business applications</li>
+                <li>Strong analytical and problem-solving skills</li>
+                <li>Patient, empathetic, and clear communication style</li>
+                <li>Familiarity with ticketing systems (e.g., Jira, Zendesk, or ServiceNow)</li>
+                <li>Fluent in English; Dutch or German is a plus</li>
+              </ul>
+            </div>
+          </div>
+          <div class="position-footer">
+            <a href="mailto:careers@themanufacturingsuite.com?subject=Application%3A%20Technical%20Support%20Engineer" class="btn btn-primary">
+              Apply Now
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M5 12h14" /><path d="m12 5 7 7-7 7" />
+              </svg>
+            </a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Open Application -->
+  <section class="section open-application-section">
+    <div class="container">
+      <div class="open-application-card" data-animate>
+        <div class="open-application-content">
+          <div class="open-application-icon" aria-hidden="true">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><line x1="19" x2="19" y1="8" y2="14" /><line x1="22" x2="16" y1="11" y2="11" />
+            </svg>
+          </div>
+          <h2>Don't See a Match?</h2>
+          <p>
+            We are always interested in hearing from talented people, even if there is no open position that fits
+            your profile right now. If you are passionate about manufacturing technology and believe you could
+            contribute to our team, we encourage you to send us an unsolicited application. Tell us about yourself,
+            what excites you about TMS, and how you think you could make an impact.
+          </p>
+          <a href="mailto:careers@themanufacturingsuite.com?subject=Unsolicited%20Application" class="btn btn-primary btn-lg">
+            Send Open Application
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M5 12h14" /><path d="m12 5 7 7-7 7" />
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Culture -->
+  <section class="section culture-section">
+    <div class="container">
+      <div class="culture-content" data-animate>
+        <span class="section-tag">Our Culture</span>
+        <h2>Built on Craft, <span class="text-amber">Driven by Curiosity</span></h2>
+        <p>
+          At TMS, we are a close-knit team of engineers, consultants, and domain experts who care deeply about
+          the quality of what we build. Our headquarters in Maastricht, situated in the heart of the Euregion,
+          gives us direct access to a thriving manufacturing ecosystem across the Netherlands, Belgium, and
+          Germany.
+        </p>
+        <p>
+          We value directness, ownership, and continuous improvement -- both in our products and in ourselves.
+          Whether you are debugging a complex scheduling algorithm, walking a customer through their first
+          go-live, or brainstorming the next generation of our platform, you will find an environment that
+          rewards initiative and celebrates shared success.
+        </p>
+        <p>
+          We keep meetings lean, documentation thorough, and code reviews honest. Friday afternoons are for
+          knowledge sharing and experimentation. And yes, we take our coffee breaks seriously.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Banner -->
+  <CTABanner
+    title="Interested in TMS as a"
+    titleAccent="product instead?"
+    description="Discover how TMS 4SAP can transform your manufacturing operations. Book a personalised demo with our product team."
+    primaryCTA={{ label: 'Book a Demo', href: '/demo' }}
+    secondaryCTA={{ label: 'View Modules', href: '/modules' }}
+  />
+</BaseLayout>
+
+<style>
+  /* ============================================
+     WHY TMS SECTION — Benefit Cards
+     ============================================ */
+  .why-section {
+    padding-top: clamp(2rem, 4vw, 3rem);
+  }
+
+  .benefits-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+
+  .benefit-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: clamp(1.5rem, 3vw, 2rem);
+    transition: all 0.3s var(--ease);
+  }
+
+  .benefit-card:hover {
+    border-color: var(--border-hover);
+    background: var(--bg-card-hover);
+    transform: translateY(-2px);
+  }
+
+  .benefit-icon {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--amber-dim);
+    border-radius: var(--radius-sm);
+    color: var(--amber);
+    margin-bottom: 16px;
+  }
+
+  .benefit-title {
+    font-family: var(--font-heading);
+    font-size: 1.25rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    margin-bottom: 8px;
+  }
+
+  .benefit-desc {
+    font-size: 0.9375rem;
+    color: var(--text-muted);
+    line-height: 1.7;
+  }
+
+  /* Tablet (768px) */
+  @media (max-width: 768px) {
+    .benefits-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+
+    .benefit-card {
+      padding: clamp(1.25rem, 3vw, 1.5rem);
+    }
+  }
+
+  /* iPhone (375px - 430px) */
+  @media (max-width: 480px) {
+    .benefits-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* ============================================
+     OPEN POSITIONS — Job Listings
+     ============================================ */
+  .positions-section {
+    background: var(--bg-card);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .positions-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .position-card {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: clamp(1.5rem, 3vw, 2rem);
+    transition: border-color 0.3s var(--ease);
+  }
+
+  .position-card:hover {
+    border-color: var(--border-hover);
+  }
+
+  .position-header {
+    margin-bottom: 16px;
+  }
+
+  .position-meta {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 12px;
+  }
+
+  .position-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 12px;
+    background: var(--amber-dim);
+    border: 1px solid rgba(245, 158, 11, 0.2);
+    border-radius: 100px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--amber);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .position-location {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.8125rem;
+    color: var(--text-dim);
+  }
+
+  .position-title {
+    font-family: var(--font-heading);
+    font-size: clamp(1.25rem, 2vw, 1.5rem);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+  }
+
+  .position-body {
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .position-desc {
+    font-size: 0.9375rem;
+    color: var(--text-muted);
+    line-height: 1.7;
+    margin-bottom: 16px;
+  }
+
+  .position-requirements h4 {
+    font-family: var(--font-heading);
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 10px;
+    letter-spacing: -0.01em;
+  }
+
+  .position-requirements ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .position-requirements li {
+    position: relative;
+    padding-left: 20px;
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+
+  .position-requirements li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 8px;
+    width: 6px;
+    height: 6px;
+    background: var(--amber);
+    border-radius: 50%;
+  }
+
+  .position-footer {
+    padding-top: 20px;
+    display: flex;
+    align-items: center;
+  }
+
+  /* ============================================
+     OPEN APPLICATION
+     ============================================ */
+  .open-application-section {
+    padding-top: 0;
+  }
+
+  .open-application-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-xl);
+    padding: clamp(2rem, 4vw, 3rem);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .open-application-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 10%;
+    right: 10%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent 0%, var(--amber) 50%, transparent 100%);
+    opacity: 0.3;
+  }
+
+  .open-application-content {
+    position: relative;
+    z-index: 1;
+    max-width: 600px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .open-application-icon {
+    width: 56px;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--amber-dim);
+    border-radius: 50%;
+    color: var(--amber);
+  }
+
+  .open-application-content h2 {
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+
+  .open-application-content p {
+    font-size: 1rem;
+    color: var(--text-muted);
+    line-height: 1.7;
+  }
+
+  .open-application-content .btn {
+    margin-top: 8px;
+  }
+
+  /* ============================================
+     CULTURE SECTION
+     ============================================ */
+  .culture-content {
+    max-width: 720px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .culture-content h2 {
+    font-size: clamp(1.75rem, 3vw, 2.5rem);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-top: 12px;
+    margin-bottom: 24px;
+  }
+
+  .culture-content p {
+    font-size: 1.0625rem;
+    color: var(--text-muted);
+    line-height: 1.8;
+    margin-bottom: 16px;
+  }
+
+  .culture-content p:last-of-type {
+    margin-bottom: 0;
+  }
+
+  /* ============================================
+     RESPONSIVE — Tablet (768px)
+     ============================================ */
+  @media (max-width: 768px) {
+    .positions-section {
+      padding: clamp(3rem, 8vw, 5rem) 0;
+    }
+
+    .position-card {
+      padding: clamp(1.25rem, 3vw, 1.5rem);
+    }
+
+    .open-application-card {
+      padding: clamp(1.5rem, 4vw, 2.5rem);
+    }
+  }
+
+  /* ============================================
+     RESPONSIVE — iPhone (375px - 430px)
+     ============================================ */
+  @media (max-width: 480px) {
+    .position-meta {
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .position-footer .btn {
+      min-height: 44px;
+      width: 100%;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .open-application-content .btn {
+      min-height: 44px;
+      align-self: stretch;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .position-requirements li {
+      font-size: 0.8125rem;
+    }
+  }
+</style>

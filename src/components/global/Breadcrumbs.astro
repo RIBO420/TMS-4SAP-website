@@ -1,0 +1,87 @@
+---
+import { defaultLang, type Lang } from '../../i18n/config';
+import { t, getLocalizedPath } from '../../i18n/utils';
+
+interface BreadcrumbItem {
+  label: string;
+  href: string;
+}
+
+interface Props {
+  items: BreadcrumbItem[];
+  lang?: Lang;
+}
+
+const { items, lang = defaultLang } = Astro.props;
+---
+
+<nav class="breadcrumbs" aria-label="Breadcrumb">
+  <ol>
+    <li>
+      <a href={getLocalizedPath('/', lang)}>{t(lang, 'breadcrumbs.home')}</a>
+    </li>
+    {items.map((item, index) => {
+      const isLast = index === items.length - 1;
+      return (
+        <li>
+          <span class="separator" aria-hidden="true">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="9 18 15 12 9 6" />
+            </svg>
+          </span>
+          {isLast ? (
+            <span class="current" aria-current="page">{item.label}</span>
+          ) : (
+            <a href={item.href}>{item.label}</a>
+          )}
+        </li>
+      );
+    })}
+  </ol>
+</nav>
+
+<style>
+  .breadcrumbs {
+    padding: 16px 0;
+  }
+
+  ol {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+
+  li {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  a {
+    font-size: 0.8125rem;
+    color: var(--text-dim);
+    transition: color 0.2s var(--ease);
+  }
+
+  a:hover {
+    color: var(--amber);
+  }
+
+  .current {
+    font-size: 0.8125rem;
+    color: var(--text-muted);
+    font-weight: 500;
+  }
+
+  .separator {
+    display: flex;
+    align-items: center;
+    color: var(--text-dim);
+    opacity: 0.5;
+    margin: 0 2px;
+  }
+</style>

@@ -1,0 +1,69 @@
+---
+import { languages, defaultLang, type Lang } from '../../i18n/config';
+
+interface Props {
+  lang?: Lang;
+  currentPath?: string;
+}
+
+const { lang = 'en', currentPath = '/' } = Astro.props;
+
+function getPathForLang(targetLang: Lang): string {
+  // Strip any existing lang prefix
+  const stripped = currentPath.replace(/^\/(en|nl|de)(\/|$)/, '/');
+  if (targetLang === defaultLang) return stripped || '/';
+  if (stripped === '/') return `/${targetLang}`;
+  return `/${targetLang}${stripped}`;
+}
+
+const langEntries = Object.entries(languages) as [Lang, string][];
+---
+
+<div class="lang-switcher">
+  {langEntries.map(([code, _label], i) => (
+    <>
+      {i > 0 && <span class="lang-sep" aria-hidden="true">|</span>}
+      {code === lang ? (
+        <span class="lang-link lang-active" aria-current="true">{code.toUpperCase()}</span>
+      ) : (
+        <a href={getPathForLang(code)} class="lang-link">{code.toUpperCase()}</a>
+      )}
+    </>
+  ))}
+</div>
+
+<style>
+  .lang-switcher {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--font-heading);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+  }
+
+  .lang-link {
+    padding: 4px 6px;
+    border-radius: 4px;
+    color: var(--text-dim, #71717a);
+    transition: color 0.2s ease, background 0.2s ease;
+    text-decoration: none;
+  }
+
+  .lang-link:hover {
+    color: var(--text, #fafafa);
+    background: rgba(35, 35, 41, 0.6);
+  }
+
+  .lang-active {
+    color: #F59E0B;
+    background: rgba(245, 158, 11, 0.1);
+  }
+
+  .lang-sep {
+    color: var(--border, #232329);
+    user-select: none;
+    font-weight: 400;
+  }
+</style>

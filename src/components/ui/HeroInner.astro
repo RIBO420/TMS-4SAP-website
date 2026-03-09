@@ -1,0 +1,227 @@
+---
+import { defaultLang, type Lang } from '../../i18n/config';
+import MotionHero from '../motion/MotionHero.tsx';
+
+export interface Props {
+  breadcrumbs?: { label: string; href: string }[];
+  tag?: string;
+  title: string;
+  titleAccent?: string;
+  description?: string;
+  /** Alias for description, used by some layouts */
+  tagline?: string;
+  /** Optional badge label (e.g. module abbreviation) */
+  badge?: string;
+  /** Optional icon SVG string */
+  icon?: string;
+  lang?: Lang;
+}
+
+const {
+  breadcrumbs,
+  tag,
+  title,
+  titleAccent,
+  description,
+  tagline,
+  badge,
+  icon,
+  lang = defaultLang,
+} = Astro.props;
+
+const displayDesc = description || tagline;
+const displayTag = tag || badge;
+---
+
+<section class="hero-inner">
+  <div class="container">
+    {breadcrumbs && breadcrumbs.length > 0 && (
+      <nav class="breadcrumbs" aria-label="Breadcrumb">
+        <ol>
+          {breadcrumbs.map((crumb, i) => (
+            <li>
+              {i < breadcrumbs.length - 1 ? (
+                <>
+                  <a href={crumb.href}>{crumb.label}</a>
+                  <span class="breadcrumb-sep" aria-hidden="true">/</span>
+                </>
+              ) : (
+                <span aria-current="page">{crumb.label}</span>
+              )}
+            </li>
+          ))}
+        </ol>
+      </nav>
+    )}
+    <MotionHero
+      client:load
+      badge={displayTag}
+      title={title}
+      titleAccent={titleAccent}
+      description={displayDesc}
+    />
+  </div>
+</section>
+
+<style>
+  .hero-inner {
+    position: relative;
+    padding-top: clamp(7rem, 12vw, 10rem);
+    padding-bottom: clamp(3rem, 6vw, 5rem);
+    overflow: hidden;
+  }
+
+  /* Subtle background gradient */
+  .hero-inner::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+      ellipse 70% 50% at 50% 0%,
+      rgba(245, 158, 11, 0.04) 0%,
+      transparent 70%
+    );
+    pointer-events: none;
+  }
+
+  .breadcrumbs {
+    position: relative;
+    z-index: 1;
+    margin-bottom: 32px;
+  }
+
+  .breadcrumbs ol {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .breadcrumbs li {
+    display: flex;
+    align-items: center;
+    font-size: 0.875rem;
+    color: var(--text-dim);
+  }
+
+  .breadcrumbs a {
+    color: var(--text-dim);
+    transition: color 0.2s var(--ease);
+  }
+
+  .breadcrumbs a:hover {
+    color: var(--amber);
+  }
+
+  .breadcrumb-sep {
+    margin: 0 10px;
+    color: var(--border-hover);
+    user-select: none;
+  }
+
+  .breadcrumbs [aria-current="page"] {
+    color: var(--text-muted);
+  }
+
+  .hero-inner-content {
+    position: relative;
+    z-index: 1;
+    max-width: 720px;
+  }
+
+  .hero-inner-title {
+    font-size: clamp(2.25rem, 5vw, 3.5rem);
+    font-weight: 700;
+    line-height: 1.08;
+    letter-spacing: -0.03em;
+    margin-top: 12px;
+  }
+
+  .hero-inner-icon {
+    width: 56px;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--amber-dim);
+    border-radius: var(--radius-sm);
+    color: var(--amber);
+    margin-bottom: 8px;
+  }
+
+  .hero-inner-desc {
+    font-size: clamp(1rem, 1.4vw, 1.125rem);
+    color: var(--text-muted);
+    line-height: 1.7;
+    max-width: 580px;
+    margin-top: 20px;
+  }
+
+  /* Tablet */
+  @media (max-width: 768px) {
+    .hero-inner {
+      padding-top: clamp(5.5rem, 10vw, 8rem);
+      padding-bottom: clamp(2.5rem, 5vw, 4rem);
+    }
+
+    .breadcrumbs {
+      margin-bottom: 24px;
+    }
+
+    .hero-inner-title {
+      font-size: clamp(2rem, 4.5vw, 3rem);
+    }
+
+    .hero-inner-desc {
+      font-size: 1rem;
+      margin-top: 16px;
+    }
+
+    .hero-inner-icon {
+      width: 48px;
+      height: 48px;
+    }
+  }
+
+  /* iPhone (375px-430px) */
+  @media (max-width: 480px) {
+    .hero-inner {
+      padding-top: 5rem;
+      padding-bottom: 2rem;
+    }
+
+    .breadcrumbs {
+      margin-bottom: 20px;
+    }
+
+    .breadcrumbs li {
+      font-size: 0.8125rem;
+    }
+
+    .breadcrumb-sep {
+      margin: 0 6px;
+    }
+
+    .hero-inner-content {
+      max-width: 100%;
+    }
+
+    .hero-inner-title {
+      font-size: clamp(1.75rem, 7vw, 2.25rem);
+      margin-top: 8px;
+    }
+
+    .hero-inner-icon {
+      width: 44px;
+      height: 44px;
+    }
+
+    .hero-inner-desc {
+      font-size: 0.9375rem;
+      line-height: 1.6;
+      margin-top: 12px;
+    }
+  }
+</style>

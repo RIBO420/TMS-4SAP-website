@@ -1,0 +1,153 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import HeroInner from '../../../components/ui/HeroInner.astro';
+import SectionHeader from '../../../components/ui/SectionHeader.astro';
+import ModuleCard from '../../../components/cards/ModuleCard.astro';
+import CTABanner from '../../../components/ui/CTABanner.astro';
+import { modules } from '../../../data/modules';
+
+const breadcrumbs = [
+  { label: 'Home', href: '/nl' },
+  { label: 'Modules', href: '/nl/modules' },
+];
+---
+
+<BaseLayout
+  lang="nl"
+  title="Systeemmodules"
+  description="Ontdek de 9 geintegreerde TMS-modules voor SAP Business One: productieplanning, geavanceerde planning, MES, dataregistratie, kwaliteitsmanagement, productdata, BI, variantconfiguratie en documentbeheer."
+>
+  <HeroInner
+    breadcrumbs={breadcrumbs}
+    tag="Kernplatform"
+    title="Systeem"
+    titleAccent="Modules"
+    description="Negen gespecialiseerde modules die naadloos samenwerken binnen SAP Business One om elk aspect van uw productieomgeving te digitaliseren — van planning en scheduling tot kwaliteitscontrole en business intelligence."
+  />
+
+  <!-- All Modules Grid -->
+  <section class="section" id="modules-grid">
+    <div class="container">
+      <div class="modules-grid">
+        {modules.map((mod) => (
+          <ModuleCard module={mod} />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Integrated Approach Section -->
+  <section class="section integrated-section">
+    <div class="container">
+      <SectionHeader
+        tag="Naadloze integratie"
+        title="Eén platform,"
+        titleAccent="geen silo's"
+        description="Elke module deelt één gemeenschappelijke datalaag binnen SAP Business One, waardoor dubbele invoer wordt geëlimineerd en real-time consistentie over uw gehele operatie wordt gegarandeerd."
+      />
+      <div class="pillars-grid">
+        <div class="pillar-card" data-animate>
+          <div class="pillar-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            </svg>
+          </div>
+          <h3>Eén bron van waarheid</h3>
+          <p>Alle modules lezen uit en schrijven naar één centrale SAP Business One-database. Een productieorder aangemaakt in PPS stroomt automatisch door naar MES, PDC en QM zonder handmatige tussenkomst.</p>
+        </div>
+        <div class="pillar-card" data-animate>
+          <div class="pillar-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"/>
+              <polyline points="12 6 12 12 16 14"/>
+            </svg>
+          </div>
+          <h3>Real-time datastroom</h3>
+          <p>Werkvloergebeurtenissen vastgelegd door PDC worden direct weergegeven in MES-dashboards, BI-rapportages en QM-inspectietriggers. Geen batchsynchronisatie, geen nachtelijke updates.</p>
+        </div>
+        <div class="pillar-card" data-animate>
+          <div class="pillar-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="7" width="20" height="14" rx="2" ry="2"/>
+              <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
+            </svg>
+          </div>
+          <h3>Modulaire implementatie</h3>
+          <p>Begin met de modules die u het meest nodig heeft en breid uit in de tijd. Elke module levert zelfstandig waarde en wordt krachtiger naarmate u meer modules activeert.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Banner -->
+  <CTABanner
+    title="Klaar om TMS"
+    titleAccent="in actie te zien?"
+    description="Vraag een persoonlijke demo aan en ontdek hoe 9 geïntegreerde modules uw productieprocessen kunnen transformeren."
+    primaryCTA={{ label: 'Demo aanvragen', href: '/nl/demo' }}
+    secondaryCTA={{ label: 'Brochure downloaden', href: '/nl/downloads' }}
+  />
+</BaseLayout>
+
+<style>
+  /* Pillars / Integrated approach grid */
+  .integrated-section {
+    border-top: 1px solid var(--border);
+  }
+
+  .pillars-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+
+  .pillar-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 32px 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    transition: all 0.3s var(--ease);
+  }
+
+  .pillar-card:hover {
+    background: var(--bg-card-hover);
+    border-color: var(--border-hover);
+    transform: translateY(-2px);
+  }
+
+  .pillar-icon {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--amber-dim);
+    border-radius: var(--radius-sm);
+    color: var(--amber);
+    flex-shrink: 0;
+  }
+
+  .pillar-card h3 {
+    font-family: var(--font-heading);
+    font-size: 1.125rem;
+    font-weight: 600;
+    line-height: 1.3;
+    letter-spacing: -0.01em;
+  }
+
+  .pillar-card p {
+    font-size: 0.9375rem;
+    color: var(--text-muted);
+    line-height: 1.7;
+  }
+
+  @media (max-width: 900px) {
+    .pillars-grid {
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+  }
+</style>

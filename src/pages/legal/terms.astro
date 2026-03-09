@@ -1,0 +1,232 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import CTABanner from '@components/ui/CTABanner.astro';
+import '@styles/utilities.css';
+
+const title = 'Terms of Service';
+const lastUpdated = '2026-03-01';
+const formattedDate = new Date(lastUpdated).toLocaleDateString('en-GB', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+});
+---
+
+<BaseLayout
+  title="Terms of Service | TMS 4SAP"
+  description="Read the Terms of Service governing your use of The Manufacturing Suite website and software services. Understand your rights and obligations."
+>
+  <!-- Breadcrumbs -->
+  <nav class="container breadcrumbs" aria-label="Breadcrumb">
+    <a href="/">Home</a>
+    <span class="breadcrumbs-separator" aria-hidden="true">/</span>
+    <a href="/legal/terms">Legal</a>
+    <span class="breadcrumbs-separator" aria-hidden="true">/</span>
+    <span class="breadcrumbs-current" aria-current="page">{title}</span>
+  </nav>
+
+  <!-- Legal content -->
+  <section class="section legal-section">
+    <div class="container">
+      <div class="legal-width">
+        <!-- Page header -->
+        <header class="legal-header">
+          <h1>{title}</h1>
+          <p class="legal-last-updated">
+            Last updated: <time datetime={lastUpdated}>{formattedDate}</time>
+          </p>
+        </header>
+
+        <!-- Prose content -->
+        <div class="prose">
+
+          <h2 id="acceptance">1. Acceptance of Terms</h2>
+          <p>
+            By accessing and using the website and services provided by <strong>TheManufacturingSuite BV</strong>
+            ("TMS," "we," "us," or "our"), located at Il Flore, Avenue Ceramique 221, 6221 KX Maastricht, The
+            Netherlands, you agree to be bound by these Terms of Service ("Terms"). If you do not agree with any
+            part of these Terms, you must not use our website or services.
+          </p>
+          <p>
+            These Terms apply to all visitors, users, and others who access or use our website at
+            <a href="https://themanufacturingsuite.com">themanufacturingsuite.com</a> and any related services,
+            applications, or platforms operated by TMS.
+          </p>
+          <p>
+            We reserve the right to modify these Terms at any time. Changes will be posted on this page with an
+            updated revision date. Your continued use of our website and services after such modifications
+            constitutes your acceptance of the revised Terms.
+          </p>
+
+          <h2 id="services">2. Services Description</h2>
+          <p>
+            TMS provides manufacturing execution and planning software solutions designed to integrate with
+            SAP Business One. Our offerings include, but are not limited to:
+          </p>
+          <ul>
+            <li>
+              <strong>TMS 4SAP software modules:</strong> Production Planning and Scheduling (PPS), Advanced
+              Planning and Scheduling (APS), Manufacturing Execution System (MES), Production Data Collection
+              (PDC), Quality Management (QM), Product Data Management (PDM), Business Intelligence (BI), Visual
+              Configuration (VC), and Document Management System (DMS).
+            </li>
+            <li>
+              <strong>Implementation services:</strong> On-site and remote implementation of TMS software,
+              including system configuration, data migration, integration setup, and user acceptance testing.
+            </li>
+            <li>
+              <strong>Training and support:</strong> User training programs, technical documentation, and
+              ongoing technical support for licensed customers.
+            </li>
+            <li>
+              <strong>Consulting:</strong> Business process analysis, workflow optimisation, and strategic
+              advice related to manufacturing operations and ERP integration.
+            </li>
+          </ul>
+          <p>
+            The specific features, functionalities, and scope of services are defined in individual licence
+            agreements and statements of work entered into between TMS and each customer.
+          </p>
+
+          <h2 id="obligations">3. User Obligations</h2>
+          <p>When using our website and services, you agree to:</p>
+          <ul>
+            <li>
+              Provide accurate, current, and complete information when submitting forms, requesting demos, or
+              communicating with our team.
+            </li>
+            <li>
+              Use our website and services only for lawful purposes and in compliance with all applicable laws
+              and regulations.
+            </li>
+            <li>
+              Not attempt to gain unauthorised access to any part of our website, servers, databases, or
+              connected systems.
+            </li>
+            <li>
+              Not reproduce, duplicate, copy, sell, resell, or exploit any portion of our website or services
+              without express written permission from TMS.
+            </li>
+            <li>
+              Not use automated systems, bots, or scripts to access, scrape, or collect data from our website
+              without prior written consent.
+            </li>
+            <li>
+              Not introduce any viruses, trojans, worms, or other malicious code that could affect the operation
+              of our website or services.
+            </li>
+            <li>
+              Respect the intellectual property rights of TMS and third parties whose content may appear on
+              our website.
+            </li>
+          </ul>
+
+          <h2 id="intellectual-property">4. Intellectual Property</h2>
+          <p>
+            All content on this website, including but not limited to text, graphics, logos, icons, images,
+            audio and video clips, data compilations, software, and the overall design and layout, is the
+            property of TheManufacturingSuite BV or its content suppliers and is protected by Dutch and
+            international copyright, trademark, and intellectual property laws.
+          </p>
+          <p>
+            The TMS name, TMS 4SAP name, TMS logo, and all related names, logos, product and service names,
+            designs, and slogans are trademarks of TheManufacturingSuite BV. You must not use such marks
+            without our prior written permission.
+          </p>
+          <p>
+            Our software, including all source code, object code, algorithms, databases, and documentation,
+            is proprietary and constitutes trade secrets of TMS. Access to our software is governed by separate
+            licence agreements. No rights to our software are granted by these Terms except as explicitly stated
+            in a signed licence agreement.
+          </p>
+
+          <h2 id="liability">5. Limitation of Liability</h2>
+          <p>
+            To the maximum extent permitted by applicable law, TheManufacturingSuite BV shall not be liable for
+            any indirect, incidental, special, consequential, or punitive damages, including but not limited to
+            loss of profits, data, use, goodwill, or other intangible losses, resulting from:
+          </p>
+          <ul>
+            <li>Your use of or inability to use our website or services.</li>
+            <li>Any unauthorised access to or use of our servers and any personal data stored therein.</li>
+            <li>Any interruption or cessation of transmission to or from our website.</li>
+            <li>Any bugs, viruses, trojan horses, or similar issues transmitted through our website by any third party.</li>
+            <li>Any errors or omissions in any content published on our website.</li>
+          </ul>
+          <p>
+            Our total aggregate liability for any claims arising out of or relating to the use of our website
+            shall not exceed the amount you have paid to TMS, if any, during the twelve (12) months preceding
+            the claim.
+          </p>
+          <p>
+            <strong>Website content disclaimer:</strong> The information provided on our website is for general
+            informational purposes only. While we strive to keep the information up to date and accurate, we
+            make no representations or warranties of any kind, express or implied, about the completeness,
+            accuracy, reliability, suitability, or availability of the website or the information, products,
+            services, or related graphics contained on the website.
+          </p>
+
+          <h2 id="termination">6. Termination</h2>
+          <p>
+            We may terminate or suspend your access to our website and services immediately, without prior
+            notice or liability, for any reason whatsoever, including without limitation if you breach these Terms.
+          </p>
+          <p>
+            Upon termination, your right to use the website and services will immediately cease. All provisions
+            of these Terms that by their nature should survive termination shall survive, including but not
+            limited to ownership provisions, warranty disclaimers, indemnity, and limitations of liability.
+          </p>
+          <p>
+            For licensed software customers, termination of access to the software and related services is
+            governed by the applicable licence agreement and may have different terms and conditions than
+            those described here.
+          </p>
+
+          <h2 id="governing-law">7. Governing Law</h2>
+          <p>
+            These Terms shall be governed by and construed in accordance with the laws of <strong>The
+            Netherlands</strong>, without regard to its conflict of law provisions.
+          </p>
+          <p>
+            Any disputes arising out of or relating to these Terms or your use of our website and services
+            shall be submitted to the exclusive jurisdiction of the courts of Maastricht, The Netherlands.
+          </p>
+          <p>
+            If any provision of these Terms is found to be invalid or unenforceable by a court of competent
+            jurisdiction, the remaining provisions shall remain in full force and effect. Our failure to enforce
+            any right or provision of these Terms shall not be deemed a waiver of such right or provision.
+          </p>
+
+          <h2 id="contact">8. Contact</h2>
+          <p>
+            If you have any questions about these Terms of Service, please contact us:
+          </p>
+          <ul>
+            <li><strong>Email:</strong> <a href="mailto:info@themanufacturingsuite.com">info@themanufacturingsuite.com</a></li>
+            <li><strong>Phone:</strong> <a href="tel:+31432340050">+31 43 234 00 50</a></li>
+            <li>
+              <strong>Post:</strong> TheManufacturingSuite BV, Il Flore, Avenue Ceramique 221,
+              6221 KX Maastricht, The Netherlands
+            </li>
+          </ul>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Banner -->
+  <CTABanner
+    title="Ready to explore"
+    titleAccent="TMS 4SAP?"
+    description="See how our manufacturing software integrates seamlessly with SAP Business One. Book a free, personalised demonstration."
+    primaryCTA={{ label: 'Book a Demo', href: '/demo' }}
+    secondaryCTA={{ label: 'Contact Us', href: '/contact' }}
+  />
+</BaseLayout>
+
+<style>
+  .legal-section {
+    padding-top: clamp(1rem, 2vw, 2rem);
+  }
+</style>

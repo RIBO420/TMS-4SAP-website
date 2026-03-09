@@ -1,0 +1,385 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import HeroInner from '../../components/ui/HeroInner.astro';
+import SectionHeader from '../../components/ui/SectionHeader.astro';
+import StatBar from '../../components/ui/StatBar.astro';
+import CTABanner from '../../components/ui/CTABanner.astro';
+import FeatureCard from '../../components/cards/FeatureCard.astro';
+/* About page stats -- concise labels for the header stat bar */
+const aboutStats = [
+  { value: '9', label: 'Module' },
+  { value: 'SAP', label: 'Zertifiziert' },
+  { value: 'Global', label: 'Netzwerk' },
+  { value: '24/7', label: 'Support' },
+];
+
+const breadcrumbs = [
+  { label: 'Startseite', href: '/de' },
+  { label: 'Über uns', href: '/de/about' },
+];
+
+/* Value icons as SVG strings */
+const valueIcons = {
+  innovation: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v4"/><path d="m6.34 6.34 2.83 2.83"/><path d="M2 12h4"/><path d="m17.66 6.34-2.83 2.83"/><path d="M22 12h-4"/><path d="m6.34 17.66 2.83-2.83"/><path d="M12 22v-4"/><path d="m17.66 17.66-2.83-2.83"/></svg>',
+  reliability: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>',
+  integration: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>',
+  support: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>',
+};
+
+/* Approach step icons */
+const approachIcons = {
+  discover: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>',
+  configure: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>',
+  deploy: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 16 12 12 8 16"/><line x1="12" y1="12" x2="12" y2="21"/><path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3"/><polyline points="16 16 12 12 8 16"/></svg>',
+  evolve: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>',
+};
+---
+
+<BaseLayout
+  title="Über uns | TMS 4SAP"
+  description="Erfahren Sie mehr über TheManufacturingSuite — die SAP-zertifizierte Fertigungslösung für die Modernisierung von Produktionsplanung, Qualitätsmanagement und Shopfloor-Steuerung."
+  lang="de"
+>
+  <!-- ===== HERO INNER ===== -->
+  <HeroInner
+    breadcrumbs={breadcrumbs}
+    tag="Über uns"
+    title="Über"
+    titleAccent="TheManufacturingSuite"
+    description="Wir entwickeln die Fertigungssoftware, die SAP Business One-Anwender verdienen — tief integriert, rigoros getestet und von Menschen gestaltet, die Produktion verstehen."
+  />
+
+  <!-- ===== STATS ROW ===== -->
+  <StatBar stats={aboutStats} />
+
+  <!-- ===== COMPANY STORY ===== -->
+  <section class="section" id="our-story">
+    <div class="container">
+      <div class="story-layout">
+        <div class="story-content" data-animate>
+          <span class="section-tag">Unsere Geschichte</span>
+          <h2>Von Herstellern entwickelt, <span class="text-amber">für Hersteller.</span></h2>
+          <p>
+            TheManufacturingSuite entstand aus einer einfachen Beobachtung: SAP Business One
+            ist eine hervorragende ERP-Plattform, doch Fertigungsunternehmen kämpften durchweg mit
+            fragmentierten Add-ons, getrennten Shopfloor-Systemen und Planungstools,
+            die nie dafür konzipiert waren, zusammenzuarbeiten.
+          </p>
+          <p>
+            Wir haben uns vorgenommen, das zu ändern. In enger Zusammenarbeit mit Produktionsplanern,
+            Qualitätsingenieuren und Werksleitern in ganz Europa haben wir eine einheitliche Suite
+            aus 9 spezialisierten Modulen entwickelt, die SAP Business One zu einer vollständigen
+            Fertigungsplattform erweitert. Jedes Modul teilt ein gemeinsames Datenmodell, jede
+            Oberfläche ist für den Shopfloor konzipiert, und jeder Integrationspunkt ist SAP-zertifiziert.
+          </p>
+          <p>
+            Heute treibt TMS Fertigungsabläufe in der Automobil-, Metallverarbeitungs-,
+            Elektronik- und Kunststoffindustrie an — von Einzelstandort-Werkstätten bis zu
+            Multi-Werks-Unternehmen. Unser Partnernetzwerk erstreckt sich über den ganzen Globus,
+            und unser Engagement bleibt dasselbe: Herstellern die Werkzeuge zu geben, die sie
+            brauchen, ohne die Komplexität, die sie nicht brauchen.
+          </p>
+        </div>
+        <aside class="story-highlights" data-animate>
+          <div class="highlight-card">
+            <span class="highlight-value">9</span>
+            <span class="highlight-label">Spezialisierte Module für jeden Fertigungsbereich</span>
+          </div>
+          <div class="highlight-card">
+            <span class="highlight-value">SAP</span>
+            <span class="highlight-label">Zertifizierte Integration — keine Middleware, keine Workarounds</span>
+          </div>
+          <div class="highlight-card">
+            <span class="highlight-value">100%</span>
+            <span class="highlight-label">Produktionsorientiert, konzipiert für den Shopfloor</span>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== VALUES ===== -->
+  <section class="section" id="values">
+    <div class="container">
+      <SectionHeader
+        tag="Unsere Werte"
+        title="Was unsere"
+        titleAccent="Arbeit antreibt."
+        description="Vier Prinzipien leiten jede Funktion, die wir entwickeln, jede Implementierung, die wir liefern, und jede Beziehung, die wir pflegen."
+      />
+      <div class="values-grid">
+        <FeatureCard
+          icon={valueIcons.innovation}
+          title="Innovation"
+          description="Wir investieren kontinuierlich in Forschung und Entwicklung, um TMS an der Spitze der Fertigungstechnologie zu halten — von KI-gesteuerter Planung bis hin zu prädiktiver Qualitätsanalytik."
+        />
+        <FeatureCard
+          icon={valueIcons.reliability}
+          title="Zuverlässigkeit"
+          description="Die Fertigung steht nie still, und wir auch nicht. TMS ist für 24/7-Betrieb mit Enterprise-Stabilität und rigorosen Release-Tests ausgelegt."
+        />
+        <FeatureCard
+          icon={valueIcons.integration}
+          title="Integration"
+          description="Wir glauben, dass Software Silos beseitigen sollte, nicht schaffen. Jedes Modul, jeder Datenpunkt und jeder Workflow verbindet sich nativ mit SAP Business One."
+        />
+        <FeatureCard
+          icon={valueIcons.support}
+          title="Partnerschaft"
+          description="Unser globales Netzwerk zertifizierter Partner stellt sicher, dass jede Implementierung auf Ihren Betrieb zugeschnitten ist — mit lokaler Expertise und Enterprise-Level-Support."
+        />
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== OUR APPROACH ===== -->
+  <section class="section" id="approach">
+    <div class="container">
+      <SectionHeader
+        tag="Methodik"
+        title="Unser Implementierungs-"
+        titleAccent="ansatz."
+        description="Eine bewährte Vier-Phasen-Methodik, die Störungen minimiert und die Akzeptanz vom ersten Tag an maximiert."
+      />
+      <div class="approach-grid">
+        <div class="approach-step" data-animate>
+          <div class="approach-number">01</div>
+          <div class="approach-icon" set:html={approachIcons.discover} />
+          <h3 class="approach-title">Analyse</h3>
+          <p class="approach-desc">
+            Wir erfassen Ihre aktuellen Produktionsprozesse, identifizieren Engpässe und
+            definieren, welche TMS-Module den höchsten unmittelbaren Nutzen liefern. Keine
+            Annahmen, nur Daten.
+          </p>
+        </div>
+        <div class="approach-step" data-animate>
+          <div class="approach-number">02</div>
+          <div class="approach-icon" set:html={approachIcons.configure} />
+          <h3 class="approach-title">Konfiguration</h3>
+          <p class="approach-desc">
+            Ihre TMS-Instanz wird an Ihre Arbeitsabläufe angepasst — Fertigungsregeln,
+            Qualitätsprüfpunkte, Stücklistenstrukturen und Reporting-Dashboards werden auf
+            Ihren Betrieb zugeschnitten.
+          </p>
+        </div>
+        <div class="approach-step" data-animate>
+          <div class="approach-number">03</div>
+          <div class="approach-icon" set:html={approachIcons.deploy} />
+          <h3 class="approach-title">Einführung</h3>
+          <p class="approach-desc">
+            Ein phasenweiser Rollout mit praxisnaher Schulung stellt sicher, dass Ihr Team
+            vor dem Go-Live sicher ist. Wir führen Modul für Modul ein, damit die Produktion
+            nie stillsteht.
+          </p>
+        </div>
+        <div class="approach-step" data-animate>
+          <div class="approach-number">04</div>
+          <div class="approach-icon" set:html={approachIcons.evolve} />
+          <h3 class="approach-title">Weiterentwicklung</h3>
+          <p class="approach-desc">
+            Post-Launch-Optimierung, laufender Support und regelmäßige Feature-Updates halten
+            Ihren Fertigungsbetrieb an der Spitze, während Ihr Unternehmen wächst.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CTA BANNER ===== -->
+  <CTABanner
+    title="Möchten Sie TMS"
+    titleAccent="in Aktion sehen?"
+    description="Buchen Sie eine persönliche Demo mit unserem Team und entdecken Sie, wie TheManufacturingSuite zu Ihrem Fertigungsbetrieb passt."
+    primaryCTA={{ label: "Demo buchen", href: "/de/demo" }}
+    secondaryCTA={{ label: "Vertrieb kontaktieren", href: "/de/contact" }}
+  />
+</BaseLayout>
+
+<style>
+  /* ---- Story Layout ---- */
+  .story-layout {
+    display: grid;
+    grid-template-columns: 1fr 340px;
+    gap: clamp(2rem, 4vw, 4rem);
+    align-items: start;
+  }
+
+  .story-content h2 {
+    font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    margin-bottom: 24px;
+  }
+
+  .story-content p {
+    font-size: 1rem;
+    color: var(--text-muted);
+    line-height: 1.8;
+    margin-bottom: 16px;
+  }
+
+  .story-content p:last-child {
+    margin-bottom: 0;
+  }
+
+  .story-content .section-tag {
+    display: inline-block;
+    margin-bottom: 16px;
+  }
+
+  /* ---- Story Highlights Sidebar ---- */
+  .story-highlights {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    position: sticky;
+    top: 100px;
+  }
+
+  .highlight-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    transition: all 0.3s var(--ease);
+  }
+
+  .highlight-card:hover {
+    background: var(--bg-card-hover);
+    border-color: var(--border-hover);
+  }
+
+  .highlight-value {
+    font-family: var(--font-heading);
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--amber);
+    letter-spacing: -0.02em;
+  }
+
+  .highlight-label {
+    font-size: 0.9375rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+
+  @media (max-width: 768px) {
+    .story-layout {
+      grid-template-columns: 1fr;
+    }
+
+    .story-highlights {
+      position: static;
+      flex-direction: row;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scroll-snap-type: x mandatory;
+      padding-bottom: 8px;
+    }
+
+    .highlight-card {
+      min-width: 240px;
+      scroll-snap-align: start;
+      flex-shrink: 0;
+    }
+  }
+
+  /* ---- Values Grid ---- */
+  .values-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+
+  @media (max-width: 900px) {
+    .values-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 540px) {
+    .values-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* ---- Approach Grid ---- */
+  .approach-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+
+  .approach-step {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    position: relative;
+    transition: all 0.3s var(--ease);
+  }
+
+  .approach-step:hover {
+    background: var(--bg-card-hover);
+    border-color: var(--border-hover);
+    transform: translateY(-2px);
+  }
+
+  .approach-number {
+    font-family: var(--font-heading);
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--amber);
+    letter-spacing: 0.06em;
+    opacity: 0.6;
+  }
+
+  .approach-icon {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--amber-dim);
+    border-radius: var(--radius-sm);
+    color: var(--amber);
+  }
+
+  .approach-icon :global(svg) {
+    width: 20px;
+    height: 20px;
+  }
+
+  .approach-title {
+    font-family: var(--font-heading);
+    font-size: 1.0625rem;
+    font-weight: 600;
+    line-height: 1.3;
+    letter-spacing: -0.01em;
+  }
+
+  .approach-desc {
+    font-size: 0.9375rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+
+  @media (max-width: 900px) {
+    .approach-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 540px) {
+    .approach-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

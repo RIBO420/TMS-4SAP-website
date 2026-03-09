@@ -1,0 +1,1069 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import HeroInner from '../components/ui/HeroInner.astro';
+import CTABanner from '../components/ui/CTABanner.astro';
+---
+
+<BaseLayout
+  title="ROI Calculator | TMS 4SAP"
+  description="Calculate the potential return on investment from implementing TMS 4SAP in your manufacturing operations. Estimate savings from planning efficiency, error reduction, and automation."
+>
+  <HeroInner
+    breadcrumbs={[
+      { label: 'Home', href: '/' },
+      { label: 'ROI Calculator', href: '/roi-calculator' },
+    ]}
+    tag="ROI Calculator"
+    title="Calculate Your"
+    titleAccent="ROI"
+    description="See the potential impact of TMS on your manufacturing operations"
+  />
+
+  <section class="roi-section section">
+    <div class="container">
+      <div class="roi-grid">
+
+        <!-- LEFT: Input form -->
+        <div class="roi-inputs" data-animate>
+          <div class="roi-inputs-card">
+            <h2 class="roi-inputs-title">Your Operations</h2>
+            <p class="roi-inputs-subtitle">Adjust the sliders to match your current situation</p>
+
+            <div class="roi-form" role="form" aria-label="ROI calculator inputs">
+
+              <!-- Company Size -->
+              <div class="roi-field">
+                <div class="roi-field-header">
+                  <label for="employees" class="roi-label">Company Size</label>
+                  <output for="employees" class="roi-value" id="employees-value">50 employees</output>
+                </div>
+                <input
+                  type="range"
+                  id="employees"
+                  name="employees"
+                  min="10"
+                  max="500"
+                  value="50"
+                  step="10"
+                  class="roi-slider"
+                  aria-describedby="employees-value"
+                />
+                <div class="roi-range-labels" aria-hidden="true">
+                  <span>10</span>
+                  <span>500</span>
+                </div>
+              </div>
+
+              <!-- Annual Revenue -->
+              <div class="roi-field">
+                <div class="roi-field-header">
+                  <label for="revenue" class="roi-label">Annual Revenue</label>
+                  <output for="revenue" class="roi-value" id="revenue-value">&euro;10M</output>
+                </div>
+                <input
+                  type="range"
+                  id="revenue"
+                  name="revenue"
+                  min="1"
+                  max="100"
+                  value="10"
+                  step="1"
+                  class="roi-slider"
+                  aria-describedby="revenue-value"
+                />
+                <div class="roi-range-labels" aria-hidden="true">
+                  <span>&euro;1M</span>
+                  <span>&euro;100M</span>
+                </div>
+              </div>
+
+              <!-- Current Planning Method -->
+              <fieldset class="roi-field roi-radio-group">
+                <legend class="roi-label">Current Planning Method</legend>
+                <div class="roi-radio-options">
+                  <label class="roi-radio">
+                    <input type="radio" name="planning" value="manual" />
+                    <span class="roi-radio-control" aria-hidden="true"></span>
+                    <span class="roi-radio-text">Manual</span>
+                  </label>
+                  <label class="roi-radio">
+                    <input type="radio" name="planning" value="spreadsheet" checked />
+                    <span class="roi-radio-control" aria-hidden="true"></span>
+                    <span class="roi-radio-text">Spreadsheet</span>
+                  </label>
+                  <label class="roi-radio">
+                    <input type="radio" name="planning" value="basic-erp" />
+                    <span class="roi-radio-control" aria-hidden="true"></span>
+                    <span class="roi-radio-text">Basic ERP</span>
+                  </label>
+                  <label class="roi-radio">
+                    <input type="radio" name="planning" value="advanced-erp" />
+                    <span class="roi-radio-control" aria-hidden="true"></span>
+                    <span class="roi-radio-text">Advanced ERP</span>
+                  </label>
+                </div>
+              </fieldset>
+
+              <!-- Production Errors Rate -->
+              <div class="roi-field">
+                <div class="roi-field-header">
+                  <label for="errors" class="roi-label">Production Error Rate</label>
+                  <output for="errors" class="roi-value" id="errors-value">5%</output>
+                </div>
+                <input
+                  type="range"
+                  id="errors"
+                  name="errors"
+                  min="1"
+                  max="15"
+                  value="5"
+                  step="0.5"
+                  class="roi-slider"
+                  aria-describedby="errors-value"
+                />
+                <div class="roi-range-labels" aria-hidden="true">
+                  <span>1%</span>
+                  <span>15%</span>
+                </div>
+              </div>
+
+              <!-- Manual Data Entry Hours/Week -->
+              <div class="roi-field">
+                <div class="roi-field-header">
+                  <label for="manual-hours" class="roi-label">Manual Data Entry</label>
+                  <output for="manual-hours" class="roi-value" id="manual-hours-value">20 hrs/week</output>
+                </div>
+                <input
+                  type="range"
+                  id="manual-hours"
+                  name="manual-hours"
+                  min="5"
+                  max="80"
+                  value="20"
+                  step="5"
+                  class="roi-slider"
+                  aria-describedby="manual-hours-value"
+                />
+                <div class="roi-range-labels" aria-hidden="true">
+                  <span>5 hrs</span>
+                  <span>80 hrs</span>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <!-- RIGHT: Results card -->
+        <div class="roi-results-wrapper" data-animate>
+          <div class="roi-results-card">
+            <div class="roi-results-header">
+              <span class="roi-results-tag">Estimated Annual Savings</span>
+              <div class="roi-savings-amount" aria-live="polite" aria-atomic="true">
+                <span class="roi-currency">&euro;</span><span id="total-savings" class="roi-total">0</span>
+              </div>
+              <p class="roi-savings-note">Based on industry benchmarks and TMS implementation data</p>
+            </div>
+
+            <div class="roi-breakdown">
+              <h3 class="roi-breakdown-title">Savings Breakdown</h3>
+
+              <div class="roi-breakdown-item">
+                <div class="roi-breakdown-row">
+                  <div class="roi-breakdown-icon" aria-hidden="true">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+                    </svg>
+                  </div>
+                  <span class="roi-breakdown-label">Planning efficiency</span>
+                </div>
+                <span class="roi-breakdown-value" id="planning-savings">&euro;0</span>
+              </div>
+
+              <div class="roi-breakdown-item">
+                <div class="roi-breakdown-row">
+                  <div class="roi-breakdown-icon" aria-hidden="true">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/>
+                    </svg>
+                  </div>
+                  <span class="roi-breakdown-label">Error reduction</span>
+                </div>
+                <span class="roi-breakdown-value" id="error-savings">&euro;0</span>
+              </div>
+
+              <div class="roi-breakdown-item">
+                <div class="roi-breakdown-row">
+                  <div class="roi-breakdown-icon" aria-hidden="true">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/>
+                    </svg>
+                  </div>
+                  <span class="roi-breakdown-label">Manual entry elimination</span>
+                </div>
+                <span class="roi-breakdown-value" id="manual-savings">&euro;0</span>
+              </div>
+            </div>
+
+            <div class="roi-timeline">
+              <div class="roi-timeline-icon" aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/>
+                  <polyline points="17 6 23 6 23 12"/>
+                </svg>
+              </div>
+              <div>
+                <span class="roi-timeline-label">Typical payback period</span>
+                <span class="roi-timeline-value">8 - 14 months</span>
+              </div>
+            </div>
+
+            <a href="/demo" class="btn btn-primary btn-lg btn-full roi-results-cta">
+              Get a Personalized Assessment
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="5" y1="12" x2="19" y2="12" />
+                <polyline points="12 5 19 12 12 19" />
+              </svg>
+            </a>
+          </div>
+
+          <!-- Methodology note -->
+          <p class="roi-disclaimer">
+            These estimates are based on industry averages from manufacturing companies that have implemented TMS 4SAP. Your actual results may vary. Contact us for a detailed, customized ROI analysis.
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- How we calculate section -->
+  <section class="roi-methodology section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Methodology</span>
+        <h2>How We Calculate <span class="text-amber">Your Savings</span></h2>
+        <p class="section-desc">Our ROI model is based on measured results from hundreds of TMS implementations across manufacturing industries.</p>
+      </div>
+
+      <div class="method-grid">
+        <div class="method-card" data-animate>
+          <div class="method-icon" aria-hidden="true">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+            </svg>
+          </div>
+          <h3>Planning Efficiency</h3>
+          <p>Measured from time savings in production scheduling, order management, and resource allocation. Larger teams see proportionally greater improvements due to coordination overhead reduction.</p>
+        </div>
+
+        <div class="method-card" data-animate>
+          <div class="method-icon" aria-hidden="true">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/>
+            </svg>
+          </div>
+          <h3>Error Reduction</h3>
+          <p>Based on the correlation between production error rates and revenue loss. Quality management and real-time monitoring typically reduce error-related costs by 40-60%.</p>
+        </div>
+
+        <div class="method-card" data-animate>
+          <div class="method-icon" aria-hidden="true">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/>
+            </svg>
+          </div>
+          <h3>Automation Savings</h3>
+          <p>Calculated from eliminated manual data entry hours, valued at an average blended labor cost. MES and PDC modules typically automate 70-85% of manual data capture tasks.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <CTABanner
+    title="Want a detailed"
+    titleAccent="ROI analysis?"
+    description="Our manufacturing consultants can build a customized business case based on your specific operations, processes, and improvement targets."
+    primaryCTA={{ label: 'Book a Demo', href: '/demo' }}
+    secondaryCTA={{ label: 'Download Brochure', href: '/downloads' }}
+  />
+</BaseLayout>
+
+<script>
+  function initROICalculator() {
+    // Elements
+    const employeesSlider = document.getElementById('employees') as HTMLInputElement | null;
+    const revenueSlider = document.getElementById('revenue') as HTMLInputElement | null;
+    const errorsSlider = document.getElementById('errors') as HTMLInputElement | null;
+    const manualHoursSlider = document.getElementById('manual-hours') as HTMLInputElement | null;
+    const planningRadios = document.querySelectorAll<HTMLInputElement>('input[name="planning"]');
+
+    const employeesOutput = document.getElementById('employees-value');
+    const revenueOutput = document.getElementById('revenue-value');
+    const errorsOutput = document.getElementById('errors-value');
+    const manualHoursOutput = document.getElementById('manual-hours-value');
+
+    const totalSavingsEl = document.getElementById('total-savings');
+    const planningSavingsEl = document.getElementById('planning-savings');
+    const errorSavingsEl = document.getElementById('error-savings');
+    const manualSavingsEl = document.getElementById('manual-savings');
+
+    if (
+      !employeesSlider || !revenueSlider || !errorsSlider || !manualHoursSlider ||
+      !totalSavingsEl || !planningSavingsEl || !errorSavingsEl || !manualSavingsEl
+    ) {
+      return;
+    }
+
+    // Planning method multipliers
+    const planningMultipliers: Record<string, number> = {
+      'manual': 1.5,
+      'spreadsheet': 1.2,
+      'basic-erp': 1.0,
+      'advanced-erp': 0.7,
+    };
+
+    function getSelectedPlanning(): string {
+      const checked = document.querySelector<HTMLInputElement>('input[name="planning"]:checked');
+      return checked?.value || 'spreadsheet';
+    }
+
+    function formatCurrency(value: number): string {
+      if (value >= 1_000_000) {
+        return new Intl.NumberFormat('de-DE', {
+          minimumFractionDigits: 0,
+          maximumFractionDigits: 0,
+        }).format(Math.round(value));
+      }
+      return new Intl.NumberFormat('de-DE', {
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 0,
+      }).format(Math.round(value));
+    }
+
+    // Animate number changes
+    let animationFrame: number | null = null;
+    let currentDisplayValue = 0;
+
+    function animateValue(target: number) {
+      if (animationFrame) cancelAnimationFrame(animationFrame);
+
+      const startValue = currentDisplayValue;
+      const diff = target - startValue;
+      const duration = 400;
+      const startTime = performance.now();
+
+      function step(timestamp: number) {
+        const elapsed = timestamp - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        // Ease out cubic
+        const eased = 1 - Math.pow(1 - progress, 3);
+        currentDisplayValue = startValue + diff * eased;
+
+        if (totalSavingsEl) {
+          totalSavingsEl.textContent = formatCurrency(currentDisplayValue);
+        }
+
+        if (progress < 1) {
+          animationFrame = requestAnimationFrame(step);
+        } else {
+          currentDisplayValue = target;
+          if (totalSavingsEl) {
+            totalSavingsEl.textContent = formatCurrency(target);
+          }
+        }
+      }
+
+      animationFrame = requestAnimationFrame(step);
+    }
+
+    function updateSliderFill(slider: HTMLInputElement) {
+      const min = parseFloat(slider.min);
+      const max = parseFloat(slider.max);
+      const val = parseFloat(slider.value);
+      const percentage = ((val - min) / (max - min)) * 100;
+      slider.style.setProperty('--slider-fill', `${percentage}%`);
+    }
+
+    function calculate() {
+      const employees = parseInt(employeesSlider!.value, 10);
+      const revenueM = parseInt(revenueSlider!.value, 10);
+      const revenue = revenueM * 1_000_000;
+      const errorRate = parseFloat(errorsSlider!.value) / 100;
+      const manualHours = parseInt(manualHoursSlider!.value, 10);
+      const planningMethod = getSelectedPlanning();
+      const multiplier = planningMultipliers[planningMethod] || 1;
+
+      // Update output labels
+      if (employeesOutput) employeesOutput.textContent = `${employees} employees`;
+      if (revenueOutput) revenueOutput.textContent = `\u20AC${revenueM}M`;
+      if (errorsOutput) errorsOutput.textContent = `${errorsSlider!.value}%`;
+      if (manualHoursOutput) manualHoursOutput.textContent = `${manualHours} hrs/week`;
+
+      // Update slider fills
+      updateSliderFill(employeesSlider!);
+      updateSliderFill(revenueSlider!);
+      updateSliderFill(errorsSlider!);
+      updateSliderFill(manualHoursSlider!);
+
+      // Calculate savings
+      // Planning efficiency: employees * 2000 * multiplier
+      const planningSavings = employees * 2000 * multiplier;
+
+      // Error reduction: errorRate * revenue * 0.01
+      const errorSavings = errorRate * revenue * 0.01;
+
+      // Manual entry elimination: manualHours * 50 * 48
+      const manualEntrySavings = manualHours * 50 * 48;
+
+      // Total: employees × 2000 + revenue × 0.02 + errorRate × revenue × 0.01 + manualHours × 50 × 48
+      // Using the multiplier to modulate planning savings
+      const total = planningSavings + (revenue * 0.02) + errorSavings + manualEntrySavings;
+
+      // Update breakdown
+      if (planningSavingsEl) planningSavingsEl.textContent = `\u20AC${formatCurrency(planningSavings + revenue * 0.02)}`;
+      if (errorSavingsEl) errorSavingsEl.textContent = `\u20AC${formatCurrency(errorSavings)}`;
+      if (manualSavingsEl) manualSavingsEl.textContent = `\u20AC${formatCurrency(manualEntrySavings)}`;
+
+      // Animate total
+      animateValue(total);
+    }
+
+    // Bind events
+    const sliders = [employeesSlider, revenueSlider, errorsSlider, manualHoursSlider];
+    sliders.forEach((slider) => {
+      if (slider) {
+        slider.addEventListener('input', calculate);
+      }
+    });
+
+    planningRadios.forEach((radio) => {
+      radio.addEventListener('change', calculate);
+    });
+
+    // Initial calculation
+    calculate();
+  }
+
+  initROICalculator();
+  document.addEventListener('astro:page-load', initROICalculator);
+</script>
+
+<style>
+  /* ============================================
+     ROI SECTION LAYOUT
+     ============================================ */
+  .roi-section {
+    padding-top: 0;
+  }
+
+  .roi-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(2rem, 4vw, 3rem);
+    align-items: start;
+  }
+
+  /* ============================================
+     INPUTS CARD
+     ============================================ */
+  .roi-inputs-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-xl);
+    padding: clamp(1.5rem, 3vw, 2.5rem);
+  }
+
+  .roi-inputs-title {
+    font-family: var(--font-heading);
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+
+  .roi-inputs-subtitle {
+    font-size: 0.9375rem;
+    color: var(--text-muted);
+    margin-bottom: 32px;
+  }
+
+  .roi-form {
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+  }
+
+  /* ============================================
+     FORM FIELDS
+     ============================================ */
+  .roi-field {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .roi-field-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .roi-label {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--text);
+  }
+
+  .roi-value {
+    font-family: var(--font-heading);
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--amber);
+    background: var(--amber-dim);
+    padding: 3px 10px;
+    border-radius: 100px;
+    border: 1px solid rgba(245, 158, 11, 0.15);
+  }
+
+  /* ============================================
+     RANGE SLIDER
+     ============================================ */
+  .roi-slider {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 6px;
+    border-radius: 3px;
+    outline: none;
+    cursor: pointer;
+    background: linear-gradient(
+      to right,
+      var(--amber) 0%,
+      var(--amber) var(--slider-fill, 50%),
+      var(--border) var(--slider-fill, 50%),
+      var(--border) 100%
+    );
+    transition: background 0.1s var(--ease);
+  }
+
+  .roi-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: var(--amber);
+    border: 3px solid var(--bg);
+    box-shadow: 0 0 0 1px rgba(245, 158, 11, 0.3), 0 2px 8px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+    transition: box-shadow 0.2s var(--ease), transform 0.15s var(--ease);
+  }
+
+  .roi-slider::-webkit-slider-thumb:hover {
+    box-shadow: 0 0 0 4px rgba(245, 158, 11, 0.15), 0 2px 12px rgba(0, 0, 0, 0.4);
+    transform: scale(1.1);
+  }
+
+  .roi-slider::-webkit-slider-thumb:active {
+    transform: scale(0.95);
+  }
+
+  .roi-slider::-moz-range-thumb {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: var(--amber);
+    border: 3px solid var(--bg);
+    box-shadow: 0 0 0 1px rgba(245, 158, 11, 0.3), 0 2px 8px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+    transition: box-shadow 0.2s var(--ease), transform 0.15s var(--ease);
+  }
+
+  .roi-slider::-moz-range-thumb:hover {
+    box-shadow: 0 0 0 4px rgba(245, 158, 11, 0.15), 0 2px 12px rgba(0, 0, 0, 0.4);
+  }
+
+  .roi-slider::-moz-range-track {
+    height: 6px;
+    border-radius: 3px;
+    background: var(--border);
+  }
+
+  .roi-slider::-moz-range-progress {
+    height: 6px;
+    border-radius: 3px;
+    background: var(--amber);
+  }
+
+  .roi-slider:focus-visible {
+    outline: 2px solid var(--amber);
+    outline-offset: 4px;
+    border-radius: 3px;
+  }
+
+  .roi-range-labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.75rem;
+    color: var(--text-dim);
+  }
+
+  /* ============================================
+     RADIO GROUP
+     ============================================ */
+  .roi-radio-group {
+    border: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .roi-radio-group legend {
+    margin-bottom: 10px;
+  }
+
+  .roi-radio-options {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+
+  .roi-radio {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 14px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: all 0.2s var(--ease);
+  }
+
+  .roi-radio:hover {
+    border-color: var(--border-hover);
+    background: var(--bg-surface);
+  }
+
+  .roi-radio input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+    width: 0;
+    height: 0;
+  }
+
+  .roi-radio-control {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    border: 2px solid var(--border-hover);
+    flex-shrink: 0;
+    position: relative;
+    transition: all 0.2s var(--ease);
+  }
+
+  .roi-radio-control::after {
+    content: '';
+    position: absolute;
+    inset: 3px;
+    border-radius: 50%;
+    background: var(--amber);
+    transform: scale(0);
+    transition: transform 0.2s var(--ease);
+  }
+
+  .roi-radio input:checked ~ .roi-radio-control {
+    border-color: var(--amber);
+  }
+
+  .roi-radio input:checked ~ .roi-radio-control::after {
+    transform: scale(1);
+  }
+
+  .roi-radio:has(input:checked) {
+    border-color: rgba(245, 158, 11, 0.3);
+    background: rgba(245, 158, 11, 0.04);
+  }
+
+  .roi-radio input:focus-visible ~ .roi-radio-control {
+    outline: 2px solid var(--amber);
+    outline-offset: 2px;
+  }
+
+  .roi-radio-text {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    transition: color 0.2s var(--ease);
+  }
+
+  .roi-radio:has(input:checked) .roi-radio-text {
+    color: var(--text);
+  }
+
+  /* ============================================
+     RESULTS CARD
+     ============================================ */
+  .roi-results-wrapper {
+    position: sticky;
+    top: 100px;
+  }
+
+  .roi-results-card {
+    background: var(--bg-card);
+    border: 1px solid rgba(245, 158, 11, 0.15);
+    border-radius: var(--radius-xl);
+    padding: clamp(1.5rem, 3vw, 2.5rem);
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Amber glow effect */
+  .roi-results-card::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 120%;
+    height: 100%;
+    background: radial-gradient(ellipse, rgba(245, 158, 11, 0.06) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  .roi-results-card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 10%;
+    right: 10%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent 0%, var(--amber) 50%, transparent 100%);
+    opacity: 0.35;
+  }
+
+  .roi-results-header {
+    position: relative;
+    text-align: center;
+    padding-bottom: 28px;
+    margin-bottom: 24px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .roi-results-tag {
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--amber);
+    margin-bottom: 16px;
+  }
+
+  .roi-savings-amount {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1;
+    color: var(--amber);
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    gap: 4px;
+  }
+
+  .roi-currency {
+    font-size: clamp(1.75rem, 3vw, 2.5rem);
+  }
+
+  .roi-total {
+    font-size: clamp(2.5rem, 5vw, 4rem);
+  }
+
+  .roi-savings-note {
+    font-size: 0.8125rem;
+    color: var(--text-dim);
+    margin-top: 12px;
+    line-height: 1.5;
+  }
+
+  /* ============================================
+     BREAKDOWN
+     ============================================ */
+  .roi-breakdown {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+
+  .roi-breakdown-title {
+    font-family: var(--font-heading);
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .roi-breakdown-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 12px 16px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+  }
+
+  .roi-breakdown-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .roi-breakdown-icon {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--amber-dim);
+    border-radius: 6px;
+    color: var(--amber);
+    flex-shrink: 0;
+  }
+
+  .roi-breakdown-label {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+  }
+
+  .roi-breakdown-value {
+    font-family: var(--font-heading);
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: var(--text);
+    white-space: nowrap;
+  }
+
+  /* ============================================
+     TIMELINE
+     ============================================ */
+  .roi-timeline {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 16px;
+    background: rgba(245, 158, 11, 0.04);
+    border: 1px solid rgba(245, 158, 11, 0.12);
+    border-radius: var(--radius);
+    margin-bottom: 24px;
+  }
+
+  .roi-timeline-icon {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--amber-dim);
+    border-radius: var(--radius-sm);
+    color: var(--amber);
+    flex-shrink: 0;
+  }
+
+  .roi-timeline-label {
+    display: block;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-dim);
+    margin-bottom: 2px;
+  }
+
+  .roi-timeline-value {
+    display: block;
+    font-family: var(--font-heading);
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: var(--amber);
+  }
+
+  .roi-results-cta {
+    position: relative;
+  }
+
+  .roi-disclaimer {
+    font-size: 0.8125rem;
+    color: var(--text-dim);
+    line-height: 1.6;
+    margin-top: 20px;
+    text-align: center;
+  }
+
+  /* ============================================
+     METHODOLOGY SECTION
+     ============================================ */
+  .roi-methodology {
+    border-top: 1px solid var(--border);
+  }
+
+  .method-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+
+  .method-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    transition: all 0.3s var(--ease);
+  }
+
+  .method-card:hover {
+    background: var(--bg-card-hover);
+    border-color: var(--border-hover);
+    transform: translateY(-2px);
+  }
+
+  .method-icon {
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--amber-dim);
+    border-radius: var(--radius-sm);
+    color: var(--amber);
+    flex-shrink: 0;
+  }
+
+  .method-card h3 {
+    font-family: var(--font-heading);
+    font-size: 1.125rem;
+    font-weight: 600;
+    line-height: 1.3;
+  }
+
+  .method-card p {
+    font-size: 0.9375rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+
+  /* ============================================
+     RESPONSIVE — Tablet (768px)
+     ============================================ */
+  @media (max-width: 768px) {
+    .roi-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .roi-results-wrapper {
+      position: relative;
+      top: 0;
+    }
+
+    .method-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .roi-section {
+      padding: clamp(3rem, 8vw, 5rem) 0;
+      padding-top: 0;
+    }
+
+    .roi-inputs-card {
+      padding: clamp(1.5rem, 3vw, 2rem);
+    }
+
+    .roi-results-card {
+      padding: clamp(1.5rem, 3vw, 2rem);
+    }
+
+    .method-card {
+      padding: 24px;
+    }
+  }
+
+  /* ============================================
+     RESPONSIVE — iPhone (375px - 430px)
+     ============================================ */
+  @media (max-width: 480px) {
+    .roi-radio-options {
+      grid-template-columns: 1fr;
+    }
+
+    /* Prevent iOS zoom on focus */
+    .roi-slider {
+      font-size: 16px;
+    }
+
+    .roi-radio-text {
+      font-size: 16px;
+    }
+
+    .roi-radio {
+      min-height: 44px;
+      padding: 12px 14px;
+    }
+
+    .roi-savings-amount {
+      flex-direction: row;
+    }
+
+    .roi-breakdown-item {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 8px;
+      padding: 12px;
+    }
+
+    .roi-breakdown-value {
+      padding-left: 42px;
+    }
+
+    .roi-inputs-card {
+      padding: 1.25rem;
+    }
+
+    .roi-results-card {
+      padding: 1.25rem;
+    }
+
+    .roi-results-cta {
+      min-height: 44px;
+    }
+
+    .roi-timeline {
+      padding: 12px;
+      gap: 10px;
+    }
+
+    .method-card {
+      padding: 20px;
+    }
+
+    /* Slider thumb: ensure 44px touch target */
+    .roi-slider::-webkit-slider-thumb {
+      width: 28px;
+      height: 28px;
+    }
+
+    .roi-slider::-moz-range-thumb {
+      width: 28px;
+      height: 28px;
+    }
+  }
+</style>

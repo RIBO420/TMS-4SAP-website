@@ -1,0 +1,147 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import HeroInner from '@components/ui/HeroInner.astro';
+import CTABanner from '@components/ui/CTABanner.astro';
+import ModuleCard from '@components/cards/ModuleCard.astro';
+import '@styles/utilities.css';
+
+export interface Props {
+  title: string;
+  abbr: string;
+  description: string;
+  icon: string;
+  features: { title: string; description: string }[];
+  benefits: string[];
+  relatedModules: { slug: string; abbr: string; title: string }[];
+}
+
+const {
+  title,
+  abbr,
+  description,
+  icon,
+  features,
+  benefits,
+  relatedModules,
+} = Astro.props;
+
+/**
+ * All 9 TMS modules — used for the sidebar navigation.
+ * The current module is highlighted via aria-current.
+ */
+const allModules = [
+  { slug: 'pps', abbr: 'PPS', title: 'Production Planning & Scheduling' },
+  { slug: 'aps', abbr: 'APS', title: 'Advanced Planning & Scheduling' },
+  { slug: 'mes', abbr: 'MES', title: 'Manufacturing Execution System' },
+  { slug: 'pdc', abbr: 'PDC', title: 'Production Data Capture' },
+  { slug: 'qm',  abbr: 'QM',  title: 'Quality Management' },
+  { slug: 'pdm', abbr: 'PDM', title: 'Product Data Management' },
+  { slug: 'bi',  abbr: 'BI',  title: 'Business Intelligence' },
+  { slug: 'vc',  abbr: 'VC',  title: 'Visual Configuration' },
+  { slug: 'dms', abbr: 'DMS', title: 'Document Management System' },
+];
+
+/** Derive the current slug from the URL path (last segment). */
+const currentSlug = Astro.url.pathname.replace(/\/$/, '').split('/').pop();
+---
+
+<BaseLayout title={`${title} (${abbr}) | The Manufacturing Suite`} description={description}>
+  <!-- Breadcrumbs -->
+  <nav class="container breadcrumbs" aria-label="Breadcrumb">
+    <a href="/">Home</a>
+    <span class="breadcrumbs-separator" aria-hidden="true">/</span>
+    <a href="/modules">Modules</a>
+    <span class="breadcrumbs-separator" aria-hidden="true">/</span>
+    <span class="breadcrumbs-current" aria-current="page">{title}</span>
+  </nav>
+
+  <!-- Hero -->
+  <HeroInner title={title} tagline={description} badge={abbr} icon={icon} />
+
+  <!-- Sidebar + Content -->
+  <section class="section">
+    <div class="container sidebar-layout">
+      <!-- Left sidebar: module navigation -->
+      <aside class="module-sidebar" aria-label="Module navigation">
+        <nav>
+          <ul class="module-sidebar-nav" role="list">
+            {allModules.map((mod) => (
+              <li>
+                <a
+                  href={`/modules/${mod.slug}`}
+                  class="module-sidebar-link"
+                  aria-current={mod.slug === currentSlug ? 'page' : undefined}
+                >
+                  <span class="module-sidebar-abbr">{mod.abbr}</span>
+                  <span>{mod.title}</span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      </aside>
+
+      <!-- Main content -->
+      <div class="module-content">
+        <!-- MDX slot content -->
+        <article class="prose">
+          <slot />
+        </article>
+
+        <!-- Features grid -->
+        {features.length > 0 && (
+          <section class="mt-3xl" aria-labelledby="features-heading">
+            <div class="section-header text-left">
+              <span class="section-tag">Features</span>
+              <h2 id="features-heading">What {abbr} offers</h2>
+            </div>
+            <div class="features-grid">
+              {features.map((feature) => (
+                <div class="feature-card" data-animate>
+                  <h3>{feature.title}</h3>
+                  <p>{feature.description}</p>
+                </div>
+              ))}
+            </div>
+          </section>
+        )}
+
+        <!-- Benefits list -->
+        {benefits.length > 0 && (
+          <section class="mt-3xl" aria-labelledby="benefits-heading">
+            <div class="section-header text-left">
+              <span class="section-tag">Benefits</span>
+              <h2 id="benefits-heading">Why choose {abbr}</h2>
+            </div>
+            <ul class="benefits-list">
+              {benefits.map((benefit) => (
+                <li>{benefit}</li>
+              ))}
+            </ul>
+          </section>
+        )}
+
+        <!-- Related modules -->
+        {relatedModules.length > 0 && (
+          <section class="mt-3xl" aria-labelledby="related-heading">
+            <div class="section-header text-left">
+              <span class="section-tag">Related</span>
+              <h2 id="related-heading">Works well with</h2>
+            </div>
+            <div class="related-modules">
+              {relatedModules.map((mod) => (
+                <a href={`/modules/${mod.slug}`} class="related-module-link">
+                  <span class="related-module-abbr">{mod.abbr}</span>
+                  <span>{mod.title}</span>
+                </a>
+              ))}
+            </div>
+          </section>
+        )}
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <CTABanner />
+</BaseLayout>

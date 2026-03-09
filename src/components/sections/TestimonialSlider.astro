@@ -1,0 +1,53 @@
+---
+import TestimonialCard from "@components/cards/TestimonialCard.astro";
+import SectionHeader from "@components/ui/SectionHeader.astro";
+
+interface Props {
+  testimonials: { quote: string; author: string; role: string; company: string }[];
+}
+
+const { testimonials } = Astro.props;
+---
+
+<section class="section">
+  <div class="container">
+    <div data-animate>
+      <SectionHeader
+        tag="Testimonials"
+        title="What our"
+        titleAccent="clients say"
+      />
+    </div>
+
+    <div class="testimonial-row">
+      {testimonials.map((testimonial) => (
+        <TestimonialCard
+          quote={testimonial.quote}
+          author={testimonial.author}
+          role={testimonial.role}
+          company={testimonial.company}
+        />
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .testimonial-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+
+  @media (max-width: 1024px) {
+    .testimonial-row {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 640px) {
+    .testimonial-row {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

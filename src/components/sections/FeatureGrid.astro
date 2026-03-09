@@ -1,0 +1,63 @@
+---
+import FeatureCard from "@components/cards/FeatureCard.astro";
+
+interface Props {
+  features: { icon: string; title: string; description: string }[];
+  columns?: 2 | 3 | 4;
+}
+
+const { features, columns = 3 } = Astro.props;
+---
+
+<section class="section">
+  <div class="container">
+    <div class:list={["feature-grid", `feature-grid--cols-${columns}`]}>
+      {features.map((feature) => (
+        <FeatureCard
+          icon={feature.icon}
+          title={feature.title}
+          description={feature.description}
+        />
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .feature-grid {
+    display: grid;
+    gap: 16px;
+  }
+
+  .feature-grid--cols-2 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .feature-grid--cols-3 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .feature-grid--cols-4 {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  @media (max-width: 1024px) {
+    .feature-grid--cols-4 {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .feature-grid--cols-3 {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 640px) {
+    .feature-grid--cols-2,
+    .feature-grid--cols-3,
+    .feature-grid--cols-4 {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

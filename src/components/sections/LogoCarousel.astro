@@ -1,0 +1,114 @@
+---
+interface Props {
+  logos: { name: string }[];
+}
+
+const { logos } = Astro.props;
+
+// Duplicate the list for seamless infinite scroll
+const doubledLogos = [...logos, ...logos];
+---
+
+<section class="logo-carousel-section" aria-label="Client logos">
+  <div class="container">
+    <p class="logo-carousel-label" data-animate>
+      Trusted by manufacturers worldwide
+    </p>
+  </div>
+  <div class="logo-carousel-track-wrapper">
+    <div class="logo-carousel-track" aria-hidden="true">
+      {doubledLogos.map((logo) => (
+        <div class="logo-carousel-item">
+          <span class="logo-carousel-text">{logo.name}</span>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .logo-carousel-section {
+    padding: clamp(3rem, 6vw, 5rem) 0;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    overflow: hidden;
+  }
+
+  .logo-carousel-label {
+    text-align: center;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-dim);
+    margin-bottom: 32px;
+  }
+
+  .logo-carousel-track-wrapper {
+    position: relative;
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(
+      to right,
+      transparent 0%,
+      black 10%,
+      black 90%,
+      transparent 100%
+    );
+    mask-image: linear-gradient(
+      to right,
+      transparent 0%,
+      black 10%,
+      black 90%,
+      transparent 100%
+    );
+  }
+
+  .logo-carousel-track {
+    display: flex;
+    gap: 24px;
+    width: max-content;
+    animation: logo-scroll 30s linear infinite;
+  }
+
+  .logo-carousel-item {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px 32px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    background: var(--bg-card);
+    min-width: 180px;
+    transition: border-color 0.2s var(--ease);
+  }
+
+  .logo-carousel-item:hover {
+    border-color: var(--border-hover);
+  }
+
+  .logo-carousel-text {
+    font-family: var(--font-heading);
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: var(--text-dim);
+    letter-spacing: -0.01em;
+    white-space: nowrap;
+    user-select: none;
+  }
+
+  @keyframes logo-scroll {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .logo-carousel-track {
+      animation: none;
+    }
+  }
+</style>

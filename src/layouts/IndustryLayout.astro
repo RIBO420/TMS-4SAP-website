@@ -1,0 +1,113 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import HeroInner from '@components/ui/HeroInner.astro';
+import CTABanner from '@components/ui/CTABanner.astro';
+import ModuleCard from '@components/cards/ModuleCard.astro';
+import StatBar from '@components/ui/StatBar.astro';
+import { modules as allModules } from '@data/modules';
+import '@styles/utilities.css';
+
+export interface Props {
+  title: string;
+  tagline: string;
+  description: string;
+  challenges: { title: string; description: string }[];
+  relevantModules: { slug: string; abbr: string; title: string }[];
+  stats: { value: string; label: string }[];
+}
+
+const {
+  title,
+  tagline,
+  description,
+  challenges,
+  relevantModules,
+  stats,
+} = Astro.props;
+---
+
+<BaseLayout title={`${title} | Industries | The Manufacturing Suite`} description={description}>
+  <!-- Breadcrumbs -->
+  <nav class="container breadcrumbs" aria-label="Breadcrumb">
+    <a href="/">Home</a>
+    <span class="breadcrumbs-separator" aria-hidden="true">/</span>
+    <a href="/industries">Industries</a>
+    <span class="breadcrumbs-separator" aria-hidden="true">/</span>
+    <span class="breadcrumbs-current" aria-current="page">{title}</span>
+  </nav>
+
+  <!-- Hero -->
+  <HeroInner title={title} tagline={tagline} />
+
+  <!-- Challenges -->
+  {challenges.length > 0 && (
+    <section class="section" aria-labelledby="challenges-heading">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag">Challenges</span>
+          <h2 id="challenges-heading">Industry challenges we solve</h2>
+          <p class="section-desc">{description}</p>
+        </div>
+        <div class="challenges-grid">
+          {challenges.map((challenge) => (
+            <div class="challenge-card" data-animate>
+              <h3>{challenge.title}</h3>
+              <p>{challenge.description}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- Relevant Modules -->
+  {relevantModules.length > 0 && (
+    <section class="section" aria-labelledby="modules-heading">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag">Solutions</span>
+          <h2 id="modules-heading">Relevant modules for {title}</h2>
+        </div>
+        <div class="modules-grid">
+          {relevantModules.map((mod) => {
+            const fullModule = allModules.find((m) => m.slug === mod.slug);
+            return fullModule ? <ModuleCard module={fullModule} /> : null;
+          })}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- Stats bar -->
+  {stats.length > 0 && (
+    <section class="stats-section" aria-label="Key statistics">
+      <div class="container">
+        <div class="stats-row">
+          {stats.map((stat, index) => (
+            <>
+              <div class="stat" data-animate>
+                <span class="stat-value">{stat.value}</span>
+                <span class="stat-label">{stat.label}</span>
+              </div>
+              {index < stats.length - 1 && (
+                <div class="stat-divider" aria-hidden="true"></div>
+              )}
+            </>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- Additional MDX content -->
+  <section class="section">
+    <div class="container">
+      <div class="prose reading-width">
+        <slot />
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <CTABanner />
+</BaseLayout>

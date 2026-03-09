@@ -1,0 +1,237 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import CTABanner from '../../../components/ui/CTABanner.astro';
+import '../../../styles/utilities.css';
+
+const title = 'Algemene Voorwaarden';
+const lastUpdated = '2026-03-01';
+const formattedDate = new Date(lastUpdated).toLocaleDateString('nl-NL', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+});
+---
+
+<BaseLayout
+  lang="nl"
+  title="Algemene Voorwaarden | TMS 4SAP"
+  description="Lees de Algemene Voorwaarden die van toepassing zijn op het gebruik van de website en softwarediensten van The Manufacturing Suite. Begrijp uw rechten en verplichtingen."
+>
+  <!-- Breadcrumbs -->
+  <nav class="container breadcrumbs" aria-label="Broodkruimelpad">
+    <a href="/nl">Home</a>
+    <span class="breadcrumbs-separator" aria-hidden="true">/</span>
+    <a href="/nl/legal/terms">Juridisch</a>
+    <span class="breadcrumbs-separator" aria-hidden="true">/</span>
+    <span class="breadcrumbs-current" aria-current="page">{title}</span>
+  </nav>
+
+  <!-- Legal content -->
+  <section class="section legal-section">
+    <div class="container">
+      <div class="legal-width">
+        <!-- Page header -->
+        <header class="legal-header">
+          <h1>{title}</h1>
+          <p class="legal-last-updated">
+            Laatst bijgewerkt: <time datetime={lastUpdated}>{formattedDate}</time>
+          </p>
+        </header>
+
+        <!-- Prose content -->
+        <div class="prose">
+
+          <h2 id="acceptance">1. Aanvaarding van de voorwaarden</h2>
+          <p>
+            Door de website en diensten van <strong>TheManufacturingSuite BV</strong> ("TMS," "wij," "ons" of "onze"),
+            gevestigd te Il Flore, Avenue Ceramique 221, 6221 KX Maastricht, Nederland, te bezoeken en te gebruiken,
+            stemt u in met deze Algemene Voorwaarden ("Voorwaarden"). Indien u niet akkoord gaat met enig onderdeel
+            van deze Voorwaarden, mag u onze website of diensten niet gebruiken.
+          </p>
+          <p>
+            Deze Voorwaarden zijn van toepassing op alle bezoekers, gebruikers en anderen die toegang hebben tot of
+            gebruikmaken van onze website op
+            <a href="https://themanufacturingsuite.com">themanufacturingsuite.com</a> en alle gerelateerde diensten,
+            applicaties of platformen die door TMS worden beheerd.
+          </p>
+          <p>
+            Wij behouden ons het recht voor deze Voorwaarden op elk moment te wijzigen. Wijzigingen worden op deze
+            pagina gepubliceerd met een bijgewerkte revisiedatum. Uw voortgezet gebruik van onze website en diensten
+            na dergelijke wijzigingen vormt uw aanvaarding van de herziene Voorwaarden.
+          </p>
+
+          <h2 id="services">2. Beschrijving van diensten</h2>
+          <p>
+            TMS levert softwareoplossingen voor productie-uitvoering en -planning, ontworpen voor integratie met
+            SAP Business One. Ons aanbod omvat, maar is niet beperkt tot:
+          </p>
+          <ul>
+            <li>
+              <strong>TMS 4SAP softwaremodules:</strong> Productieplanning en Scheduling (PPS), Geavanceerde
+              Planning en Scheduling (APS), Manufacturing Execution System (MES), Productiedataregistratie (PDC),
+              Kwaliteitsmanagement (QM), Productdatabeheer (PDM), Business Intelligence (BI), Visuele Configuratie
+              (VC) en Documentmanagementsysteem (DMS).
+            </li>
+            <li>
+              <strong>Implementatiediensten:</strong> On-site en remote implementatie van TMS-software, inclusief
+              systeemconfiguratie, datamigratie, integratie-inrichting en gebruikersacceptatietesten.
+            </li>
+            <li>
+              <strong>Training en ondersteuning:</strong> Gebruikerstrainingsprogramma's, technische documentatie
+              en doorlopende technische ondersteuning voor gelicentieerde klanten.
+            </li>
+            <li>
+              <strong>Consultancy:</strong> Bedrijfsprocesanalyse, workflowoptimalisatie en strategisch advies
+              met betrekking tot productieoperaties en ERP-integratie.
+            </li>
+          </ul>
+          <p>
+            De specifieke functies, functionaliteiten en omvang van diensten worden gedefinieerd in individuele
+            licentieovereenkomsten en werkomschrijvingen die worden afgesloten tussen TMS en elke klant.
+          </p>
+
+          <h2 id="obligations">3. Verplichtingen van de gebruiker</h2>
+          <p>Bij het gebruik van onze website en diensten stemt u ermee in om:</p>
+          <ul>
+            <li>
+              Nauwkeurige, actuele en volledige informatie te verstrekken bij het indienen van formulieren, het
+              aanvragen van demo's of het communiceren met ons team.
+            </li>
+            <li>
+              Onze website en diensten uitsluitend te gebruiken voor wettige doeleinden en in overeenstemming met
+              alle toepasselijke wet- en regelgeving.
+            </li>
+            <li>
+              Geen ongeautoriseerde toegang te proberen te verkrijgen tot enig deel van onze website, servers,
+              databases of verbonden systemen.
+            </li>
+            <li>
+              Geen enkel deel van onze website of diensten te reproduceren, dupliceren, kopi\u00ebren, verkopen,
+              doorverkopen of exploiteren zonder uitdrukkelijke schriftelijke toestemming van TMS.
+            </li>
+            <li>
+              Geen geautomatiseerde systemen, bots of scripts te gebruiken om toegang te verkrijgen tot, te
+              scrapen of gegevens te verzamelen van onze website zonder voorafgaande schriftelijke toestemming.
+            </li>
+            <li>
+              Geen virussen, trojans, wormen of andere kwaadaardige code te introduceren die de werking van onze
+              website of diensten zou kunnen be\u00efnvloeden.
+            </li>
+            <li>
+              De intellectuele eigendomsrechten van TMS en derden wier content op onze website kan verschijnen
+              te respecteren.
+            </li>
+          </ul>
+
+          <h2 id="intellectual-property">4. Intellectueel eigendom</h2>
+          <p>
+            Alle content op deze website, inclusief maar niet beperkt tot tekst, afbeeldingen, logo's, pictogrammen,
+            foto's, audio- en videofragmenten, datacompilaties, software en het algehele ontwerp en de indeling,
+            is eigendom van TheManufacturingSuite BV of haar contentleveranciers en wordt beschermd door het
+            Nederlandse en internationale auteursrecht, merkenrecht en intellectueel eigendomsrecht.
+          </p>
+          <p>
+            De naam TMS, de naam TMS 4SAP, het TMS-logo en alle gerelateerde namen, logo's, product- en
+            dienstnamen, ontwerpen en slogans zijn handelsmerken van TheManufacturingSuite BV. U mag dergelijke
+            merken niet gebruiken zonder onze voorafgaande schriftelijke toestemming.
+          </p>
+          <p>
+            Onze software, inclusief alle broncode, objectcode, algoritmen, databases en documentatie, is
+            eigendomsrechtelijk beschermd en vormt bedrijfsgeheimen van TMS. Toegang tot onze software wordt
+            beheerst door afzonderlijke licentieovereenkomsten. Deze Voorwaarden verlenen geen rechten op onze
+            software, behalve zoals uitdrukkelijk vermeld in een ondertekende licentieovereenkomst.
+          </p>
+
+          <h2 id="liability">5. Beperking van aansprakelijkheid</h2>
+          <p>
+            Voor zover toegestaan door toepasselijk recht, is TheManufacturingSuite BV niet aansprakelijk voor
+            enige indirecte, incidentele, speciale, gevolg- of punitieve schade, inclusief maar niet beperkt tot
+            verlies van winst, gegevens, gebruik, goodwill of andere immateri\u00eble verliezen, voortvloeiend uit:
+          </p>
+          <ul>
+            <li>Uw gebruik van of onvermogen om onze website of diensten te gebruiken.</li>
+            <li>Ongeautoriseerde toegang tot of gebruik van onze servers en de daarop opgeslagen persoonsgegevens.</li>
+            <li>Onderbreking of be\u00ebindiging van de overdracht naar of van onze website.</li>
+            <li>Bugs, virussen, trojans of soortgelijke problemen die via onze website door derden worden overgedragen.</li>
+            <li>Fouten of omissies in de content die op onze website is gepubliceerd.</li>
+          </ul>
+          <p>
+            Onze totale aansprakelijkheid voor claims die voortvloeien uit of verband houden met het gebruik van
+            onze website bedraagt niet meer dan het bedrag dat u aan TMS hebt betaald, indien van toepassing,
+            gedurende de twaalf (12) maanden voorafgaand aan de claim.
+          </p>
+          <p>
+            <strong>Disclaimer websitecontent:</strong> De informatie op onze website is uitsluitend bedoeld voor
+            algemene informatiedoeleinden. Hoewel wij ernaar streven de informatie actueel en accuraat te houden,
+            doen wij geen uitspraken of geven wij geen garanties van welke aard dan ook, expliciet of impliciet,
+            over de volledigheid, nauwkeurigheid, betrouwbaarheid, geschiktheid of beschikbaarheid van de website
+            of de informatie, producten, diensten of gerelateerde afbeeldingen op de website.
+          </p>
+
+          <h2 id="termination">6. Be\u00ebindiging</h2>
+          <p>
+            Wij kunnen uw toegang tot onze website en diensten onmiddellijk be\u00ebindigen of opschorten, zonder
+            voorafgaande kennisgeving of aansprakelijkheid, om welke reden dan ook, inclusief maar niet beperkt
+            tot een schending van deze Voorwaarden.
+          </p>
+          <p>
+            Bij be\u00ebindiging vervalt uw recht om de website en diensten te gebruiken onmiddellijk. Alle bepalingen
+            van deze Voorwaarden die naar hun aard de be\u00ebindiging zouden moeten overleven, blijven van kracht,
+            inclusief maar niet beperkt tot eigendomsbepalingen, garantiedisclaimers, vrijwaring en beperkingen
+            van aansprakelijkheid.
+          </p>
+          <p>
+            Voor gelicentieerde softwareklanten wordt de be\u00ebindiging van de toegang tot de software en
+            gerelateerde diensten beheerst door de toepasselijke licentieovereenkomst en kan deze andere voorwaarden
+            en bepalingen bevatten dan hier beschreven.
+          </p>
+
+          <h2 id="governing-law">7. Toepasselijk recht</h2>
+          <p>
+            Deze Voorwaarden worden beheerst door en ge\u00efnterpreteerd in overeenstemming met het recht van
+            <strong>Nederland</strong>, zonder inachtneming van conflictenrechtbepalingen.
+          </p>
+          <p>
+            Geschillen die voortvloeien uit of verband houden met deze Voorwaarden of uw gebruik van onze website
+            en diensten worden voorgelegd aan de exclusieve bevoegdheid van de rechtbank te Maastricht, Nederland.
+          </p>
+          <p>
+            Indien enige bepaling van deze Voorwaarden ongeldig of niet-afdwingbaar wordt bevonden door een
+            bevoegde rechter, blijven de overige bepalingen onverminderd van kracht. Het nalaten door ons om enig
+            recht of bepaling van deze Voorwaarden af te dwingen, wordt niet beschouwd als een verklaring van
+            afstand van dat recht of die bepaling.
+          </p>
+
+          <h2 id="contact">8. Contact</h2>
+          <p>
+            Als u vragen hebt over deze Algemene Voorwaarden, neem dan contact met ons op:
+          </p>
+          <ul>
+            <li><strong>E-mail:</strong> <a href="mailto:info@themanufacturingsuite.com">info@themanufacturingsuite.com</a></li>
+            <li><strong>Telefoon:</strong> <a href="tel:+31432340050">+31 43 234 00 50</a></li>
+            <li>
+              <strong>Post:</strong> TheManufacturingSuite BV, Il Flore, Avenue Ceramique 221,
+              6221 KX Maastricht, Nederland
+            </li>
+          </ul>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Banner -->
+  <CTABanner
+    title="Klaar om"
+    titleAccent="TMS 4SAP te verkennen?"
+    description="Ontdek hoe onze productiesoftware naadloos integreert met SAP Business One. Boek een gratis, persoonlijke demonstratie."
+    primaryCTA={{ label: 'Boek een Demo', href: '/nl/demo' }}
+    secondaryCTA={{ label: 'Neem Contact Op', href: '/nl/contact' }}
+  />
+</BaseLayout>
+
+<style>
+  .legal-section {
+    padding-top: clamp(1rem, 2vw, 2rem);
+  }
+</style>

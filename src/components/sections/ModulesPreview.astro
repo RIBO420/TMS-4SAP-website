@@ -1,0 +1,68 @@
+---
+import { modules } from "@data/modules";
+import ModuleCard from "@components/cards/ModuleCard.astro";
+import SectionHeader from "@components/ui/SectionHeader.astro";
+
+const previewModules = modules.slice(0, 5);
+---
+
+<section id="modules-preview" class="section">
+  <div class="container">
+    <div data-animate>
+      <SectionHeader
+        tag="Core Platform"
+        title="System"
+        titleAccent="Modules"
+        description="Nine specialized modules working together to digitalize your entire manufacturing operation."
+      />
+    </div>
+
+    <div class="modules-grid">
+      {previewModules.map((mod) => (
+        <ModuleCard module={mod} />
+      ))}
+    </div>
+
+    <div class="modules-preview-footer" data-animate>
+      <a href="/modules" class="modules-view-all">
+        View all modules
+        <svg
+          width="16"
+          height="16"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <path d="M5 12h14" />
+          <path d="m12 5 7 7-7 7" />
+        </svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .modules-preview-footer {
+    display: flex;
+    justify-content: center;
+    margin-top: 40px;
+  }
+
+  .modules-view-all {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.9375rem;
+    font-weight: 500;
+    color: var(--amber);
+    transition: gap 0.2s var(--ease);
+  }
+
+  .modules-view-all:hover {
+    gap: 12px;
+  }
+</style>

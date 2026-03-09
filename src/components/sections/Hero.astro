@@ -1,0 +1,82 @@
+---
+import StatBar from "@components/ui/StatBar.astro";
+import { heroStats } from "@data/stats";
+
+interface Props {
+  badge?: string;
+  title: string;
+  titleAccent?: string;
+  subtitle: string;
+  primaryCTA?: { label: string; href: string };
+  secondaryCTA?: { label: string; href: string };
+  showStats?: boolean;
+}
+
+const {
+  badge,
+  title,
+  titleAccent,
+  subtitle,
+  primaryCTA,
+  secondaryCTA,
+  showStats = false,
+} = Astro.props;
+---
+
+<section class="hero" id="hero">
+  <div class="hero-bg" aria-hidden="true"></div>
+
+  <div class="container hero-content">
+    {badge && (
+      <div class="hero-badge" data-animate>
+        <span class="hero-badge-dot" aria-hidden="true"></span>
+        {badge}
+      </div>
+    )}
+
+    <h1 class="hero-title" data-animate>
+      {title}
+      {titleAccent && (
+        <>
+          <br />
+          <span class="text-amber">{titleAccent}</span>
+        </>
+      )}
+    </h1>
+
+    <p class="hero-subtitle" data-animate>
+      {subtitle}
+    </p>
+
+    {(primaryCTA || secondaryCTA) && (
+      <div class="hero-actions" data-animate>
+        {primaryCTA && (
+          <a href={primaryCTA.href} class="btn btn-primary btn-lg">
+            {primaryCTA.label}
+            <svg
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <path d="M5 12h14" />
+              <path d="m12 5 7 7-7 7" />
+            </svg>
+          </a>
+        )}
+        {secondaryCTA && (
+          <a href={secondaryCTA.href} class="btn btn-ghost btn-lg">
+            {secondaryCTA.label}
+          </a>
+        )}
+      </div>
+    )}
+  </div>
+
+  {showStats && <StatBar stats={heroStats} />}
+</section>

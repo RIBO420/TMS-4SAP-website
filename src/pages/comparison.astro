@@ -1,0 +1,600 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import HeroInner from '../components/ui/HeroInner.astro';
+import SectionHeader from '../components/ui/SectionHeader.astro';
+import CTABanner from '../components/ui/CTABanner.astro';
+
+const breadcrumbs = [
+  { label: 'Home', href: '/' },
+  { label: 'Comparison', href: '/comparison' },
+];
+
+/**
+ * Comparison matrix data.
+ * Statuses: 'full' = checkmark, 'partial' = dash, 'none' = X
+ */
+type CellStatus = 'full' | 'partial' | 'none';
+
+interface ComparisonRow {
+  criteria: string;
+  tms: CellStatus;
+  erp: CellStatus;
+  mes: CellStatus;
+  spreadsheet: CellStatus;
+}
+
+const rows: ComparisonRow[] = [
+  { criteria: 'Production Planning',      tms: 'full',    erp: 'partial', mes: 'partial', spreadsheet: 'partial' },
+  { criteria: 'Material Planning',        tms: 'full',    erp: 'full',    mes: 'none',    spreadsheet: 'partial' },
+  { criteria: 'Shop Floor Monitoring',    tms: 'full',    erp: 'none',    mes: 'full',    spreadsheet: 'none'    },
+  { criteria: 'Quality Management',       tms: 'full',    erp: 'none',    mes: 'partial', spreadsheet: 'none'    },
+  { criteria: 'Data Capture',             tms: 'full',    erp: 'none',    mes: 'partial', spreadsheet: 'none'    },
+  { criteria: 'Product Data Management',  tms: 'full',    erp: 'partial', mes: 'none',    spreadsheet: 'none'    },
+  { criteria: 'Business Intelligence',    tms: 'full',    erp: 'partial', mes: 'partial', spreadsheet: 'partial' },
+  { criteria: 'Configuration Management', tms: 'full',    erp: 'none',    mes: 'none',    spreadsheet: 'none'    },
+  { criteria: 'SAP Integration',          tms: 'full',    erp: 'full',    mes: 'partial', spreadsheet: 'none'    },
+  { criteria: 'Single Database',          tms: 'full',    erp: 'full',    mes: 'none',    spreadsheet: 'none'    },
+  { criteria: 'Real-time Data',           tms: 'full',    erp: 'partial', mes: 'full',    spreadsheet: 'none'    },
+  { criteria: 'Implementation Time',      tms: 'full',    erp: 'partial', mes: 'partial', spreadsheet: 'full'    },
+];
+
+const advantages = [
+  {
+    icon: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>',
+    title: 'Native SAP Integration',
+    description: 'TMS is built specifically for SAP Business One from the ground up. It is not a bolt-on or third-party connector. Data flows bidirectionally in real time through a single shared database, eliminating synchronization issues and data discrepancies that plague bolt-on solutions.',
+  },
+  {
+    icon: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>',
+    title: 'All-in-One Platform',
+    description: 'Nine purpose-built modules in one unified system. From production planning and shop floor monitoring to quality management and business intelligence, every function shares a single data layer. No data silos, no duplicate entry, no reconciliation headaches.',
+  },
+  {
+    icon: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 20a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8l-7 5V8l-7 5V4a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"/></svg>',
+    title: 'Industry-Specific',
+    description: 'Pre-configured for the workflows and requirements of plastics processing, automotive supply, metal fabrication, and electronics manufacturing. You get industry best practices out of the box instead of spending months on custom configuration.',
+  },
+];
+---
+
+<BaseLayout
+  title="Why TMS | Comparison"
+  description="See how TMS 4SAP compares to generic ERP systems, standalone MES solutions, and spreadsheet-based planning. Discover why manufacturers choose TMS for SAP Business One."
+>
+  <!-- Hero -->
+  <HeroInner
+    breadcrumbs={breadcrumbs}
+    tag="Why TMS"
+    title="Why Choose"
+    titleAccent="TMS?"
+    description="See how TMS compares to alternative approaches for managing manufacturing operations within SAP Business One."
+  />
+
+  <!-- Comparison Table -->
+  <section class="section comparison-section">
+    <div class="container">
+      <SectionHeader
+        tag="Feature Matrix"
+        title="Detailed"
+        titleAccent="Comparison"
+        description="A side-by-side look at TMS versus three common alternatives manufacturers consider."
+      />
+
+      <div class="table-wrapper" role="region" aria-label="Feature comparison table" tabindex="0">
+        <table class="comparison-table" aria-label="TMS feature comparison with Generic ERP, Standalone MES, and Spreadsheet planning">
+          <thead>
+            <tr>
+              <th class="criteria-col" scope="col">Feature</th>
+              <th class="tms-col" scope="col">
+                <span class="col-label-highlight">TMS 4SAP</span>
+              </th>
+              <th scope="col">
+                <span class="col-label">Generic ERP</span>
+                <span class="col-sublabel">SAP B1 without MFG add-on</span>
+              </th>
+              <th scope="col">
+                <span class="col-label">Standalone MES</span>
+                <span class="col-sublabel">Separate system</span>
+              </th>
+              <th scope="col">
+                <span class="col-label">Spreadsheets</span>
+                <span class="col-sublabel">Excel-based planning</span>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {rows.map((row, i) => (
+              <tr class={i % 2 === 0 ? 'row-even' : 'row-odd'}>
+                <td class="criteria-cell">{row.criteria}</td>
+                <td class="tms-cell">
+                  {row.tms === 'full' && (
+                    <span class="status-full" aria-label="Fully supported">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                    </span>
+                  )}
+                </td>
+                <td>
+                  {row.erp === 'full' && (
+                    <span class="status-other-full" aria-label="Supported">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                    </span>
+                  )}
+                  {row.erp === 'partial' && (
+                    <span class="status-partial" aria-label="Partially supported">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                    </span>
+                  )}
+                  {row.erp === 'none' && (
+                    <span class="status-none" aria-label="Not supported">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                    </span>
+                  )}
+                </td>
+                <td>
+                  {row.mes === 'full' && (
+                    <span class="status-other-full" aria-label="Supported">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                    </span>
+                  )}
+                  {row.mes === 'partial' && (
+                    <span class="status-partial" aria-label="Partially supported">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                    </span>
+                  )}
+                  {row.mes === 'none' && (
+                    <span class="status-none" aria-label="Not supported">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                    </span>
+                  )}
+                </td>
+                <td>
+                  {row.spreadsheet === 'full' && (
+                    <span class="status-other-full" aria-label="Supported">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                    </span>
+                  )}
+                  {row.spreadsheet === 'partial' && (
+                    <span class="status-partial" aria-label="Partially supported">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                    </span>
+                  )}
+                  {row.spreadsheet === 'none' && (
+                    <span class="status-none" aria-label="Not supported">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                    </span>
+                  )}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Legend -->
+      <div class="table-legend" aria-hidden="true">
+        <div class="legend-item">
+          <span class="status-full"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+          <span>Fully supported</span>
+        </div>
+        <div class="legend-item">
+          <span class="status-partial"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/></svg></span>
+          <span>Partial / limited</span>
+        </div>
+        <div class="legend-item">
+          <span class="status-none"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span>
+          <span>Not available</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Key Advantages -->
+  <section class="section advantages-section">
+    <div class="container">
+      <SectionHeader
+        tag="Key Differentiators"
+        title="The TMS"
+        titleAccent="Advantage"
+        description="Three fundamental reasons manufacturers choose TMS over alternative approaches."
+      />
+
+      <div class="advantages-grid">
+        {advantages.map((adv) => (
+          <div class="advantage-card" data-animate>
+            <div class="advantage-icon">
+              <Fragment set:html={adv.icon} />
+            </div>
+            <h3>{adv.title}</h3>
+            <p>{adv.description}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Banner -->
+  <CTABanner
+    title="Ready to see the difference?"
+    titleAccent="Book a demo"
+    description="Experience firsthand how TMS outperforms generic ERP, standalone MES, and spreadsheet-based approaches for manufacturing management."
+    primaryCTA={{ label: 'Book a Demo', href: '/demo' }}
+    secondaryCTA={{ label: 'Download Brochure', href: '/downloads' }}
+  />
+</BaseLayout>
+
+<style>
+  /* ---- Comparison Section ---- */
+  .comparison-section {
+    padding-top: clamp(2rem, 4vw, 3rem);
+  }
+
+  /* ---- Table Wrapper (horizontal scroll on mobile) ---- */
+  .table-wrapper {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    background: var(--bg-card);
+  }
+
+  /* ---- Table ---- */
+  .comparison-table {
+    width: 100%;
+    min-width: 700px;
+    border-collapse: collapse;
+    font-size: 0.9375rem;
+  }
+
+  .comparison-table thead {
+    border-bottom: 1px solid var(--border);
+  }
+
+  .comparison-table th {
+    padding: 20px 16px;
+    text-align: center;
+    font-family: var(--font-heading);
+    font-weight: 600;
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    vertical-align: bottom;
+    white-space: nowrap;
+  }
+
+  .comparison-table th.criteria-col {
+    text-align: left;
+    min-width: 200px;
+    position: sticky;
+    left: 0;
+    z-index: 2;
+    background: var(--bg-card);
+  }
+
+  .comparison-table th.tms-col {
+    background: rgba(245, 158, 11, 0.04);
+  }
+
+  .col-label-highlight {
+    display: block;
+    font-family: var(--font-heading);
+    font-size: 0.9375rem;
+    font-weight: 700;
+    color: var(--amber);
+    letter-spacing: -0.01em;
+  }
+
+  .col-label {
+    display: block;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: var(--text-muted);
+  }
+
+  .col-sublabel {
+    display: block;
+    font-size: 0.6875rem;
+    font-weight: 400;
+    color: var(--text-dim);
+    margin-top: 2px;
+    white-space: normal;
+    max-width: 130px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .comparison-table td {
+    padding: 14px 16px;
+    text-align: center;
+    vertical-align: middle;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .comparison-table tr:last-child td {
+    border-bottom: none;
+  }
+
+  .criteria-cell {
+    text-align: left;
+    font-weight: 500;
+    color: var(--text);
+    position: sticky;
+    left: 0;
+    z-index: 1;
+    background: var(--bg-card);
+  }
+
+  .tms-cell {
+    background: rgba(245, 158, 11, 0.04);
+  }
+
+  /* ---- Striped rows ---- */
+  .row-even td {
+    background-color: transparent;
+  }
+
+  .row-odd td {
+    background-color: rgba(255, 255, 255, 0.015);
+  }
+
+  /* Preserve sticky + tms column colors on striped rows */
+  .row-odd .criteria-cell {
+    background-color: var(--bg-card);
+  }
+
+  .row-odd .tms-cell {
+    background-color: rgba(245, 158, 11, 0.05);
+  }
+
+  /* ---- Status Icons ---- */
+  .status-full {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: rgba(245, 158, 11, 0.12);
+    color: var(--amber);
+  }
+
+  .status-other-full {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: rgba(161, 161, 170, 0.1);
+    color: var(--text-muted);
+  }
+
+  .status-partial {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: rgba(234, 179, 8, 0.08);
+    color: var(--amber-hover);
+    opacity: 0.7;
+  }
+
+  .status-none {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: rgba(113, 113, 122, 0.08);
+    color: var(--text-dim);
+    opacity: 0.5;
+  }
+
+  /* ---- Legend ---- */
+  .table-legend {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 24px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.8125rem;
+    color: var(--text-dim);
+  }
+
+  /* ---- Advantages Section ---- */
+  .advantages-section {
+    border-top: 1px solid var(--border);
+  }
+
+  .advantages-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+
+  .advantage-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 32px 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    transition: all 0.3s var(--ease);
+  }
+
+  .advantage-card:hover {
+    background: var(--bg-card-hover);
+    border-color: var(--border-hover);
+    transform: translateY(-2px);
+  }
+
+  .advantage-icon {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--amber-dim);
+    border-radius: var(--radius-sm);
+    color: var(--amber);
+    flex-shrink: 0;
+  }
+
+  .advantage-card h3 {
+    font-family: var(--font-heading);
+    font-size: 1.125rem;
+    font-weight: 600;
+    line-height: 1.3;
+    letter-spacing: -0.01em;
+  }
+
+  .advantage-card p {
+    font-size: 0.9375rem;
+    color: var(--text-muted);
+    line-height: 1.7;
+  }
+
+  /* ---- Responsive ---- */
+
+  @media (max-width: 900px) {
+    .advantages-grid {
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+  }
+
+  /* Tablet */
+  @media (max-width: 768px) {
+    .comparison-section {
+      padding: clamp(2rem, 6vw, 3rem) 0;
+    }
+
+    .table-wrapper {
+      margin-left: -4%;
+      margin-right: -4%;
+      border-radius: var(--radius);
+    }
+
+    .comparison-table th {
+      padding: 16px 12px;
+      font-size: 0.8125rem;
+    }
+
+    .comparison-table td {
+      padding: 12px;
+    }
+
+    .advantages-section {
+      padding: clamp(2rem, 6vw, 3rem) 0;
+    }
+
+    .advantage-card {
+      padding: 24px 20px;
+    }
+
+    .advantage-card h3 {
+      font-size: 1.0625rem;
+    }
+
+    .table-legend {
+      gap: 16px;
+    }
+  }
+
+  /* iPhone / small mobile */
+  @media (max-width: 480px) {
+    .comparison-section {
+      padding: 2rem 0;
+    }
+
+    .advantages-section {
+      padding: 2rem 0;
+    }
+
+    /* Ensure table scrolls smoothly on small screens */
+    .table-wrapper {
+      margin-left: -4%;
+      margin-right: -4%;
+      border-radius: var(--radius-sm);
+      scrollbar-width: thin;
+    }
+
+    /* Show a subtle scroll hint shadow */
+    .table-wrapper::after {
+      content: '';
+      position: absolute;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      width: 24px;
+      background: linear-gradient(to left, var(--bg-card), transparent);
+      pointer-events: none;
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    }
+
+    .comparison-table {
+      font-size: 0.875rem;
+    }
+
+    .comparison-table th {
+      padding: 14px 10px;
+      font-size: 0.75rem;
+    }
+
+    .comparison-table td {
+      padding: 10px 8px;
+    }
+
+    .criteria-cell {
+      font-size: 0.8125rem;
+    }
+
+    .col-sublabel {
+      font-size: 0.625rem;
+      max-width: 100px;
+    }
+
+    .status-full,
+    .status-other-full,
+    .status-partial,
+    .status-none {
+      width: 24px;
+      height: 24px;
+    }
+
+    .table-legend {
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .legend-item {
+      font-size: 0.75rem;
+    }
+
+    .advantage-card {
+      padding: 20px 16px;
+    }
+
+    .advantage-icon {
+      width: 44px;
+      height: 44px;
+    }
+
+    .advantage-card h3 {
+      font-size: 1rem;
+    }
+
+    .advantage-card p {
+      font-size: 0.875rem;
+    }
+  }
+</style>

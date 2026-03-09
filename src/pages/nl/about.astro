@@ -1,0 +1,385 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import HeroInner from '../../components/ui/HeroInner.astro';
+import SectionHeader from '../../components/ui/SectionHeader.astro';
+import StatBar from '../../components/ui/StatBar.astro';
+import CTABanner from '../../components/ui/CTABanner.astro';
+import FeatureCard from '../../components/cards/FeatureCard.astro';
+/* About page stats -- beknopte labels voor de header stat bar */
+const aboutStats = [
+  { value: '9', label: 'Modules' },
+  { value: 'SAP', label: 'Gecertificeerd' },
+  { value: 'Globaal', label: 'Netwerk' },
+  { value: '24/7', label: 'Ondersteuning' },
+];
+
+const breadcrumbs = [
+  { label: 'Home', href: '/nl' },
+  { label: 'Over ons', href: '/nl/about' },
+];
+
+/* Value icons as SVG strings */
+const valueIcons = {
+  innovation: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v4"/><path d="m6.34 6.34 2.83 2.83"/><path d="M2 12h4"/><path d="m17.66 6.34-2.83 2.83"/><path d="M22 12h-4"/><path d="m6.34 17.66 2.83-2.83"/><path d="M12 22v-4"/><path d="m17.66 17.66-2.83-2.83"/></svg>',
+  reliability: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>',
+  integration: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>',
+  support: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>',
+};
+
+/* Approach step icons */
+const approachIcons = {
+  discover: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>',
+  configure: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>',
+  deploy: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 16 12 12 8 16"/><line x1="12" y1="12" x2="12" y2="21"/><path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3"/><polyline points="16 16 12 12 8 16"/></svg>',
+  evolve: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>',
+};
+---
+
+<BaseLayout
+  title="Over ons | TMS 4SAP"
+  description="Leer meer over TheManufacturingSuite — de SAP-gecertificeerde productieoplossing gebouwd om productieplanning, kwaliteitsbeheer en werkvloeruitvoering te moderniseren."
+  lang="nl"
+>
+  <!-- ===== HERO INNER ===== -->
+  <HeroInner
+    breadcrumbs={breadcrumbs}
+    tag="Over ons"
+    title="Over"
+    titleAccent="TheManufacturingSuite"
+    description="Wij bouwen de productiesoftware die SAP Business One gebruikers verdienen — diep geïntegreerd, grondig getest en ontworpen door mensen die productie begrijpen."
+  />
+
+  <!-- ===== STATS ROW ===== -->
+  <StatBar stats={aboutStats} />
+
+  <!-- ===== COMPANY STORY ===== -->
+  <section class="section" id="our-story">
+    <div class="container">
+      <div class="story-layout">
+        <div class="story-content" data-animate>
+          <span class="section-tag">Ons verhaal</span>
+          <h2>Gebouwd door fabrikanten, <span class="text-amber">voor fabrikanten.</span></h2>
+          <p>
+            TheManufacturingSuite is ontstaan uit een eenvoudige observatie: SAP Business One
+            is een uitzonderlijk ERP-platform, maar fabrikanten worstelden consequent met
+            gefragmenteerde add-ons, losgekoppelde werkvloersystemen en productieplanning-tools
+            die nooit ontworpen waren om samen te werken.
+          </p>
+          <p>
+            Wij besloten dat te veranderen. In directe samenwerking met productieplanning,
+            kwaliteitsingenieurs en plantmanagers door heel Europa, ontwikkelden wij een
+            geïntegreerde suite van 9 gespecialiseerde modules die SAP Business One uitbreiden
+            tot een compleet productie-executieplatform. Elke module deelt een gemeenschappelijk
+            datamodel, elke interface is ontworpen voor de werkvloer en elk integratiepunt
+            is SAP-gecertificeerd.
+          </p>
+          <p>
+            Vandaag de dag ondersteunt TMS productieactiviteiten in de automotive, metaalbewerking,
+            elektronica en voedselproductie — van werkplaatsen met één locatie tot ondernemingen
+            met meerdere fabrieken. Ons partnernetwerk strekt zich uit over de hele wereld en
+            onze missie blijft dezelfde: fabrikanten de tools geven die ze nodig hebben, zonder
+            de complexiteit die ze niet nodig hebben.
+          </p>
+        </div>
+        <aside class="story-highlights" data-animate>
+          <div class="highlight-card">
+            <span class="highlight-value">9</span>
+            <span class="highlight-label">Gespecialiseerde modules voor elke productiediscipline</span>
+          </div>
+          <div class="highlight-card">
+            <span class="highlight-value">SAP</span>
+            <span class="highlight-label">Gecertificeerde integratie — geen middleware, geen workarounds</span>
+          </div>
+          <div class="highlight-card">
+            <span class="highlight-value">100%</span>
+            <span class="highlight-label">Productiegericht, ontworpen voor de werkvloer</span>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== VALUES ===== -->
+  <section class="section" id="values">
+    <div class="container">
+      <SectionHeader
+        tag="Onze waarden"
+        title="Wat ons werk"
+        titleAccent="drijft."
+        description="Vier principes sturen elke functie die we bouwen, elke implementatie die we leveren en elke relatie die we onderhouden."
+      />
+      <div class="values-grid">
+        <FeatureCard
+          icon={valueIcons.innovation}
+          title="Innovatie"
+          description="Wij investeren continu in R&D om TMS aan de voorhoede van productietechnologie te houden — van AI-gestuurde planning tot voorspellende kwaliteitsanalyse."
+        />
+        <FeatureCard
+          icon={valueIcons.reliability}
+          title="Betrouwbaarheid"
+          description="Productie stopt nooit, en wij ook niet. TMS is ontwikkeld voor 24/7 beschikbaarheid met enterprise-grade stabiliteit en grondige release-tests."
+        />
+        <FeatureCard
+          icon={valueIcons.integration}
+          title="Integratie"
+          description="Wij geloven dat software silo's moet elimineren, niet creëren. Elke module, elk datapunt en elke workflow is native verbonden met SAP Business One."
+        />
+        <FeatureCard
+          icon={valueIcons.support}
+          title="Partnerschap"
+          description="Ons wereldwijde netwerk van gecertificeerde partners zorgt ervoor dat elke implementatie is afgestemd op uw operatie, met lokale expertise en enterprise-level ondersteuning."
+        />
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== OUR APPROACH ===== -->
+  <section class="section" id="approach">
+    <div class="container">
+      <SectionHeader
+        tag="Methodologie"
+        title="Onze implementatie"
+        titleAccent="aanpak."
+        description="Een bewezen vierfasenmethodologie die verstoring minimaliseert en adoptie maximaliseert vanaf dag één."
+      />
+      <div class="approach-grid">
+        <div class="approach-step" data-animate>
+          <div class="approach-number">01</div>
+          <div class="approach-icon" set:html={approachIcons.discover} />
+          <h3 class="approach-title">Verkennen</h3>
+          <p class="approach-desc">
+            Wij brengen uw huidige productieprocessen in kaart, identificeren knelpunten en
+            bepalen welke TMS-modules de grootste directe impact leveren. Geen aannames,
+            alleen data.
+          </p>
+        </div>
+        <div class="approach-step" data-animate>
+          <div class="approach-number">02</div>
+          <div class="approach-icon" set:html={approachIcons.configure} />
+          <h3 class="approach-title">Configureren</h3>
+          <p class="approach-desc">
+            Uw TMS-instantie wordt geconfigureerd om aan te sluiten bij uw workflows — routingregels,
+            kwaliteitscontrolepunten, stuklijststructuren en rapportagedashboards worden afgestemd
+            op uw operatie.
+          </p>
+        </div>
+        <div class="approach-step" data-animate>
+          <div class="approach-number">03</div>
+          <div class="approach-icon" set:html={approachIcons.deploy} />
+          <h3 class="approach-title">Uitrollen</h3>
+          <p class="approach-desc">
+            Gefaseerde uitrol met hands-on training zorgt ervoor dat uw team vertrouwen heeft
+            voordat u live gaat. Wij rollen module voor module uit zodat de productie nooit stopt.
+          </p>
+        </div>
+        <div class="approach-step" data-animate>
+          <div class="approach-number">04</div>
+          <div class="approach-icon" set:html={approachIcons.evolve} />
+          <h3 class="approach-title">Doorontwikkelen</h3>
+          <p class="approach-desc">
+            Optimalisatie na lancering, doorlopende ondersteuning en regelmatige functie-updates
+            houden uw productieoperatie voorop naarmate uw bedrijf groeit.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CTA BANNER ===== -->
+  <CTABanner
+    title="Wilt u TMS"
+    titleAccent="in actie zien?"
+    description="Boek een persoonlijke demo met ons team en ontdek hoe TheManufacturingSuite past bij uw productieoperatie."
+    primaryCTA={{ label: "Demo aanvragen", href: "/nl/demo" }}
+    secondaryCTA={{ label: "Neem contact op", href: "/nl/contact" }}
+  />
+</BaseLayout>
+
+<style>
+  /* ---- Story Layout ---- */
+  .story-layout {
+    display: grid;
+    grid-template-columns: 1fr 340px;
+    gap: clamp(2rem, 4vw, 4rem);
+    align-items: start;
+  }
+
+  .story-content h2 {
+    font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    margin-bottom: 24px;
+  }
+
+  .story-content p {
+    font-size: 1rem;
+    color: var(--text-muted);
+    line-height: 1.8;
+    margin-bottom: 16px;
+  }
+
+  .story-content p:last-child {
+    margin-bottom: 0;
+  }
+
+  .story-content .section-tag {
+    display: inline-block;
+    margin-bottom: 16px;
+  }
+
+  /* ---- Story Highlights Sidebar ---- */
+  .story-highlights {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    position: sticky;
+    top: 100px;
+  }
+
+  .highlight-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    transition: all 0.3s var(--ease);
+  }
+
+  .highlight-card:hover {
+    background: var(--bg-card-hover);
+    border-color: var(--border-hover);
+  }
+
+  .highlight-value {
+    font-family: var(--font-heading);
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--amber);
+    letter-spacing: -0.02em;
+  }
+
+  .highlight-label {
+    font-size: 0.9375rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+
+  @media (max-width: 768px) {
+    .story-layout {
+      grid-template-columns: 1fr;
+    }
+
+    .story-highlights {
+      position: static;
+      flex-direction: row;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scroll-snap-type: x mandatory;
+      padding-bottom: 8px;
+    }
+
+    .highlight-card {
+      min-width: 240px;
+      scroll-snap-align: start;
+      flex-shrink: 0;
+    }
+  }
+
+  /* ---- Values Grid ---- */
+  .values-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+
+  @media (max-width: 900px) {
+    .values-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 540px) {
+    .values-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* ---- Approach Grid ---- */
+  .approach-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+
+  .approach-step {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    position: relative;
+    transition: all 0.3s var(--ease);
+  }
+
+  .approach-step:hover {
+    background: var(--bg-card-hover);
+    border-color: var(--border-hover);
+    transform: translateY(-2px);
+  }
+
+  .approach-number {
+    font-family: var(--font-heading);
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--amber);
+    letter-spacing: 0.06em;
+    opacity: 0.6;
+  }
+
+  .approach-icon {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--amber-dim);
+    border-radius: var(--radius-sm);
+    color: var(--amber);
+  }
+
+  .approach-icon :global(svg) {
+    width: 20px;
+    height: 20px;
+  }
+
+  .approach-title {
+    font-family: var(--font-heading);
+    font-size: 1.0625rem;
+    font-weight: 600;
+    line-height: 1.3;
+    letter-spacing: -0.01em;
+  }
+
+  .approach-desc {
+    font-size: 0.9375rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+
+  @media (max-width: 900px) {
+    .approach-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 540px) {
+    .approach-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

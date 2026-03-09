@@ -1,0 +1,239 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import CTABanner from '../../../components/ui/CTABanner.astro';
+import '../../../styles/utilities.css';
+
+const title = 'Impressum';
+const lastUpdated = '2026-03-01';
+const formattedDate = new Date(lastUpdated).toLocaleDateString('nl-NL', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+});
+---
+
+<BaseLayout
+  lang="nl"
+  title="Impressum | TMS 4SAP"
+  description="Juridische kennisgeving (Impressum) voor TheManufacturingSuite BV. Vind onze bedrijfsgegevens, registratie-informatie en juridische disclaimers."
+>
+  <!-- Breadcrumbs -->
+  <nav class="container breadcrumbs" aria-label="Broodkruimelpad">
+    <a href="/nl">Home</a>
+    <span class="breadcrumbs-separator" aria-hidden="true">/</span>
+    <a href="/nl/legal/impressum">Juridisch</a>
+    <span class="breadcrumbs-separator" aria-hidden="true">/</span>
+    <span class="breadcrumbs-current" aria-current="page">{title}</span>
+  </nav>
+
+  <!-- Legal content -->
+  <section class="section legal-section">
+    <div class="container">
+      <div class="legal-width">
+        <!-- Page header -->
+        <header class="legal-header">
+          <h1>{title}</h1>
+          <p class="legal-last-updated">
+            Laatst bijgewerkt: <time datetime={lastUpdated}>{formattedDate}</time>
+          </p>
+        </header>
+
+        <!-- Prose content -->
+        <div class="prose">
+
+          <h2 id="company-details">Bedrijfsgegevens</h2>
+
+          <div class="company-info-card">
+            <div class="company-info-row">
+              <span class="company-info-label">Bedrijfsnaam</span>
+              <span class="company-info-value">TheManufacturingSuite BV</span>
+            </div>
+            <div class="company-info-row">
+              <span class="company-info-label">Adres</span>
+              <span class="company-info-value">
+                Il Flore<br />
+                Avenue Ceramique 221<br />
+                6221 KX, Maastricht<br />
+                Nederland
+              </span>
+            </div>
+            <div class="company-info-row">
+              <span class="company-info-label">Telefoon</span>
+              <span class="company-info-value">
+                <a href="tel:+31432340050">+31 43 234 00 50</a>
+              </span>
+            </div>
+            <div class="company-info-row">
+              <span class="company-info-label">E-mail</span>
+              <span class="company-info-value">
+                <a href="mailto:info@themanufacturingsuite.com">info@themanufacturingsuite.com</a>
+              </span>
+            </div>
+            <div class="company-info-row">
+              <span class="company-info-label">Website</span>
+              <span class="company-info-value">
+                <a href="https://themanufacturingsuite.com">themanufacturingsuite.com</a>
+              </span>
+            </div>
+            <div class="company-info-row">
+              <span class="company-info-label">Kamer van Koophandel</span>
+              <span class="company-info-value">KvK Limburg 14XXXXXX</span>
+            </div>
+            <div class="company-info-row">
+              <span class="company-info-label">Btw-nummer</span>
+              <span class="company-info-value">NL00XXXXXXXXB01</span>
+            </div>
+            <div class="company-info-row">
+              <span class="company-info-label">Directie</span>
+              <span class="company-info-value">Nog te bevestigen</span>
+            </div>
+          </div>
+
+          <h2 id="disclaimer">Disclaimer</h2>
+
+          <h3>Aansprakelijkheid voor inhoud</h3>
+          <p>
+            De inhoud van onze website is met de grootst mogelijke zorgvuldigheid samengesteld. TheManufacturingSuite BV
+            kan echter de juistheid, volledigheid of actualiteit van de verstrekte informatie niet garanderen. Als
+            dienstverlener zijn wij verantwoordelijk voor onze eigen inhoud op deze pagina's volgens het algemene recht.
+            Wij zijn echter niet verplicht om overgedragen of opgeslagen informatie van derden te monitoren, of om
+            omstandigheden te onderzoeken die wijzen op onrechtmatige activiteit.
+          </p>
+          <p>
+            Verplichtingen tot verwijdering of blokkering van het gebruik van informatie op grond van het algemene recht
+            blijven onverminderd van kracht. Aansprakelijkheid in dit verband is echter pas mogelijk vanaf het moment
+            van kennis van een specifieke overtreding. Bij kennisgeving van dergelijke overtredingen zullen wij deze
+            inhoud onmiddellijk verwijderen.
+          </p>
+
+          <h3>Aansprakelijkheid voor links</h3>
+          <p>
+            Onze website kan links bevatten naar externe websites van derden waarover wij geen controle hebben.
+            Daarom kunnen wij geen aansprakelijkheid aanvaarden voor deze externe inhoud. De respectieve aanbieder
+            of exploitant van de gelinkte pagina's is altijd verantwoordelijk voor de inhoud van die pagina's. De
+            gelinkte pagina's zijn gecontroleerd op mogelijke juridische overtredingen op het moment van linken.
+            Onrechtmatige inhoud was op het moment van linken niet herkenbaar.
+          </p>
+          <p>
+            Permanente monitoring van de inhoud van gelinkte pagina's is niet redelijk zonder concreet bewijs van
+            een overtreding. Bij kennisgeving van overtredingen zullen wij dergelijke links onmiddellijk verwijderen.
+          </p>
+
+          <h3>Auteursrecht</h3>
+          <p>
+            De inhoud en werken gepubliceerd op deze website zijn onderworpen aan het Nederlandse auteursrecht.
+            Elke verveelvoudiging, bewerking, verspreiding of enige vorm van commercialisering van dergelijk
+            materiaal buiten het bereik van het auteursrecht vereist de voorafgaande schriftelijke toestemming
+            van TheManufacturingSuite BV. Downloads en kopie\u00ebn van deze site zijn uitsluitend toegestaan voor
+            priv\u00e9, niet-commercieel gebruik.
+          </p>
+          <p>
+            Voor zover de inhoud op deze site niet door de exploitant is gecre\u00eberd, worden de auteursrechten van
+            derden gerespecteerd. Met name wordt inhoud van derden als zodanig aangeduid. Mocht u desondanks
+            een auteursrechtschending constateren, verzoeken wij u ons hiervan op de hoogte te stellen. Bij
+            kennisgeving van overtredingen zullen wij dergelijke inhoud onmiddellijk verwijderen.
+          </p>
+
+          <h2 id="dispute-resolution">Geschillenbeslechting</h2>
+          <p>
+            De Europese Commissie biedt een platform voor Online Geschillenbeslechting (ODR), te vinden op
+            <a href="https://ec.europa.eu/consumers/odr" target="_blank" rel="noopener noreferrer">
+              https://ec.europa.eu/consumers/odr
+            </a>. Wij zijn niet bereid en niet verplicht deel te nemen aan geschillenbeslechtingsprocedures bij
+            een consumentenarbitragecommissie.
+          </p>
+
+          <h2 id="copyright-notice">Auteursrechtvermelding</h2>
+          <p>
+            &copy; {new Date().getFullYear()} TheManufacturingSuite BV. Alle rechten voorbehouden.
+          </p>
+          <p>
+            TMS, TMS 4SAP en het TMS-logo zijn geregistreerde handelsmerken van TheManufacturingSuite BV. SAP en
+            SAP Business One zijn handelsmerken of geregistreerde handelsmerken van SAP SE in Duitsland en andere
+            landen. Alle andere productnamen, logo's en merken zijn eigendom van hun respectieve eigenaren en
+            worden op deze website uitsluitend gebruikt ter identificatie. Het gebruik van deze namen, logo's en
+            merken impliceert geen goedkeuring.
+          </p>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Banner -->
+  <CTABanner
+    title="Meer weten over"
+    titleAccent="TMS 4SAP?"
+    description="Ontdek hoe onze productiesoftwareoplossingen uw productieprocessen kunnen stroomlijnen. Neem vandaag nog contact op met ons team."
+    primaryCTA={{ label: 'Neem Contact Op', href: '/nl/contact' }}
+    secondaryCTA={{ label: 'Bekijk Modules', href: '/nl/modules' }}
+  />
+</BaseLayout>
+
+<style>
+  .legal-section {
+    padding-top: clamp(1rem, 2vw, 2rem);
+  }
+
+  .company-info-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: clamp(1.5rem, 3vw, 2rem);
+    margin-top: 1.5em;
+  }
+
+  .company-info-row {
+    display: flex;
+    gap: 16px;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .company-info-row:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  .company-info-row:first-child {
+    padding-top: 0;
+  }
+
+  .company-info-label {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--text-dim);
+    min-width: 180px;
+    flex-shrink: 0;
+    font-family: var(--font-heading);
+    letter-spacing: -0.01em;
+  }
+
+  .company-info-value {
+    font-size: 0.9375rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+
+  .company-info-value a {
+    color: var(--amber);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    transition: color 0.2s var(--ease);
+  }
+
+  .company-info-value a:hover {
+    color: var(--amber-hover);
+  }
+
+  @media (max-width: 600px) {
+    .company-info-row {
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .company-info-label {
+      min-width: auto;
+    }
+  }
+</style>

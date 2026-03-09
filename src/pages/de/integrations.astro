@@ -1,0 +1,429 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import HeroInner from '@components/ui/HeroInner.astro';
+import SectionHeader from '@components/ui/SectionHeader.astro';
+import CTABanner from '@components/ui/CTABanner.astro';
+
+const breadcrumbs = [
+  { label: 'Startseite', href: '/de' },
+  { label: 'Integrationen', href: '/de/integrations' },
+];
+
+type BadgeType = 'Native' | 'Certified' | 'Compatible';
+
+interface Integration {
+  name: string;
+  description: string;
+  badge: BadgeType;
+  icon: string;
+}
+
+interface IntegrationCategory {
+  category: string;
+  description: string;
+  integrations: Integration[];
+}
+
+const categories: IntegrationCategory[] = [
+  {
+    category: 'ERP-Plattform',
+    description: 'Das Fundament von TMS -- eine tiefe, native Verbindung mit SAP Business One.',
+    integrations: [
+      {
+        name: 'SAP Business One',
+        description: 'Native Integration mit bidirektionaler Echtzeit-Datensynchronisation. TMS ist ein zertifiziertes SAP-Add-on, das innerhalb der SAP B1-Datenbank läuft und dadurch keine Datenlatenz sowie vollständige Transaktionskonsistenz gewährleistet.',
+        badge: 'Native',
+        icon: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>',
+      },
+    ],
+  },
+  {
+    category: 'CAD / PLM',
+    description: 'Integrieren Sie Ihre Engineering-Tools direkt mit der Produktionsplanung und dem Produktdatenmanagement.',
+    integrations: [
+      {
+        name: 'Autodesk Inventor',
+        description: 'Bidirektionale Stücklistensynchronisation und Zeichnungsverwaltung. Konstruktionsänderungen in Inventor werden automatisch in den TMS-Produktionsstücklisten abgebildet, sodass Ihre Fertigung stets mit der aktuellen Revision übereinstimmt.',
+        badge: 'Certified',
+        icon: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 20a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8l-7 5V8l-7 5V4a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"/></svg>',
+      },
+      {
+        name: 'Autodesk Vault',
+        description: 'Dokumentenmanagement-Integration für zentralen Zugriff auf CAD-Dateien, Zeichnungen und Engineering-Dokumentation aus TMS und SAP Business One heraus.',
+        badge: 'Certified',
+        icon: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/></svg>',
+      },
+      {
+        name: 'SOLIDWORKS',
+        description: 'Modell-zu-Stückliste-Extraktion zur automatischen Erstellung von Produktionsstücklisten aus SOLIDWORKS-Baugruppen, einschließlich Materialspezifikationen und Arbeitsplaninformationen.',
+        badge: 'Compatible',
+        icon: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>',
+      },
+      {
+        name: 'EPLAN',
+        description: 'Elektrotechnische Datenintegration für Kabellisten, Klemmenzuordnungen und Komponentenstücklisten. Ideal für Schaltschrankbauer und Maschinenhersteller mit elektrotechnischen Anforderungen.',
+        badge: 'Compatible',
+        icon: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg>',
+      },
+    ],
+  },
+  {
+    category: 'Kommunikation',
+    description: 'Automatisieren Sie den Datenaustausch mit Ihren Kunden und Lieferkettenpartnern.',
+    integrations: [
+      {
+        name: 'EDI',
+        description: 'Automatisierter elektronischer Bestell- und Rechnungsaustausch mit OEM-Kunden und Tier-1-Lieferanten. Unterstützung für EDIFACT-, ANSI X12- und VDA-Standards, die in der Automobil- und Fertigungsindustrie üblich sind.',
+        badge: 'Certified',
+        icon: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11a9 9 0 0 1 9 9"/><path d="M4 4a16 16 0 0 1 16 16"/><circle cx="5" cy="19" r="1"/></svg>',
+      },
+    ],
+  },
+  {
+    category: 'Datenerfassung',
+    description: 'Verbinden Sie Ihre Shopfloor-Hardware für die Echtzeit-Produktionsdatenerfassung.',
+    integrations: [
+      {
+        name: 'Barcode-Scanner',
+        description: 'Volle Unterstützung für USB- und Bluetooth-Barcode-Scanner aller führenden Hersteller, darunter Zebra, Honeywell und Datalogic. Scannen Sie Fertigungsaufträge, Materialien und Fertigwaren auf dem Shopfloor.',
+        badge: 'Compatible',
+        icon: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7V5a2 2 0 0 1 2-2h2"/><path d="M17 3h2a2 2 0 0 1 2 2v2"/><path d="M21 17v2a2 2 0 0 1-2 2h-2"/><path d="M7 21H5a2 2 0 0 1-2-2v-2"/><line x1="7" y1="12" x2="17" y2="12"/></svg>',
+      },
+      {
+        name: 'RFID-Systeme',
+        description: 'Passive und aktive RFID-Tag-Unterstützung für automatisierte Materialverfolgung, Bestandsverwaltung und Überwachung der laufenden Produktion. Ermöglicht berührungslose Datenerfassung in Hochvolumen-Umgebungen.',
+        badge: 'Compatible',
+        icon: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12h6"/><path d="M22 12h-6"/><path d="M12 2v6"/><path d="M12 22v-6"/><circle cx="12" cy="12" r="4"/></svg>',
+      },
+      {
+        name: 'Maschinenanbindung',
+        description: 'Direkte SPS-Integration und OPC-UA-Protokollunterstützung zur automatisierten Datenerfassung von CNC-Maschinen, Spritzgießanlagen und Produktionslinien. Erfassen Sie Zykluszeiten, Stückzahlen und Maschinenstatus in Echtzeit.',
+        badge: 'Native',
+        icon: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M6 12h.01"/><path d="M10 12h.01"/><path d="M14 12h.01"/><path d="M18 12h.01"/></svg>',
+      },
+    ],
+  },
+  {
+    category: 'Reporting',
+    description: 'Erweitern Sie Ihre Analyse- und Berichtsfunktionen mit branchenüblichen Tools.',
+    integrations: [
+      {
+        name: 'Crystal Reports',
+        description: 'Erweiterte Berichtserstellung für Produktionsberichte, Qualitätszertifikate, Lieferscheine und Management-Dashboards. Voller Zugriff auf alle TMS- und SAP Business One-Daten.',
+        badge: 'Native',
+        icon: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>',
+      },
+      {
+        name: 'Microsoft Excel',
+        description: 'Nahtlose Datenexport- und -importfunktionen mit vordefinierten Vorlagen für Produktionsplanung, Kapazitätsanalyse und Kostenkalkulationen. Vertraute Oberfläche für Ad-hoc-Berichtsanforderungen.',
+        badge: 'Native',
+        icon: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="3" y1="15" x2="21" y2="15"/><line x1="9" y1="3" x2="9" y2="21"/><line x1="15" y1="3" x2="15" y2="21"/></svg>',
+      },
+    ],
+  },
+];
+---
+
+<BaseLayout
+  lang="de"
+  title="Integrationen | TMS 4SAP"
+  description="Entdecken Sie TMS-Integrationspartner und -Funktionen: SAP Business One, Autodesk Inventor, SOLIDWORKS, EPLAN, EDI, Barcode/RFID, OPC-UA-Maschinenanbindung, Crystal Reports und mehr."
+>
+  <!-- Hero -->
+  <HeroInner
+    breadcrumbs={breadcrumbs}
+    tag="Ökosystem"
+    title="Integrationen"
+    description="TMS verbindet sich nahtlos mit Ihren bestehenden Tools und Systemen. Von CAD-Plattformen und Shopfloor-Hardware bis hin zu Reporting-Engines und Lieferkettenkommunikation."
+  />
+
+  <!-- Integration Categories -->
+  {categories.map((cat) => (
+    <section class="section integration-category">
+      <div class="container">
+        <div class="category-header" data-animate>
+          <h2 class="category-title">{cat.category}</h2>
+          <p class="category-desc">{cat.description}</p>
+        </div>
+
+        <div class:list={['integration-grid', { 'integration-grid--single': cat.integrations.length === 1 }]}>
+          {cat.integrations.map((item) => (
+            <div class="integration-card" data-animate>
+              <div class="integration-card-top">
+                <div class="integration-icon">
+                  <Fragment set:html={item.icon} />
+                </div>
+                <span class:list={['integration-badge', `badge-${item.badge.toLowerCase()}`]}>
+                  {item.badge}
+                </span>
+              </div>
+              <h3>{item.name}</h3>
+              <p>{item.description}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  ))}
+
+  <!-- Custom Integration CTA -->
+  <section class="section custom-integration-section">
+    <div class="container">
+      <div class="custom-integration-card" data-animate>
+        <div class="custom-integration-content">
+          <div class="custom-integration-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="3"/>
+              <path d="M12 1v4"/>
+              <path d="M12 19v4"/>
+              <path d="M4.22 4.22l2.83 2.83"/>
+              <path d="M16.95 16.95l2.83 2.83"/>
+              <path d="M1 12h4"/>
+              <path d="M19 12h4"/>
+              <path d="M4.22 19.78l2.83-2.83"/>
+              <path d="M16.95 7.05l2.83-2.83"/>
+            </svg>
+          </div>
+          <div class="custom-integration-text">
+            <h3>Individuelle Integration benötigt?</h3>
+            <p>
+              Wenn Ihre Fertigungsumgebung Tools oder Systeme verwendet, die hier nicht aufgeführt sind, kann unser
+              Integrationsteam individuelle Konnektoren entwickeln. Wir haben Erfahrung mit einer Vielzahl von
+              industriellen Protokollen, APIs und Datenformaten, die in der diskreten und Prozessfertigung verwendet werden.
+            </p>
+          </div>
+          <a href="/de/contact" class="btn btn-primary btn-lg">Unser Team kontaktieren</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Banner -->
+  <CTABanner
+    title="TMS-Integrationen"
+    titleAccent="in Aktion sehen"
+    description="Buchen Sie eine Demo, um zu sehen, wie TMS Ihre bestehenden SAP-, CAD- und Shopfloor-Systeme in einer einheitlichen Fertigungsplattform verbindet."
+    primaryCTA={{ label: 'Demo buchen', href: '/de/demo' }}
+    secondaryCTA={{ label: 'Broschüre herunterladen', href: '/de/downloads' }}
+  />
+</BaseLayout>
+
+<style>
+  /* ---- Category Sections ---- */
+  .integration-category {
+    padding-top: clamp(2rem, 4vw, 3rem);
+    padding-bottom: clamp(2rem, 4vw, 3rem);
+  }
+
+  .integration-category + .integration-category {
+    border-top: 1px solid var(--border);
+  }
+
+  /* ---- Category Header ---- */
+  .category-header {
+    margin-bottom: clamp(1.5rem, 3vw, 2.5rem);
+  }
+
+  .category-title {
+    font-family: var(--font-heading);
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    margin-bottom: 8px;
+  }
+
+  .category-desc {
+    font-size: 1rem;
+    color: var(--text-muted);
+    line-height: 1.7;
+    max-width: 600px;
+  }
+
+  /* ---- Integration Cards Grid ---- */
+  .integration-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+
+  .integration-grid--single {
+    grid-template-columns: 1fr;
+    max-width: 640px;
+  }
+
+  .integration-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    transition: all 0.3s var(--ease);
+  }
+
+  .integration-card:hover {
+    background: var(--bg-card-hover);
+    border-color: var(--border-hover);
+    transform: translateY(-2px);
+  }
+
+  /* ---- Card Top: Icon + Badge ---- */
+  .integration-card-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .integration-icon {
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--amber-dim);
+    border-radius: var(--radius-sm);
+    color: var(--amber);
+    flex-shrink: 0;
+  }
+
+  /* ---- Badges ---- */
+  .integration-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 10px;
+    border-radius: 100px;
+    font-size: 0.6875rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    flex-shrink: 0;
+  }
+
+  .badge-native {
+    background: rgba(245, 158, 11, 0.12);
+    border: 1px solid rgba(245, 158, 11, 0.25);
+    color: var(--amber);
+  }
+
+  .badge-certified {
+    background: rgba(34, 197, 94, 0.08);
+    border: 1px solid rgba(34, 197, 94, 0.2);
+    color: #4ade80;
+  }
+
+  .badge-compatible {
+    background: rgba(161, 161, 170, 0.08);
+    border: 1px solid rgba(161, 161, 170, 0.2);
+    color: var(--text-muted);
+  }
+
+  /* ---- Card Content ---- */
+  .integration-card h3 {
+    font-family: var(--font-heading);
+    font-size: 1.125rem;
+    font-weight: 600;
+    line-height: 1.3;
+    letter-spacing: -0.01em;
+  }
+
+  .integration-card p {
+    font-size: 0.9375rem;
+    color: var(--text-muted);
+    line-height: 1.7;
+  }
+
+  /* ---- Custom Integration Section ---- */
+  .custom-integration-section {
+    padding-top: 0;
+  }
+
+  .custom-integration-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-xl);
+    padding: clamp(2rem, 4vw, 3rem);
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Top edge glow */
+  .custom-integration-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 15%;
+    right: 15%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent 0%, var(--amber) 50%, transparent 100%);
+    opacity: 0.3;
+  }
+
+  .custom-integration-content {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+  }
+
+  .custom-integration-icon {
+    width: 56px;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--amber-dim);
+    border-radius: var(--radius);
+    color: var(--amber);
+    flex-shrink: 0;
+  }
+
+  .custom-integration-text {
+    flex: 1;
+  }
+
+  .custom-integration-text h3 {
+    font-family: var(--font-heading);
+    font-size: 1.25rem;
+    font-weight: 600;
+    line-height: 1.3;
+    letter-spacing: -0.01em;
+    margin-bottom: 8px;
+  }
+
+  .custom-integration-text p {
+    font-size: 0.9375rem;
+    color: var(--text-muted);
+    line-height: 1.7;
+    max-width: 640px;
+  }
+
+  .custom-integration-content > .btn {
+    flex-shrink: 0;
+    white-space: nowrap;
+  }
+
+  /* ---- Responsive ---- */
+  @media (min-width: 1024px) {
+    .integration-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  @media (max-width: 640px) {
+    .integration-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .custom-integration-content {
+      flex-direction: column;
+      align-items: flex-start;
+      text-align: left;
+    }
+
+    .custom-integration-content > .btn {
+      align-self: flex-start;
+    }
+  }
+</style>

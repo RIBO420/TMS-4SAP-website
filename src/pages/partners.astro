@@ -1,0 +1,780 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import HeroInner from '@components/ui/HeroInner.astro';
+import SectionHeader from '@components/ui/SectionHeader.astro';
+import CTABanner from '@components/ui/CTABanner.astro';
+
+const breadcrumbs = [
+  { label: 'Home', href: '/' },
+  { label: 'Partners', href: '/partners' },
+];
+
+type PartnerTier = 'Gold' | 'Silver' | 'Technology';
+
+interface Partner {
+  name: string;
+  tier: PartnerTier;
+  country: string;
+  city: string;
+  description: string;
+  specialties: string[];
+}
+
+const partnerTiers: { tier: PartnerTier; title: string; description: string }[] = [
+  {
+    tier: 'Gold',
+    title: 'Gold Partners',
+    description: 'Full implementation capability. Gold Partners deliver end-to-end TMS deployments, from initial scoping through go-live and long-term support. They hold the highest certification level and can implement all modules.',
+  },
+  {
+    tier: 'Silver',
+    title: 'Silver Partners',
+    description: 'Module-specific expertise. Silver Partners specialize in particular TMS modules or functional areas, delivering deep knowledge and proven track records in their focus domains.',
+  },
+  {
+    tier: 'Technology',
+    title: 'Technology Partners',
+    description: 'Integration and connectivity. Technology Partners extend the TMS ecosystem through system integration, IoT connectivity, cloud infrastructure, and complementary technology solutions.',
+  },
+];
+
+const partners: Partner[] = [
+  {
+    name: 'G3G Consulting',
+    tier: 'Gold',
+    country: 'Netherlands',
+    city: 'Maastricht',
+    description: 'Full SAP Business One and TMS implementation partner with 12 years of manufacturing expertise. Specialized in discrete and process manufacturing verticals across the Benelux region.',
+    specialties: ['SAP B1', 'Full TMS Suite', 'Go-Live Support'],
+  },
+  {
+    name: 'DigiFactory Solutions',
+    tier: 'Gold',
+    country: 'Germany',
+    city: 'Düsseldorf',
+    description: 'Manufacturing digitalization firm helping mid-market manufacturers transition from legacy systems to integrated TMS and SAP environments. Strong focus on change management and user adoption.',
+    specialties: ['Digital Transformation', 'MES', 'Training'],
+  },
+  {
+    name: 'SAP Experts BV',
+    tier: 'Silver',
+    country: 'Belgium',
+    city: 'Antwerp',
+    description: 'SAP Business One specialists with certified TMS consultants for planning and scheduling modules. Proven methodology for rapid deployments in automotive and electronics sectors.',
+    specialties: ['PPS', 'APS', 'SAP B1 Add-ons'],
+  },
+  {
+    name: 'ProMES Integration',
+    tier: 'Silver',
+    country: 'Netherlands',
+    city: 'Eindhoven',
+    description: 'MES and shop floor systems integrator bridging the gap between ERP and operational technology. Expertise in machine connectivity, data collection terminals, and real-time production monitoring.',
+    specialties: ['MES', 'PDC', 'Shop Floor IT'],
+  },
+  {
+    name: 'QualityFirst GmbH',
+    tier: 'Silver',
+    country: 'Germany',
+    city: 'Stuttgart',
+    description: 'Quality management consultancy focused on IATF 16949 and ISO 9001 compliance. Implements TMS Quality Management and Document Management modules for automotive suppliers.',
+    specialties: ['QM', 'DMS', 'IATF 16949'],
+  },
+  {
+    name: 'TechBridge Partners',
+    tier: 'Technology',
+    country: 'Netherlands',
+    city: 'Amsterdam',
+    description: 'System integration firm connecting TMS with third-party PLM, CAD, and ERP platforms. Builds custom connectors, API integrations, and data pipelines for manufacturing environments.',
+    specialties: ['API Integration', 'PLM', 'Data Migration'],
+  },
+  {
+    name: 'IndustryConnect',
+    tier: 'Technology',
+    country: 'Germany',
+    city: 'Munich',
+    description: 'IoT and machine connectivity provider enabling real-time data capture from CNC machines, PLCs, and sensors. Supplies the hardware and middleware layer that feeds into TMS MES and PDC.',
+    specialties: ['IoT', 'OPC-UA', 'Machine Connectivity'],
+  },
+  {
+    name: 'CloudManufacturing AG',
+    tier: 'Technology',
+    country: 'Switzerland',
+    city: 'Zürich',
+    description: 'Cloud infrastructure and managed services for manufacturing IT. Provides secure hosting, disaster recovery, and performance optimization for TMS and SAP Business One environments.',
+    specialties: ['Cloud Hosting', 'Security', 'Managed Services'],
+  },
+];
+
+const tierColors: Record<PartnerTier, string> = {
+  Gold: 'tier-gold',
+  Silver: 'tier-silver',
+  Technology: 'tier-tech',
+};
+---
+
+<BaseLayout
+  title="Partners | TMS 4SAP"
+  description="Find a certified TMS integrator near you. Our partner network spans the Benelux, DACH, and beyond with Gold, Silver, and Technology partners."
+>
+  <HeroInner
+    breadcrumbs={breadcrumbs}
+    tag="Partner Network"
+    title="Partner"
+    titleAccent="Network"
+    description="Find a certified TMS integrator near you. Our partner ecosystem brings together implementation experts, domain specialists, and technology providers."
+  />
+
+  <!-- Partner Tiers Explanation -->
+  <section class="section tiers-section">
+    <div class="container">
+      <SectionHeader
+        tag="Partner Tiers"
+        title="Three levels of"
+        titleAccent="expertise"
+        description="Our tiered partner program ensures you find the right match for your project scope and technical requirements."
+      />
+      <div class="tiers-grid">
+        {partnerTiers.map((pt) => (
+          <div class:list={['tier-card', tierColors[pt.tier]]} data-animate>
+            <div class="tier-badge-wrapper">
+              <span class:list={['tier-badge', tierColors[pt.tier]]}>
+                {pt.tier === 'Gold' && (
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/>
+                    <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/>
+                    <path d="M4 22h16"/>
+                    <path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/>
+                    <path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/>
+                    <path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/>
+                  </svg>
+                )}
+                {pt.tier === 'Silver' && (
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M12 2 2 7l10 5 10-5-10-5Z"/>
+                    <path d="m2 17 10 5 10-5"/>
+                    <path d="m2 12 10 5 10-5"/>
+                  </svg>
+                )}
+                {pt.tier === 'Technology' && (
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/>
+                    <path d="m2 12 10-5 10 5"/>
+                    <path d="m2 12 10 5 10-5"/>
+                    <path d="M12 2v20"/>
+                  </svg>
+                )}
+                {pt.tier}
+              </span>
+            </div>
+            <h3 class="tier-title">{pt.title}</h3>
+            <p class="tier-desc">{pt.description}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Partner Directory -->
+  <section class="section partners-directory-section">
+    <div class="container">
+      <SectionHeader
+        tag="Directory"
+        title="Our certified"
+        titleAccent="partners"
+        description="Each partner is vetted, trained, and certified to deliver TMS implementations that meet our quality standards."
+      />
+      <div class="partners-grid" role="list" aria-label="Partner directory">
+        {partners.map((partner) => (
+          <article class:list={['partner-card', tierColors[partner.tier]]} data-animate role="listitem">
+            <div class="partner-card-header">
+              <span class:list={['partner-tier-badge', tierColors[partner.tier]]}>
+                {partner.tier}
+              </span>
+              <span class="partner-location">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/>
+                  <circle cx="12" cy="10" r="3"/>
+                </svg>
+                {partner.city}, {partner.country}
+              </span>
+            </div>
+            <h3 class="partner-name">{partner.name}</h3>
+            <p class="partner-desc">{partner.description}</p>
+            <div class="partner-specialties">
+              {partner.specialties.map((spec) => (
+                <span class="specialty-tag">{spec}</span>
+              ))}
+            </div>
+            <a href={`/contact?partner=${encodeURIComponent(partner.name)}`} class="btn btn-ghost btn-sm partner-cta">
+              Contact Partner
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M5 12h14"/>
+                <path d="m12 5 7 7-7 7"/>
+              </svg>
+            </a>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Become a Partner -->
+  <section class="section become-partner-section">
+    <div class="container">
+      <div class="become-partner-card" data-animate>
+        <div class="become-partner-content">
+          <span class="section-tag">Join Our Network</span>
+          <h2 class="become-partner-title">Become a <span class="text-amber">TMS Partner</span></h2>
+          <p class="become-partner-desc">
+            Are you a consulting firm, system integrator, or technology provider serving the manufacturing sector?
+            Join our partner program and gain access to certification training, co-marketing resources, lead sharing,
+            and dedicated partner support. We are actively expanding our network across Europe.
+          </p>
+          <div class="become-partner-benefits">
+            <div class="benefit-item">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                <polyline points="22 4 12 14.01 9 11.01"/>
+              </svg>
+              <span>Certification and training program</span>
+            </div>
+            <div class="benefit-item">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                <polyline points="22 4 12 14.01 9 11.01"/>
+              </svg>
+              <span>Lead referral and co-selling</span>
+            </div>
+            <div class="benefit-item">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                <polyline points="22 4 12 14.01 9 11.01"/>
+              </svg>
+              <span>Marketing and demo resources</span>
+            </div>
+            <div class="benefit-item">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                <polyline points="22 4 12 14.01 9 11.01"/>
+              </svg>
+              <span>Dedicated partner support portal</span>
+            </div>
+          </div>
+          <a href="/contact?subject=Partnership" class="btn btn-primary btn-lg">
+            Apply to Partner Program
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M5 12h14"/>
+              <path d="m12 5 7 7-7 7"/>
+            </svg>
+          </a>
+        </div>
+        <div class="become-partner-visual" aria-hidden="true">
+          <div class="network-visual">
+            <div class="network-node node-center">
+              <span>TMS</span>
+            </div>
+            <div class="network-node node-1">
+              <span>Gold</span>
+            </div>
+            <div class="network-node node-2">
+              <span>Silver</span>
+            </div>
+            <div class="network-node node-3">
+              <span>Tech</span>
+            </div>
+            <div class="network-line line-1"></div>
+            <div class="network-line line-2"></div>
+            <div class="network-line line-3"></div>
+            <div class="network-ring ring-1"></div>
+            <div class="network-ring ring-2"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <CTABanner
+    title="Ready to get"
+    titleAccent="started?"
+    description="Whether you are looking for a partner or want to become one, we are here to help. Reach out to our team today."
+    primaryCTA={{ label: 'Book a Demo', href: '/demo' }}
+    secondaryCTA={{ label: 'Contact Us', href: '/contact' }}
+  />
+</BaseLayout>
+
+<style>
+  /* --- Tier Cards --- */
+  .tiers-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+
+  .tier-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 32px 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    transition: all 0.3s var(--ease);
+  }
+
+  .tier-card:hover {
+    background: var(--bg-card-hover);
+    border-color: var(--border-hover);
+  }
+
+  .tier-card.tier-gold {
+    border-top: 3px solid var(--amber);
+  }
+
+  .tier-card.tier-silver {
+    border-top: 3px solid var(--text-dim);
+  }
+
+  .tier-card.tier-tech {
+    border-top: 3px solid #3b82f6;
+  }
+
+  .tier-badge-wrapper {
+    display: flex;
+  }
+
+  .tier-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 12px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    border-radius: 100px;
+  }
+
+  .tier-badge.tier-gold {
+    color: var(--amber);
+    background: var(--amber-dim);
+    border: 1px solid rgba(245, 158, 11, 0.15);
+  }
+
+  .tier-badge.tier-silver {
+    color: var(--text-muted);
+    background: rgba(161, 161, 170, 0.08);
+    border: 1px solid rgba(161, 161, 170, 0.15);
+  }
+
+  .tier-badge.tier-tech {
+    color: #3b82f6;
+    background: rgba(59, 130, 246, 0.08);
+    border: 1px solid rgba(59, 130, 246, 0.15);
+  }
+
+  .tier-title {
+    font-family: var(--font-heading);
+    font-size: 1.25rem;
+    font-weight: 600;
+    line-height: 1.3;
+    color: var(--text);
+  }
+
+  .tier-desc {
+    font-size: 0.9375rem;
+    color: var(--text-muted);
+    line-height: 1.7;
+  }
+
+  /* --- Partners Directory Grid --- */
+  .partners-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+
+  /* --- Partner Card --- */
+  .partner-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    transition: all 0.3s var(--ease);
+  }
+
+  .partner-card:hover {
+    background: var(--bg-card-hover);
+    border-color: var(--border-hover);
+    transform: translateY(-2px);
+  }
+
+  .partner-card.tier-gold:hover {
+    border-color: rgba(245, 158, 11, 0.3);
+  }
+
+  .partner-card.tier-tech:hover {
+    border-color: rgba(59, 130, 246, 0.3);
+  }
+
+  .partner-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .partner-tier-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 3px 10px;
+    font-size: 0.6875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    border-radius: 100px;
+  }
+
+  .partner-tier-badge.tier-gold {
+    color: var(--amber);
+    background: var(--amber-dim);
+    border: 1px solid rgba(245, 158, 11, 0.15);
+  }
+
+  .partner-tier-badge.tier-silver {
+    color: var(--text-muted);
+    background: rgba(161, 161, 170, 0.08);
+    border: 1px solid rgba(161, 161, 170, 0.15);
+  }
+
+  .partner-tier-badge.tier-tech {
+    color: #3b82f6;
+    background: rgba(59, 130, 246, 0.08);
+    border: 1px solid rgba(59, 130, 246, 0.15);
+  }
+
+  .partner-location {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.8125rem;
+    color: var(--text-dim);
+  }
+
+  .partner-name {
+    font-family: var(--font-heading);
+    font-size: 1.125rem;
+    font-weight: 600;
+    line-height: 1.3;
+    color: var(--text);
+  }
+
+  .partner-desc {
+    font-size: 0.9375rem;
+    color: var(--text-muted);
+    line-height: 1.7;
+    flex-grow: 1;
+  }
+
+  .partner-specialties {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .specialty-tag {
+    display: inline-flex;
+    align-items: center;
+    padding: 3px 10px;
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    color: var(--text-dim);
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+  }
+
+  .partner-cta {
+    align-self: flex-start;
+    margin-top: 4px;
+  }
+
+  /* --- Stagger Animations for Partners Grid --- */
+  .partners-grid [data-animate]:nth-child(1) { transition-delay: 0ms; }
+  .partners-grid [data-animate]:nth-child(2) { transition-delay: 80ms; }
+  .partners-grid [data-animate]:nth-child(3) { transition-delay: 160ms; }
+  .partners-grid [data-animate]:nth-child(4) { transition-delay: 240ms; }
+  .partners-grid [data-animate]:nth-child(5) { transition-delay: 320ms; }
+  .partners-grid [data-animate]:nth-child(6) { transition-delay: 400ms; }
+  .partners-grid [data-animate]:nth-child(7) { transition-delay: 480ms; }
+  .partners-grid [data-animate]:nth-child(8) { transition-delay: 560ms; }
+
+  /* --- Become a Partner Section --- */
+  .become-partner-section {
+    padding-bottom: 0;
+  }
+
+  .become-partner-card {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    min-height: 480px;
+  }
+
+  .become-partner-content {
+    padding: clamp(2.5rem, 4vw, 4rem);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 16px;
+  }
+
+  .become-partner-title {
+    font-family: var(--font-heading);
+    font-size: clamp(1.75rem, 3vw, 2.5rem);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+  }
+
+  .become-partner-desc {
+    font-size: 1rem;
+    color: var(--text-muted);
+    line-height: 1.7;
+    max-width: 480px;
+  }
+
+  .become-partner-benefits {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin: 8px 0;
+  }
+
+  .benefit-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.9375rem;
+    color: var(--text-muted);
+  }
+
+  .benefit-item svg {
+    color: var(--amber);
+    flex-shrink: 0;
+  }
+
+  /* --- Network Visual (Become a Partner) --- */
+  .become-partner-visual {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, rgba(245, 158, 11, 0.03) 0%, transparent 100%);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .network-visual {
+    position: relative;
+    width: 280px;
+    height: 280px;
+  }
+
+  .network-node {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    font-family: var(--font-heading);
+    font-weight: 600;
+    font-size: 0.6875rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  .node-center {
+    width: 64px;
+    height: 64px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: var(--amber);
+    color: #09090B;
+    font-size: 0.8125rem;
+    z-index: 2;
+    box-shadow: 0 0 32px var(--amber-glow), 0 0 64px var(--amber-glow);
+  }
+
+  .node-1 {
+    width: 48px;
+    height: 48px;
+    top: 12%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--amber-dim);
+    color: var(--amber);
+    border: 1px solid rgba(245, 158, 11, 0.2);
+  }
+
+  .node-2 {
+    width: 48px;
+    height: 48px;
+    bottom: 18%;
+    left: 14%;
+    background: rgba(161, 161, 170, 0.08);
+    color: var(--text-muted);
+    border: 1px solid rgba(161, 161, 170, 0.15);
+  }
+
+  .node-3 {
+    width: 48px;
+    height: 48px;
+    bottom: 18%;
+    right: 14%;
+    background: rgba(59, 130, 246, 0.08);
+    color: #3b82f6;
+    border: 1px solid rgba(59, 130, 246, 0.15);
+  }
+
+  .network-line {
+    position: absolute;
+    background: var(--border);
+    z-index: 1;
+  }
+
+  .line-1 {
+    width: 1px;
+    height: 70px;
+    top: calc(12% + 48px);
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .line-2 {
+    width: 90px;
+    height: 1px;
+    bottom: calc(18% + 24px);
+    left: calc(14% + 48px);
+    transform: rotate(-25deg);
+    transform-origin: left center;
+  }
+
+  .line-3 {
+    width: 90px;
+    height: 1px;
+    bottom: calc(18% + 24px);
+    right: calc(14% + 48px);
+    transform: rotate(25deg);
+    transform-origin: right center;
+  }
+
+  .network-ring {
+    position: absolute;
+    border-radius: 50%;
+    border: 1px solid rgba(245, 158, 11, 0.08);
+  }
+
+  .ring-1 {
+    inset: 15%;
+    animation: globe-pulse 4s var(--ease) infinite;
+  }
+
+  .ring-2 {
+    inset: -5%;
+    animation: globe-pulse 4s var(--ease) infinite;
+    animation-delay: 2s;
+  }
+
+  @keyframes globe-pulse {
+    0%, 100% { opacity: 0.3; transform: scale(1); }
+    50% { opacity: 0.6; transform: scale(1.03); }
+  }
+
+  /* --- Responsive --- */
+
+  /* Tablet (768px) */
+  @media (max-width: 768px) {
+    .tiers-grid {
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+
+    .partners-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .become-partner-card {
+      grid-template-columns: 1fr;
+      min-height: auto;
+    }
+
+    .become-partner-visual {
+      min-height: 280px;
+    }
+
+    .become-partner-content {
+      padding: clamp(2rem, 4vw, 3rem);
+    }
+
+    .tier-card {
+      padding: 24px 20px;
+    }
+
+    .partner-card {
+      padding: 24px;
+    }
+  }
+
+  /* iPhone (375px - 430px) */
+  @media (max-width: 480px) {
+    .partner-card-header {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .partner-card {
+      padding: 20px;
+    }
+
+    .tier-card {
+      padding: 20px 16px;
+    }
+
+    .become-partner-content {
+      padding: clamp(1.5rem, 4vw, 2rem);
+    }
+
+    .become-partner-visual {
+      min-height: 240px;
+    }
+
+    .network-visual {
+      width: 220px;
+      height: 220px;
+    }
+
+    .partner-cta {
+      min-height: 44px;
+    }
+
+    .become-partner-content > .btn {
+      min-height: 44px;
+      align-self: stretch;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .specialty-tag {
+      min-height: 44px;
+      padding: 8px 12px;
+    }
+  }
+</style>

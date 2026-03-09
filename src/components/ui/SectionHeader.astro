@@ -1,0 +1,64 @@
+---
+export interface Props {
+  tag?: string;
+  title: string;
+  titleAccent?: string;
+  description?: string;
+  align?: 'center' | 'left';
+}
+
+const {
+  tag,
+  title,
+  titleAccent,
+  description,
+  align = 'center',
+} = Astro.props;
+---
+
+<div class:list={['section-header', { 'section-header--left': align === 'left' }]}>
+  {tag && <span class="section-tag">{tag}</span>}
+  <h2>
+    {title}{titleAccent && <>{' '}<span class="text-amber">{titleAccent}</span></>}
+  </h2>
+  {description && <p class="section-desc">{description}</p>}
+</div>
+
+<style>
+  .section-header--left {
+    text-align: left;
+  }
+
+  .section-header--left .section-desc {
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  /* Tablet */
+  @media (max-width: 768px) {
+    .section-header :global(.section-desc) {
+      font-size: 1rem;
+      line-height: 1.65;
+    }
+  }
+
+  /* iPhone (375px-430px) */
+  @media (max-width: 480px) {
+    .section-header :global(.section-tag) {
+      font-size: 0.6875rem;
+      letter-spacing: 0.08em;
+      margin-bottom: 12px;
+    }
+
+    .section-header :global(h2) {
+      font-size: clamp(1.375rem, 5vw, 1.75rem);
+      line-height: 1.15;
+    }
+
+    .section-header :global(.section-desc) {
+      font-size: 0.9375rem;
+      line-height: 1.6;
+      margin-top: 12px;
+    }
+  }
+</style>

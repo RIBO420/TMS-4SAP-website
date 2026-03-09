@@ -1,0 +1,189 @@
+---
+import { defaultLang, type Lang } from '../../i18n/config';
+import { t, getLocalizedPath } from '../../i18n/utils';
+
+export interface Props {
+  title?: string;
+  titleAccent?: string;
+  description?: string;
+  primaryCTA?: { label: string; href: string };
+  secondaryCTA?: { label: string; href: string };
+  lang?: Lang;
+}
+
+const { lang = defaultLang } = Astro.props;
+
+const {
+  title = t(lang, 'ctaBanner.title'),
+  titleAccent = t(lang, 'ctaBanner.titleAccent'),
+  description = t(lang, 'ctaBanner.description'),
+  primaryCTA = { label: t(lang, 'cta.bookFreeDemo'), href: getLocalizedPath('/contact', lang) },
+  secondaryCTA,
+} = Astro.props;
+---
+
+<section class="cta-banner-section">
+  <div class="container">
+    <div class="cta-banner">
+      <div class="cta-banner-content">
+        <h2 class="cta-banner-title">
+          {title}{titleAccent && <>{' '}<span class="text-amber">{titleAccent}</span></>}
+        </h2>
+        <p class="cta-banner-desc">{description}</p>
+        <div class="cta-banner-actions">
+          <a href={primaryCTA.href} class="btn btn-primary btn-lg">
+            {primaryCTA.label}
+          </a>
+          {secondaryCTA && (
+            <a href={secondaryCTA.href} class="btn btn-ghost btn-lg">
+              {secondaryCTA.label}
+            </a>
+          )}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .cta-banner-section {
+    padding: clamp(3rem, 6vw, 5rem) 0;
+  }
+
+  .cta-banner {
+    position: relative;
+    background-color: var(--bg-card);
+    background-image:
+      radial-gradient(circle at 1px 1px, rgba(255, 255, 255, 0.015) 1px, transparent 0),
+      linear-gradient(180deg, rgba(245, 158, 11, 0.04) 0%, var(--bg-card) 40%, var(--bg-card) 100%);
+    background-size: 24px 24px, 100% 100%;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-xl);
+    padding: clamp(2.5rem, 5vw, 4rem);
+    overflow: hidden;
+    text-align: center;
+  }
+
+  /* Gradient border glow along top edge */
+  .cta-banner::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 10%;
+    right: 10%;
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      var(--amber) 50%,
+      transparent 100%
+    );
+    opacity: 0.6;
+  }
+
+  /* Subtle radial glow in the background */
+  .cta-banner::after {
+    content: '';
+    position: absolute;
+    top: -40%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    height: 80%;
+    background: radial-gradient(ellipse, rgba(245, 158, 11, 0.08) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  .cta-banner-content {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    max-width: 640px;
+    margin: 0 auto;
+  }
+
+  .cta-banner-title {
+    font-family: var(--font-heading);
+    font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+  }
+
+  .cta-banner-desc {
+    font-size: 1.0625rem;
+    color: var(--text-muted);
+    line-height: 1.7;
+    max-width: 520px;
+  }
+
+  .cta-banner-actions {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 8px;
+  }
+
+  /* Tablet */
+  @media (max-width: 768px) {
+    .cta-banner {
+      padding: clamp(2rem, 4vw, 3rem);
+    }
+
+    .cta-banner-title {
+      font-size: clamp(1.5rem, 3vw, 2rem);
+    }
+
+    .cta-banner-desc {
+      font-size: 1rem;
+    }
+  }
+
+  /* iPhone (375px-430px) */
+  @media (max-width: 480px) {
+    .cta-banner-section {
+      padding: 2rem 0;
+    }
+
+    .cta-banner {
+      padding: 32px 20px;
+      border-radius: var(--radius-lg);
+    }
+
+    .cta-banner::after {
+      width: 120%;
+      top: -30%;
+      height: 60%;
+    }
+
+    .cta-banner-content {
+      gap: 12px;
+    }
+
+    .cta-banner-title {
+      font-size: 1.375rem;
+      line-height: 1.15;
+    }
+
+    .cta-banner-desc {
+      font-size: 0.9375rem;
+      line-height: 1.6;
+    }
+
+    .cta-banner-actions {
+      flex-direction: column;
+      width: 100%;
+      gap: 12px;
+    }
+
+    .cta-banner-actions :global(.btn) {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+</style>

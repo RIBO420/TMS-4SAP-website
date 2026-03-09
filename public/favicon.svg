@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <!-- Two interlocking rounded diamonds -->
+  <path d="M12 32L24 16L36 32L24 48Z" rx="4" stroke="#F59E0B" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round" fill="none"/>
+  <path d="M28 32L40 16L52 32L40 48Z" rx="4" stroke="#F59E0B" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round" fill="none"/>
+</svg>

@@ -1,0 +1,368 @@
+---
+import { defaultLang, type Lang } from '../../i18n/config';
+import { t, getLocalizedPath } from '../../i18n/utils';
+
+interface Props {
+  lang?: Lang;
+}
+
+const { lang = defaultLang } = Astro.props;
+
+const lp = (path: string) => getLocalizedPath(path, lang);
+
+const modules = [
+  { nameKey: 'module.pps', href: '/modules/pps' },
+  { nameKey: 'module.aps', href: '/modules/aps' },
+  { nameKey: 'module.mes', href: '/modules/mes' },
+  { nameKey: 'module.pdc', href: '/modules/pdc' },
+  { nameKey: 'module.qm',  href: '/modules/qm' },
+  { nameKey: 'module.pdm', href: '/modules/pdm' },
+  { nameKey: 'module.bi',  href: '/modules/bi' },
+  { nameKey: 'module.vc',  href: '/modules/vc' },
+  { nameKey: 'module.dms', href: '/modules/dms' },
+];
+
+const industries = [
+  { nameKey: 'industry.plastics', href: '/industries/kunststof' },
+  { nameKey: 'industry.automotive', href: '/industries/automotive' },
+  { nameKey: 'industry.metal', href: '/industries/metaalbewerking' },
+  { nameKey: 'industry.electronics', href: '/industries/elektronica' },
+];
+
+const resources = [
+  { nameKey: 'resource.blog', href: '/blog' },
+  { nameKey: 'resource.downloads', href: '/downloads' },
+  { nameKey: 'resource.references', href: '/references' },
+  { nameKey: 'resource.support', href: '/support' },
+];
+
+const company = [
+  { nameKey: 'footer.about', href: '/about' },
+  { nameKey: 'footer.contact', href: '/contact' },
+  { nameKey: 'footer.careers', href: '/careers' },
+  { nameKey: 'footer.partners', href: '/partners' },
+  { nameKey: 'footer.bookDemo', href: '/demo' },
+];
+
+const legal = [
+  { nameKey: 'footer.privacy', href: '/legal/privacy' },
+  { nameKey: 'footer.terms', href: '/legal/terms' },
+  { nameKey: 'footer.impressum', href: '/legal/impressum' },
+];
+---
+
+<footer class="footer">
+  <div class="container">
+    <!-- Sitemap columns -->
+    <div class="footer-grid">
+      <div class="footer-col footer-col--product">
+        <h4 class="footer-heading">{t(lang, 'footer.product')}</h4>
+        <ul class="footer-list">
+          {modules.map((mod) => (
+            <li><a href={lp(mod.href)}>{t(lang, mod.nameKey)}</a></li>
+          ))}
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4 class="footer-heading">{t(lang, 'footer.industries')}</h4>
+        <ul class="footer-list">
+          {industries.map((ind) => (
+            <li><a href={lp(ind.href)}>{t(lang, ind.nameKey)}</a></li>
+          ))}
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4 class="footer-heading">{t(lang, 'footer.resources')}</h4>
+        <ul class="footer-list">
+          {resources.map((res) => (
+            <li><a href={lp(res.href)}>{t(lang, res.nameKey)}</a></li>
+          ))}
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4 class="footer-heading">{t(lang, 'footer.company')}</h4>
+        <ul class="footer-list">
+          {company.map((item) => (
+            <li><a href={lp(item.href)}>{t(lang, item.nameKey)}</a></li>
+          ))}
+        </ul>
+      </div>
+    </div>
+
+    <!-- Bottom bar -->
+    <div class="footer-bottom">
+      <div class="footer-bottom-left">
+        <a href={lp('/')} class="logo" aria-label="TMS 4SAP - Home">
+          <img src="/logo.jpeg" alt="" class="logo-icon" width="28" height="28" />
+          <div class="logo-text">
+            <span class="logo-name">TMS</span>
+            <span class="logo-sub">4SAP</span>
+          </div>
+        </a>
+        <p class="footer-copyright">{t(lang, 'footer.copyright')}</p>
+      </div>
+      <nav class="footer-legal" aria-label="Legal">
+        {legal.map((link) => (
+          <a href={lp(link.href)}>{t(lang, link.nameKey)}</a>
+        ))}
+      </nav>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    border-top: 1px solid var(--border);
+    padding-top: 64px;
+    padding-bottom: 0;
+  }
+
+  /* ---- Grid ---- */
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr 1fr;
+    gap: 40px;
+    padding-bottom: 48px;
+  }
+
+  .footer-heading {
+    font-family: var(--font-heading);
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text);
+    margin-bottom: 20px;
+  }
+
+  .footer-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .footer-list a {
+    font-size: 0.875rem;
+    color: var(--text-dim);
+    transition: color 0.2s var(--ease);
+    line-height: 1.4;
+    position: relative;
+    display: inline;
+  }
+
+  .footer-list a::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: var(--amber);
+    transition: width 0.25s var(--ease);
+  }
+
+  .footer-list a:hover::after {
+    width: 100%;
+  }
+
+  .footer-list a:hover {
+    color: var(--amber);
+  }
+
+  /* ---- Bottom bar ---- */
+  .footer-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 24px;
+    padding: 24px 0;
+    border-top: 1px solid var(--border);
+  }
+
+  .footer-bottom-left {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 1.125rem;
+    letter-spacing: -0.02em;
+    flex-shrink: 0;
+  }
+
+  .logo-icon {
+    width: 28px;
+    height: 28px;
+    border-radius: 5px;
+    object-fit: cover;
+  }
+
+  .logo-text {
+    display: flex;
+    align-items: baseline;
+    gap: 3px;
+  }
+
+  .logo-name {
+    font-weight: 700;
+    font-size: 1.125rem;
+  }
+
+  .logo-sub {
+    font-size: 0.55rem;
+    font-weight: 300;
+    letter-spacing: 0.04em;
+    color: var(--amber);
+    align-self: flex-end;
+    line-height: 1.6;
+  }
+
+  .logo-accent {
+    color: var(--amber);
+  }
+
+  .footer-copyright {
+    font-size: 0.8125rem;
+    color: var(--text-dim);
+  }
+
+  .footer-legal {
+    display: flex;
+    gap: 24px;
+  }
+
+  .footer-legal a {
+    font-size: 0.8125rem;
+    color: var(--text-dim);
+    transition: color 0.2s var(--ease);
+    position: relative;
+  }
+
+  .footer-legal a::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: var(--text);
+    transition: width 0.25s var(--ease);
+  }
+
+  .footer-legal a:hover::after {
+    width: 100%;
+  }
+
+  .footer-legal a:hover {
+    color: var(--text);
+  }
+
+  /* ---- Responsive ---- */
+  @media (max-width: 900px) {
+    .footer-grid {
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .footer {
+      padding-top: 48px;
+    }
+
+    .footer-grid {
+      grid-template-columns: 1fr;
+      gap: 32px;
+    }
+
+    .footer-bottom {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 16px;
+    }
+
+    .footer-bottom-left {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 8px;
+    }
+
+    .footer-legal {
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+  }
+
+  /* iPhone (375px-430px) */
+  @media (max-width: 480px) {
+    .footer {
+      padding-top: 40px;
+    }
+
+    .footer-grid {
+      grid-template-columns: 1fr 1fr;
+      gap: 28px 20px;
+    }
+
+    .footer-heading {
+      font-size: 0.6875rem;
+      margin-bottom: 14px;
+    }
+
+    .footer-list {
+      gap: 8px;
+    }
+
+    .footer-list a {
+      font-size: 0.8125rem;
+    }
+
+    .footer-bottom {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 16px;
+      padding: 20px 0;
+    }
+
+    .footer-bottom-left {
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .footer-copyright {
+      font-size: 0.75rem;
+    }
+
+    .footer-legal {
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 12px 16px;
+    }
+
+    .footer-legal a {
+      font-size: 0.75rem;
+    }
+
+    /* Ensure animated underlines still work on touch */
+    .footer-list a::after,
+    .footer-legal a::after {
+      transition: width 0.25s var(--ease);
+    }
+  }
+</style>

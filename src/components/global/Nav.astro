@@ -1,0 +1,816 @@
+---
+import { defaultLang, type Lang } from '../../i18n/config';
+import { t, getLocalizedPath } from '../../i18n/utils';
+import LanguageSwitcher from './LanguageSwitcher.astro';
+
+interface Props {
+  lang?: Lang;
+}
+
+const { lang = defaultLang } = Astro.props;
+
+const currentPath = Astro.url.pathname;
+
+function isActive(href: string): boolean {
+  if (href === '/' || href === `/${lang}`) return currentPath === '/' || currentPath === `/${lang}`;
+  return currentPath.startsWith(href);
+}
+
+const modules = [
+  { abbr: 'PPS', nameKey: 'module.pps', href: '/modules/pps' },
+  { abbr: 'APS', nameKey: 'module.aps', href: '/modules/aps' },
+  { abbr: 'MES', nameKey: 'module.mes', href: '/modules/mes' },
+  { abbr: 'PDC', nameKey: 'module.pdc', href: '/modules/pdc' },
+  { abbr: 'QM',  nameKey: 'module.qm',  href: '/modules/qm' },
+  { abbr: 'PDM', nameKey: 'module.pdm', href: '/modules/pdm' },
+  { abbr: 'BI',  nameKey: 'module.bi',  href: '/modules/bi' },
+  { abbr: 'VC',  nameKey: 'module.vc',  href: '/modules/vc' },
+  { abbr: 'DMS', nameKey: 'module.dms', href: '/modules/dms' },
+];
+
+const industries = [
+  { nameKey: 'industry.plastics', href: '/industries/kunststof' },
+  { nameKey: 'industry.automotive', href: '/industries/automotive' },
+  { nameKey: 'industry.metal', href: '/industries/metaalbewerking' },
+  { nameKey: 'industry.electronics', href: '/industries/elektronica' },
+];
+
+const resources = [
+  { nameKey: 'resource.blog', href: '/blog' },
+  { nameKey: 'resource.downloads', href: '/downloads' },
+  { nameKey: 'resource.references', href: '/references' },
+];
+
+const lp = (path: string) => getLocalizedPath(path, lang);
+---
+
+<nav class="nav" id="nav">
+  <div class="container nav-inner">
+    <!-- Logo -->
+    <a href={lp('/')} class="logo" aria-label="TMS 4SAP - Home">
+      <img src="/logo.jpeg" alt="" class="logo-icon" width="32" height="32" />
+      <div class="logo-text">
+        <span class="logo-name">TMS</span>
+        <span class="logo-sub">4SAP</span>
+      </div>
+    </a>
+
+    <!-- Desktop navigation -->
+    <div class="nav-links">
+      <!-- Modules mega-trigger -->
+      <button
+        class:list={['nav-link nav-link-trigger', { active: isActive(lp('/modules')) }]}
+        data-mega-trigger="modules"
+        aria-haspopup="true"
+        aria-expanded="false"
+      >
+        {t(lang, 'nav.modules')}
+        <svg class="chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="6 9 12 15 18 9" />
+        </svg>
+      </button>
+
+      <!-- Industries mega-trigger -->
+      <button
+        class:list={['nav-link nav-link-trigger', { active: isActive(lp('/industries')) }]}
+        data-mega-trigger="industries"
+        aria-haspopup="true"
+        aria-expanded="false"
+      >
+        {t(lang, 'nav.industries')}
+        <svg class="chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="6 9 12 15 18 9" />
+        </svg>
+      </button>
+
+      <!-- Resources mega-trigger -->
+      <button
+        class:list={['nav-link nav-link-trigger', { active: isActive(lp('/blog')) || isActive(lp('/downloads')) || isActive(lp('/references')) }]}
+        data-mega-trigger="resources"
+        aria-haspopup="true"
+        aria-expanded="false"
+      >
+        {t(lang, 'nav.resources')}
+        <svg class="chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="6 9 12 15 18 9" />
+        </svg>
+      </button>
+
+      <!-- Direct links -->
+      <a href={lp('/about')} class:list={['nav-link', { active: isActive(lp('/about')) }]}>{t(lang, 'nav.about')}</a>
+      <a href={lp('/contact')} class:list={['nav-link', { active: isActive(lp('/contact')) }]}>{t(lang, 'nav.contact')}</a>
+    </div>
+
+    <!-- CTA + Language Switcher -->
+    <div class="nav-actions">
+      <LanguageSwitcher lang={lang} currentPath={currentPath} />
+      <a href={lp('/demo')} class="btn btn-primary btn-sm">{t(lang, 'nav.bookDemo')}</a>
+    </div>
+
+    <!-- Mobile toggle -->
+    <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle menu" aria-expanded="false">
+      <span class="hamburger"></span>
+    </button>
+  </div>
+
+  <!-- Mega-menu panels (desktop) -->
+  <div class="nav-mega" data-mega-panel="modules">
+    <div class="container mega-inner">
+      <div class="mega-header">
+        <span class="mega-title">{t(lang, 'nav.modules')}</span>
+        <a href={lp('/modules')} class="mega-view-all">{t(lang, 'nav.viewAllModules')} &rarr;</a>
+      </div>
+      <div class="mega-grid mega-grid--modules">
+        {modules.map((mod) => (
+          <a href={lp(mod.href)} class="mega-item">
+            <span class="mega-item-abbr">{mod.abbr}</span>
+            <span class="mega-item-name">{t(lang, mod.nameKey)}</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </div>
+
+  <div class="nav-mega" data-mega-panel="industries">
+    <div class="container mega-inner">
+      <div class="mega-header">
+        <span class="mega-title">{t(lang, 'nav.industries')}</span>
+        <a href={lp('/industries')} class="mega-view-all">{t(lang, 'nav.viewAllIndustries')} &rarr;</a>
+      </div>
+      <div class="mega-grid mega-grid--industries">
+        {industries.map((ind) => (
+          <a href={lp(ind.href)} class="mega-item">
+            <span class="mega-item-name">{t(lang, ind.nameKey)}</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </div>
+
+  <div class="nav-mega" data-mega-panel="resources">
+    <div class="container mega-inner">
+      <div class="mega-header">
+        <span class="mega-title">{t(lang, 'nav.resources')}</span>
+      </div>
+      <div class="mega-grid mega-grid--resources">
+        {resources.map((res) => (
+          <a href={lp(res.href)} class="mega-item">
+            <span class="mega-item-name">{t(lang, res.nameKey)}</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile menu -->
+  <div class="mobile-menu" id="mobileMenu">
+    <div class="mobile-menu-inner">
+      <!-- Language switcher (mobile) -->
+      <div class="mobile-lang-switcher">
+        <LanguageSwitcher lang={lang} currentPath={currentPath} />
+      </div>
+
+      <!-- Modules -->
+      <div class="mega-section">
+        <button class="mega-section-trigger" data-mobile-mega aria-expanded="false">
+          {t(lang, 'nav.modules')}
+          <svg class="chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="6 9 12 15 18 9" />
+          </svg>
+        </button>
+        <div class="mega-section-list">
+          {modules.map((mod) => (
+            <a href={lp(mod.href)} class="mobile-link">
+              <span class="mega-item-abbr">{mod.abbr}</span> {t(lang, mod.nameKey)}
+            </a>
+          ))}
+          <a href={lp('/modules')} class="mobile-link mobile-link--all">{t(lang, 'nav.viewAllModules')}</a>
+        </div>
+      </div>
+
+      <!-- Industries -->
+      <div class="mega-section">
+        <button class="mega-section-trigger" data-mobile-mega aria-expanded="false">
+          {t(lang, 'nav.industries')}
+          <svg class="chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="6 9 12 15 18 9" />
+          </svg>
+        </button>
+        <div class="mega-section-list">
+          {industries.map((ind) => (
+            <a href={lp(ind.href)} class="mobile-link">{t(lang, ind.nameKey)}</a>
+          ))}
+        </div>
+      </div>
+
+      <!-- Resources -->
+      <div class="mega-section">
+        <button class="mega-section-trigger" data-mobile-mega aria-expanded="false">
+          {t(lang, 'nav.resources')}
+          <svg class="chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="6 9 12 15 18 9" />
+          </svg>
+        </button>
+        <div class="mega-section-list">
+          {resources.map((res) => (
+            <a href={lp(res.href)} class="mobile-link">{t(lang, res.nameKey)}</a>
+          ))}
+        </div>
+      </div>
+
+      <!-- Direct links -->
+      <a href={lp('/about')} class="mobile-link mobile-link--direct">{t(lang, 'nav.about')}</a>
+      <a href={lp('/contact')} class="mobile-link mobile-link--direct">{t(lang, 'nav.contact')}</a>
+
+      <!-- Mobile CTA -->
+      <a href={lp('/demo')} class="btn btn-primary btn-full mobile-cta">{t(lang, 'nav.bookDemo')}</a>
+    </div>
+  </div>
+</nav>
+
+<script>
+  import { initNav } from '../../scripts/nav.js';
+  initNav();
+
+  /* ---- Mobile UX enhancements ---- */
+  function initMobileEnhancements() {
+    const mobileToggle = document.getElementById('mobileToggle');
+    const mobileMenu = document.getElementById('mobileMenu');
+    if (!mobileToggle || !mobileMenu) return;
+
+    let savedScrollY = 0;
+
+    /* Body scroll lock: prevent background scroll when menu is open */
+    const lockObserver = new MutationObserver(() => {
+      const isOpen = mobileMenu.classList.contains('mobile-open');
+      if (isOpen) {
+        savedScrollY = window.scrollY;
+        document.body.classList.add('mobile-menu-open');
+        document.body.style.top = `-${savedScrollY}px`;
+      } else {
+        document.body.classList.remove('mobile-menu-open');
+        document.body.style.top = '';
+        window.scrollTo(0, savedScrollY);
+      }
+    });
+
+    lockObserver.observe(mobileMenu, {
+      attributes: true,
+      attributeFilter: ['class'],
+    });
+
+    /* Toggle aria-expanded on mobile mega-section triggers */
+    mobileMenu.querySelectorAll('[data-mobile-mega]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const section = btn.closest('.mega-section');
+        if (!section) return;
+        const isExpanded = section.classList.contains('open');
+        btn.setAttribute('aria-expanded', String(isExpanded));
+      });
+    });
+  }
+
+  initMobileEnhancements();
+  document.addEventListener('astro:page-load', initMobileEnhancements);
+</script>
+
+<script>
+function initScrollSpy() {
+  // Only run on homepage
+  if (window.location.pathname !== '/' && !window.location.pathname.match(/^\/(en|nl|de)\/?$/)) return;
+
+  const sections = document.querySelectorAll('section[id]');
+  if (!sections.length) return;
+
+  const navLinks = document.querySelectorAll('.nav-link');
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const id = entry.target.id;
+          navLinks.forEach((link) => {
+            // Only affect section-linked nav items (not mega triggers)
+            if (link.getAttribute('href')?.includes('#' + id)) {
+              link.classList.add('active');
+            }
+          });
+        }
+      });
+    },
+    { rootMargin: '-20% 0px -70% 0px' }
+  );
+
+  sections.forEach((section) => observer.observe(section));
+}
+
+initScrollSpy();
+document.addEventListener('astro:page-load', initScrollSpy);
+</script>
+
+<style>
+  /* ---- Nav container (inherits global .nav styles) ---- */
+  .nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    padding: 16px 0;
+    transition: all 0.3s var(--ease);
+  }
+
+  .nav.scrolled {
+    background: rgba(9, 9, 11, 0.85);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    padding: 12px 0;
+  }
+
+  .nav-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 40px;
+  }
+
+  /* ---- Logo ---- */
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 1.25rem;
+    letter-spacing: -0.02em;
+    flex-shrink: 0;
+  }
+
+  .logo-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 6px;
+    object-fit: cover;
+  }
+
+  .logo-text {
+    display: flex;
+    align-items: baseline;
+    gap: 4px;
+  }
+
+  .logo-name {
+    font-weight: 700;
+    font-size: 1.25rem;
+  }
+
+  .logo-sub {
+    font-size: 0.625rem;
+    font-weight: 300;
+    letter-spacing: 0.04em;
+    color: var(--amber);
+    align-self: flex-end;
+    line-height: 1.6;
+  }
+
+  .logo-accent {
+    color: var(--amber);
+  }
+
+  /* ---- Desktop links ---- */
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+  }
+
+  .nav-link {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    transition: color 0.2s var(--ease);
+    position: relative;
+    background: none;
+    border: none;
+    font-family: var(--font-body);
+    cursor: pointer;
+    padding: 0;
+  }
+
+  .nav-link:hover,
+  .nav-link.active {
+    color: var(--text);
+  }
+
+  .nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: var(--amber);
+    transition: width 0.25s var(--ease);
+  }
+
+  .nav-link:hover::after {
+    width: 100%;
+  }
+
+  .nav-link.active::after {
+    width: 100%;
+  }
+
+  .nav-link-trigger {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .chevron {
+    transition: transform 0.2s var(--ease);
+    flex-shrink: 0;
+  }
+
+  .nav-link-trigger.active .chevron {
+    transform: rotate(180deg);
+  }
+
+  /* ---- Nav actions ---- */
+  .nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-shrink: 0;
+  }
+
+  /* ---- Mobile toggle ---- */
+  .mobile-toggle {
+    display: none;
+    width: 44px;
+    height: 44px;
+    position: relative;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: none;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .hamburger,
+  .hamburger::before,
+  .hamburger::after {
+    width: 20px;
+    height: 2px;
+    background: var(--text);
+    border-radius: 2px;
+    transition: all 0.3s var(--ease);
+  }
+
+  .hamburger::before,
+  .hamburger::after {
+    content: '';
+    position: absolute;
+  }
+
+  .hamburger::before {
+    transform: translateY(-6px);
+  }
+
+  .hamburger::after {
+    transform: translateY(6px);
+  }
+
+  .mobile-toggle.open .hamburger {
+    background: transparent;
+  }
+
+  .mobile-toggle.open .hamburger::before {
+    transform: rotate(45deg);
+  }
+
+  .mobile-toggle.open .hamburger::after {
+    transform: rotate(-45deg);
+  }
+
+  /* ---- Mega-menu panels ---- */
+  .nav-mega {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: rgba(9, 9, 11, 0.96);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border-bottom: 1px solid var(--border);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-8px);
+    transition: opacity 0.25s var(--ease), transform 0.25s var(--ease), visibility 0.25s;
+    pointer-events: none;
+  }
+
+  .nav-mega.open {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+
+  .mega-inner {
+    padding: 24px 0;
+  }
+
+  .mega-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .mega-title {
+    font-family: var(--font-heading);
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-dim);
+  }
+
+  .mega-view-all {
+    font-size: 0.8125rem;
+    color: var(--amber);
+    transition: color 0.2s var(--ease);
+  }
+
+  .mega-view-all:hover {
+    color: var(--amber-hover);
+  }
+
+  /* ---- Mega-grid ---- */
+  .mega-grid {
+    display: grid;
+    gap: 4px;
+  }
+
+  .mega-grid--modules {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .mega-grid--industries {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .mega-grid--resources {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .mega-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    border-radius: var(--radius-sm);
+    transition: background 0.15s var(--ease);
+  }
+
+  .mega-item:hover {
+    background: var(--bg-card-hover);
+  }
+
+  .mega-item-abbr {
+    font-family: var(--font-heading);
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--amber);
+    background: var(--amber-dim);
+    padding: 4px 8px;
+    border-radius: 4px;
+    flex-shrink: 0;
+    min-width: 38px;
+    text-align: center;
+  }
+
+  .mega-item-name {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    transition: color 0.15s var(--ease);
+  }
+
+  .mega-item:hover .mega-item-name {
+    color: var(--text);
+  }
+
+  /* ---- Mobile menu ---- */
+  .mobile-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: rgba(9, 9, 11, 0.97);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border-bottom: 1px solid var(--border);
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .mobile-menu.mobile-open {
+    max-height: calc(100vh - 60px);
+    max-height: calc(100dvh - 60px);
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .mobile-menu-inner {
+    padding: 16px 24px 32px;
+    padding-bottom: calc(32px + env(safe-area-inset-bottom, 0px));
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    opacity: 0;
+    transform: translateY(-8px);
+    transition: opacity 0.3s ease 0.05s, transform 0.3s ease 0.05s;
+  }
+
+  .mobile-menu.mobile-open .mobile-menu-inner {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .mobile-lang-switcher {
+    padding: 8px 0 12px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 4px;
+  }
+
+  /* ---- Mobile mega-sections ---- */
+  .mega-section-trigger {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 12px 0;
+    min-height: 44px;
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    background: none;
+    border: none;
+    border-bottom: 1px solid var(--border);
+    cursor: pointer;
+    font-family: var(--font-body);
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .mega-section-trigger:hover {
+    color: var(--text);
+  }
+
+  .mega-section-trigger:active {
+    color: var(--text);
+  }
+
+  .mega-section .chevron {
+    transition: transform 0.25s var(--ease);
+  }
+
+  .mega-section.open .chevron {
+    transform: rotate(180deg);
+  }
+
+  .mega-section-list {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+                padding 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    padding: 0 0 0 8px;
+  }
+
+  .mega-section.open .mega-section-list {
+    max-height: 600px;
+    padding: 8px 0 12px 8px;
+  }
+
+  .mobile-link {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 12px;
+    min-height: 44px;
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    border-radius: var(--radius-sm);
+    transition: background 0.15s var(--ease), color 0.15s var(--ease);
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .mobile-link:hover,
+  .mobile-link:active {
+    color: var(--text);
+    background: var(--bg-card-hover);
+  }
+
+  .mobile-link--all {
+    color: var(--amber);
+    font-weight: 500;
+    margin-top: 4px;
+  }
+
+  .mobile-link--direct {
+    padding: 12px 0;
+    min-height: 44px;
+    font-size: 1rem;
+    font-weight: 500;
+    border-bottom: 1px solid var(--border);
+    border-radius: 0;
+  }
+
+  .mobile-cta {
+    margin-top: 20px;
+    padding: 14px 24px;
+    min-height: 48px;
+    font-size: 1rem;
+    font-weight: 600;
+    text-align: center;
+    justify-content: center;
+    border-radius: var(--radius-sm, 8px);
+  }
+
+  /* ---- Responsive ---- */
+  @media (max-width: 960px) {
+    .nav-links,
+    .nav-actions {
+      display: none;
+    }
+
+    .mobile-toggle {
+      display: flex;
+    }
+
+    .mobile-menu {
+      display: block;
+    }
+
+    .nav-mega {
+      display: none;
+    }
+  }
+
+  /* --- iPhone-specific refinements (375px-430px) --- */
+  @media (max-width: 430px) {
+    .mobile-menu-inner {
+      padding: 12px 20px 28px;
+      padding-bottom: calc(28px + env(safe-area-inset-bottom, 0px));
+    }
+
+    .mega-section-trigger {
+      font-size: 0.9375rem;
+      padding: 14px 0;
+    }
+
+    .mobile-link--direct {
+      padding: 14px 0;
+    }
+
+    .mobile-cta {
+      margin-top: 24px;
+      padding: 16px 24px;
+      min-height: 50px;
+    }
+
+    .mobile-lang-switcher {
+      padding: 6px 0 14px;
+    }
+  }
+
+  /* --- Body scroll lock when mobile menu is open --- */
+  :global(body.mobile-menu-open) {
+    overflow: hidden;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+  }
+
+  @media (min-width: 961px) {
+    .mobile-menu {
+      display: none !important;
+    }
+
+    .mobile-toggle {
+      display: none !important;
+    }
+  }
+</style>

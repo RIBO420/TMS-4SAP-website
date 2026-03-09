@@ -1,0 +1,296 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import CTABanner from '@components/ui/CTABanner.astro';
+import '@styles/utilities.css';
+
+const title = 'Datenschutzerklärung';
+const lastUpdated = '2026-03-01';
+const formattedDate = new Date(lastUpdated).toLocaleDateString('de-DE', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+});
+---
+
+<BaseLayout
+  lang="de"
+  title="Datenschutzerklärung | TMS 4SAP"
+  description="Erfahren Sie, wie TheManufacturingSuite BV Ihre personenbezogenen Daten erhebt, verwendet und schützt. Lesen Sie unsere Datenschutzerklärung für Details zu Ihren Rechten gemäß DSGVO."
+>
+  <!-- Breadcrumbs -->
+  <nav class="container breadcrumbs" aria-label="Breadcrumb">
+    <a href="/de">Startseite</a>
+    <span class="breadcrumbs-separator" aria-hidden="true">/</span>
+    <a href="/de/legal/privacy">Recht</a>
+    <span class="breadcrumbs-separator" aria-hidden="true">/</span>
+    <span class="breadcrumbs-current" aria-current="page">{title}</span>
+  </nav>
+
+  <!-- Legal content -->
+  <section class="section legal-section">
+    <div class="container">
+      <div class="legal-width">
+        <!-- Page header -->
+        <header class="legal-header">
+          <h1>{title}</h1>
+          <p class="legal-last-updated">
+            Zuletzt aktualisiert: <time datetime={lastUpdated}>{formattedDate}</time>
+          </p>
+        </header>
+
+        <!-- Prose content -->
+        <div class="prose">
+
+          <h2 id="introduction">1. Einleitung</h2>
+          <p>
+            Diese Datenschutzerklärung erläutert, wie <strong>TheManufacturingSuite BV</strong> ("TMS", "wir", "uns"
+            oder "unser"), mit Sitz in Il Flore, Avenue Ceramique 221, 6221 KX Maastricht, Niederlande, Ihre
+            personenbezogenen Daten erhebt, verwendet, speichert und schützt, wenn Sie unsere Website besuchen,
+            unsere Dienste nutzen oder anderweitig mit uns interagieren.
+          </p>
+          <p>
+            Wir verpflichten uns zum Schutz Ihrer Privatsphäre und zum offenen und transparenten Umgang mit Ihren
+            Daten. Diese Erklärung entspricht der Datenschutz-Grundverordnung (DSGVO) der Europäischen Union und
+            anderen anwendbaren Datenschutzgesetzen.
+          </p>
+
+          <h2 id="data-collection">2. Welche Daten wir erheben</h2>
+          <p>Wir können die folgenden Kategorien personenbezogener Daten erheben und verarbeiten:</p>
+          <ul>
+            <li>
+              <strong>Kontaktformulardaten:</strong> Wenn Sie ein Kontaktformular absenden, eine Demo anfordern oder
+              eine Broschüre herunterladen, erheben wir Ihren Namen, Ihre E-Mail-Adresse, den Firmennamen, die
+              Telefonnummer und den Inhalt Ihrer Nachricht.
+            </li>
+            <li>
+              <strong>Website-Analysedaten:</strong> Wir erheben anonymisierte Daten darüber, wie Sie mit unserer
+              Website interagieren, einschließlich besuchter Seiten, Verweildauer auf jeder Seite, Verweisquellen,
+              Browsertyp, Betriebssystem und Geräteinformationen.
+            </li>
+            <li>
+              <strong>Cookies und Tracking-Technologien:</strong> Wir verwenden Cookies und ähnliche Technologien,
+              um Ihr Browsing-Erlebnis zu verbessern, den Website-Traffic zu analysieren und personalisierte Inhalte
+              bereitzustellen. Siehe Abschnitt 8 für vollständige Details.
+            </li>
+            <li>
+              <strong>Geschäftskorrespondenz:</strong> Wenn Sie per E-Mail, Telefon oder über andere Kanäle mit uns
+              kommunizieren, können wir diese Kommunikation aufbewahren, um Ihre Anfragen zu beantworten und unsere
+              Unterlagen zu pflegen.
+            </li>
+          </ul>
+
+          <h2 id="data-use">3. Wie wir Ihre Daten verwenden</h2>
+          <p>Wir verwenden Ihre personenbezogenen Daten für folgende Zwecke:</p>
+          <ul>
+            <li>
+              <strong>Beantwortung von Anfragen:</strong> Um Ihre Fragen zu beantworten, angeforderte Informationen
+              über unsere Produkte und Dienstleistungen bereitzustellen und Demo-Anfragen nachzuverfolgen.
+            </li>
+            <li>
+              <strong>Verbesserung unserer Website:</strong> Um Nutzungsmuster zu analysieren, technische Probleme
+              zu diagnostizieren und die Benutzererfahrung unserer Website und digitalen Angebote zu verbessern.
+            </li>
+            <li>
+              <strong>Marketingkommunikation:</strong> Mit Ihrer ausdrücklichen Einwilligung können wir Ihnen
+              Newsletter, Produktaktualisierungen, Veranstaltungseinladungen und andere Marketingmaterialien zusenden.
+              Sie können sich jederzeit abmelden, indem Sie den Link "Abmelden" in jeder Marketing-E-Mail anklicken
+              oder uns direkt kontaktieren.
+            </li>
+            <li>
+              <strong>Vertragserfüllung:</strong> Um unsere Softwarelösungen bereitzustellen, Implementierungssupport
+              zu leisten und unsere vertraglichen Verpflichtungen gegenüber Kunden und Partnern zu erfüllen.
+            </li>
+            <li>
+              <strong>Einhaltung gesetzlicher Vorschriften:</strong> Um geltende Gesetze, Vorschriften und
+              rechtliche Verfahren einzuhalten.
+            </li>
+          </ul>
+
+          <h2 id="legal-basis">4. Rechtsgrundlage der Verarbeitung</h2>
+          <p>Wir verarbeiten Ihre personenbezogenen Daten auf der Grundlage einer oder mehrerer der folgenden Rechtsgrundlagen:</p>
+          <ul>
+            <li>
+              <strong>Berechtigtes Interesse (Art. 6 Abs. 1 lit. f DSGVO):</strong> Wir verarbeiten bestimmte Daten,
+              soweit dies für unsere berechtigten Geschäftsinteressen erforderlich ist, wie z. B. die Verbesserung
+              unserer Website, die Analyse von Nutzungsmustern und den Schutz unserer Systeme, sofern diese Interessen
+              nicht durch Ihre Rechte und Freiheiten überwiegen.
+            </li>
+            <li>
+              <strong>Einwilligung (Art. 6 Abs. 1 lit. a DSGVO):</strong> Wenn Sie uns Ihre ausdrückliche Einwilligung
+              zur Verarbeitung Ihrer Daten für einen bestimmten Zweck erteilt haben, wie z. B. den Empfang von
+              Marketingkommunikation oder die Aktivierung nicht-essentieller Cookies.
+            </li>
+            <li>
+              <strong>Vertragserfüllung (Art. 6 Abs. 1 lit. b DSGVO):</strong> Wenn die Verarbeitung zur Erfüllung
+              eines Vertrags mit Ihnen oder zur Durchführung vorvertraglicher Maßnahmen erforderlich ist, wie z. B.
+              die Beantwortung einer Demo-Anfrage oder die Bereitstellung unserer Softwaredienstleistungen.
+            </li>
+            <li>
+              <strong>Rechtliche Verpflichtung (Art. 6 Abs. 1 lit. c DSGVO):</strong> Wenn die Verarbeitung zur
+              Erfüllung einer rechtlichen Verpflichtung erforderlich ist, der wir unterliegen, wie z. B.
+              Steuerberichterstattung oder regulatorische Anforderungen.
+            </li>
+          </ul>
+
+          <h2 id="data-sharing">5. Datenweitergabe</h2>
+          <p>
+            Wir <strong>verkaufen, handeln oder vermieten</strong> Ihre personenbezogenen Daten nicht an Dritte. Wir
+            geben Ihre Daten nur unter den folgenden eingeschränkten Umständen weiter:
+          </p>
+          <ul>
+            <li>
+              <strong>Dienstleister:</strong> Wir arbeiten mit vertrauenswürdigen Auftragsverarbeitern zusammen, die
+              uns beim Betrieb unserer Website, der Durchführung unserer Geschäftstätigkeit und der Betreuung unserer
+              Kunden unterstützen (z. B. Hosting-Anbieter, E-Mail-Dienstleister, Analyseplattformen). Diese Partner
+              sind vertraglich verpflichtet, Ihre Daten vertraulich zu behandeln und nur nach unserer Weisung zu
+              verarbeiten.
+            </li>
+            <li>
+              <strong>Gesetzliche Anforderungen:</strong> Wir können Ihre Daten offenlegen, wenn dies gesetzlich
+              vorgeschrieben ist oder aufgrund behördlicher Anforderungen erforderlich ist.
+            </li>
+            <li>
+              <strong>Unternehmensübertragungen:</strong> Im Falle einer Fusion, Übernahme oder eines Verkaufs von
+              Vermögenswerten können Ihre Daten als Teil der Transaktion übertragen werden. Wir werden Sie über
+              solche Änderungen informieren und sicherstellen, dass die Datenschutzstandards eingehalten werden.
+            </li>
+          </ul>
+
+          <h2 id="data-retention">6. Datenspeicherung</h2>
+          <p>Wir speichern Ihre personenbezogenen Daten nur so lange, wie es für die in dieser Erklärung genannten Zwecke erforderlich ist:</p>
+          <ul>
+            <li>
+              <strong>Kontaktformulardaten:</strong> Werden bis zu <strong>2 Jahre</strong> ab dem Datum Ihrer
+              letzten Interaktion mit uns aufbewahrt, es sei denn, eine längere Aufbewahrungsfrist ist aus
+              vertraglichen oder rechtlichen Gründen erforderlich.
+            </li>
+            <li>
+              <strong>Website-Analysedaten:</strong> Werden bis zu <strong>26 Monate</strong> aufbewahrt, danach
+              werden sie automatisch anonymisiert oder gelöscht.
+            </li>
+            <li>
+              <strong>Einwilligungsnachweise für Marketing:</strong> Werden so lange aufbewahrt, wie die Einwilligung
+              gültig ist, zuzüglich eines angemessenen Zeitraums danach zum Nachweis der Compliance.
+            </li>
+            <li>
+              <strong>Vertragsdaten:</strong> Werden für die Dauer des Vertrags und bis zu 7 Jahre danach aufbewahrt,
+              wie es die niederländische Steuergesetzgebung vorschreibt.
+            </li>
+          </ul>
+
+          <h2 id="your-rights">7. Ihre Rechte</h2>
+          <p>
+            Gemäß der DSGVO haben Sie folgende Rechte in Bezug auf Ihre personenbezogenen Daten. Sie können jedes
+            dieser Rechte ausüben, indem Sie uns unter
+            <a href="mailto:privacy@themanufacturingsuite.com">privacy@themanufacturingsuite.com</a> kontaktieren.
+          </p>
+          <ul>
+            <li>
+              <strong>Auskunftsrecht (Art. 15 DSGVO):</strong> Sie haben das Recht, eine Kopie der über Sie
+              gespeicherten personenbezogenen Daten anzufordern.
+            </li>
+            <li>
+              <strong>Recht auf Berichtigung (Art. 16 DSGVO):</strong> Sie haben das Recht, die Berichtigung
+              unrichtiger oder unvollständiger personenbezogener Daten zu verlangen.
+            </li>
+            <li>
+              <strong>Recht auf Löschung (Art. 17 DSGVO):</strong> Sie haben das Recht, die Löschung Ihrer
+              personenbezogenen Daten zu verlangen, wenn kein zwingender Grund für die weitere Verarbeitung besteht.
+            </li>
+            <li>
+              <strong>Recht auf Datenübertragbarkeit (Art. 20 DSGVO):</strong> Sie haben das Recht, Ihre
+              personenbezogenen Daten in einem strukturierten, gängigen und maschinenlesbaren Format zu erhalten
+              und an einen anderen Verantwortlichen zu übertragen.
+            </li>
+            <li>
+              <strong>Widerspruchsrecht (Art. 21 DSGVO):</strong> Sie haben das Recht, der Verarbeitung Ihrer
+              personenbezogenen Daten zu widersprechen, soweit wir uns auf ein berechtigtes Interesse als
+              Rechtsgrundlage stützen.
+            </li>
+            <li>
+              <strong>Recht auf Einschränkung der Verarbeitung (Art. 18 DSGVO):</strong> Sie haben das Recht, die
+              Einschränkung der Verarbeitung Ihrer personenbezogenen Daten unter bestimmten Umständen zu verlangen.
+            </li>
+            <li>
+              <strong>Recht auf Widerruf der Einwilligung:</strong> Soweit die Verarbeitung auf einer Einwilligung
+              beruht, haben Sie das Recht, diese Einwilligung jederzeit zu widerrufen, ohne dass die Rechtmäßigkeit
+              der aufgrund der Einwilligung bis zum Widerruf erfolgten Verarbeitung berührt wird.
+            </li>
+          </ul>
+          <p>
+            Wir werden Ihre Anfrage innerhalb von 30 Tagen beantworten. Wenn Sie mit unserer Antwort nicht zufrieden
+            sind, haben Sie das Recht, eine Beschwerde bei der niederländischen Datenschutzbehörde
+            (<em>Autoriteit Persoonsgegevens</em>) einzureichen.
+          </p>
+
+          <h2 id="cookies">8. Cookies</h2>
+          <p>
+            Unsere Website verwendet Cookies und ähnliche Tracking-Technologien, um Sie von anderen Nutzern zu
+            unterscheiden und ein besseres Browsing-Erlebnis zu bieten. Cookies sind kleine Textdateien, die von
+            Ihrem Browser auf Ihrem Gerät gespeichert werden.
+          </p>
+          <p>Wir verwenden die folgenden Cookie-Kategorien:</p>
+          <ul>
+            <li>
+              <strong>Essentielle Cookies:</strong> Erforderlich für den grundlegenden Betrieb der Website. Diese
+              Cookies ermöglichen Kernfunktionen wie Seitennavigation, Sicherheit und Barrierefreiheit. Sie können
+              nicht deaktiviert werden.
+            </li>
+            <li>
+              <strong>Analyse-Cookies:</strong> Helfen uns zu verstehen, wie Besucher mit unserer Website
+              interagieren, indem sie Informationen anonym sammeln und melden. Wir nutzen diese Erkenntnisse zur
+              Verbesserung der Struktur und des Inhalts unserer Website. Analyse-Cookies werden nur mit Ihrer
+              Einwilligung gesetzt.
+            </li>
+            <li>
+              <strong>Marketing-Cookies:</strong> Werden verwendet, um Besucher über Websites hinweg zu verfolgen
+              und relevante und ansprechende Werbung anzuzeigen. Marketing-Cookies werden nur mit Ihrer
+              ausdrücklichen Einwilligung gesetzt.
+            </li>
+          </ul>
+          <p>
+            <strong>Verwaltung Ihrer Cookie-Einstellungen:</strong> Wenn Sie unsere Website zum ersten Mal besuchen,
+            wird Ihnen ein Cookie-Einwilligungsbanner angezeigt, in dem Sie auswählen können, welche
+            Cookie-Kategorien Sie akzeptieren möchten. Sie können Ihre Cookie-Einstellungen jederzeit ändern, indem
+            Sie Ihre Browser-Cookies löschen und unsere Website erneut besuchen oder uns direkt kontaktieren.
+          </p>
+          <p>
+            Sie können Cookies auch über Ihre Browsereinstellungen steuern. Die meisten Browser ermöglichen es Ihnen,
+            Cookies abzulehnen oder zu löschen. Bitte beachten Sie, dass das Deaktivieren bestimmter Cookies die
+            Funktionalität unserer Website beeinträchtigen kann.
+          </p>
+
+          <h2 id="contact">9. Kontakt für Datenschutzfragen</h2>
+          <p>
+            Wenn Sie Fragen, Bedenken oder Anfragen zu dieser Datenschutzerklärung oder zum Umgang mit Ihren
+            personenbezogenen Daten haben, kontaktieren Sie uns bitte:
+          </p>
+          <ul>
+            <li><strong>E-Mail:</strong> <a href="mailto:privacy@themanufacturingsuite.com">privacy@themanufacturingsuite.com</a></li>
+            <li><strong>Telefon:</strong> <a href="tel:+31432340050">+31 43 234 00 50</a></li>
+            <li>
+              <strong>Post:</strong> TheManufacturingSuite BV, z. Hd. Datenschutzbeauftragter,
+              Il Flore, Avenue Ceramique 221, 6221 KX Maastricht, Niederlande
+            </li>
+          </ul>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Banner -->
+  <CTABanner
+    title="Fragen zu unseren"
+    titleAccent="Datenschutzpraktiken?"
+    description="Unser Team beantwortet gerne alle Fragen zum Umgang mit Ihren personenbezogenen Daten. Kontaktieren Sie uns direkt."
+    primaryCTA={{ label: 'Kontakt aufnehmen', href: '/de/contact' }}
+    secondaryCTA={{ label: 'Zur Startseite', href: '/de' }}
+  />
+</BaseLayout>
+
+<style>
+  .legal-section {
+    padding-top: clamp(1rem, 2vw, 2rem);
+  }
+</style>

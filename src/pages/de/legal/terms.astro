@@ -1,0 +1,241 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import CTABanner from '@components/ui/CTABanner.astro';
+import '@styles/utilities.css';
+
+const title = 'Allgemeine Geschäftsbedingungen (AGB)';
+const lastUpdated = '2026-03-01';
+const formattedDate = new Date(lastUpdated).toLocaleDateString('de-DE', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+});
+---
+
+<BaseLayout
+  lang="de"
+  title="Allgemeine Geschäftsbedingungen | TMS 4SAP"
+  description="Lesen Sie die Allgemeinen Geschäftsbedingungen (AGB) für die Nutzung der Website und Softwaredienstleistungen von The Manufacturing Suite. Informieren Sie sich über Ihre Rechte und Pflichten."
+>
+  <!-- Breadcrumbs -->
+  <nav class="container breadcrumbs" aria-label="Breadcrumb">
+    <a href="/de">Startseite</a>
+    <span class="breadcrumbs-separator" aria-hidden="true">/</span>
+    <a href="/de/legal/terms">Recht</a>
+    <span class="breadcrumbs-separator" aria-hidden="true">/</span>
+    <span class="breadcrumbs-current" aria-current="page">{title}</span>
+  </nav>
+
+  <!-- Legal content -->
+  <section class="section legal-section">
+    <div class="container">
+      <div class="legal-width">
+        <!-- Page header -->
+        <header class="legal-header">
+          <h1>{title}</h1>
+          <p class="legal-last-updated">
+            Zuletzt aktualisiert: <time datetime={lastUpdated}>{formattedDate}</time>
+          </p>
+        </header>
+
+        <!-- Prose content -->
+        <div class="prose">
+
+          <h2 id="acceptance">1. Geltungsbereich und Annahme</h2>
+          <p>
+            Durch den Zugriff auf und die Nutzung der Website und Dienste der <strong>TheManufacturingSuite BV</strong>
+            ("TMS", "wir", "uns" oder "unser") mit Sitz in Il Flore, Avenue Ceramique 221, 6221 KX Maastricht,
+            Niederlande, erklären Sie sich mit diesen Allgemeinen Geschäftsbedingungen ("AGB") einverstanden. Wenn
+            Sie mit einem Teil dieser AGB nicht einverstanden sind, dürfen Sie unsere Website oder Dienste nicht nutzen.
+          </p>
+          <p>
+            Diese AGB gelten für alle Besucher, Nutzer und sonstige Personen, die auf unsere Website unter
+            <a href="https://themanufacturingsuite.com">themanufacturingsuite.com</a> und alle damit verbundenen
+            Dienste, Anwendungen oder Plattformen von TMS zugreifen oder diese nutzen.
+          </p>
+          <p>
+            Wir behalten uns das Recht vor, diese AGB jederzeit zu ändern. Änderungen werden auf dieser Seite mit
+            einem aktualisierten Revisionsdatum veröffentlicht. Ihre fortgesetzte Nutzung unserer Website und Dienste
+            nach solchen Änderungen stellt Ihre Zustimmung zu den überarbeiteten AGB dar.
+          </p>
+
+          <h2 id="services">2. Leistungsbeschreibung</h2>
+          <p>
+            TMS bietet Software-Lösungen für die Fertigungssteuerung und -planung, die für die Integration mit
+            SAP Business One konzipiert sind. Unser Angebot umfasst unter anderem:
+          </p>
+          <ul>
+            <li>
+              <strong>TMS 4SAP Softwaremodule:</strong> Produktionsplanung und -steuerung (PPS), Erweiterte Planung
+              und Steuerung (APS), Manufacturing Execution System (MES), Betriebsdatenerfassung (BDE),
+              Qualitätsmanagement (QM), Produktdatenmanagement (PDM), Business Intelligence (BI), Visuelle
+              Konfiguration (VC) und Dokumentenmanagementsystem (DMS).
+            </li>
+            <li>
+              <strong>Implementierungsleistungen:</strong> Vor-Ort- und Remote-Implementierung der TMS-Software,
+              einschließlich Systemkonfiguration, Datenmigration, Integrationseinrichtung und Benutzerakzeptanztest.
+            </li>
+            <li>
+              <strong>Schulung und Support:</strong> Anwenderschulungen, technische Dokumentation und laufender
+              technischer Support für lizenzierte Kunden.
+            </li>
+            <li>
+              <strong>Beratung:</strong> Geschäftsprozessanalyse, Workflow-Optimierung und strategische Beratung
+              in Bezug auf Fertigungsabläufe und ERP-Integration.
+            </li>
+          </ul>
+          <p>
+            Die spezifischen Funktionen, Funktionalitäten und der Leistungsumfang werden in individuellen
+            Lizenzvereinbarungen und Leistungsbeschreibungen festgelegt, die zwischen TMS und jedem Kunden
+            vereinbart werden.
+          </p>
+
+          <h2 id="obligations">3. Pflichten des Nutzers</h2>
+          <p>Bei der Nutzung unserer Website und Dienste verpflichten Sie sich:</p>
+          <ul>
+            <li>
+              Genaue, aktuelle und vollständige Informationen bei der Übermittlung von Formularen, der Anforderung
+              von Demos oder der Kommunikation mit unserem Team bereitzustellen.
+            </li>
+            <li>
+              Unsere Website und Dienste nur zu rechtmäßigen Zwecken und in Übereinstimmung mit allen geltenden
+              Gesetzen und Vorschriften zu nutzen.
+            </li>
+            <li>
+              Nicht zu versuchen, unbefugten Zugang zu Teilen unserer Website, Server, Datenbanken oder
+              verbundener Systeme zu erlangen.
+            </li>
+            <li>
+              Keine Teile unserer Website oder Dienste ohne ausdrückliche schriftliche Genehmigung von TMS zu
+              vervielfältigen, duplizieren, kopieren, verkaufen, weiterverkaufen oder anderweitig zu verwerten.
+            </li>
+            <li>
+              Keine automatisierten Systeme, Bots oder Skripte zu verwenden, um ohne vorherige schriftliche
+              Zustimmung auf Daten unserer Website zuzugreifen, diese zu scrapen oder zu sammeln.
+            </li>
+            <li>
+              Keine Viren, Trojaner, Würmer oder anderen Schadcode einzuführen, die den Betrieb unserer Website
+              oder Dienste beeinträchtigen könnten.
+            </li>
+            <li>
+              Die geistigen Eigentumsrechte von TMS und Dritten, deren Inhalte auf unserer Website erscheinen
+              können, zu respektieren.
+            </li>
+          </ul>
+
+          <h2 id="intellectual-property">4. Geistiges Eigentum</h2>
+          <p>
+            Alle Inhalte dieser Website, einschließlich, aber nicht beschränkt auf Texte, Grafiken, Logos, Icons,
+            Bilder, Audio- und Videoclips, Datensammlungen, Software sowie das gesamte Design und Layout, sind
+            Eigentum der TheManufacturingSuite BV oder ihrer Inhaltslieferanten und durch niederländisches und
+            internationales Urheberrecht, Markenrecht und Gesetze zum geistigen Eigentum geschützt.
+          </p>
+          <p>
+            Der Name TMS, der Name TMS 4SAP, das TMS-Logo und alle zugehörigen Namen, Logos, Produkt- und
+            Dienstleistungsnamen, Designs und Slogans sind Marken der TheManufacturingSuite BV. Sie dürfen diese
+            Marken nicht ohne unsere vorherige schriftliche Genehmigung verwenden.
+          </p>
+          <p>
+            Unsere Software, einschließlich aller Quellcodes, Objektcodes, Algorithmen, Datenbanken und
+            Dokumentationen, ist proprietär und stellt Geschäftsgeheimnisse von TMS dar. Der Zugang zu unserer
+            Software wird durch separate Lizenzvereinbarungen geregelt. Durch diese AGB werden keine Rechte an
+            unserer Software gewährt, es sei denn, dies ist ausdrücklich in einer unterzeichneten
+            Lizenzvereinbarung festgelegt.
+          </p>
+
+          <h2 id="liability">5. Haftungsbeschränkung</h2>
+          <p>
+            Im größtmöglichen gesetzlich zulässigen Umfang haftet die TheManufacturingSuite BV nicht für indirekte,
+            beiläufige, besondere, Folge- oder Strafschäden, einschließlich, aber nicht beschränkt auf entgangenen
+            Gewinn, Datenverlust, Nutzungsausfall, Verlust des Geschäftswerts oder andere immaterielle Verluste,
+            die sich ergeben aus:
+          </p>
+          <ul>
+            <li>Ihrer Nutzung oder Unfähigkeit zur Nutzung unserer Website oder Dienste.</li>
+            <li>Unbefugtem Zugriff auf oder unbefugter Nutzung unserer Server und der darauf gespeicherten personenbezogenen Daten.</li>
+            <li>Jeder Unterbrechung oder Einstellung der Übertragung zu oder von unserer Website.</li>
+            <li>Fehlern, Viren, Trojanern oder ähnlichen Problemen, die durch Dritte über unsere Website übertragen werden.</li>
+            <li>Fehlern oder Auslassungen in auf unserer Website veröffentlichten Inhalten.</li>
+          </ul>
+          <p>
+            Unsere gesamte Haftung für Ansprüche, die sich aus der Nutzung unserer Website ergeben oder damit
+            zusammenhängen, übersteigt nicht den Betrag, den Sie gegebenenfalls in den zwölf (12) Monaten vor
+            dem Anspruch an TMS gezahlt haben.
+          </p>
+          <p>
+            <strong>Haftungsausschluss für Website-Inhalte:</strong> Die auf unserer Website bereitgestellten
+            Informationen dienen ausschließlich allgemeinen Informationszwecken. Obwohl wir bestrebt sind, die
+            Informationen aktuell und korrekt zu halten, geben wir keine Zusicherungen oder Gewährleistungen
+            jeglicher Art, weder ausdrücklich noch stillschweigend, hinsichtlich der Vollständigkeit, Genauigkeit,
+            Zuverlässigkeit, Eignung oder Verfügbarkeit der Website oder der darin enthaltenen Informationen,
+            Produkte, Dienste oder zugehörigen Grafiken ab.
+          </p>
+
+          <h2 id="termination">6. Kündigung</h2>
+          <p>
+            Wir können Ihren Zugang zu unserer Website und unseren Diensten jederzeit sofort und ohne vorherige
+            Ankündigung oder Haftung aus beliebigem Grund aussetzen oder beenden, insbesondere wenn Sie gegen
+            diese AGB verstoßen.
+          </p>
+          <p>
+            Mit der Kündigung erlischt Ihr Recht zur Nutzung der Website und Dienste sofort. Alle Bestimmungen
+            dieser AGB, die ihrer Natur nach die Kündigung überdauern sollten, bleiben bestehen, einschließlich,
+            aber nicht beschränkt auf Eigentumsbestimmungen, Gewährleistungsausschlüsse, Freistellung und
+            Haftungsbeschränkungen.
+          </p>
+          <p>
+            Für lizenzierte Softwarekunden wird die Beendigung des Zugangs zur Software und den damit verbundenen
+            Diensten durch den jeweiligen Lizenzvertrag geregelt und kann andere Bedingungen als die hier
+            beschriebenen enthalten.
+          </p>
+
+          <h2 id="governing-law">7. Anwendbares Recht</h2>
+          <p>
+            Diese AGB unterliegen dem Recht der <strong>Niederlande</strong> und sind entsprechend auszulegen,
+            unter Ausschluss der Kollisionsnormen.
+          </p>
+          <p>
+            Alle Streitigkeiten, die sich aus diesen AGB oder Ihrer Nutzung unserer Website und Dienste ergeben
+            oder damit zusammenhängen, werden der ausschließlichen Zuständigkeit der Gerichte von Maastricht,
+            Niederlande, unterworfen.
+          </p>
+          <p>
+            Sollte eine Bestimmung dieser AGB von einem zuständigen Gericht für ungültig oder nicht durchsetzbar
+            erklärt werden, bleiben die übrigen Bestimmungen in vollem Umfang wirksam. Unser Versäumnis, ein Recht
+            oder eine Bestimmung dieser AGB durchzusetzen, gilt nicht als Verzicht auf dieses Recht oder diese
+            Bestimmung.
+          </p>
+
+          <h2 id="contact">8. Kontakt</h2>
+          <p>
+            Wenn Sie Fragen zu diesen Allgemeinen Geschäftsbedingungen haben, kontaktieren Sie uns bitte:
+          </p>
+          <ul>
+            <li><strong>E-Mail:</strong> <a href="mailto:info@themanufacturingsuite.com">info@themanufacturingsuite.com</a></li>
+            <li><strong>Telefon:</strong> <a href="tel:+31432340050">+31 43 234 00 50</a></li>
+            <li>
+              <strong>Post:</strong> TheManufacturingSuite BV, Il Flore, Avenue Ceramique 221,
+              6221 KX Maastricht, Niederlande
+            </li>
+          </ul>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Banner -->
+  <CTABanner
+    title="Bereit,"
+    titleAccent="TMS 4SAP zu entdecken?"
+    description="Erfahren Sie, wie unsere Fertigungssoftware nahtlos mit SAP Business One integriert wird. Buchen Sie eine kostenlose, personalisierte Demo."
+    primaryCTA={{ label: 'Demo buchen', href: '/de/demo' }}
+    secondaryCTA={{ label: 'Kontakt aufnehmen', href: '/de/contact' }}
+  />
+</BaseLayout>
+
+<style>
+  .legal-section {
+    padding-top: clamp(1rem, 2vw, 2rem);
+  }
+</style>

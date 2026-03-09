@@ -1,0 +1,54 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import '@styles/utilities.css';
+/* Breadcrumbs rendered inline below */
+
+export interface Props {
+  title: string;
+  lastUpdated?: string;
+}
+
+const { title, lastUpdated } = Astro.props;
+
+/** Format the last-updated date if provided. */
+const formattedDate = lastUpdated
+  ? new Date(lastUpdated).toLocaleDateString('nl-NL', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+    })
+  : null;
+---
+
+<BaseLayout title={`${title} | The Manufacturing Suite`} description={title}>
+  <!-- Breadcrumbs -->
+  <nav class="container breadcrumbs" aria-label="Breadcrumb">
+    <a href="/">Home</a>
+    <span class="breadcrumbs-separator" aria-hidden="true">/</span>
+    <a href="/legal">Legal</a>
+    <span class="breadcrumbs-separator" aria-hidden="true">/</span>
+    <span class="breadcrumbs-current" aria-current="page">{title}</span>
+  </nav>
+
+  <!-- Legal content -->
+  <section class="section">
+    <div class="container">
+      <div class="legal-width">
+        <!-- Page header -->
+        <header class="legal-header">
+          <h1>{title}</h1>
+          {formattedDate && (
+            <p class="legal-last-updated">
+              Last updated: <time datetime={lastUpdated}>{formattedDate}</time>
+            </p>
+          )}
+        </header>
+
+        <!-- Prose content from MDX -->
+        <div class="prose">
+          <slot />
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

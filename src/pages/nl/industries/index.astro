@@ -1,0 +1,435 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../../components/global/Breadcrumbs.astro';
+import SectionHeader from '../../../components/ui/SectionHeader.astro';
+import CTABanner from '../../../components/ui/CTABanner.astro';
+
+const industries = [
+  {
+    slug: 'kunststof',
+    name: 'Kunststofproductie',
+    tagline: 'Spuitgieten & Extrusie',
+    description:
+      'Volledige productiecontrole voor kunststofproducenten. Van matrijslevenscyclusbeheer tot multi-cavity planning en complete batchtraceerbaarheid.',
+  },
+  {
+    slug: 'automotive',
+    name: 'Automotive toeleveranciers',
+    tagline: 'OEM-klare serieproductie',
+    description:
+      'Voldoe aan de eisen van IATF 16949-compliance, EDI-communicatie met OEM\'s, afroepplanning en volledige batchtraceerbaarheid voor recalls.',
+  },
+  {
+    slug: 'metaalbewerking',
+    name: 'Metaalbewerking & Verspaning',
+    tagline: 'CNC, Draaien & Frezen',
+    description:
+      'Precisieplanning voor complexe meerbewerkingsrouteringen, gereedschaps- en opspanmiddelbeheer en realtime kostprijscalculatie over machinegroepen.',
+  },
+  {
+    slug: 'elektronica',
+    name: 'Elektronica productie',
+    tagline: 'PCB-assemblage & Testen',
+    description:
+      'Geïntegreerde productiecontrole van stuklijstimport tot eindtest, met componenttraceerbaarheid op reelniveau en pick-and-place integratie.',
+  },
+];
+---
+
+<BaseLayout
+  title="Industrieoplossingen | TMS 4SAP"
+  description="TMS past zich aan uw specifieke productieomgeving aan. Ontdek op maat gemaakte ERP-oplossingen voor kunststof, automotive, metaalbewerking en elektronica."
+  lang="nl"
+>
+  <!-- Hero -->
+  <section class="hero-inner">
+    <div class="container">
+      <div class="breadcrumbs-wrap">
+        <Breadcrumbs items={[{ label: 'Industrieën', href: '/nl/industries' }]} />
+      </div>
+      <div class="hero-inner-content">
+        <span class="section-tag">Industrieoplossingen</span>
+        <h1 class="hero-inner-title">
+          Productie-ERP, <span class="text-amber">afgestemd op uw industrie</span>
+        </h1>
+        <p class="hero-inner-desc">
+          TMS past zich aan uw specifieke productieomgeving aan. Of u nu kunststof componenten, automotive onderdelen, precisie metaalwerk of elektronische assemblages produceert, ons modulaire ERP-platform spreekt uw taal.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Intro -->
+  <section class="section">
+    <div class="container">
+      <div class="intro-block" data-animate>
+        <p class="intro-text">
+          Elke productiesector staat voor unieke uitdagingen — van regelgevingscompliance en traceerbaarheidseisen tot gespecialiseerde machine-integratie en complexe productieplanning. Generieke ERP-systemen dwingen u uw processen aan te passen aan de software. TMS hanteert de tegenovergestelde benadering: onze modulaire architectuur stelt u in staat precies de mogelijkheden te configureren die uw industrie vereist, zonder onnodige complexiteit of kostbare maatwerkaanpassingen.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Industry Grid -->
+  <section class="section industry-overview-section">
+    <div class="container">
+      <SectionHeader
+        tag="Sectoren"
+        title="Kies uw"
+        titleAccent="industrie"
+        description="Selecteer uw productiesector om te zien hoe TMS uw specifieke uitdagingen aanpakt met doelgerichte modules en workflows."
+      />
+      <div class="industry-overview-grid">
+        {industries.map((ind) => (
+          <a href={`/nl/industries/${ind.slug}`} class="ind-card" data-animate>
+            <span class="ind-tagline">{ind.tagline}</span>
+            <h3 class="ind-title">{ind.name}</h3>
+            <p class="ind-desc">{ind.description}</p>
+            <span class="ind-link">
+              Bekijk oplossingen <span aria-hidden="true">&rarr;</span>
+            </span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Unified Platform -->
+  <section class="section">
+    <div class="container">
+      <div class="unified-block" data-animate>
+        <div class="unified-content">
+          <span class="section-tag">Geïntegreerde aanpak</span>
+          <h2>Eén platform, <span class="text-amber">meerdere industrieën</span></h2>
+          <p class="unified-desc">
+            Hoewel elke industriesector unieke eisen stelt, is elke TMS-implementatie gebouwd op hetzelfde bewezen platform. Dit betekent dat uw team profiteert van een consistente gebruikerservaring, gedeelde datamodellen en naadloze module-integratie — ongeacht uw specifieke productieprocessen.
+          </p>
+          <p class="unified-desc">
+            Wilt u uitbreiden naar een nieuwe sector? Uw bestaande TMS-investering draagt over. Hetzelfde kernplatform dat uw kunststofproductie aanstuurt, kan worden uitgebreid om een elektronische assemblagelijn te dekken, met gedeelde stamgegevens en geïntegreerde rapportage over alle divisies.
+          </p>
+          <ul class="unified-list">
+            <li>
+              <strong>Consistente UX</strong> — Dezelfde interfacepatronen voor alle modules, wat de trainingstijd verkort
+            </li>
+            <li>
+              <strong>Gedeelde stamgegevens</strong> — Eén bron van waarheid voor klanten, materialen en resources
+            </li>
+            <li>
+              <strong>Modulaire activering</strong> — Activeer alleen de modules die u nodig heeft, wanneer u ze nodig heeft
+            </li>
+            <li>
+              <strong>SAP Business One integratie</strong> — Native connector zorgt voor naadloze gegevensstroom naar uw financiële kern
+            </li>
+          </ul>
+        </div>
+        <div class="unified-visual">
+          <div class="unified-diagram">
+            <div class="unified-center">
+              <span class="unified-center-label">TMS Core</span>
+            </div>
+            <div class="unified-orbit">
+              <span class="unified-orbit-item" style="--angle: 0deg;">PPS</span>
+              <span class="unified-orbit-item" style="--angle: 60deg;">APS</span>
+              <span class="unified-orbit-item" style="--angle: 120deg;">MES</span>
+              <span class="unified-orbit-item" style="--angle: 180deg;">QM</span>
+              <span class="unified-orbit-item" style="--angle: 240deg;">PDC</span>
+              <span class="unified-orbit-item" style="--angle: 300deg;">BI</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <CTABanner
+    title="Niet zeker welke oplossing past?"
+    titleAccent="Laten we praten."
+    description="Boek een gratis consult met onze productie-ERP-specialisten. Wij brengen TMS in kaart voor uw specifieke productieomgeving."
+    primaryCTA={{ label: 'Demo aanvragen', href: '/nl/demo' }}
+    secondaryCTA={{ label: 'Neem contact op', href: '/nl/contact' }}
+  />
+</BaseLayout>
+
+<style>
+  /* Hero */
+  .hero-inner {
+    position: relative;
+    padding-top: clamp(7rem, 12vw, 10rem);
+    padding-bottom: clamp(3rem, 6vw, 5rem);
+    overflow: hidden;
+  }
+
+  .hero-inner::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+      ellipse 70% 50% at 50% 0%,
+      rgba(245, 158, 11, 0.04) 0%,
+      transparent 70%
+    );
+    pointer-events: none;
+  }
+
+  .breadcrumbs-wrap {
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero-inner-content {
+    position: relative;
+    z-index: 1;
+    max-width: 720px;
+  }
+
+  .hero-inner-title {
+    font-size: clamp(2.25rem, 5vw, 3.5rem);
+    font-weight: 700;
+    line-height: 1.08;
+    letter-spacing: -0.03em;
+    margin-top: 12px;
+  }
+
+  .hero-inner-desc {
+    font-size: clamp(1rem, 1.4vw, 1.125rem);
+    color: var(--text-muted);
+    line-height: 1.7;
+    max-width: 580px;
+    margin-top: 20px;
+  }
+
+  /* Intro */
+  .intro-block {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .intro-text {
+    font-size: clamp(1rem, 1.3vw, 1.0625rem);
+    color: var(--text-muted);
+    line-height: 1.8;
+  }
+
+  /* Industry Grid */
+  .industry-overview-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+
+  .ind-card {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 32px;
+    transition: all 0.3s var(--ease);
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .ind-card:hover {
+    background: var(--bg-card-hover);
+    border-color: rgba(245, 158, 11, 0.3);
+    transform: translateY(-2px);
+  }
+
+  .ind-tagline {
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: var(--amber);
+    line-height: 1.4;
+  }
+
+  .ind-title {
+    font-family: var(--font-heading);
+    font-size: 1.375rem;
+    font-weight: 600;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+  }
+
+  .ind-desc {
+    font-size: 0.9375rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+    flex-grow: 1;
+  }
+
+  .ind-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--amber);
+    margin-top: 4px;
+    transition: gap 0.2s var(--ease);
+  }
+
+  .ind-card:hover .ind-link {
+    gap: 10px;
+  }
+
+  @media (max-width: 700px) {
+    .industry-overview-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* Unified Platform */
+  .unified-block {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(2rem, 5vw, 4rem);
+    align-items: center;
+  }
+
+  .unified-content h2 {
+    font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+    margin-top: 12px;
+  }
+
+  .unified-desc {
+    font-size: 1rem;
+    color: var(--text-muted);
+    line-height: 1.7;
+    margin-top: 16px;
+  }
+
+  .unified-list {
+    list-style: none;
+    padding: 0;
+    margin-top: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .unified-list li {
+    font-size: 0.9375rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+    padding-left: 20px;
+    position: relative;
+  }
+
+  .unified-list li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 10px;
+    width: 6px;
+    height: 6px;
+    background: var(--amber);
+    border-radius: 50%;
+  }
+
+  .unified-list li strong {
+    color: var(--text);
+    font-weight: 600;
+  }
+
+  /* Unified Visual Diagram */
+  .unified-visual {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .unified-diagram {
+    position: relative;
+    width: 280px;
+    height: 280px;
+  }
+
+  .unified-center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80px;
+    height: 80px;
+    background: var(--amber-dim);
+    border: 1px solid rgba(245, 158, 11, 0.25);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .unified-center-label {
+    font-family: var(--font-heading);
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--amber);
+    text-align: center;
+    line-height: 1.2;
+  }
+
+  .unified-orbit {
+    position: absolute;
+    inset: 0;
+  }
+
+  .unified-orbit::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 220px;
+    height: 220px;
+    border: 1px solid var(--border);
+    border-radius: 50%;
+  }
+
+  .unified-orbit-item {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 44px;
+    height: 44px;
+    margin: -22px 0 0 -22px;
+    transform: rotate(var(--angle)) translateX(110px) rotate(calc(-1 * var(--angle)));
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-heading);
+    font-size: 0.6875rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    letter-spacing: 0.04em;
+  }
+
+  @media (max-width: 900px) {
+    .unified-block {
+      grid-template-columns: 1fr;
+    }
+
+    .unified-visual {
+      order: -1;
+    }
+
+    .unified-diagram {
+      width: 240px;
+      height: 240px;
+    }
+
+    .unified-orbit::before {
+      width: 190px;
+      height: 190px;
+    }
+
+    .unified-orbit-item {
+      transform: rotate(var(--angle)) translateX(95px) rotate(calc(-1 * var(--angle)));
+    }
+  }
+</style>

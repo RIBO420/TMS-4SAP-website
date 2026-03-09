@@ -1,0 +1,236 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import CTABanner from '@components/ui/CTABanner.astro';
+import '@styles/utilities.css';
+
+const title = 'Impressum';
+const lastUpdated = '2026-03-01';
+const formattedDate = new Date(lastUpdated).toLocaleDateString('en-GB', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+});
+---
+
+<BaseLayout
+  title="Impressum | TMS 4SAP"
+  description="Legal notice (Impressum) for TheManufacturingSuite BV. Find our company details, registration information, and legal disclaimers."
+>
+  <!-- Breadcrumbs -->
+  <nav class="container breadcrumbs" aria-label="Breadcrumb">
+    <a href="/">Home</a>
+    <span class="breadcrumbs-separator" aria-hidden="true">/</span>
+    <a href="/legal/impressum">Legal</a>
+    <span class="breadcrumbs-separator" aria-hidden="true">/</span>
+    <span class="breadcrumbs-current" aria-current="page">{title}</span>
+  </nav>
+
+  <!-- Legal content -->
+  <section class="section legal-section">
+    <div class="container">
+      <div class="legal-width">
+        <!-- Page header -->
+        <header class="legal-header">
+          <h1>{title}</h1>
+          <p class="legal-last-updated">
+            Last updated: <time datetime={lastUpdated}>{formattedDate}</time>
+          </p>
+        </header>
+
+        <!-- Prose content -->
+        <div class="prose">
+
+          <h2 id="company-details">Company Details</h2>
+
+          <div class="company-info-card">
+            <div class="company-info-row">
+              <span class="company-info-label">Company name</span>
+              <span class="company-info-value">TheManufacturingSuite BV</span>
+            </div>
+            <div class="company-info-row">
+              <span class="company-info-label">Address</span>
+              <span class="company-info-value">
+                Il Flore<br />
+                Avenue Ceramique 221<br />
+                6221 KX, Maastricht<br />
+                The Netherlands
+              </span>
+            </div>
+            <div class="company-info-row">
+              <span class="company-info-label">Phone</span>
+              <span class="company-info-value">
+                <a href="tel:+31432340050">+31 43 234 00 50</a>
+              </span>
+            </div>
+            <div class="company-info-row">
+              <span class="company-info-label">Email</span>
+              <span class="company-info-value">
+                <a href="mailto:info@themanufacturingsuite.com">info@themanufacturingsuite.com</a>
+              </span>
+            </div>
+            <div class="company-info-row">
+              <span class="company-info-label">Website</span>
+              <span class="company-info-value">
+                <a href="https://themanufacturingsuite.com">themanufacturingsuite.com</a>
+              </span>
+            </div>
+            <div class="company-info-row">
+              <span class="company-info-label">Chamber of Commerce</span>
+              <span class="company-info-value">KvK Limburg 14XXXXXX</span>
+            </div>
+            <div class="company-info-row">
+              <span class="company-info-label">VAT number</span>
+              <span class="company-info-value">NL00XXXXXXXXB01</span>
+            </div>
+            <div class="company-info-row">
+              <span class="company-info-label">Managing Director</span>
+              <span class="company-info-value">To be confirmed</span>
+            </div>
+          </div>
+
+          <h2 id="disclaimer">Disclaimer</h2>
+
+          <h3>Liability for Content</h3>
+          <p>
+            The content of our website has been compiled with the utmost care. However, TheManufacturingSuite BV
+            cannot guarantee the accuracy, completeness, or timeliness of the information provided. As a service
+            provider, we are responsible for our own content on these pages under general law. However, we are not
+            obligated to monitor transmitted or stored third-party information, or to investigate circumstances
+            that indicate illegal activity.
+          </p>
+          <p>
+            Obligations to remove or block the use of information under general law remain unaffected. However,
+            liability in this regard is only possible from the time of knowledge of a specific infringement. Upon
+            notification of corresponding violations, we will remove this content immediately.
+          </p>
+
+          <h3>Liability for Links</h3>
+          <p>
+            Our website may contain links to external third-party websites over whose content we have no control.
+            Therefore, we cannot accept any liability for this external content. The respective provider or operator
+            of the linked pages is always responsible for the content of those pages. The linked pages were checked
+            for possible legal violations at the time of linking. Illegal content was not recognisable at the time
+            of linking.
+          </p>
+          <p>
+            Permanent monitoring of the content of linked pages is not reasonable without concrete evidence of a
+            violation. Upon notification of violations, we will remove such links immediately.
+          </p>
+
+          <h3>Copyright</h3>
+          <p>
+            The content and works published on this website are subject to Dutch copyright law. Any duplication,
+            processing, distribution, or any form of commercialisation of such material beyond the scope of the
+            copyright law requires the prior written consent of TheManufacturingSuite BV. Downloads and copies of
+            this site are only permitted for private, non-commercial use.
+          </p>
+          <p>
+            Insofar as the content on this site was not created by the operator, the copyrights of third parties
+            are respected. In particular, third-party content is identified as such. Should you nevertheless
+            become aware of a copyright infringement, please inform us accordingly. Upon notification of
+            violations, we will remove such content immediately.
+          </p>
+
+          <h2 id="dispute-resolution">Dispute Resolution</h2>
+          <p>
+            The European Commission provides a platform for Online Dispute Resolution (ODR), which can be found at
+            <a href="https://ec.europa.eu/consumers/odr" target="_blank" rel="noopener noreferrer">
+              https://ec.europa.eu/consumers/odr
+            </a>. We are neither willing nor obliged to participate in dispute resolution proceedings before a
+            consumer arbitration board.
+          </p>
+
+          <h2 id="copyright-notice">Copyright Notice</h2>
+          <p>
+            &copy; {new Date().getFullYear()} TheManufacturingSuite BV. All rights reserved.
+          </p>
+          <p>
+            TMS, TMS 4SAP, and the TMS logo are registered trademarks of TheManufacturingSuite BV. SAP and SAP
+            Business One are trademarks or registered trademarks of SAP SE in Germany and other countries. All
+            other product names, logos, and brands are property of their respective owners and are used on this
+            website for identification purposes only. Use of these names, logos, and brands does not imply
+            endorsement.
+          </p>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Banner -->
+  <CTABanner
+    title="Want to learn more about"
+    titleAccent="TMS 4SAP?"
+    description="Discover how our manufacturing software solutions can streamline your production operations. Get in touch with our team today."
+    primaryCTA={{ label: 'Contact Us', href: '/contact' }}
+    secondaryCTA={{ label: 'View Products', href: '/modules' }}
+  />
+</BaseLayout>
+
+<style>
+  .legal-section {
+    padding-top: clamp(1rem, 2vw, 2rem);
+  }
+
+  .company-info-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: clamp(1.5rem, 3vw, 2rem);
+    margin-top: 1.5em;
+  }
+
+  .company-info-row {
+    display: flex;
+    gap: 16px;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .company-info-row:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  .company-info-row:first-child {
+    padding-top: 0;
+  }
+
+  .company-info-label {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--text-dim);
+    min-width: 180px;
+    flex-shrink: 0;
+    font-family: var(--font-heading);
+    letter-spacing: -0.01em;
+  }
+
+  .company-info-value {
+    font-size: 0.9375rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+
+  .company-info-value a {
+    color: var(--amber);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    transition: color 0.2s var(--ease);
+  }
+
+  .company-info-value a:hover {
+    color: var(--amber-hover);
+  }
+
+  @media (max-width: 600px) {
+    .company-info-row {
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .company-info-label {
+      min-width: auto;
+    }
+  }
+</style>

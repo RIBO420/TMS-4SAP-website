@@ -1,0 +1,571 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import HeroInner from '../components/ui/HeroInner.astro';
+import CTABanner from '../components/ui/CTABanner.astro';
+
+const categories = ['All', 'Brochures', 'Datasheets', 'Whitepapers'] as const;
+
+const downloads = [
+  {
+    title: 'TMS Product Brochure',
+    description: 'Complete overview of the TMS 4SAP manufacturing suite, its modules, and how it extends SAP Business One for discrete and process manufacturers.',
+    category: 'Brochures',
+    fileType: 'PDF',
+    icon: 'brochure',
+  },
+  {
+    title: 'PPS Module Datasheet',
+    description: 'Detailed specifications of the Production Planning & Scheduling module including MRP II, capacity planning, and multi-level BOM management.',
+    category: 'Datasheets',
+    fileType: 'PDF',
+    icon: 'datasheet',
+  },
+  {
+    title: 'MES Module Datasheet',
+    description: 'Technical overview of the Manufacturing Execution System module covering real-time shop-floor data capture, OEE tracking, and work order management.',
+    category: 'Datasheets',
+    fileType: 'PDF',
+    icon: 'datasheet',
+  },
+  {
+    title: 'QM Module Datasheet',
+    description: 'In-depth look at Quality Management capabilities including inspection plans, SPC charts, non-conformance workflows, and CAPA management.',
+    category: 'Datasheets',
+    fileType: 'PDF',
+    icon: 'datasheet',
+  },
+  {
+    title: 'Industry Brochure: Plastics',
+    description: 'How TMS 4SAP addresses the unique requirements of plastics manufacturers including mold management, cycle tracking, and material traceability.',
+    category: 'Brochures',
+    fileType: 'PDF',
+    icon: 'brochure',
+  },
+  {
+    title: 'Industry Brochure: Automotive',
+    description: 'TMS solutions for automotive suppliers covering IATF 16949 compliance, serial number tracking, EDI integration, and just-in-time delivery.',
+    category: 'Brochures',
+    fileType: 'PDF',
+    icon: 'brochure',
+  },
+  {
+    title: 'SAP Business One Integration Guide',
+    description: 'Technical whitepaper describing the deep, native integration between TMS modules and SAP Business One, including data flows and API architecture.',
+    category: 'Whitepapers',
+    fileType: 'PDF',
+    icon: 'whitepaper',
+  },
+  {
+    title: 'ROI of Manufacturing ERP',
+    description: 'Business case analysis for investing in a manufacturing ERP extension, with benchmarks from real TMS implementations across industries.',
+    category: 'Whitepapers',
+    fileType: 'PDF',
+    icon: 'whitepaper',
+  },
+  {
+    title: 'Implementation Methodology Guide',
+    description: 'What to expect during a TMS rollout: project phases, timelines, resource requirements, and best practices for a successful go-live.',
+    category: 'Whitepapers',
+    fileType: 'PDF',
+    icon: 'whitepaper',
+  },
+];
+---
+
+<BaseLayout
+  title="Downloads | TMS 4SAP"
+  description="Download brochures, datasheets, and whitepapers about TMS 4SAP manufacturing modules and SAP Business One integration."
+>
+  <HeroInner
+    breadcrumbs={[
+      { label: 'Home', href: '/' },
+      { label: 'Downloads', href: '/downloads' },
+    ]}
+    tag="Resources"
+    title="Download"
+    titleAccent="Center"
+    description="Brochures, datasheets, and resources for your evaluation"
+  />
+
+  <!-- Category filter -->
+  <section class="filter-section">
+    <div class="container">
+      <div class="filter-bar" role="tablist" aria-label="Filter downloads by category">
+        {categories.map((cat) => (
+          <button
+            class:list={['filter-pill', { 'filter-pill--active': cat === 'All' }]}
+            role="tab"
+            aria-selected={cat === 'All' ? 'true' : 'false'}
+            data-category={cat.toLowerCase()}
+          >
+            {cat}
+          </button>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Downloads grid -->
+  <section class="downloads-listing section">
+    <div class="container">
+      <div class="downloads-grid" role="tabpanel" aria-label="Downloadable resources">
+        {downloads.map((item) => (
+          <article
+            class="download-card"
+            data-download-category={item.category.toLowerCase()}
+            data-animate
+          >
+            <div class="download-icon-box" aria-hidden="true">
+              {item.icon === 'brochure' && (
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20" />
+                </svg>
+              )}
+              {item.icon === 'datasheet' && (
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                  <polyline points="14 2 14 8 20 8" />
+                  <line x1="16" y1="13" x2="8" y2="13" />
+                  <line x1="16" y1="17" x2="8" y2="17" />
+                  <polyline points="10 9 9 9 8 9" />
+                </svg>
+              )}
+              {item.icon === 'whitepaper' && (
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" />
+                  <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
+                </svg>
+              )}
+            </div>
+            <div class="download-content">
+              <h3 class="download-title">{item.title}</h3>
+              <p class="download-desc">{item.description}</p>
+            </div>
+            <div class="download-footer">
+              <span class="download-badge">{item.fileType}</span>
+              <a
+                href="#"
+                class="btn btn-ghost btn-sm download-btn"
+                data-file={item.title.toLowerCase().replace(/[\s:]+/g, '-')}
+                aria-label={`Download ${item.title}`}
+              >
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                  <polyline points="7 10 12 15 17 10" />
+                  <line x1="12" y1="15" x2="12" y2="3" />
+                </svg>
+                Download
+              </a>
+            </div>
+          </article>
+        ))}
+      </div>
+
+      <!-- Empty state -->
+      <div class="downloads-empty" aria-live="polite" hidden>
+        <p class="downloads-empty-text">No resources found in this category.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Email capture -->
+  <section class="notify-section section">
+    <div class="container">
+      <div class="notify-card" data-animate>
+        <div class="notify-icon" aria-hidden="true">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+            <polyline points="22,6 12,13 2,6" />
+          </svg>
+        </div>
+        <h2 class="notify-title">Get notified about new resources</h2>
+        <p class="notify-desc">We publish new brochures, datasheets, and whitepapers regularly. Enter your email to stay informed.</p>
+        <form class="notify-form" aria-label="Email notification signup">
+          <div class="notify-input-group">
+            <label for="notify-email" class="sr-only">Email address</label>
+            <input
+              type="email"
+              id="notify-email"
+              name="email"
+              placeholder="your.email@company.com"
+              required
+              autocomplete="email"
+            />
+            <button type="submit" class="btn btn-primary">Subscribe</button>
+          </div>
+          <p class="notify-disclaimer">No spam. Unsubscribe anytime. We respect your privacy.</p>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <CTABanner
+    title="Need a personalized"
+    titleAccent="walkthrough?"
+    description="Book a free 1-hour demo with our manufacturing ERP experts and see TMS 4SAP in action for your specific use case."
+    primaryCTA={{ label: 'Book a Demo', href: '/demo' }}
+    secondaryCTA={{ label: 'Contact Sales', href: '/contact' }}
+  />
+</BaseLayout>
+
+<script>
+  function initDownloadFilter() {
+    const pills = document.querySelectorAll<HTMLButtonElement>('.filter-pill');
+    const items = document.querySelectorAll<HTMLElement>('[data-download-category]');
+    const emptyState = document.querySelector<HTMLDivElement>('.downloads-empty');
+
+    pills.forEach((pill) => {
+      pill.addEventListener('click', () => {
+        pills.forEach((p) => {
+          p.classList.remove('filter-pill--active');
+          p.setAttribute('aria-selected', 'false');
+        });
+        pill.classList.add('filter-pill--active');
+        pill.setAttribute('aria-selected', 'true');
+
+        const category = pill.dataset.category;
+        let visibleCount = 0;
+
+        items.forEach((item) => {
+          if (category === 'all' || item.dataset.downloadCategory === category) {
+            item.style.display = '';
+            visibleCount++;
+          } else {
+            item.style.display = 'none';
+          }
+        });
+
+        if (emptyState) {
+          emptyState.hidden = visibleCount > 0;
+        }
+      });
+    });
+  }
+
+  initDownloadFilter();
+  document.addEventListener('astro:page-load', initDownloadFilter);
+</script>
+
+<style>
+  /* ---- Filter bar ---- */
+  .filter-section {
+    padding-bottom: 0;
+  }
+
+  .filter-bar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .filter-pill {
+    display: inline-flex;
+    align-items: center;
+    padding: 8px 20px;
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    cursor: pointer;
+    transition: all 0.2s var(--ease);
+    white-space: nowrap;
+  }
+
+  .filter-pill:hover {
+    color: var(--text);
+    border-color: var(--border-hover);
+    background: rgba(255, 255, 255, 0.03);
+  }
+
+  .filter-pill--active {
+    background: var(--amber);
+    color: #09090B;
+    border-color: var(--amber);
+    font-weight: 600;
+  }
+
+  .filter-pill--active:hover {
+    background: var(--amber-hover);
+    border-color: var(--amber-hover);
+    color: #09090B;
+  }
+
+  /* ---- Downloads grid ---- */
+  .downloads-listing {
+    padding-top: clamp(2rem, 4vw, 3rem);
+  }
+
+  .downloads-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+
+  .download-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    transition: all 0.3s var(--ease);
+  }
+
+  .download-card:hover {
+    background: var(--bg-card-hover);
+    border-color: var(--border-hover);
+    transform: translateY(-2px);
+  }
+
+  .download-icon-box {
+    width: 52px;
+    height: 52px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--amber-dim);
+    border-radius: var(--radius-sm);
+    color: var(--amber);
+    flex-shrink: 0;
+  }
+
+  .download-content {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .download-title {
+    font-family: var(--font-heading);
+    font-size: 1.0625rem;
+    font-weight: 600;
+    line-height: 1.3;
+    color: var(--text);
+  }
+
+  .download-desc {
+    font-size: 0.9375rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+
+  .download-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding-top: 8px;
+    border-top: 1px solid var(--border);
+    margin-top: auto;
+  }
+
+  .download-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 3px 10px;
+    font-size: 0.6875rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--amber);
+    background: var(--amber-dim);
+    border-radius: 100px;
+  }
+
+  .download-btn {
+    flex-shrink: 0;
+  }
+
+  /* ---- Empty state ---- */
+  .downloads-empty {
+    text-align: center;
+    padding: 4rem 0;
+  }
+
+  .downloads-empty-text {
+    font-size: 1.0625rem;
+    color: var(--text-dim);
+  }
+
+  /* ---- Notify section ---- */
+  .notify-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-xl);
+    padding: clamp(2rem, 4vw, 3.5rem);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .notify-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 15%;
+    right: 15%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent 0%, var(--amber) 50%, transparent 100%);
+    opacity: 0.3;
+  }
+
+  .notify-icon {
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--amber-dim);
+    border-radius: var(--radius);
+    color: var(--amber);
+  }
+
+  .notify-title {
+    font-family: var(--font-heading);
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+  }
+
+  .notify-desc {
+    font-size: 1rem;
+    color: var(--text-muted);
+    line-height: 1.7;
+    max-width: 520px;
+  }
+
+  .notify-form {
+    width: 100%;
+    max-width: 480px;
+    margin-top: 8px;
+  }
+
+  .notify-input-group {
+    display: flex;
+    gap: 8px;
+  }
+
+  .notify-input-group input {
+    flex: 1;
+    padding: 12px 16px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    font-size: 0.9375rem;
+    color: var(--text);
+    outline: none;
+    transition: border-color 0.2s var(--ease);
+  }
+
+  .notify-input-group input::placeholder {
+    color: var(--text-dim);
+  }
+
+  .notify-input-group input:focus {
+    border-color: var(--amber);
+    box-shadow: 0 0 0 3px var(--amber-dim);
+  }
+
+  .notify-disclaimer {
+    font-size: 0.75rem;
+    color: var(--text-dim);
+    margin-top: 12px;
+  }
+
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+  }
+
+  /* ---- Stagger animations ---- */
+  .downloads-grid [data-animate]:nth-child(1) { transition-delay: 0ms; }
+  .downloads-grid [data-animate]:nth-child(2) { transition-delay: 80ms; }
+  .downloads-grid [data-animate]:nth-child(3) { transition-delay: 160ms; }
+  .downloads-grid [data-animate]:nth-child(4) { transition-delay: 240ms; }
+  .downloads-grid [data-animate]:nth-child(5) { transition-delay: 320ms; }
+  .downloads-grid [data-animate]:nth-child(6) { transition-delay: 400ms; }
+  .downloads-grid [data-animate]:nth-child(7) { transition-delay: 480ms; }
+  .downloads-grid [data-animate]:nth-child(8) { transition-delay: 560ms; }
+  .downloads-grid [data-animate]:nth-child(9) { transition-delay: 640ms; }
+
+  /* ---- Responsive ---- */
+
+  /* Tablet (768px) */
+  @media (max-width: 768px) {
+    .downloads-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+
+    .downloads-listing {
+      padding-top: clamp(1.5rem, 6vw, 2.5rem);
+    }
+
+    .download-card {
+      padding: 24px;
+    }
+
+    .notify-card {
+      padding: clamp(1.5rem, 4vw, 2.5rem);
+    }
+  }
+
+  /* iPhone (375px - 430px) */
+  @media (max-width: 480px) {
+    .downloads-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .filter-bar {
+      gap: 6px;
+    }
+
+    .filter-pill {
+      padding: 8px 16px;
+      font-size: 0.8125rem;
+      min-height: 44px;
+    }
+
+    .download-card {
+      padding: 20px;
+    }
+
+    .download-btn {
+      min-height: 44px;
+      padding: 8px 16px;
+    }
+
+    .notify-input-group {
+      flex-direction: column;
+    }
+
+    .notify-input-group input {
+      font-size: 16px; /* prevent iOS zoom */
+      min-height: 44px;
+    }
+
+    .notify-input-group .btn {
+      width: 100%;
+      justify-content: center;
+      min-height: 44px;
+    }
+  }
+</style>

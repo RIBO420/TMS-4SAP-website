@@ -1,0 +1,888 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/global/Breadcrumbs.astro';
+import SectionHeader from '../../components/ui/SectionHeader.astro';
+import StatBar from '../../components/ui/StatBar.astro';
+import CTABanner from '../../components/ui/CTABanner.astro';
+import PlaceholderImage from '../../components/ui/PlaceholderImage.astro';
+import { modules as allModules } from '../../data/modules';
+
+/* ===================================================================
+   Industry Data
+   =================================================================== */
+
+interface IndustryChallenge {
+  title: string;
+  description: string;
+}
+
+interface IndustryCapability {
+  title: string;
+  description: string;
+}
+
+interface IndustryStat {
+  value: string;
+  label: string;
+}
+
+interface IndustryData {
+  slug: string;
+  title: string;
+  tagline: string;
+  metaDescription: string;
+  intro: string;
+  challenges: IndustryChallenge[];
+  relevantModuleSlugs: string[];
+  capabilities: IndustryCapability[];
+  stats: IndustryStat[];
+  ctaTitle: string;
+  ctaTitleAccent: string;
+  ctaDescription: string;
+}
+
+const industriesData: IndustryData[] = [
+  {
+    slug: 'kunststof',
+    title: 'ERP for Plastics Manufacturing',
+    tagline: 'From injection molding to extrusion \u2014 full production control',
+    metaDescription:
+      'TMS provides plastics manufacturers with complete ERP including mold lifecycle management, multi-cavity planning, batch traceability, and machine integration for injection molding and extrusion.',
+    intro:
+      'Plastics manufacturing demands a level of process control that generic ERP systems simply cannot deliver. From managing hundreds of molds across multiple injection molding machines to tracking multi-cavity production output and maintaining full batch traceability through complex material flows, the industry requires purpose-built tools. TMS gives plastics manufacturers the digital foundation to control every aspect of production \u2014 from raw material intake through finished goods shipment.',
+    challenges: [
+      {
+        title: 'Complex Mold Management',
+        description:
+          'Tracking hundreds of molds across multiple machines, monitoring cavity status, shot counts, maintenance schedules, and tooling costs requires a system built for the complexity of plastics production.',
+      },
+      {
+        title: 'Multi-Cavity Production Planning',
+        description:
+          'Planning production across multi-cavity tools with varying cycle times, changeover requirements, and coupled production orders demands intelligent scheduling that understands plastics-specific constraints.',
+      },
+      {
+        title: 'Material Traceability & Batch Control',
+        description:
+          'Maintaining complete traceability from raw resin lots through blending, drying, and molding to finished parts is critical for quality assurance and customer compliance requirements.',
+      },
+      {
+        title: 'Machine Integration',
+        description:
+          'Connecting injection molding machines, extruders, and peripheral equipment to capture cycle data, shot weights, process parameters, and alarm conditions in real time.',
+      },
+    ],
+    relevantModuleSlugs: ['pps', 'aps', 'mes', 'pdc', 'qm', 'pdm'],
+    capabilities: [
+      {
+        title: 'Mold Lifecycle Management',
+        description:
+          'Track every mold from commissioning to retirement. Monitor shot counts, schedule preventive maintenance based on cycle thresholds, log repairs, and allocate tooling costs to production orders. TMS maintains a complete history for every tool in your shop.',
+      },
+      {
+        title: 'Coupled Production Order Handling',
+        description:
+          'Manage multi-cavity molds that produce different parts simultaneously. TMS automatically creates coupled production orders, splits output by cavity, and tracks scrap per cavity position \u2014 giving you accurate per-part costing and yield analysis.',
+      },
+      {
+        title: 'Machine Interface for Injection Molding',
+        description:
+          'Connect directly to your injection molding equipment via standardized interfaces (Euromap 63/77, OPC-UA). Capture cycle times, shot weights, process parameters, and machine status in real time for full production transparency.',
+      },
+      {
+        title: 'Multi-Level Batch Traceability',
+        description:
+          'Trace materials forward from raw resin receipt through blending, masterbatch addition, and production to finished goods. Trace backward from any finished part to identify every material lot used. Complete traceability in seconds, not hours.',
+      },
+      {
+        title: 'Scrap Analysis by Defect Type',
+        description:
+          'Categorize and analyze scrap by defect type \u2014 flash, short shots, sink marks, warpage, and more. Correlate defect rates with machine parameters, material lots, and operator shifts to identify root causes and drive continuous improvement.',
+      },
+      {
+        title: 'Color and Material Change Management',
+        description:
+          'Optimize production sequences to minimize color and material changeovers. TMS considers purge requirements, drying times, and contamination risks when scheduling, reducing waste and maximizing machine uptime.',
+      },
+    ],
+    stats: [
+      { value: '100%', label: 'Traceability' },
+      { value: 'Real-time', label: 'OEE Monitoring' },
+      { value: 'Automated', label: 'Planning' },
+      { value: 'SAP', label: 'Integrated' },
+    ],
+    ctaTitle: 'Ready to digitalize your',
+    ctaTitleAccent: 'plastics production?',
+    ctaDescription:
+      'See how TMS handles mold management, coupled orders, and batch traceability for plastics manufacturers. Book a personalized demo.',
+  },
+  {
+    slug: 'automotive',
+    title: 'ERP for Automotive Suppliers',
+    tagline: 'Meet the demands of series production and OEM requirements',
+    metaDescription:
+      'TMS delivers automotive supplier ERP with IATF 16949 compliance, EDI integration, call-off scheduling, SPC, and complete lot and batch traceability for recalls.',
+    intro:
+      'Automotive suppliers operate under intense pressure: demanding OEM customers, strict quality standards, tight delivery windows, and zero tolerance for production failures. IATF 16949 compliance is not optional, and the ability to respond to recall inquiries within hours can determine whether you keep your contracts. TMS provides automotive suppliers with the integrated production management platform needed to meet these demands while maintaining profitability.',
+    challenges: [
+      {
+        title: 'IATF 16949 Compliance',
+        description:
+          'Meeting the rigorous quality management system requirements of IATF 16949 demands documented processes, controlled records, statistical process control, and continuous improvement workflows built into your daily operations.',
+      },
+      {
+        title: 'EDI Communication with OEMs',
+        description:
+          'Automotive OEMs expect electronic data interchange for forecasts, call-offs, delivery schedules, and invoicing. Manual processing is not an option when you receive hundreds of EDI messages daily.',
+      },
+      {
+        title: 'Call-Off Scheduling & JIT Delivery',
+        description:
+          'Managing fluctuating call-off schedules, just-in-time delivery requirements, and consignment stock agreements requires planning systems that can react to daily schedule changes without disrupting production.',
+      },
+      {
+        title: 'Full Batch Traceability for Recalls',
+        description:
+          'When an OEM issues a recall, you need to identify every affected lot, every delivery, and every customer within hours \u2014 not days. Incomplete traceability puts your entire supplier status at risk.',
+      },
+    ],
+    relevantModuleSlugs: ['pps', 'aps', 'mes', 'pdc', 'qm', 'bi'],
+    capabilities: [
+      {
+        title: 'EDI Integration for Automated Order Processing',
+        description:
+          'Process incoming EDI messages (DELFOR, DELJIT, DESADV) automatically. TMS converts OEM forecasts and call-offs into production orders, updates delivery schedules, and generates ASN and invoice documents \u2014 reducing manual data entry to near zero.',
+      },
+      {
+        title: 'IATF 16949 Quality Management Workflows',
+        description:
+          'Built-in workflows support APQP, PPAP, Control Plans, FMEA tracking, and 8D problem-solving. TMS maintains the documented evidence trail that auditors require, with automatic reminders for calibration, reviews, and corrective actions.',
+      },
+      {
+        title: 'Call Scheduling and Delivery Management',
+        description:
+          'Manage complex call-off structures with multiple delivery dates per order line. TMS synchronizes call-off schedules with production planning, calculates required capacity and materials, and generates shipping documents aligned to each delivery window.',
+      },
+      {
+        title: 'Statistical Process Control (SPC)',
+        description:
+          'Monitor critical-to-quality characteristics in real time with built-in SPC charting. TMS calculates Cp, Cpk, and process capability indices automatically, triggers alerts when processes drift, and documents everything for customer audits.',
+      },
+      {
+        title: 'Complete Lot and Batch Traceability',
+        description:
+          'Trace any finished part back through every production step, material lot, machine, operator, and quality inspection. Forward trace from any raw material to every affected delivery. Generate recall reports in minutes, covering the complete supply chain.',
+      },
+    ],
+    stats: [
+      { value: 'IATF 16949', label: 'Ready' },
+      { value: 'EDI', label: 'Integrated' },
+      { value: 'Full', label: 'Traceability' },
+      { value: 'SPC', label: 'Built-in' },
+    ],
+    ctaTitle: 'Ready to meet OEM demands',
+    ctaTitleAccent: 'with confidence?',
+    ctaDescription:
+      'Discover how TMS supports automotive suppliers with EDI, IATF 16949 compliance, and real-time production visibility. Schedule your demo today.',
+  },
+  {
+    slug: 'metaalbewerking',
+    title: 'ERP for Metal Working & Machining',
+    tagline: 'Precision planning for CNC, turning, and milling operations',
+    metaDescription:
+      'TMS provides metal working ERP with multi-operation routing, tool lifecycle tracking, CNC data collection, real-time job costing, and capacity optimization for machining operations.',
+    intro:
+      'Metal working and machining operations face a unique planning challenge: every job can involve dozens of operations across different machine types, each with its own setup times, tooling requirements, and capacity constraints. Accurate quoting depends on knowing your true costs, and profitability hinges on keeping expensive CNC equipment running at optimal utilization. TMS gives metal working shops the precision planning and real-time visibility needed to run a profitable operation.',
+    challenges: [
+      {
+        title: 'Complex Multi-Operation Routing',
+        description:
+          'A single part may require turning, milling, drilling, grinding, heat treatment, and surface finishing \u2014 each with specific machine requirements, setup times, and sequencing constraints that make scheduling extremely complex.',
+      },
+      {
+        title: 'Tool and Fixture Management',
+        description:
+          'Keeping track of cutting tools, inserts, fixtures, and gauges across multiple machines and jobs \u2014 including wear tracking, regrinding schedules, and replacement ordering \u2014 is a constant operational challenge.',
+      },
+      {
+        title: 'Capacity Planning Across Machine Groups',
+        description:
+          'Balancing workload across CNC lathes, milling centers, grinding machines, and external operations while accounting for setup times, batch sizes, and due dates requires sophisticated planning tools.',
+      },
+      {
+        title: 'Job Costing Accuracy',
+        description:
+          'Without accurate time tracking per operation and real-time material consumption data, job costing becomes guesswork \u2014 leading to underpriced quotes and eroded margins on complex multi-operation work.',
+      },
+    ],
+    relevantModuleSlugs: ['pps', 'aps', 'mes', 'pdc', 'qm', 'bi'],
+    capabilities: [
+      {
+        title: 'Multi-Operation Routing Management',
+        description:
+          'Define complex routings with unlimited operations, alternative machines, parallel processing steps, and external operations. TMS handles operation dependencies, overlap allowances, and minimum transfer quantities to accurately model your real production flow.',
+      },
+      {
+        title: 'Tool and Fixture Lifecycle Tracking',
+        description:
+          'Track every cutting tool, insert, fixture, and gauge in your shop. Monitor tool wear against expected life, schedule regrinding and replacements, and automatically include tooling costs in job calculations. Know exactly where every tool is and when it needs attention.',
+      },
+      {
+        title: 'CNC Machine Data Collection',
+        description:
+          'Connect to your CNC machines to capture run times, setup times, part counts, and machine states automatically. Eliminate manual time recording, improve data accuracy, and get real-time visibility into machine utilization and OEE across your entire shop floor.',
+      },
+      {
+        title: 'Real-Time Job Costing',
+        description:
+          'See actual costs accumulate against estimated costs as each operation completes. TMS tracks labor hours, machine time, material consumption, tooling costs, and external operations in real time \u2014 giving you accurate margin visibility before the job ships.',
+      },
+      {
+        title: 'Capacity Optimization Across Machine Groups',
+        description:
+          'Visualize and optimize capacity loading across all machine groups with interactive Gantt charts. TMS considers setup times, batch splitting, alternative machines, and due date priorities to maximize throughput and on-time delivery.',
+      },
+    ],
+    stats: [
+      { value: 'Multi-Op', label: 'Routing' },
+      { value: 'Real-time', label: 'Costing' },
+      { value: 'Machine', label: 'Connected' },
+      { value: 'Capacity', label: 'Optimized' },
+    ],
+    ctaTitle: 'Ready for precision',
+    ctaTitleAccent: 'production planning?',
+    ctaDescription:
+      'See how TMS handles multi-operation routing, real-time job costing, and capacity planning for metal working shops. Request your demo.',
+  },
+  {
+    slug: 'elektronica',
+    title: 'ERP for Electronics Manufacturing',
+    tagline: 'From PCB assembly to final testing \u2014 integrated production control',
+    metaDescription:
+      'TMS delivers electronics manufacturing ERP with multi-part number management, BOM import from CAD/EDA, component traceability at reel level, and SMT pick-and-place integration.',
+    intro:
+      'Electronics manufacturing combines high component variety with strict traceability requirements and rapid technology cycles. A single PCB assembly can contain hundreds of components from dozens of suppliers, each with multiple approved alternatives. Managing this complexity \u2014 from BOM import through SMT placement, soldering, testing, and final assembly \u2014 requires an ERP system that understands the electronics industry. TMS provides that specialized foundation.',
+    challenges: [
+      {
+        title: 'Multi-Manufacturer Part Numbers',
+        description:
+          'A single component position on a BOM may have approved parts from three or more manufacturers, each with different part numbers, packaging, and lead times. Managing these alternatives across hundreds of components is a daily challenge.',
+      },
+      {
+        title: 'BOM Import from CAD/EDA Tools',
+        description:
+          'Engineering creates BOMs in Altium Designer, KiCad, or similar EDA tools. Manually re-entering these into your ERP system is error-prone and time-consuming, especially when designs change frequently during prototyping.',
+      },
+      {
+        title: 'Component Traceability at Reel/Spool Level',
+        description:
+          'Customers and regulations increasingly require traceability to the individual reel or spool level. Generic batch tracking is insufficient when you need to know exactly which reel was loaded on which feeder for a specific production run.',
+      },
+      {
+        title: 'SMT Pick-and-Place Integration',
+        description:
+          'Connecting your SMT lines to your ERP \u2014 sharing feeder setups, verifying component loading, and capturing placement data \u2014 is essential for quality and traceability but rarely supported by generic manufacturing systems.',
+      },
+    ],
+    relevantModuleSlugs: ['pps', 'aps', 'mes', 'pdc', 'qm', 'pdm'],
+    capabilities: [
+      {
+        title: 'Multi-Part Number Management per Component',
+        description:
+          'Define multiple approved manufacturers and part numbers for each component position. TMS automatically considers availability, pricing, and lead times across all alternatives when planning material requirements, ensuring you always have the best sourcing option.',
+      },
+      {
+        title: 'BOM Import from Altium, KiCad, and Excel',
+        description:
+          'Import BOMs directly from your EDA tools with intelligent mapping of component designators, values, and footprints to your TMS master data. Handle design revisions with automated BOM comparison that highlights changes for engineering review.',
+      },
+      {
+        title: 'Pick-and-Place Machine Integration',
+        description:
+          'Connect your SMT pick-and-place equipment to TMS for feeder setup verification, component consumption tracking, and placement data capture. Prevent wrong-component loading errors and maintain complete traceability from reel to board position.',
+      },
+      {
+        title: 'Reel and Spool-Level Traceability',
+        description:
+          'Track components at the individual reel and spool level through receiving, storage, kitting, placement, and assembly. Know exactly which reels were consumed on each production order and trace any component issue back to its source.',
+      },
+      {
+        title: 'MOQ and Lead Time Management',
+        description:
+          'Handle minimum order quantities, packaging units, and varying lead times across multiple suppliers and manufacturers. TMS optimizes purchasing by consolidating demand, respecting MOQ constraints, and balancing inventory investment against production needs.',
+      },
+      {
+        title: 'Test Result Integration',
+        description:
+          'Capture ICT, functional test, and AOI results directly in TMS. Link test outcomes to individual serial numbers or batch identifiers, track first-pass yield by product and production line, and generate the test documentation your customers require.',
+      },
+    ],
+    stats: [
+      { value: 'BOM', label: 'Integration' },
+      { value: 'Component', label: 'Tracing' },
+      { value: 'Multi-Source', label: 'Parts' },
+      { value: 'SMT', label: 'Connected' },
+    ],
+    ctaTitle: 'Ready to streamline your',
+    ctaTitleAccent: 'electronics production?',
+    ctaDescription:
+      'Discover how TMS manages component complexity, BOM imports, and reel-level traceability for electronics manufacturers. Book your demo.',
+  },
+];
+
+/* ===================================================================
+   Static Paths
+   =================================================================== */
+
+export function getStaticPaths() {
+  return [
+    { params: { slug: 'kunststof' } },
+    { params: { slug: 'automotive' } },
+    { params: { slug: 'metaalbewerking' } },
+    { params: { slug: 'elektronica' } },
+  ];
+}
+
+/* ===================================================================
+   Page Data
+   =================================================================== */
+
+const { slug } = Astro.params;
+const industry = industriesData.find((i) => i.slug === slug);
+
+if (!industry) {
+  return Astro.redirect('/industries');
+}
+
+const relevantModules = allModules.filter((m) =>
+  industry.relevantModuleSlugs.includes(m.slug)
+);
+
+// Friendly display name for breadcrumbs
+const displayNames: Record<string, string> = {
+  kunststof: 'Plastics Manufacturing',
+  automotive: 'Automotive Suppliers',
+  metaalbewerking: 'Metal Working & Machining',
+  elektronica: 'Electronics Manufacturing',
+};
+
+const displayName = displayNames[slug!] || industry.title;
+---
+
+<BaseLayout
+  title={`${industry.title} | TMS 4SAP`}
+  description={industry.metaDescription}
+>
+  <!-- Hero -->
+  <section class="ind-hero">
+    <div class="ind-hero-bg" aria-hidden="true"></div>
+    <div class="container">
+      <div class="breadcrumbs-wrap">
+        <Breadcrumbs
+          items={[
+            { label: 'Industries', href: '/industries' },
+            { label: displayName, href: `/industries/${slug}` },
+          ]}
+        />
+      </div>
+      <div class="ind-hero-content" data-animate>
+        <span class="section-tag">Industry Solution</span>
+        <h1 class="ind-hero-title">{industry.title}</h1>
+        <p class="ind-hero-tagline">{industry.tagline}</p>
+        <p class="ind-hero-intro">{industry.intro}</p>
+        <div class="ind-hero-actions">
+          <a href="/demo" class="btn btn-primary btn-lg">Book a Demo</a>
+          <a href="/contact" class="btn btn-ghost btn-lg">Contact Sales</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top: 0; padding-bottom: 0;">
+    <div class="container">
+      <PlaceholderImage aspect="16:9" label="Industry-specific manufacturing" />
+    </div>
+  </section>
+
+  <!-- Challenges -->
+  <section class="section">
+    <div class="container">
+      <SectionHeader
+        tag="Challenges"
+        title="The problems"
+        titleAccent="you face"
+        description="These are the specific challenges that make generic ERP systems fall short in your industry. TMS was designed to address each one."
+      />
+      <div class="challenges-grid">
+        {industry.challenges.map((challenge, idx) => (
+          <div class="challenge-card" data-animate>
+            <span class="challenge-number">{String(idx + 1).padStart(2, '0')}</span>
+            <h3 class="challenge-title">{challenge.title}</h3>
+            <p class="challenge-desc">{challenge.description}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Relevant Modules -->
+  <section class="section section-modules-bg">
+    <div class="container">
+      <SectionHeader
+        tag="How TMS Solves It"
+        title="The right modules for"
+        titleAccent="your production"
+        description="TMS provides a modular platform. Here are the modules most relevant to your industry, each purpose-built for manufacturing operations."
+      />
+      <div class="modules-grid">
+        {relevantModules.map((mod) => (
+          <a href={`/modules/${mod.slug}`} class="rel-module-card" data-animate>
+            <div class="rel-module-icon">
+              <span class="rel-module-abbr">{mod.abbr}</span>
+            </div>
+            <div class="rel-module-body">
+              <h3 class="rel-module-name">{mod.name}</h3>
+              <p class="rel-module-desc">{mod.description}</p>
+              <span class="rel-module-link">
+                Learn more <span aria-hidden="true">&rarr;</span>
+              </span>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Stats Bar -->
+  <StatBar stats={industry.stats} />
+
+  <!-- Key Capabilities -->
+  <section class="section">
+    <div class="container">
+      <SectionHeader
+        tag="Key Capabilities"
+        title="Built for"
+        titleAccent="your workflows"
+        description="Detailed capabilities that address the specific requirements of your manufacturing environment."
+      />
+      <div class="capabilities-list">
+        {industry.capabilities.map((cap, idx) => (
+          <div class="capability-item" data-animate>
+            <div class="capability-marker">
+              <span class="capability-index">{String(idx + 1).padStart(2, '0')}</span>
+              {idx < industry.capabilities.length - 1 && (
+                <div class="capability-line" aria-hidden="true"></div>
+              )}
+            </div>
+            <div class="capability-content">
+              <h3 class="capability-title">{cap.title}</h3>
+              <p class="capability-desc">{cap.description}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <CTABanner
+    title={industry.ctaTitle}
+    titleAccent={industry.ctaTitleAccent}
+    description={industry.ctaDescription}
+    primaryCTA={{ label: 'Book a Demo', href: '/demo' }}
+    secondaryCTA={{ label: 'Download Brochure', href: '/downloads' }}
+  />
+</BaseLayout>
+
+<style>
+  /* ============================================
+     HERO
+     ============================================ */
+  .ind-hero {
+    position: relative;
+    padding-top: clamp(7rem, 12vw, 10rem);
+    padding-bottom: clamp(3rem, 6vw, 5rem);
+    overflow: hidden;
+  }
+
+  .ind-hero-bg {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+      ellipse 70% 50% at 50% 0%,
+      rgba(245, 158, 11, 0.04) 0%,
+      transparent 70%
+    );
+    pointer-events: none;
+  }
+
+  /* Subtle dot grid */
+  .ind-hero-bg::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(circle, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    background-size: 32px 32px;
+    -webkit-mask-image: radial-gradient(ellipse 60% 50% at 50% 30%, black 10%, transparent 60%);
+    mask-image: radial-gradient(ellipse 60% 50% at 50% 30%, black 10%, transparent 60%);
+  }
+
+  .breadcrumbs-wrap {
+    position: relative;
+    z-index: 1;
+  }
+
+  .ind-hero-content {
+    position: relative;
+    z-index: 1;
+    max-width: 740px;
+  }
+
+  .ind-hero-title {
+    font-size: clamp(2.25rem, 5vw, 3.5rem);
+    font-weight: 700;
+    line-height: 1.08;
+    letter-spacing: -0.03em;
+    margin-top: 12px;
+  }
+
+  .ind-hero-tagline {
+    font-size: clamp(1.0625rem, 1.5vw, 1.1875rem);
+    color: var(--amber);
+    font-weight: 500;
+    margin-top: 16px;
+    line-height: 1.5;
+  }
+
+  .ind-hero-intro {
+    font-size: clamp(0.9375rem, 1.2vw, 1rem);
+    color: var(--text-muted);
+    line-height: 1.7;
+    margin-top: 20px;
+    max-width: 640px;
+  }
+
+  .ind-hero-actions {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-top: 32px;
+  }
+
+  /* ============================================
+     CHALLENGES
+     ============================================ */
+  .challenges-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+
+  .challenge-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    transition: all 0.3s var(--ease);
+  }
+
+  .challenge-card:hover {
+    background: var(--bg-card-hover);
+    border-color: var(--border-hover);
+  }
+
+  .challenge-number {
+    font-family: var(--font-heading);
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: var(--amber);
+    letter-spacing: 0.04em;
+  }
+
+  .challenge-title {
+    font-family: var(--font-heading);
+    font-size: 1.125rem;
+    font-weight: 600;
+    line-height: 1.3;
+    letter-spacing: -0.01em;
+  }
+
+  .challenge-desc {
+    font-size: 0.9375rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+
+  /* Tablet (768px) — Challenges */
+  @media (max-width: 768px) {
+    .challenges-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+
+    .challenge-card {
+      padding: 24px;
+    }
+  }
+
+  /* iPhone (375px - 430px) — Challenges */
+  @media (max-width: 480px) {
+    .challenges-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .challenge-card {
+      padding: 20px;
+    }
+
+    .ind-hero {
+      padding-top: clamp(5rem, 10vw, 7rem);
+      padding-bottom: clamp(2rem, 5vw, 3rem);
+    }
+
+    .ind-hero-actions {
+      flex-direction: column;
+      width: 100%;
+    }
+
+    .ind-hero-actions .btn {
+      min-height: 44px;
+      width: 100%;
+      justify-content: center;
+      text-align: center;
+    }
+  }
+
+  /* ============================================
+     RELEVANT MODULES
+     ============================================ */
+  .section-modules-bg {
+    background: var(--bg-surface);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .modules-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+
+  .rel-module-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 24px;
+    display: flex;
+    gap: 16px;
+    transition: all 0.3s var(--ease);
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .rel-module-card:hover {
+    background: var(--bg-card-hover);
+    border-color: var(--border-hover);
+    transform: translateY(-2px);
+  }
+
+  .rel-module-icon {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--amber-dim);
+    border-radius: var(--radius-sm);
+    flex-shrink: 0;
+  }
+
+  .rel-module-abbr {
+    font-family: var(--font-heading);
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--amber);
+    letter-spacing: 0.06em;
+  }
+
+  .rel-module-body {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-width: 0;
+  }
+
+  .rel-module-name {
+    font-family: var(--font-heading);
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 1.3;
+    letter-spacing: -0.01em;
+  }
+
+  .rel-module-desc {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .rel-module-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: var(--amber);
+    margin-top: 4px;
+    transition: gap 0.2s var(--ease);
+  }
+
+  .rel-module-card:hover .rel-module-link {
+    gap: 10px;
+  }
+
+  /* Tablet (768px) — Modules grid */
+  @media (max-width: 768px) {
+    .modules-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .rel-module-card {
+      padding: 20px;
+    }
+  }
+
+  /* iPhone (375px - 430px) — Modules grid */
+  @media (max-width: 480px) {
+    .modules-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .rel-module-card {
+      flex-direction: column;
+      padding: 16px;
+    }
+
+    .rel-module-link {
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+    }
+  }
+
+  /* ============================================
+     CAPABILITIES
+     ============================================ */
+  .capabilities-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .capability-item {
+    display: flex;
+    gap: 24px;
+    align-items: stretch;
+  }
+
+  .capability-marker {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-shrink: 0;
+    width: 40px;
+  }
+
+  .capability-index {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background: var(--amber-dim);
+    border: 1px solid rgba(245, 158, 11, 0.2);
+    border-radius: 50%;
+    font-family: var(--font-heading);
+    font-size: 0.8125rem;
+    font-weight: 700;
+    color: var(--amber);
+    flex-shrink: 0;
+  }
+
+  .capability-line {
+    width: 1px;
+    flex-grow: 1;
+    background: var(--border);
+    margin: 8px 0;
+  }
+
+  .capability-content {
+    padding-bottom: 40px;
+    padding-top: 6px;
+  }
+
+  .capability-item:last-child .capability-content {
+    padding-bottom: 0;
+  }
+
+  .capability-title {
+    font-family: var(--font-heading);
+    font-size: 1.125rem;
+    font-weight: 600;
+    line-height: 1.3;
+    letter-spacing: -0.01em;
+    margin-bottom: 8px;
+  }
+
+  .capability-desc {
+    font-size: 0.9375rem;
+    color: var(--text-muted);
+    line-height: 1.7;
+  }
+
+  /* Tablet (768px) — Capabilities */
+  @media (max-width: 768px) {
+    .capability-content {
+      padding-bottom: 32px;
+    }
+  }
+
+  /* iPhone (375px - 430px) — Capabilities */
+  @media (max-width: 480px) {
+    .capability-item {
+      gap: 16px;
+    }
+
+    .capability-content {
+      padding-bottom: 28px;
+    }
+
+    .capability-marker {
+      width: 32px;
+    }
+
+    .capability-index {
+      width: 32px;
+      height: 32px;
+      font-size: 0.75rem;
+    }
+
+    .capability-title {
+      font-size: 1rem;
+    }
+
+    .capability-desc {
+      font-size: 0.875rem;
+    }
+  }
+</style>

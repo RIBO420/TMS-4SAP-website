@@ -1,0 +1,378 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import HeroInner from '../../../components/ui/HeroInner.astro';
+import CTABanner from '../../../components/ui/CTABanner.astro';
+
+const categories = ['Alle', 'Product', 'Branche', 'Engineering', 'Bedrijf'] as const;
+
+const posts = [
+  {
+    slug: 'what-is-mes-manufacturing-execution-system',
+    title: 'Wat is MES? Een complete gids voor Manufacturing Execution Systems',
+    description:
+      'Ontdek wat een Manufacturing Execution System (MES) doet, waarom het belangrijk is voor moderne fabrieken en hoe het de kloof overbrugt tussen ERP-planning en de realiteit op de werkvloer.',
+    date: '2026-02-15',
+    author: 'TMS Redactie',
+    category: 'Product',
+    categoryLabel: 'Product',
+  },
+  {
+    slug: 'iatf-16949-erp-automotive',
+    title: 'Hoe ERP-software IATF 16949 compliance ondersteunt in de automotive',
+    description:
+      'Ontdek hoe geïntegreerde ERP-systemen automotiveproducenten helpen bij het naleven van IATF 16949 door traceerbaarheid, kwaliteitsmanagement en auditklare documentatie.',
+    date: '2026-01-20',
+    author: 'TMS Redactie',
+    category: 'Branche',
+    categoryLabel: 'Branche',
+  },
+  {
+    slug: 'industry-4-0-sap-business-one',
+    title: 'Industrie 4.0 en SAP Business One: de brug slaan met TMS',
+    description:
+      'Ontdek hoe TMS-modules SAP Business One transformeren tot een volledig Industrie 4.0-platform met real-time dataregistratie, geavanceerde analytics en slimme productiemogelijkheden.',
+    date: '2026-03-01',
+    author: 'TMS Redactie',
+    category: 'Engineering',
+    categoryLabel: 'Engineering',
+  },
+];
+
+// Map Dutch category labels to lowercase filter keys
+const categoryFilterMap: Record<string, string> = {
+  'Alle': 'all',
+  'Product': 'product',
+  'Branche': 'branche',
+  'Engineering': 'engineering',
+  'Bedrijf': 'bedrijf',
+};
+
+const formattedDate = (date: string) =>
+  new Date(date).toLocaleDateString('nl-NL', {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
+  });
+---
+
+<BaseLayout
+  lang="nl"
+  title="Blog | TMS 4SAP"
+  description="Vakartikelen over ERP, productieplanning, MES en Industrie 4.0 voor productieprofessionals."
+>
+  <HeroInner
+    breadcrumbs={[
+      { label: 'Home', href: '/nl' },
+      { label: 'Blog', href: '/nl/blog' },
+    ]}
+    tag="Blog"
+    title="Productie"
+    titleAccent="inzichten"
+    description="Vakartikelen over ERP, productieplanning en Industrie 4.0"
+  />
+
+  <!-- Category filter -->
+  <section class="filter-section">
+    <div class="container">
+      <div class="filter-bar" role="tablist" aria-label="Filter blogberichten op categorie">
+        {categories.map((cat) => (
+          <button
+            class:list={['filter-pill', { 'filter-pill--active': cat === 'Alle' }]}
+            role="tab"
+            aria-selected={cat === 'Alle' ? 'true' : 'false'}
+            data-category={categoryFilterMap[cat]}
+          >
+            {cat}
+          </button>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Blog grid -->
+  <section class="blog-listing section">
+    <div class="container">
+      <div class="blog-grid" role="tabpanel" aria-label="Blogberichten">
+        {posts.map((post) => (
+          <div class="blog-grid-item" data-post-category={categoryFilterMap[post.category]}>
+            <article class="blog-card" data-animate>
+              <div class="blog-card-content">
+                <div class="blog-card-meta">
+                  <span class="blog-card-category">{post.categoryLabel}</span>
+                  <span class="blog-card-dot" aria-hidden="true"></span>
+                  <time class="blog-card-date" datetime={post.date}>{formattedDate(post.date)}</time>
+                </div>
+                <h3 class="blog-card-title">
+                  <a href={`/nl/blog/${post.slug}`}>{post.title}</a>
+                </h3>
+                <p class="blog-card-desc">{post.description}</p>
+                <div class="blog-card-footer">
+                  <span class="blog-card-author">{post.author}</span>
+                  <a href={`/nl/blog/${post.slug}`} class="blog-card-link" aria-label={`Lees meer over ${post.title}`}>
+                    Lees meer <span aria-hidden="true">&rarr;</span>
+                  </a>
+                </div>
+              </div>
+            </article>
+          </div>
+        ))}
+      </div>
+
+      <!-- Empty state for filtered results -->
+      <div class="blog-empty" aria-live="polite" hidden>
+        <p class="blog-empty-text">Geen artikelen gevonden in deze categorie.</p>
+      </div>
+    </div>
+  </section>
+
+  <CTABanner
+    title="Klaar om uw productie te"
+    titleAccent="moderniseren?"
+    description="Boek een gratis demo van 1 uur met onze experts en ontdek hoe TMS 4SAP uw productievloer kan transformeren."
+    primaryCTA={{ label: 'Demo aanvragen', href: '/nl/demo' }}
+    secondaryCTA={{ label: 'Brochure downloaden', href: '/nl/downloads' }}
+  />
+</BaseLayout>
+
+<script>
+  function initBlogFilter() {
+    const pills = document.querySelectorAll<HTMLButtonElement>('.filter-pill');
+    const items = document.querySelectorAll<HTMLDivElement>('.blog-grid-item');
+    const emptyState = document.querySelector<HTMLDivElement>('.blog-empty');
+
+    pills.forEach((pill) => {
+      pill.addEventListener('click', () => {
+        // Update active state
+        pills.forEach((p) => {
+          p.classList.remove('filter-pill--active');
+          p.setAttribute('aria-selected', 'false');
+        });
+        pill.classList.add('filter-pill--active');
+        pill.setAttribute('aria-selected', 'true');
+
+        const category = pill.dataset.category;
+        let visibleCount = 0;
+
+        items.forEach((item) => {
+          if (category === 'all' || item.dataset.postCategory === category) {
+            item.style.display = '';
+            visibleCount++;
+          } else {
+            item.style.display = 'none';
+          }
+        });
+
+        // Toggle empty state
+        if (emptyState) {
+          emptyState.hidden = visibleCount > 0;
+        }
+      });
+    });
+  }
+
+  initBlogFilter();
+  document.addEventListener('astro:page-load', initBlogFilter);
+</script>
+
+<style>
+  /* ---- Filter bar ---- */
+  .filter-section {
+    padding-bottom: 0;
+  }
+
+  .filter-bar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .filter-pill {
+    display: inline-flex;
+    align-items: center;
+    padding: 8px 20px;
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    cursor: pointer;
+    transition: all 0.2s var(--ease);
+    white-space: nowrap;
+  }
+
+  .filter-pill:hover {
+    color: var(--text);
+    border-color: var(--border-hover);
+    background: rgba(255, 255, 255, 0.03);
+  }
+
+  .filter-pill--active {
+    background: var(--amber);
+    color: #09090B;
+    border-color: var(--amber);
+    font-weight: 600;
+  }
+
+  .filter-pill--active:hover {
+    background: var(--amber-hover);
+    border-color: var(--amber-hover);
+    color: #09090B;
+  }
+
+  /* ---- Blog grid ---- */
+  .blog-listing {
+    padding-top: clamp(2rem, 4vw, 3rem);
+  }
+
+  .blog-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+
+  /* ---- Blog Card (inline) ---- */
+  .blog-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    transition: all 0.3s var(--ease);
+  }
+
+  .blog-card:hover {
+    background: var(--bg-card-hover);
+    border-color: var(--border-hover);
+    transform: translateY(-2px);
+  }
+
+  .blog-card-content {
+    padding: 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .blog-card-meta {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.8125rem;
+  }
+
+  .blog-card-category {
+    display: inline-block;
+    padding: 3px 10px;
+    background: var(--amber-dim);
+    border: 1px solid rgba(245, 158, 11, 0.15);
+    border-radius: 100px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--amber);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .blog-card-dot {
+    width: 3px;
+    height: 3px;
+    background: var(--text-dim);
+    border-radius: 50%;
+  }
+
+  .blog-card-date {
+    color: var(--text-dim);
+    font-size: 0.8125rem;
+  }
+
+  .blog-card-title {
+    font-family: var(--font-heading);
+    font-size: 1.125rem;
+    font-weight: 600;
+    line-height: 1.3;
+    letter-spacing: -0.01em;
+  }
+
+  .blog-card-title a {
+    color: var(--text);
+    text-decoration: none;
+    transition: color 0.2s var(--ease);
+  }
+
+  .blog-card-title a:hover {
+    color: var(--amber);
+  }
+
+  .blog-card-desc {
+    font-size: 0.9375rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+    flex-grow: 1;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .blog-card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 4px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+  }
+
+  .blog-card-author {
+    font-size: 0.8125rem;
+    color: var(--text-dim);
+  }
+
+  .blog-card-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--amber);
+    transition: gap 0.2s var(--ease);
+  }
+
+  .blog-card-link:hover {
+    gap: 10px;
+  }
+
+  @media (max-width: 960px) {
+    .blog-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 640px) {
+    .blog-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .filter-bar {
+      gap: 6px;
+    }
+
+    .filter-pill {
+      padding: 6px 16px;
+      font-size: 0.8125rem;
+    }
+  }
+
+  /* ---- Empty state ---- */
+  .blog-empty {
+    text-align: center;
+    padding: 4rem 0;
+  }
+
+  .blog-empty-text {
+    font-size: 1.0625rem;
+    color: var(--text-dim);
+  }
+</style>

@@ -3,10 +3,11 @@ import BaseLayout from '@layouts/BaseLayout.astro';
 import HeroInner from '@components/ui/HeroInner.astro';
 import SectionHeader from '@components/ui/SectionHeader.astro';
 import CTABanner from '@components/ui/CTABanner.astro';
+import { withBase } from '../../i18n/utils';
 
 const breadcrumbs = [
-  { label: 'Startseite', href: '/de' },
-  { label: 'Integrationen', href: '/de/integrations' },
+  { label: 'Startseite', href: withBase('/de') },
+  { label: 'Integrationen', href: withBase('/de/integrations') },
 ];
 
 type BadgeType = 'Native' | 'Certified' | 'Compatible';
@@ -192,7 +193,7 @@ const categories: IntegrationCategory[] = [
               industriellen Protokollen, APIs und Datenformaten, die in der diskreten und Prozessfertigung verwendet werden.
             </p>
           </div>
-          <a href="/de/contact" class="btn btn-primary btn-lg">Unser Team kontaktieren</a>
+          <a href={withBase('/de/contact')} class="btn btn-primary btn-lg">Unser Team kontaktieren</a>
         </div>
       </div>
     </div>
@@ -203,8 +204,8 @@ const categories: IntegrationCategory[] = [
     title="TMS-Integrationen"
     titleAccent="in Aktion sehen"
     description="Buchen Sie eine Demo, um zu sehen, wie TMS Ihre bestehenden SAP-, CAD- und Shopfloor-Systeme in einer einheitlichen Fertigungsplattform verbindet."
-    primaryCTA={{ label: 'Demo buchen', href: '/de/demo' }}
-    secondaryCTA={{ label: 'Broschüre herunterladen', href: '/de/downloads' }}
+    primaryCTA={{ label: 'Demo buchen', href: withBase('/de/demo') }}
+    secondaryCTA={{ label: 'Broschüre herunterladen', href: withBase('/de/downloads') }}
   />
 </BaseLayout>
 

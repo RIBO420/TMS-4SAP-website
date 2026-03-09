@@ -3,6 +3,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
 import Breadcrumbs from '../../../components/global/Breadcrumbs.astro';
 import SectionHeader from '../../../components/ui/SectionHeader.astro';
 import CTABanner from '../../../components/ui/CTABanner.astro';
+import { withBase } from '../../../i18n/utils';
 
 const industries = [
   {
@@ -81,7 +82,7 @@ const industries = [
       />
       <div class="industry-overview-grid">
         {industries.map((ind) => (
-          <a href={`/nl/industries/${ind.slug}`} class="ind-card" data-animate>
+          <a href={withBase(`/nl/industries/${ind.slug}`)} class="ind-card" data-animate>
             <span class="ind-tagline">{ind.tagline}</span>
             <h3 class="ind-title">{ind.name}</h3>
             <p class="ind-desc">{ind.description}</p>

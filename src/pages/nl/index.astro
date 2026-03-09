@@ -11,6 +11,7 @@ import { industries } from '../../data/industries';
 import { heroStats } from '../../data/stats';
 import { testimonials } from '../../data/testimonials';
 import { clients } from '../../data/clients';
+import { withBase } from '../../i18n/utils';
 
 const previewModules = modules.slice(0, 5);
 
@@ -47,14 +48,14 @@ const featureIcons = {
         business intelligence.
       </p>
       <div class="hero-actions" data-animate>
-        <a href="/nl/modules" class="btn btn-primary btn-lg">
+        <a href={withBase('/nl/modules')} class="btn btn-primary btn-lg">
           Bekijk modules
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M5 12h14" />
             <path d="m12 5 7 7-7 7" />
           </svg>
         </a>
-        <a href="/nl/contact" class="btn btn-ghost btn-lg">Neem contact op</a>
+        <a href={withBase('/nl/contact')} class="btn btn-ghost btn-lg">Neem contact op</a>
       </div>
     </div>
     <StatBar stats={heroStats} />
@@ -139,14 +140,14 @@ const featureIcons = {
             <span class="module-abbr">{mod.abbr}</span>
             <h3>{mod.title}</h3>
             <p>{mod.tagline}</p>
-            <a href={`/nl/modules/${mod.slug}`} class="module-link" aria-label={`Meer informatie over ${mod.title}`}>
+            <a href={withBase(`/nl/modules/${mod.slug}`)} class="module-link" aria-label={`Meer informatie over ${mod.title}`}>
               Meer informatie <span aria-hidden="true">&rarr;</span>
             </a>
           </div>
         ))}
       </div>
       <div class="modules-cta" data-animate>
-        <a href="/nl/modules" class="btn btn-ghost">
+        <a href={withBase('/nl/modules')} class="btn btn-ghost">
           Bekijk alle 9 modules
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M5 12h14" />
@@ -201,8 +202,8 @@ const featureIcons = {
     title="Klaar om uw"
     titleAccent="productie te transformeren?"
     description="Plan een persoonlijke demo met onze productie-experts en ontdek hoe TMS integreert met uw SAP Business One omgeving."
-    primaryCTA={{ label: "Demo aanvragen", href: "/nl/demo" }}
-    secondaryCTA={{ label: "Neem contact op", href: "/nl/contact" }}
+    primaryCTA={{ label: "Demo aanvragen", href: withBase("/nl/demo") }}
+    secondaryCTA={{ label: "Neem contact op", href: withBase("/nl/contact") }}
   />
 </BaseLayout>
 

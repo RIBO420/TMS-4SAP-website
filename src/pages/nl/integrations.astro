@@ -3,10 +3,11 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import HeroInner from '../../components/ui/HeroInner.astro';
 import SectionHeader from '../../components/ui/SectionHeader.astro';
 import CTABanner from '../../components/ui/CTABanner.astro';
+import { withBase } from '../../i18n/utils';
 
 const breadcrumbs = [
-  { label: 'Home', href: '/nl' },
-  { label: 'Integraties', href: '/nl/integrations' },
+  { label: 'Home', href: withBase('/nl') },
+  { label: 'Integraties', href: withBase('/nl/integrations') },
 ];
 
 type BadgeType = 'Native' | 'Certified' | 'Compatible';
@@ -192,7 +193,7 @@ const categories: IntegrationCategory[] = [
               protocollen, API's en dataformaten die worden gebruikt in discrete en procesmatige productie.
             </p>
           </div>
-          <a href="/nl/contact" class="btn btn-primary btn-lg">Neem Contact Op</a>
+          <a href={withBase('/nl/contact')} class="btn btn-primary btn-lg">Neem Contact Op</a>
         </div>
       </div>
     </div>
@@ -203,8 +204,8 @@ const categories: IntegrationCategory[] = [
     title="Bekijk TMS-integraties"
     titleAccent="in actie"
     description="Boek een demo om te zien hoe TMS verbindt met uw bestaande SAP-, CAD- en shopfloorsystemen in een ge\u00efntegreerd productieplatform."
-    primaryCTA={{ label: 'Boek een Demo', href: '/nl/demo' }}
-    secondaryCTA={{ label: 'Download Brochure', href: '/nl/downloads' }}
+    primaryCTA={{ label: 'Boek een Demo', href: withBase('/nl/demo') }}
+    secondaryCTA={{ label: 'Download Brochure', href: withBase('/nl/downloads') }}
   />
 </BaseLayout>
 

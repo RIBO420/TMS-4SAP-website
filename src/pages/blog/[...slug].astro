@@ -3,6 +3,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import BlogPostCard from '../../components/cards/BlogPostCard.astro';
 import SectionHeader from '../../components/ui/SectionHeader.astro';
 import CTABanner from '../../components/ui/CTABanner.astro';
+import { withBase } from '../../i18n/utils';
 
 interface BlogPost {
   slug: string;
@@ -260,11 +261,11 @@ const readingTime = Math.max(1, Math.ceil(wordCount / 200));
       <nav class="breadcrumbs" aria-label="Breadcrumb">
         <ol>
           <li>
-            <a href="/">Home</a>
+            <a href={withBase('/')}>Home</a>
             <span class="breadcrumb-sep" aria-hidden="true">/</span>
           </li>
           <li>
-            <a href="/blog">Blog</a>
+            <a href={withBase('/blog')}>Blog</a>
             <span class="breadcrumb-sep" aria-hidden="true">/</span>
           </li>
           <li>

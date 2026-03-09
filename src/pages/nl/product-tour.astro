@@ -2,6 +2,7 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import HeroInner from '../../components/ui/HeroInner.astro';
 import CTABanner from '../../components/ui/CTABanner.astro';
+import { withBase } from '../../i18n/utils';
 
 const stops = [
   {
@@ -152,8 +153,8 @@ const stops = [
 >
   <HeroInner
     breadcrumbs={[
-      { label: 'Home', href: '/nl' },
-      { label: 'Product Tour', href: '/nl/product-tour' },
+      { label: 'Home', href: withBase('/nl') },
+      { label: 'Product Tour', href: withBase('/nl/product-tour') },
     ]}
     tag="Interactieve Tour"
     title="Neem de"
@@ -228,7 +229,7 @@ const stops = [
           <p class="tour-final-desc">
             U hebt de volledige TMS-suite verkend. Laat nu onze experts u door een gepersonaliseerde demo leiden met uw eigen productiescenario's.
           </p>
-          <a href="/nl/demo" class="btn btn-primary btn-lg">
+          <a href={withBase('/nl/demo')} class="btn btn-primary btn-lg">
             Boek een Gepersonaliseerde Demo
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <line x1="5" y1="12" x2="19" y2="12" />
@@ -244,8 +245,8 @@ const stops = [
     title="Transformeer uw"
     titleAccent="productie"
     description="Boek een gratis demo van 1 uur met onze experts en ontdek hoe TMS 4SAP uw productievloer kan moderniseren."
-    primaryCTA={{ label: 'Boek een Demo', href: '/nl/demo' }}
-    secondaryCTA={{ label: 'Download Brochure', href: '/nl/downloads' }}
+    primaryCTA={{ label: 'Boek een Demo', href: withBase('/nl/demo') }}
+    secondaryCTA={{ label: 'Download Brochure', href: withBase('/nl/downloads') }}
   />
 </BaseLayout>
 

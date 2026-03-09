@@ -2,6 +2,7 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import HeroInner from '../../components/ui/HeroInner.astro';
 import CTABanner from '../../components/ui/CTABanner.astro';
+import { withBase } from '../../i18n/utils';
 ---
 
 <BaseLayout
@@ -12,8 +13,8 @@ import CTABanner from '../../components/ui/CTABanner.astro';
   <!-- Hero -->
   <HeroInner
     breadcrumbs={[
-      { label: 'Home', href: '/nl' },
-      { label: 'Contact', href: '/nl/contact' },
+      { label: 'Home', href: withBase('/nl') },
+      { label: 'Contact', href: withBase('/nl/contact') },
     ]}
     tag="Contact"
     title="Neem Contact Op"
@@ -146,7 +147,7 @@ import CTABanner from '../../components/ui/CTABanner.astro';
 
             <p class="form-privacy">
               Door dit formulier te verzenden, gaat u akkoord met ons
-              <a href="/nl/legal/privacy">Privacybeleid</a>. Wij gebruiken uw gegevens
+              <a href={withBase('/nl/legal/privacy')}>Privacybeleid</a>. Wij gebruiken uw gegevens
               uitsluitend om op uw aanvraag te reageren.
             </p>
           </form>
@@ -179,7 +180,7 @@ import CTABanner from '../../components/ui/CTABanner.astro';
     title="Liever een live demo?"
     titleAccent="Boek een gratis presentatie"
     description="Bekijk TMS 4SAP in actie met een gepersonaliseerde online demonstratie begeleid door onze productie-experts. Vrijblijvend en kosteloos."
-    primaryCTA={{ label: 'Demo aanvragen', href: '/nl/demo' }}
+    primaryCTA={{ label: 'Demo aanvragen', href: withBase('/nl/demo') }}
     secondaryCTA={{ label: 'Bel ons nu', href: 'tel:+31432340050' }}
   />
 </BaseLayout>

@@ -2,6 +2,7 @@
 import BaseLayout from '@layouts/BaseLayout.astro';
 import CTABanner from '@components/ui/CTABanner.astro';
 import '@styles/utilities.css';
+import { withBase } from '../../../i18n/utils';
 
 const title = 'Datenschutzerklärung';
 const lastUpdated = '2026-03-01';
@@ -19,9 +20,9 @@ const formattedDate = new Date(lastUpdated).toLocaleDateString('de-DE', {
 >
   <!-- Breadcrumbs -->
   <nav class="container breadcrumbs" aria-label="Breadcrumb">
-    <a href="/de">Startseite</a>
+    <a href={withBase('/de')}>Startseite</a>
     <span class="breadcrumbs-separator" aria-hidden="true">/</span>
-    <a href="/de/legal/privacy">Recht</a>
+    <a href={withBase('/de/legal/privacy')}>Recht</a>
     <span class="breadcrumbs-separator" aria-hidden="true">/</span>
     <span class="breadcrumbs-current" aria-current="page">{title}</span>
   </nav>
@@ -284,8 +285,8 @@ const formattedDate = new Date(lastUpdated).toLocaleDateString('de-DE', {
     title="Fragen zu unseren"
     titleAccent="Datenschutzpraktiken?"
     description="Unser Team beantwortet gerne alle Fragen zum Umgang mit Ihren personenbezogenen Daten. Kontaktieren Sie uns direkt."
-    primaryCTA={{ label: 'Kontakt aufnehmen', href: '/de/contact' }}
-    secondaryCTA={{ label: 'Zur Startseite', href: '/de' }}
+    primaryCTA={{ label: 'Kontakt aufnehmen', href: withBase('/de/contact') }}
+    secondaryCTA={{ label: 'Zur Startseite', href: withBase('/de') }}
   />
 </BaseLayout>
 

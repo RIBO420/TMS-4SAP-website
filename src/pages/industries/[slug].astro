@@ -6,6 +6,7 @@ import StatBar from '../../components/ui/StatBar.astro';
 import CTABanner from '../../components/ui/CTABanner.astro';
 import PlaceholderImage from '../../components/ui/PlaceholderImage.astro';
 import { modules as allModules } from '../../data/modules';
+import { withBase } from '../../i18n/utils';
 
 /* ===================================================================
    Industry Data
@@ -351,7 +352,7 @@ const { slug } = Astro.params;
 const industry = industriesData.find((i) => i.slug === slug);
 
 if (!industry) {
-  return Astro.redirect('/industries');
+  return Astro.redirect(withBase('/industries'));
 }
 
 const relevantModules = allModules.filter((m) =>
@@ -380,8 +381,8 @@ const displayName = displayNames[slug!] || industry.title;
       <div class="breadcrumbs-wrap">
         <Breadcrumbs
           items={[
-            { label: 'Industries', href: '/industries' },
-            { label: displayName, href: `/industries/${slug}` },
+            { label: 'Industries', href: withBase('/industries') },
+            { label: displayName, href: withBase(`/industries/${slug}`) },
           ]}
         />
       </div>
@@ -391,8 +392,8 @@ const displayName = displayNames[slug!] || industry.title;
         <p class="ind-hero-tagline">{industry.tagline}</p>
         <p class="ind-hero-intro">{industry.intro}</p>
         <div class="ind-hero-actions">
-          <a href="/demo" class="btn btn-primary btn-lg">Book a Demo</a>
-          <a href="/contact" class="btn btn-ghost btn-lg">Contact Sales</a>
+          <a href={withBase('/demo')} class="btn btn-primary btn-lg">Book a Demo</a>
+          <a href={withBase('/contact')} class="btn btn-ghost btn-lg">Contact Sales</a>
         </div>
       </div>
     </div>
@@ -436,7 +437,7 @@ const displayName = displayNames[slug!] || industry.title;
       />
       <div class="modules-grid">
         {relevantModules.map((mod) => (
-          <a href={`/modules/${mod.slug}`} class="rel-module-card" data-animate>
+          <a href={withBase(`/modules/${mod.slug}`)} class="rel-module-card" data-animate>
             <div class="rel-module-icon">
               <span class="rel-module-abbr">{mod.abbr}</span>
             </div>
@@ -489,8 +490,8 @@ const displayName = displayNames[slug!] || industry.title;
     title={industry.ctaTitle}
     titleAccent={industry.ctaTitleAccent}
     description={industry.ctaDescription}
-    primaryCTA={{ label: 'Book a Demo', href: '/demo' }}
-    secondaryCTA={{ label: 'Download Brochure', href: '/downloads' }}
+    primaryCTA={{ label: 'Book a Demo', href: withBase('/demo') }}
+    secondaryCTA={{ label: 'Download Brochure', href: withBase('/downloads') }}
   />
 </BaseLayout>
 

@@ -2,6 +2,7 @@
 import { modules } from "@data/modules";
 import ModuleCard from "@components/cards/ModuleCard.astro";
 import SectionHeader from "@components/ui/SectionHeader.astro";
+import { withBase } from "../../i18n/utils";
 
 const previewModules = modules.slice(0, 5);
 ---
@@ -24,7 +25,7 @@ const previewModules = modules.slice(0, 5);
     </div>
 
     <div class="modules-preview-footer" data-animate>
-      <a href="/modules" class="modules-view-all">
+      <a href={withBase('/modules')} class="modules-view-all">
         View all modules
         <svg
           width="16"

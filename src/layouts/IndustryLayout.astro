@@ -5,6 +5,7 @@ import CTABanner from '@components/ui/CTABanner.astro';
 import ModuleCard from '@components/cards/ModuleCard.astro';
 import StatBar from '@components/ui/StatBar.astro';
 import { modules as allModules } from '@data/modules';
+import { withBase } from '../i18n/utils';
 import '@styles/utilities.css';
 
 export interface Props {
@@ -29,9 +30,9 @@ const {
 <BaseLayout title={`${title} | Industries | The Manufacturing Suite`} description={description}>
   <!-- Breadcrumbs -->
   <nav class="container breadcrumbs" aria-label="Breadcrumb">
-    <a href="/">Home</a>
+    <a href={withBase('/')}>Home</a>
     <span class="breadcrumbs-separator" aria-hidden="true">/</span>
-    <a href="/industries">Industries</a>
+    <a href={withBase('/industries')}>Industries</a>
     <span class="breadcrumbs-separator" aria-hidden="true">/</span>
     <span class="breadcrumbs-current" aria-current="page">{title}</span>
   </nav>

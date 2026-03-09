@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '@layouts/BaseLayout.astro';
 import CTABanner from '@components/ui/CTABanner.astro';
+import { withBase } from '../../i18n/utils';
 import '@styles/utilities.css';
 
 const title = 'Impressum';
@@ -18,9 +19,9 @@ const formattedDate = new Date(lastUpdated).toLocaleDateString('en-GB', {
 >
   <!-- Breadcrumbs -->
   <nav class="container breadcrumbs" aria-label="Breadcrumb">
-    <a href="/">Home</a>
+    <a href={withBase('/')}>Home</a>
     <span class="breadcrumbs-separator" aria-hidden="true">/</span>
-    <a href="/legal/impressum">Legal</a>
+    <a href={withBase('/legal/impressum')}>Legal</a>
     <span class="breadcrumbs-separator" aria-hidden="true">/</span>
     <span class="breadcrumbs-current" aria-current="page">{title}</span>
   </nav>

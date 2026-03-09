@@ -2,6 +2,7 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import HeroInner from '../../components/ui/HeroInner.astro';
 import CTABanner from '../../components/ui/CTABanner.astro';
+import { withBase } from '../../i18n/utils';
 ---
 
 <BaseLayout
@@ -12,8 +13,8 @@ import CTABanner from '../../components/ui/CTABanner.astro';
   <!-- Hero -->
   <HeroInner
     breadcrumbs={[
-      { label: 'Startseite', href: '/de/' },
-      { label: 'Kontakt', href: '/de/contact' },
+      { label: 'Startseite', href: withBase('/de/') },
+      { label: 'Kontakt', href: withBase('/de/contact') },
     ]}
     tag="Kontakt"
     title="Kontaktieren Sie uns"
@@ -146,7 +147,7 @@ import CTABanner from '../../components/ui/CTABanner.astro';
 
             <p class="form-privacy">
               Mit dem Absenden dieses Formulars stimmen Sie unserer
-              <a href="/de/legal/privacy">Datenschutzerklärung</a> zu. Wir verwenden Ihre
+              <a href={withBase('/de/legal/privacy')}>Datenschutzerklärung</a> zu. Wir verwenden Ihre
               Daten ausschließlich zur Beantwortung Ihrer Anfrage.
             </p>
           </form>
@@ -179,7 +180,7 @@ import CTABanner from '../../components/ui/CTABanner.astro';
     title="Lieber eine Live-Demo?"
     titleAccent="Kostenlose Präsentation buchen"
     description="Erleben Sie TMS 4SAP in Aktion mit einer persönlichen Online-Demonstration, geleitet von unseren Fertigungsexperten. Unverbindlich und kostenfrei."
-    primaryCTA={{ label: 'Demo buchen', href: '/de/demo' }}
+    primaryCTA={{ label: 'Demo buchen', href: withBase('/de/demo') }}
     secondaryCTA={{ label: 'Jetzt anrufen', href: 'tel:+31432340050' }}
   />
 </BaseLayout>

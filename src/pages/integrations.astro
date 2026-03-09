@@ -3,10 +3,11 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import HeroInner from '../components/ui/HeroInner.astro';
 import SectionHeader from '../components/ui/SectionHeader.astro';
 import CTABanner from '../components/ui/CTABanner.astro';
+import { withBase } from '../i18n/utils';
 
 const breadcrumbs = [
-  { label: 'Home', href: '/' },
-  { label: 'Integrations', href: '/integrations' },
+  { label: 'Home', href: withBase('/') },
+  { label: 'Integrations', href: withBase('/integrations') },
 ];
 
 type BadgeType = 'Native' | 'Certified' | 'Compatible';
@@ -191,7 +192,7 @@ const categories: IntegrationCategory[] = [
               protocols, APIs, and data formats used in discrete and process manufacturing.
             </p>
           </div>
-          <a href="/contact" class="btn btn-primary btn-lg">Contact Our Team</a>
+          <a href={withBase('/contact')} class="btn btn-primary btn-lg">Contact Our Team</a>
         </div>
       </div>
     </div>
@@ -202,8 +203,8 @@ const categories: IntegrationCategory[] = [
     title="See TMS integrations"
     titleAccent="in action"
     description="Book a demo to see how TMS connects with your existing SAP, CAD, and shop floor systems in a unified manufacturing platform."
-    primaryCTA={{ label: 'Book a Demo', href: '/demo' }}
-    secondaryCTA={{ label: 'Download Brochure', href: '/downloads' }}
+    primaryCTA={{ label: 'Book a Demo', href: withBase('/demo') }}
+    secondaryCTA={{ label: 'Download Brochure', href: withBase('/downloads') }}
   />
 </BaseLayout>
 

@@ -6,6 +6,7 @@ import FeatureCard from '../../../components/cards/FeatureCard.astro';
 import ModuleCard from '../../../components/cards/ModuleCard.astro';
 import CTABanner from '../../../components/ui/CTABanner.astro';
 import { modules as dataModules } from '../../../data/modules';
+import { withBase } from '../../../i18n/utils';
 
 /* -------------------------------------------------------
    SVG Icons – keyed by the icon name from modules.ts
@@ -368,7 +369,7 @@ const breadcrumbs = [
             {sidebarModules.map((sm) => (
               <li>
                 <a
-                  href={`/de/modules/${sm.slug}`}
+                  href={withBase(`/de/modules/${sm.slug}`)}
                   class:list={['sidebar-link', { 'sidebar-link--active': sm.slug === slug }]}
                   aria-current={sm.slug === slug ? 'page' : undefined}
                 >

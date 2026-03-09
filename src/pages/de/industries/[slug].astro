@@ -5,6 +5,7 @@ import SectionHeader from '../../../components/ui/SectionHeader.astro';
 import StatBar from '../../../components/ui/StatBar.astro';
 import CTABanner from '../../../components/ui/CTABanner.astro';
 import { modules as allModules } from '../../../data/modules';
+import { withBase } from '../../../i18n/utils';
 
 /* ===================================================================
    Industry Data (German)
@@ -350,7 +351,7 @@ const { slug } = Astro.params;
 const industry = industriesData.find((i) => i.slug === slug);
 
 if (!industry) {
-  return Astro.redirect('/de/industries');
+  return Astro.redirect(withBase('/de/industries'));
 }
 
 const relevantModules = allModules.filter((m) =>
@@ -380,8 +381,8 @@ const displayName = displayNames[slug!] || industry.title;
       <div class="breadcrumbs-wrap">
         <Breadcrumbs
           items={[
-            { label: 'Branchen', href: '/de/industries' },
-            { label: displayName, href: `/de/industries/${slug}` },
+            { label: 'Branchen', href: withBase('/de/industries') },
+            { label: displayName, href: withBase(`/de/industries/${slug}`) },
           ]}
         />
       </div>
@@ -391,8 +392,8 @@ const displayName = displayNames[slug!] || industry.title;
         <p class="ind-hero-tagline">{industry.tagline}</p>
         <p class="ind-hero-intro">{industry.intro}</p>
         <div class="ind-hero-actions">
-          <a href="/de/demo" class="btn btn-primary btn-lg">Demo buchen</a>
-          <a href="/de/contact" class="btn btn-ghost btn-lg">Vertrieb kontaktieren</a>
+          <a href={withBase('/de/demo')} class="btn btn-primary btn-lg">Demo buchen</a>
+          <a href={withBase('/de/contact')} class="btn btn-ghost btn-lg">Vertrieb kontaktieren</a>
         </div>
       </div>
     </div>
@@ -430,7 +431,7 @@ const displayName = displayNames[slug!] || industry.title;
       />
       <div class="modules-grid">
         {relevantModules.map((mod) => (
-          <a href={`/de/modules/${mod.slug}`} class="rel-module-card" data-animate>
+          <a href={withBase(`/de/modules/${mod.slug}`)} class="rel-module-card" data-animate>
             <div class="rel-module-icon">
               <span class="rel-module-abbr">{mod.abbr}</span>
             </div>
@@ -483,8 +484,8 @@ const displayName = displayNames[slug!] || industry.title;
     title={industry.ctaTitle}
     titleAccent={industry.ctaTitleAccent}
     description={industry.ctaDescription}
-    primaryCTA={{ label: 'Demo buchen', href: '/de/demo' }}
-    secondaryCTA={{ label: 'Broschüre herunterladen', href: '/de/downloads' }}
+    primaryCTA={{ label: 'Demo buchen', href: withBase('/de/demo') }}
+    secondaryCTA={{ label: 'Broschüre herunterladen', href: withBase('/de/downloads') }}
   />
 </BaseLayout>
 

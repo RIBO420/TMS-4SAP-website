@@ -2,6 +2,7 @@
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import SectionHeader from '../../../components/ui/SectionHeader.astro';
 import CTABanner from '../../../components/ui/CTABanner.astro';
+import { withBase } from '../../../i18n/utils';
 
 interface BlogPost {
   slug: string;
@@ -233,7 +234,7 @@ const { slug } = Astro.params;
 const post = posts.find((p) => p.slug === slug);
 
 if (!post) {
-  return Astro.redirect('/nl/blog');
+  return Astro.redirect(withBase('/nl/blog'));
 }
 
 const relatedPosts = posts.filter((p) => p.slug !== slug);
@@ -260,11 +261,11 @@ const readingTime = Math.max(1, Math.ceil(wordCount / 200));
       <nav class="breadcrumbs" aria-label="Breadcrumb">
         <ol>
           <li>
-            <a href="/nl">Home</a>
+            <a href={withBase('/nl')}>Home</a>
             <span class="breadcrumb-sep" aria-hidden="true">/</span>
           </li>
           <li>
-            <a href="/nl/blog">Blog</a>
+            <a href={withBase('/nl/blog')}>Blog</a>
             <span class="breadcrumb-sep" aria-hidden="true">/</span>
           </li>
           <li>
@@ -341,12 +342,12 @@ const readingTime = Math.max(1, Math.ceil(wordCount / 200));
                   <time class="blog-card-date" datetime={relPost.date}>{relDate}</time>
                 </div>
                 <h3 class="blog-card-title">
-                  <a href={`/nl/blog/${relPost.slug}`}>{relPost.title}</a>
+                  <a href={withBase(`/nl/blog/${relPost.slug}`)}>{relPost.title}</a>
                 </h3>
                 <p class="blog-card-desc">{relPost.description}</p>
                 <div class="blog-card-footer">
                   <span class="blog-card-author">{relPost.author}</span>
-                  <a href={`/nl/blog/${relPost.slug}`} class="blog-card-link" aria-label={`Lees meer over ${relPost.title}`}>
+                  <a href={withBase(`/nl/blog/${relPost.slug}`)} class="blog-card-link" aria-label={`Lees meer over ${relPost.title}`}>
                     Lees meer <span aria-hidden="true">&rarr;</span>
                   </a>
                 </div>
@@ -362,8 +363,8 @@ const readingTime = Math.max(1, Math.ceil(wordCount / 200));
     title="Klaar om uw productie te"
     titleAccent="moderniseren?"
     description="Boek een gratis demo van 1 uur met onze experts en ontdek hoe TMS 4SAP uw productievloer kan transformeren."
-    primaryCTA={{ label: 'Demo aanvragen', href: '/nl/demo' }}
-    secondaryCTA={{ label: 'Brochure downloaden', href: '/nl/downloads' }}
+    primaryCTA={{ label: 'Demo aanvragen', href: withBase('/nl/demo') }}
+    secondaryCTA={{ label: 'Brochure downloaden', href: withBase('/nl/downloads') }}
   />
 </BaseLayout>
 

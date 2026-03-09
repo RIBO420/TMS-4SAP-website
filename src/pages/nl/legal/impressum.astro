@@ -2,6 +2,7 @@
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import CTABanner from '../../../components/ui/CTABanner.astro';
 import '../../../styles/utilities.css';
+import { withBase } from '../../../i18n/utils';
 
 const title = 'Impressum';
 const lastUpdated = '2026-03-01';
@@ -19,9 +20,9 @@ const formattedDate = new Date(lastUpdated).toLocaleDateString('nl-NL', {
 >
   <!-- Breadcrumbs -->
   <nav class="container breadcrumbs" aria-label="Broodkruimelpad">
-    <a href="/nl">Home</a>
+    <a href={withBase('/nl')}>Home</a>
     <span class="breadcrumbs-separator" aria-hidden="true">/</span>
-    <a href="/nl/legal/impressum">Juridisch</a>
+    <a href={withBase('/nl/legal/impressum')}>Juridisch</a>
     <span class="breadcrumbs-separator" aria-hidden="true">/</span>
     <span class="breadcrumbs-current" aria-current="page">{title}</span>
   </nav>
@@ -165,8 +166,8 @@ const formattedDate = new Date(lastUpdated).toLocaleDateString('nl-NL', {
     title="Meer weten over"
     titleAccent="TMS 4SAP?"
     description="Ontdek hoe onze productiesoftwareoplossingen uw productieprocessen kunnen stroomlijnen. Neem vandaag nog contact op met ons team."
-    primaryCTA={{ label: 'Neem Contact Op', href: '/nl/contact' }}
-    secondaryCTA={{ label: 'Bekijk Modules', href: '/nl/modules' }}
+    primaryCTA={{ label: 'Neem Contact Op', href: withBase('/nl/contact') }}
+    secondaryCTA={{ label: 'Bekijk Modules', href: withBase('/nl/modules') }}
   />
 </BaseLayout>
 

@@ -1,5 +1,6 @@
 ---
 import BaseLayout from './BaseLayout.astro';
+import { withBase } from '../i18n/utils';
 import '@styles/utilities.css';
 /* Breadcrumbs rendered inline below */
 
@@ -23,9 +24,9 @@ const formattedDate = lastUpdated
 <BaseLayout title={`${title} | The Manufacturing Suite`} description={title}>
   <!-- Breadcrumbs -->
   <nav class="container breadcrumbs" aria-label="Breadcrumb">
-    <a href="/">Home</a>
+    <a href={withBase('/')}>Home</a>
     <span class="breadcrumbs-separator" aria-hidden="true">/</span>
-    <a href="/legal">Legal</a>
+    <a href={withBase('/legal')}>Legal</a>
     <span class="breadcrumbs-separator" aria-hidden="true">/</span>
     <span class="breadcrumbs-current" aria-current="page">{title}</span>
   </nav>

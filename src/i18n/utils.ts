@@ -275,12 +275,19 @@ export function getLangFromUrl(url: URL): Lang {
   return defaultLang;
 }
 
+const base = import.meta.env.BASE_URL?.replace(/\/$/, '') ?? '';
+
 export function getLocalizedPath(path: string, lang: Lang): string {
-  if (lang === defaultLang) return path;
+  if (lang === defaultLang) return `${base}${path}`;
   // Strip any existing lang prefix first
   const cleaned = path.replace(/^\/(en|nl|de)(\/|$)/, '/');
-  if (cleaned === '/') return `/${lang}`;
-  return `/${lang}${cleaned}`;
+  if (cleaned === '/') return `${base}/${lang}`;
+  return `${base}/${lang}${cleaned}`;
+}
+
+/** Prefix a path with the configured base URL */
+export function withBase(path: string): string {
+  return `${base}${path}`;
 }
 
 export function t(lang: Lang, key: string): string {

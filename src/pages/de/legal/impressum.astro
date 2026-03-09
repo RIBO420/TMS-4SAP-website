@@ -2,6 +2,7 @@
 import BaseLayout from '@layouts/BaseLayout.astro';
 import CTABanner from '@components/ui/CTABanner.astro';
 import '@styles/utilities.css';
+import { withBase } from '../../../i18n/utils';
 
 const title = 'Impressum';
 const lastUpdated = '2026-03-01';
@@ -19,9 +20,9 @@ const formattedDate = new Date(lastUpdated).toLocaleDateString('de-DE', {
 >
   <!-- Breadcrumbs -->
   <nav class="container breadcrumbs" aria-label="Breadcrumb">
-    <a href="/de">Startseite</a>
+    <a href={withBase('/de')}>Startseite</a>
     <span class="breadcrumbs-separator" aria-hidden="true">/</span>
-    <a href="/de/legal/impressum">Recht</a>
+    <a href={withBase('/de/legal/impressum')}>Recht</a>
     <span class="breadcrumbs-separator" aria-hidden="true">/</span>
     <span class="breadcrumbs-current" aria-current="page">{title}</span>
   </nav>
@@ -168,8 +169,8 @@ const formattedDate = new Date(lastUpdated).toLocaleDateString('de-DE', {
     title="Möchten Sie mehr über"
     titleAccent="TMS 4SAP erfahren?"
     description="Entdecken Sie, wie unsere Fertigungssoftware-Lösungen Ihre Produktionsabläufe optimieren können. Nehmen Sie noch heute Kontakt mit unserem Team auf."
-    primaryCTA={{ label: 'Kontakt aufnehmen', href: '/de/contact' }}
-    secondaryCTA={{ label: 'Module ansehen', href: '/de/modules' }}
+    primaryCTA={{ label: 'Kontakt aufnehmen', href: withBase('/de/contact') }}
+    secondaryCTA={{ label: 'Module ansehen', href: withBase('/de/modules') }}
   />
 </BaseLayout>
 

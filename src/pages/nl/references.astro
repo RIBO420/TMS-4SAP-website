@@ -4,6 +4,7 @@ import HeroInner from '@components/ui/HeroInner.astro';
 import StatBar from '@components/ui/StatBar.astro';
 import SectionHeader from '@components/ui/SectionHeader.astro';
 import CTABanner from '@components/ui/CTABanner.astro';
+import { withBase } from '../../i18n/utils';
 
 const breadcrumbs = [
   { label: 'Home', href: '/nl' },
@@ -158,7 +159,7 @@ const countryFlags: Record<string, string> = {
             </blockquote>
             <div class="reference-modules">
               {ref.modules.map((mod) => (
-                <a href={`/nl/modules/${mod.toLowerCase()}`} class="module-tag">{mod}</a>
+                <a href={withBase(`/nl/modules/${mod.toLowerCase()}`)} class="module-tag">{mod}</a>
               ))}
             </div>
           </article>

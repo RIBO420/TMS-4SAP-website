@@ -2,6 +2,7 @@
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import SectionHeader from '../../../components/ui/SectionHeader.astro';
 import CTABanner from '../../../components/ui/CTABanner.astro';
+import { withBase } from '../../../i18n/utils';
 
 interface BlogPost {
   slug: string;
@@ -233,7 +234,7 @@ const { slug } = Astro.params;
 const post = posts.find((p) => p.slug === slug);
 
 if (!post) {
-  return Astro.redirect('/de/blog');
+  return Astro.redirect(withBase('/de/blog'));
 }
 
 const relatedPosts = posts.filter((p) => p.slug !== slug);
@@ -260,11 +261,11 @@ const readingTime = Math.max(1, Math.ceil(wordCount / 200));
       <nav class="breadcrumbs" aria-label="Breadcrumb">
         <ol>
           <li>
-            <a href="/de/">Startseite</a>
+            <a href={withBase('/de/')}>Startseite</a>
             <span class="breadcrumb-sep" aria-hidden="true">/</span>
           </li>
           <li>
-            <a href="/de/blog">Blog</a>
+            <a href={withBase('/de/blog')}>Blog</a>
             <span class="breadcrumb-sep" aria-hidden="true">/</span>
           </li>
           <li>
@@ -337,12 +338,12 @@ const readingTime = Math.max(1, Math.ceil(wordCount / 200));
                 </time>
               </div>
               <h3 class="blog-card-title">
-                <a href={`/de/blog/${relPost.slug}`}>{relPost.title}</a>
+                <a href={withBase(`/de/blog/${relPost.slug}`)}>{relPost.title}</a>
               </h3>
               <p class="blog-card-desc">{relPost.description}</p>
               <div class="blog-card-footer">
                 <span class="blog-card-author">{relPost.author}</span>
-                <a href={`/de/blog/${relPost.slug}`} class="blog-card-link" aria-label={`Mehr lesen über ${relPost.title}`}>
+                <a href={withBase(`/de/blog/${relPost.slug}`)} class="blog-card-link" aria-label={`Mehr lesen über ${relPost.title}`}>
                   Weiterlesen <span aria-hidden="true">&rarr;</span>
                 </a>
               </div>
@@ -357,8 +358,8 @@ const readingTime = Math.max(1, Math.ceil(wordCount / 200));
     title="Bereit, Ihre Fertigung zu"
     titleAccent="modernisieren?"
     description="Buchen Sie eine kostenlose 1-stündige Demo mit unseren Experten und erfahren Sie, wie TMS 4SAP Ihre Produktion transformieren kann."
-    primaryCTA={{ label: 'Demo buchen', href: '/de/demo' }}
-    secondaryCTA={{ label: 'Broschüre herunterladen', href: '/de/downloads' }}
+    primaryCTA={{ label: 'Demo buchen', href: withBase('/de/demo') }}
+    secondaryCTA={{ label: 'Broschüre herunterladen', href: withBase('/de/downloads') }}
   />
 </BaseLayout>
 

@@ -3,10 +3,11 @@ import BaseLayout from '@layouts/BaseLayout.astro';
 import HeroInner from '@components/ui/HeroInner.astro';
 import SectionHeader from '@components/ui/SectionHeader.astro';
 import CTABanner from '@components/ui/CTABanner.astro';
+import { withBase } from '../../i18n/utils';
 
 const breadcrumbs = [
-  { label: 'Startseite', href: '/de/' },
-  { label: 'Partner', href: '/de/partners' },
+  { label: 'Startseite', href: withBase('/de/') },
+  { label: 'Partner', href: withBase('/de/partners') },
 ];
 
 type PartnerTier = 'Gold' | 'Silver' | 'Technology';
@@ -206,7 +207,7 @@ const tierColors: Record<PartnerTier, string> = {
                 <span class="specialty-tag">{spec}</span>
               ))}
             </div>
-            <a href={`/de/contact?partner=${encodeURIComponent(partner.name)}`} class="btn btn-ghost btn-sm partner-cta">
+            <a href={withBase(`/de/contact?partner=${encodeURIComponent(partner.name)}`)} class="btn btn-ghost btn-sm partner-cta">
               Partner kontaktieren
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                 <path d="M5 12h14"/>
@@ -261,7 +262,7 @@ const tierColors: Record<PartnerTier, string> = {
               <span>Dediziertes Partner-Support-Portal</span>
             </div>
           </div>
-          <a href="/de/contact?subject=Partnership" class="btn btn-primary btn-lg">
+          <a href={withBase('/de/contact?subject=Partnership')} class="btn btn-primary btn-lg">
             Für Partnerprogramm bewerben
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
               <path d="M5 12h14"/>
@@ -298,8 +299,8 @@ const tierColors: Record<PartnerTier, string> = {
     title="Bereit"
     titleAccent="loszulegen?"
     description="Ob Sie einen Partner suchen oder selbst einer werden möchten — wir sind für Sie da. Kontaktieren Sie noch heute unser Team."
-    primaryCTA={{ label: 'Demo buchen', href: '/de/demo' }}
-    secondaryCTA={{ label: 'Kontaktieren Sie uns', href: '/de/contact' }}
+    primaryCTA={{ label: 'Demo buchen', href: withBase('/de/demo') }}
+    secondaryCTA={{ label: 'Kontaktieren Sie uns', href: withBase('/de/contact') }}
   />
 </BaseLayout>
 

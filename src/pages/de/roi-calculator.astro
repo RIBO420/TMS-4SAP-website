@@ -2,6 +2,7 @@
 import BaseLayout from '@layouts/BaseLayout.astro';
 import HeroInner from '@components/ui/HeroInner.astro';
 import CTABanner from '@components/ui/CTABanner.astro';
+import { withBase } from '../../i18n/utils';
 ---
 
 <BaseLayout
@@ -11,8 +12,8 @@ import CTABanner from '@components/ui/CTABanner.astro';
 >
   <HeroInner
     breadcrumbs={[
-      { label: 'Startseite', href: '/de' },
-      { label: 'ROI-Rechner', href: '/de/roi-calculator' },
+      { label: 'Startseite', href: withBase('/de') },
+      { label: 'ROI-Rechner', href: withBase('/de/roi-calculator') },
     ]}
     tag="ROI-Rechner"
     title="Berechnen Sie Ihren"
@@ -219,7 +220,7 @@ import CTABanner from '@components/ui/CTABanner.astro';
               </div>
             </div>
 
-            <a href="/de/demo" class="btn btn-primary btn-lg btn-full roi-results-cta">
+            <a href={withBase('/de/demo')} class="btn btn-primary btn-lg btn-full roi-results-cta">
               Individuelle Bewertung erhalten
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <line x1="5" y1="12" x2="19" y2="12" />
@@ -285,8 +286,8 @@ import CTABanner from '@components/ui/CTABanner.astro';
     title="Möchten Sie eine detaillierte"
     titleAccent="ROI-Analyse?"
     description="Unsere Fertigungsberater können einen maßgeschneiderten Business Case basierend auf Ihren spezifischen Abläufen, Prozessen und Verbesserungszielen erstellen."
-    primaryCTA={{ label: 'Demo buchen', href: '/de/demo' }}
-    secondaryCTA={{ label: 'Broschüre herunterladen', href: '/de/downloads' }}
+    primaryCTA={{ label: 'Demo buchen', href: withBase('/de/demo') }}
+    secondaryCTA={{ label: 'Broschüre herunterladen', href: withBase('/de/downloads') }}
   />
 </BaseLayout>
 

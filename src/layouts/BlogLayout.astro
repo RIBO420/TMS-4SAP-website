@@ -1,6 +1,7 @@
 ---
 import BaseLayout from './BaseLayout.astro';
 import CTABanner from '@components/ui/CTABanner.astro';
+import { withBase } from '../i18n/utils';
 import '@styles/utilities.css';
 
 export interface Props {
@@ -32,9 +33,9 @@ const formattedDate = new Date(publishDate).toLocaleDateString('nl-NL', {
 <BaseLayout title={`${title} | Blog | The Manufacturing Suite`} description={description}>
   <!-- Breadcrumbs -->
   <nav class="container breadcrumbs" aria-label="Breadcrumb">
-    <a href="/">Home</a>
+    <a href={withBase('/')}>Home</a>
     <span class="breadcrumbs-separator" aria-hidden="true">/</span>
-    <a href="/blog">Blog</a>
+    <a href={withBase('/blog')}>Blog</a>
     <span class="breadcrumbs-separator" aria-hidden="true">/</span>
     <span class="breadcrumbs-current" aria-current="page">{title}</span>
   </nav>

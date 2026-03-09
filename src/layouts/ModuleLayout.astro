@@ -3,6 +3,7 @@ import BaseLayout from './BaseLayout.astro';
 import HeroInner from '@components/ui/HeroInner.astro';
 import CTABanner from '@components/ui/CTABanner.astro';
 import ModuleCard from '@components/cards/ModuleCard.astro';
+import { withBase } from '../i18n/utils';
 import '@styles/utilities.css';
 
 export interface Props {
@@ -48,9 +49,9 @@ const currentSlug = Astro.url.pathname.replace(/\/$/, '').split('/').pop();
 <BaseLayout title={`${title} (${abbr}) | The Manufacturing Suite`} description={description}>
   <!-- Breadcrumbs -->
   <nav class="container breadcrumbs" aria-label="Breadcrumb">
-    <a href="/">Home</a>
+    <a href={withBase('/')}>Home</a>
     <span class="breadcrumbs-separator" aria-hidden="true">/</span>
-    <a href="/modules">Modules</a>
+    <a href={withBase('/modules')}>Modules</a>
     <span class="breadcrumbs-separator" aria-hidden="true">/</span>
     <span class="breadcrumbs-current" aria-current="page">{title}</span>
   </nav>
@@ -68,7 +69,7 @@ const currentSlug = Astro.url.pathname.replace(/\/$/, '').split('/').pop();
             {allModules.map((mod) => (
               <li>
                 <a
-                  href={`/modules/${mod.slug}`}
+                  href={withBase(`/modules/${mod.slug}`)}
                   class="module-sidebar-link"
                   aria-current={mod.slug === currentSlug ? 'page' : undefined}
                 >
@@ -130,7 +131,7 @@ const currentSlug = Astro.url.pathname.replace(/\/$/, '').split('/').pop();
             </div>
             <div class="related-modules">
               {relatedModules.map((mod) => (
-                <a href={`/modules/${mod.slug}`} class="related-module-link">
+                <a href={withBase(`/modules/${mod.slug}`)} class="related-module-link">
                   <span class="related-module-abbr">{mod.abbr}</span>
                   <span>{mod.title}</span>
                 </a>

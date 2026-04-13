@@ -6,7 +6,8 @@ import react from '@astrojs/react';
 
 export default defineConfig({
   site: 'https://ribo420.github.io',
-  base: '/TMS-4SAP-website',
+  base: '/TMS-4SAP-website/',
+  output: 'static',
   integrations: [mdx(), sitemap(), react()],
   i18n: {
     defaultLocale: 'en',

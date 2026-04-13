@@ -3,38 +3,19 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import HeroInner from '../../components/ui/HeroInner.astro';
 import BlogPostCard from '../../components/cards/BlogPostCard.astro';
 import CTABanner from '../../components/ui/CTABanner.astro';
+import { posts as allPosts } from '@data/blog';
 
 const categories = ['All', 'Product', 'Industry', 'Engineering', 'Company'] as const;
 
-const posts = [
-  {
-    slug: 'what-is-mes-manufacturing-execution-system',
-    title: 'What is MES? A Complete Guide to Manufacturing Execution Systems',
-    description:
-      'Learn what a Manufacturing Execution System (MES) does, why it matters for modern factories, and how it bridges the gap between ERP planning and shop-floor reality.',
-    date: '2026-02-15',
-    author: 'TMS Editorial',
-    category: 'Product',
-  },
-  {
-    slug: 'iatf-16949-erp-automotive',
-    title: 'How ERP Software Supports IATF 16949 Compliance in Automotive',
-    description:
-      'Discover how integrated ERP systems help automotive manufacturers maintain IATF 16949 compliance through traceability, quality management, and audit-ready documentation.',
-    date: '2026-01-20',
-    author: 'TMS Editorial',
-    category: 'Industry',
-  },
-  {
-    slug: 'industry-4-0-sap-business-one',
-    title: 'Industry 4.0 and SAP Business One: Bridging the Gap with TMS',
-    description:
-      'Explore how TMS modules transform SAP Business One into a full Industry 4.0 platform with real-time data capture, advanced analytics, and smart manufacturing capabilities.',
-    date: '2026-03-01',
-    author: 'TMS Editorial',
-    category: 'Engineering',
-  },
-];
+const locale = 'en';
+const posts = allPosts.map((p) => ({
+  slug: p.slug,
+  date: p.date,
+  author: p.author[locale],
+  title: p.i18n[locale].title,
+  description: p.i18n[locale].description,
+  category: p.i18n[locale].category,
+}));
 ---
 
 <BaseLayout

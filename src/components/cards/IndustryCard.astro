@@ -1,8 +1,8 @@
 ---
-import type { Industry } from "@data/industries";
+import type { IndustryData } from "@data/industries";
 
 interface Props {
-  industry: Industry;
+  industry: IndustryData;
 }
 
 const { industry } = Astro.props;
@@ -15,23 +15,23 @@ const iconMap: Record<string, string> = {
   cpu: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><path d="M15 2v2"/><path d="M15 20v2"/><path d="M2 15h2"/><path d="M2 9h2"/><path d="M20 15h2"/><path d="M20 9h2"/><path d="M9 2v2"/><path d="M9 20v2"/></svg>`,
 };
 
-const svgIcon = iconMap[industry.icon] || iconMap["cpu"];
+const svgIcon = iconMap["cpu"];
 ---
 
-<a href={href} class="industry-card" data-animate>
-  <div class="industry-thumb" role="img" aria-label={`${industry.name} manufacturing`}>
+<a href={href} class="industry-card" data-animate aria-label={industry.title}>
+  <div class="industry-thumb" aria-hidden="true">
     <svg class="industry-thumb-icon" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
       <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
       <circle cx="8.5" cy="8.5" r="1.5"/>
       <polyline points="21 15 16 10 5 21"/>
     </svg>
   </div>
-  <div class="industry-icon">
+  <div class="industry-icon" aria-hidden="true">
     <Fragment set:html={svgIcon} />
   </div>
-  <h3>{industry.name}</h3>
+  <h3>{industry.title}</h3>
   <p>{industry.description}</p>
-  <span class="industry-link">
+  <span class="industry-link" aria-hidden="true">
     Explore
     <svg
       width="14"

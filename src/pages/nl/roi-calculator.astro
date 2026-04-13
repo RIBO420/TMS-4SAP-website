@@ -31,7 +31,7 @@ import { withBase } from '../../i18n/utils';
             <h2 class="roi-inputs-title">Uw bedrijfsgegevens</h2>
             <p class="roi-inputs-subtitle">Pas de schuifregelaars aan op uw huidige situatie</p>
 
-            <div class="roi-form" role="form" aria-label="ROI calculator invoervelden">
+            <form class="roi-form" aria-label="ROI calculator invoervelden" onsubmit="return false;">
 
               <!-- Company Size -->
               <div class="roi-field">
@@ -152,7 +152,7 @@ import { withBase } from '../../i18n/utils';
                 </div>
               </div>
 
-            </div>
+            </form>
           </div>
         </div>
 
@@ -161,10 +161,11 @@ import { withBase } from '../../i18n/utils';
           <div class="roi-results-card">
             <div class="roi-results-header">
               <span class="roi-results-tag">Geschatte jaarlijkse besparing</span>
-              <div class="roi-savings-amount" aria-live="polite" aria-atomic="true">
+              <div class="roi-savings-amount">
                 <span class="roi-currency">&euro;</span><span id="total-savings" class="roi-total">0</span>
               </div>
               <p class="roi-savings-note">Gebaseerd op branchebenchmarks en TMS-implementatiedata</p>
+              <p id="roi-live-summary" class="sr-only" aria-live="polite" aria-atomic="true"></p>
             </div>
 
             <div class="roi-breakdown">
@@ -227,6 +228,12 @@ import { withBase } from '../../i18n/utils';
                 <polyline points="12 5 19 12 12 19" />
               </svg>
             </a>
+            <button type="button" id="roi-copy-results" class="btn btn-secondary btn-full roi-copy-btn" aria-label="Resultaten naar klembord kopi\u00ebren">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+              </svg>
+              <span id="roi-copy-label">Resultaten kopi\u00ebren</span>
+            </button>
           </div>
 
           <!-- Methodology note -->
@@ -309,12 +316,28 @@ import { withBase } from '../../i18n/utils';
     const planningSavingsEl = document.getElementById('planning-savings');
     const errorSavingsEl = document.getElementById('error-savings');
     const manualSavingsEl = document.getElementById('manual-savings');
+    const liveSummaryEl = document.getElementById('roi-live-summary');
+    const copyBtn = document.getElementById('roi-copy-results') as HTMLButtonElement | null;
+    const copyLabelEl = document.getElementById('roi-copy-label');
 
     if (
       !employeesSlider || !revenueSlider || !errorsSlider || !manualHoursSlider ||
       !totalSavingsEl || !planningSavingsEl || !errorSavingsEl || !manualSavingsEl
     ) {
       return;
+    }
+
+    // Debounced aria-live announcement (500ms quiet period)
+    let liveDebounceTimer: number | null = null;
+    function announceLive(text: string) {
+      if (!liveSummaryEl) return;
+      if (liveDebounceTimer !== null) {
+        window.clearTimeout(liveDebounceTimer);
+      }
+      liveSummaryEl.textContent = '';
+      liveDebounceTimer = window.setTimeout(() => {
+        if (liveSummaryEl) liveSummaryEl.textContent = text;
+      }, 500);
     }
 
     // Planning method multipliers
@@ -402,6 +425,12 @@ import { withBase } from '../../i18n/utils';
       if (errorsOutput) errorsOutput.textContent = `${errorsSlider!.value}%`;
       if (manualHoursOutput) manualHoursOutput.textContent = `${manualHours} uur/week`;
 
+      // Update aria-valuetext for screen readers (friendlier than raw numbers)
+      employeesSlider!.setAttribute('aria-valuetext', `${employees} medewerkers`);
+      revenueSlider!.setAttribute('aria-valuetext', `\u20AC${revenueM} miljoen`);
+      errorsSlider!.setAttribute('aria-valuetext', `${errorsSlider!.value} procent foutmarge`);
+      manualHoursSlider!.setAttribute('aria-valuetext', `${manualHours} uur per week`);
+
       // Update slider fills
       updateSliderFill(employeesSlider!);
       updateSliderFill(revenueSlider!);
@@ -428,6 +457,32 @@ import { withBase } from '../../i18n/utils';
 
       // Animate total
       animateValue(total);
+
+      // Debounced live-region announcement (500ms quiet period)
+      announceLive(`Geschatte jaarlijkse besparing: \u20AC${formatCurrency(total)}`);
+    }
+
+    function buildResultsText(): string {
+      const employees = parseInt(employeesSlider!.value, 10);
+      const revenueM = parseInt(revenueSlider!.value, 10);
+      const planningMethod = getSelectedPlanning();
+      const lines = [
+        'TMS 4SAP ROI-schatting',
+        '======================',
+        `Bedrijfsgrootte: ${employees} medewerkers`,
+        `Jaarlijkse omzet: \u20AC${revenueM}M`,
+        `Huidige planningsmethode: ${planningMethod}`,
+        `Productie-uitvalpercentage: ${errorsSlider!.value}%`,
+        `Handmatige data-invoer: ${manualHoursSlider!.value} uur/week`,
+        '',
+        `Geschatte jaarlijkse besparing: \u20AC${totalSavingsEl!.textContent || '0'}`,
+        `- Planningseffici\u00ebntie: ${planningSavingsEl!.textContent || ''}`,
+        `- Foutreductie: ${errorSavingsEl!.textContent || ''}`,
+        `- Eliminatie handmatige invoer: ${manualSavingsEl!.textContent || ''}`,
+        '',
+        'Typische terugverdientijd: 8 - 14 maanden',
+      ];
+      return lines.join('\n');
     }
 
     // Bind events
@@ -441,6 +496,37 @@ import { withBase } from '../../i18n/utils';
     planningRadios.forEach((radio) => {
       radio.addEventListener('change', calculate);
     });
+
+    // Copy results button
+    if (copyBtn) {
+      copyBtn.addEventListener('click', async () => {
+        const text = buildResultsText();
+        const originalLabel = copyLabelEl?.textContent || 'Resultaten kopi\u00ebren';
+        try {
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            await navigator.clipboard.writeText(text);
+          } else {
+            const ta = document.createElement('textarea');
+            ta.value = text;
+            ta.setAttribute('readonly', '');
+            ta.style.position = 'absolute';
+            ta.style.left = '-9999px';
+            document.body.appendChild(ta);
+            ta.select();
+            document.execCommand('copy');
+            document.body.removeChild(ta);
+          }
+          if (copyLabelEl) copyLabelEl.textContent = 'Gekopieerd!';
+          announceLive('Resultaten gekopieerd naar klembord');
+        } catch (err) {
+          if (copyLabelEl) copyLabelEl.textContent = 'Kopi\u00ebren mislukt';
+          announceLive('Kopi\u00ebren mislukt');
+        }
+        window.setTimeout(() => {
+          if (copyLabelEl) copyLabelEl.textContent = originalLabel;
+        }, 2000);
+      });
+    }
 
     // Initial calculation
     calculate();
@@ -999,5 +1085,27 @@ import { withBase } from '../../i18n/utils';
     .roi-breakdown-value {
       padding-left: 42px;
     }
+  }
+
+  /* Visually-hidden live region (announced to AT only) */
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  /* Copy-results button */
+  .roi-copy-btn {
+    margin-top: 12px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
   }
 </style>

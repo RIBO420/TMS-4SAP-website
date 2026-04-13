@@ -11,6 +11,9 @@ export interface Props {
   author: string;
   category: string;
   heroImage?: string;
+  heroImageAlt?: string;
+  heroImageWidth?: number;
+  heroImageHeight?: number;
 }
 
 const {
@@ -20,6 +23,9 @@ const {
   author,
   category,
   heroImage,
+  heroImageAlt,
+  heroImageWidth = 1600,
+  heroImageHeight = 900,
 } = Astro.props;
 
 /** Format the publish date for display. */
@@ -51,10 +57,18 @@ const formattedDate = new Date(publishDate).toLocaleDateString('nl-NL', {
     </div>
   </header>
 
-  <!-- Hero image -->
+  <!-- Hero image (directly below title — treated as LCP-critical) -->
   {heroImage && (
     <div class="article-hero-image">
-      <img src={heroImage} alt="" loading="eager" />
+      <img
+        src={heroImage}
+        alt={heroImageAlt ?? title}
+        width={heroImageWidth}
+        height={heroImageHeight}
+        loading="eager"
+        decoding="async"
+        fetchpriority="high"
+      />
     </div>
   )}
 

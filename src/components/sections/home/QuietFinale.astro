@@ -1,0 +1,315 @@
+---
+// §9 — Act VII: Talk to the engineer who would deploy it
+// "A solution engineer. A live scheduler. Thirty minutes."
+// See HOMEPAGE-REDESIGN.md §9 Quiet finale.
+import { withBase } from "../../../i18n/utils";
+import { posts } from "@data/blog";
+import { clients } from "@data/clients";
+import ScrollReveal from "../../motion/ScrollReveal.tsx";
+
+interface Props {
+  lang?: "en" | "nl" | "de";
+}
+const { lang = "en" } = Astro.props;
+
+const copy = {
+  en: {
+    eyebrow: "09 · WALKTHROUGH",
+    h3: "A solution engineer. A live scheduler. Thirty minutes.",
+    sub: "Not a sales deck. A working product walkthrough from the engineer who would run your implementation.",
+    primary: "Get the case-study pack (PDF)",
+    secondary: "Book a technical walkthrough",
+    clientsLabel: "Representative clients",
+    readLabel: "Latest from the field",
+  },
+  nl: {
+    eyebrow: "09 · WALKTHROUGH",
+    h3: "Een solution engineer. Een live planner. Dertig minuten.",
+    sub: "Geen salesdeck. Een werkende productwalkthrough van de engineer die jouw implementatie zou draaien.",
+    primary: "Download het casepakket (PDF)",
+    secondary: "Plan een technische walkthrough",
+    clientsLabel: "Representatieve klanten",
+    readLabel: "Laatste van de werkvloer",
+  },
+  de: {
+    eyebrow: "09 · WALKTHROUGH",
+    h3: "Ein Solution Engineer. Ein Live-Planer. Dreißig Minuten.",
+    sub: "Kein Sales-Pitch. Ein funktionierender Produkt-Walkthrough vom Engineer, der Ihre Einführung durchführen würde.",
+    primary: "Fallstudien-Paket laden (PDF)",
+    secondary: "Technischen Walkthrough vereinbaren",
+    clientsLabel: "Repräsentative Kunden",
+    readLabel: "Aktuelles von der Werkhalle",
+  },
+}[lang];
+
+const demoHref = withBase("/demo");
+
+// Latest 3 blog posts by date descending.
+const latestPosts = [...posts]
+  .sort((a, b) => (a.date < b.date ? 1 : -1))
+  .slice(0, 3)
+  .map((p) => {
+    const localized = p.i18n[lang] ?? p.i18n.en;
+    return {
+      slug: p.slug,
+      title: localized.title,
+      href: withBase(`/blog/${p.slug}/`),
+    };
+  });
+
+// Up to 10 client names from the data source.
+const clientNames = clients.slice(0, 10).map((c) => c.name);
+---
+
+<section class="finale" data-section="9" data-lang={lang} aria-labelledby="finale-h3">
+  <ScrollReveal client:visible direction="up" delay={0} className="finale__inner">
+    <p class="finale__eyebrow mono">{copy.eyebrow}</p>
+    <h2 id="finale-h3" class="finale__h3">{copy.h3}</h2>
+    <p class="finale__sub">{copy.sub}</p>
+
+    <div class="finale__ctas">
+      <a
+        class="finale__cta finale__cta--primary"
+        href="#case-study-pack-todo"
+        download
+        data-todo-pdf="true"
+      >
+        {copy.primary}
+      </a>
+      <a class="finale__cta finale__cta--secondary" href={demoHref}>
+        {copy.secondary}
+        <span aria-hidden="true" class="finale__cta-arrow">→</span>
+      </a>
+    </div>
+
+    <div class="finale__rail">
+      <p class="finale__rail-label mono">{copy.readLabel}</p>
+      <ul class="finale__posts">
+        {latestPosts.map((p, i) => (
+          <li class="finale__post" style={`--i:${i}`}>
+            <a class="finale__post-link" href={p.href}>
+              <span class="finale__dash mono" aria-hidden="true">·</span>
+              <span class="finale__post-title">{p.title}</span>
+              <span class="finale__arrow mono" aria-hidden="true">→</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+
+    <div class="finale__clients">
+      <p class="finale__rail-label mono">{copy.clientsLabel}</p>
+      <p class="finale__clients-line mono">
+        {clientNames.map((name, i) => (
+          <>
+            {i > 0 && <span class="finale__sep" aria-hidden="true"> · </span>}
+            <span class="finale__client">{name}</span>
+          </>
+        ))}
+      </p>
+    </div>
+  </ScrollReveal>
+</section>
+
+<style>
+  .finale {
+    background: color-mix(in oklch, var(--bg, #09090b) 92%, black);
+    padding-block: 140px;
+    border-top: 1px solid var(--border, #232329);
+  }
+
+  /* Target the wrapper that ScrollReveal renders */
+  .finale :global(.finale__inner) {
+    max-width: 640px;
+    margin: 0 auto;
+    padding-inline: 24px;
+    text-align: left;
+  }
+
+  .finale__eyebrow {
+    font-size: 0.75rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--amber, #f59e0b);
+    margin: 0 0 24px;
+  }
+
+  .finale__h3 {
+    font-size: clamp(1.75rem, 3.4vw, 2.5rem);
+    line-height: 1.15;
+    letter-spacing: -0.015em;
+    font-weight: 700;
+    color: var(--text, #fafafa);
+    margin: 0 0 20px;
+  }
+
+  .finale__sub {
+    font-size: 1.0625rem;
+    line-height: 1.6;
+    color: var(--text-muted, #a1a1aa);
+    margin: 0 0 36px;
+    max-width: 56ch;
+  }
+
+  /* ---- CTAs ---- */
+  .finale__ctas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 56px;
+  }
+  .finale__cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 14px 22px;
+    font-size: 0.9375rem;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    text-decoration: none;
+    border-radius: 2px;
+    border: 1px solid transparent;
+    transition: transform 150ms cubic-bezier(0.25, 1, 0.5, 1),
+      background 150ms cubic-bezier(0.25, 1, 0.5, 1),
+      border-color 150ms cubic-bezier(0.25, 1, 0.5, 1),
+      color 150ms cubic-bezier(0.25, 1, 0.5, 1);
+  }
+  .finale__cta--primary {
+    background: var(--amber, #f59e0b);
+    color: #0a0a0a;
+    border-color: var(--amber, #f59e0b);
+  }
+  .finale__cta--primary:hover {
+    background: var(--amber-hover, #eab308);
+    transform: scale(1.02);
+  }
+  .finale__cta--primary:active {
+    transform: scale(0.98);
+  }
+  .finale__cta--secondary {
+    background: transparent;
+    color: var(--text-muted, #a1a1aa);
+    border-color: transparent;
+    padding-inline: 8px;
+  }
+  .finale__cta--secondary:hover {
+    color: var(--text, #fafafa);
+  }
+  .finale__cta--secondary:hover .finale__cta-arrow {
+    transform: translateX(3px);
+  }
+  .finale__cta-arrow {
+    transition: transform 150ms cubic-bezier(0.25, 1, 0.5, 1);
+  }
+
+  /* ---- Blog rail ---- */
+  .finale__rail {
+    margin-bottom: 48px;
+  }
+  .finale__rail-label {
+    font-size: 0.6875rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-dim, #71717a);
+    margin: 0 0 14px;
+  }
+  .finale__posts {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .finale__post {
+    opacity: 0;
+    animation: finaleFade 600ms cubic-bezier(0.25, 1, 0.5, 1) calc(120ms + var(--i, 0) * 80ms) both;
+  }
+  .finale__post-link {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 10px;
+    text-decoration: none;
+    color: var(--text-muted, #a1a1aa);
+    font-size: 0.9375rem;
+    line-height: 1.45;
+    transition: color 150ms cubic-bezier(0.25, 1, 0.5, 1);
+  }
+  .finale__post-link:hover {
+    color: var(--text, #fafafa);
+  }
+  .finale__post-link:hover .finale__arrow {
+    color: var(--amber, #f59e0b);
+    transform: translateX(3px);
+  }
+  .finale__dash {
+    color: var(--amber, #f59e0b);
+  }
+  .finale__arrow {
+    color: var(--text-dim, #71717a);
+    font-size: 0.75rem;
+    transition: transform 150ms cubic-bezier(0.25, 1, 0.5, 1),
+      color 150ms cubic-bezier(0.25, 1, 0.5, 1);
+  }
+
+  /* ---- Clients line ---- */
+  .finale__clients {
+    opacity: 0;
+    animation: finaleFade 600ms cubic-bezier(0.25, 1, 0.5, 1) 320ms both;
+  }
+  .finale__clients-line {
+    font-size: 0.75rem;
+    line-height: 1.8;
+    color: var(--text-dim, #71717a);
+    margin: 0;
+    letter-spacing: 0.02em;
+  }
+  .finale__sep {
+    color: var(--amber, #f59e0b);
+    padding-inline: 2px;
+  }
+  .finale__client {
+    white-space: nowrap;
+  }
+
+  @keyframes finaleFade {
+    from {
+      opacity: 0;
+      transform: translateY(6px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .finale__post,
+    .finale__clients {
+      animation: none;
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .finale {
+      padding-block: 96px;
+    }
+    .finale :global(.finale__inner) {
+      padding-inline: 20px;
+    }
+    .finale__ctas {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 16px;
+    }
+    .finale__cta {
+      width: 100%;
+      justify-content: center;
+    }
+    .finale__cta--secondary {
+      justify-content: flex-start;
+    }
+  }
+</style>

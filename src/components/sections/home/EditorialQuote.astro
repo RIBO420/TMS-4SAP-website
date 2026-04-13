@@ -1,0 +1,155 @@
+---
+// §7 — Editorial quote break. Single oversized quote, no card, no portrait.
+// 200px vertical padding — the calmest section on the page, a deliberate
+// breath before §8. See HOMEPAGE-REDESIGN.md §7.
+import ScrollReveal from "@components/motion/ScrollReveal";
+import { testimonials } from "@data/testimonials";
+
+interface Props {
+  lang?: "en" | "nl" | "de";
+}
+const { lang = "en" } = Astro.props;
+
+// Pick the first testimonial. testimonials.ts is declared fictional in its
+// header, so every language gets a visible "Composite scenario" micro-label.
+const t = testimonials[0]!;
+
+// Localized micro-label + typographic quote marks.
+// DE uses low-9 / high-9 German quotation marks; EN/NL use curly doubles.
+const copy = {
+  en: {
+    microLabel: "Composite scenario",
+    open: "\u201C", // “
+    close: "\u201D", // ”
+  },
+  nl: {
+    microLabel: "Representatief voorbeeld",
+    open: "\u201C",
+    close: "\u201D",
+  },
+  de: {
+    microLabel: "Repr\u00E4sentatives Beispiel",
+    open: "\u201E", // „
+    close: "\u201C", // “
+  },
+}[lang];
+---
+
+<section class="home-section home-section--quote" data-section="7" data-lang={lang}>
+  <ScrollReveal client:visible direction="up">
+    <figure class="editorial-quote">
+      <ScrollReveal client:visible direction="up" delay={0.12}>
+        <span class="quote-mark quote-mark--open" aria-hidden="true">{copy.open}</span>
+      </ScrollReveal>
+
+      <blockquote class="quote-body">
+        <p class="quote-text">{t.quote}</p>
+      </blockquote>
+
+      <ScrollReveal client:visible direction="up" delay={0.18}>
+        <span class="quote-mark quote-mark--close" aria-hidden="true">{copy.close}</span>
+      </ScrollReveal>
+
+      <figcaption class="quote-attribution">
+        <span class="attribution-line">— {t.author}, {t.role} at {t.company}</span>
+        <span class="micro-label">{copy.microLabel}</span>
+      </figcaption>
+    </figure>
+  </ScrollReveal>
+</section>
+
+<style>
+  .home-section--quote {
+    padding-block: 200px;
+    /* No background chrome. No borders. No separator rules. */
+    background: transparent;
+  }
+
+  .editorial-quote {
+    position: relative;
+    max-width: 880px;
+    margin: 0 auto;
+    padding-inline: 1.5rem;
+  }
+
+  .quote-mark {
+    position: absolute;
+    font-family: var(--font-heading, Georgia, serif);
+    font-size: 80px;
+    line-height: 1;
+    color: var(--amber, #f59e0b);
+    font-weight: 500;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .quote-mark--open {
+    top: -24px;
+    left: -8px;
+  }
+
+  .quote-mark--close {
+    bottom: 40px;
+    right: 0;
+  }
+
+  .quote-body {
+    margin: 0;
+    padding: 0;
+    border: 0;
+  }
+
+  .quote-text {
+    font-family: var(--font-heading, Georgia, serif);
+    font-size: clamp(32px, 4.5vw, 56px);
+    font-weight: 500;
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+    color: var(--text, #fafafa);
+    margin: 0;
+  }
+
+  .quote-attribution {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 2rem;
+    font-family: ui-monospace, "JetBrains Mono", "IBM Plex Mono", monospace;
+  }
+
+  .attribution-line {
+    font-size: 14px;
+    color: var(--text-muted, #a1a1aa);
+    letter-spacing: 0.01em;
+  }
+
+  .micro-label {
+    font-size: 11px;
+    color: var(--text, #fafafa);
+    opacity: 0.3;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  @media (max-width: 640px) {
+    .home-section--quote {
+      padding-block: 120px;
+    }
+    .quote-mark {
+      font-size: 56px;
+    }
+    .quote-mark--open {
+      top: -12px;
+      left: -4px;
+    }
+    .quote-mark--close {
+      bottom: 32px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .quote-mark {
+      /* ScrollReveal handles the motion; nothing else to disable here. */
+    }
+  }
+</style>

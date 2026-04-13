@@ -1,0 +1,585 @@
+---
+// §5 — Three beats. One shop floor.
+// Sticky-pin scroll story: 300vh outer, 100vh sticky inner, 3 beats whose
+// opacity is driven by native CSS `animation-timeline: scroll()`.
+// Mobile + reduced motion → stacked static panels, no pin.
+//
+// Scroll-linking strategy: pure CSS (no JS) via `animation-timeline: scroll(self)`.
+// Falls back gracefully in older browsers (beats appear at natural scroll position).
+// The OEEDials widget inside Beat 3 does its own scroll-linked fill via motion/react.
+// See HOMEPAGE-REDESIGN.md §5 Sticky-pin shop-floor beats.
+
+import OEEDials from "../../widgets/OEEDials.tsx";
+import IndustryMorph from "../../widgets/IndustryMorph.tsx";
+
+interface Props {
+  lang?: "en" | "nl" | "de";
+}
+const { lang = "en" } = Astro.props;
+
+const t = {
+  en: {
+    eyebrow:  "05 · EXECUTE",
+    heading:  "Three beats. One shop floor.",
+    beat1: {
+      title: "NOK scan at station 12.",
+      copy:  "Operator scans a reject. Barcode hits the database in 400 ms.",
+    },
+    beat2: {
+      title: "SAP B1 re-books the batch.",
+      copy:  "MM stock adjusts, production order status flips, downstream operations re-plan. No human intervention.",
+    },
+    beat3: {
+      title: "OEE drops live.",
+      copy:  "The line supervisor's dashboard recalculates. OEE is the first number they'll see tomorrow morning.",
+    },
+    progressLabel: "Scroll progress",
+    stationLabel:  "Station",
+    scanLabel:     "NOK",
+  },
+  nl: {
+    eyebrow:  "05 · UITVOEREN",
+    heading:  "Drie momenten. Eén werkvloer.",
+    beat1: {
+      title: "NOK-scan op station 12.",
+      copy:  "Operator scant een afgekeurd stuk. Barcode staat in de database binnen 400 ms.",
+    },
+    beat2: {
+      title: "SAP B1 herberekent de batch.",
+      copy:  "MM-voorraad past zich aan, productieorderstatus kantelt, stroomafwaartse bewerkingen herplannen. Geen menselijke tussenkomst.",
+    },
+    beat3: {
+      title: "OEE daalt live.",
+      copy:  "Het dashboard van de lijnsupervisor rekent opnieuw. OEE is het eerste cijfer dat hij morgenochtend ziet.",
+    },
+    progressLabel: "Scrollvoortgang",
+    stationLabel:  "Station",
+    scanLabel:     "NOK",
+  },
+  de: {
+    eyebrow:  "05 · AUSFÜHREN",
+    heading:  "Drei Momente. Eine Werkshalle.",
+    beat1: {
+      title: "NOK-Scan an Station 12.",
+      copy:  "Bediener scannt einen Ausschuss. Barcode erreicht die Datenbank in 400 ms.",
+    },
+    beat2: {
+      title: "SAP B1 bucht die Charge neu.",
+      copy:  "MM-Bestand passt sich an, Fertigungsauftragsstatus kippt, nachgelagerte Vorgänge planen neu. Kein menschliches Eingreifen.",
+    },
+    beat3: {
+      title: "OEE sinkt live.",
+      copy:  "Das Dashboard des Linienleiters rechnet neu. OEE ist die erste Zahl, die er morgen früh sehen wird.",
+    },
+    progressLabel: "Scrollfortschritt",
+    stationLabel:  "Station",
+    scanLabel:     "NOK",
+  },
+}[lang];
+
+const beats = [
+  { i: 1, ...t.beat1 },
+  { i: 2, ...t.beat2 },
+  { i: 3, ...t.beat3 },
+];
+---
+
+<section
+  id="shop-floor-beats"
+  class="beats"
+  data-section="5"
+  data-lang={lang}
+  aria-labelledby="beats-heading"
+>
+  <!-- Sticky-pin scroll story (desktop) -->
+  <div class="beats__pin-outer">
+    <div class="beats__pin-inner">
+      <!-- Progress bar -->
+      <div class="beats__progress" aria-hidden="true">
+        <div class="beats__progress-bar"></div>
+      </div>
+
+      <div class="beats__grid">
+        <!-- LEFT: copy panels -->
+        <div class="beats__copy">
+          <p class="beats__eyebrow">{t.eyebrow}</p>
+          <h2 id="beats-heading" class="beats__heading">{t.heading}</h2>
+
+          <div class="beats__copy-stack">
+            {beats.map((b) => (
+              <div class={`beat beat--${b.i} beat--copy`} data-beat={b.i}>
+                <div class="beat__index">0{b.i}</div>
+                <h3 class="beat__title">{b.title}</h3>
+                <p class="beat__copy">{b.copy}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <!-- RIGHT: visuals -->
+        <div class="beats__visuals">
+          <!-- Beat 1: 4 stations, station 12 highlighted with scan beam -->
+          <div class="beat beat--1 beat--visual" data-beat={1} aria-hidden="true">
+            <svg viewBox="0 0 400 260" class="beats__svg">
+              <defs>
+                <pattern id="grid-beat1" width="20" height="20" patternUnits="userSpaceOnUse">
+                  <path d="M 20 0 L 0 0 0 20" fill="none" stroke="var(--border, #27272a)" stroke-width="0.5"/>
+                </pattern>
+                <linearGradient id="beam-grad" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0" stop-color="var(--amber, #f59e0b)" stop-opacity="0"/>
+                  <stop offset="0.5" stop-color="var(--amber, #f59e0b)" stop-opacity="0.6"/>
+                  <stop offset="1" stop-color="var(--amber, #f59e0b)" stop-opacity="0"/>
+                </linearGradient>
+              </defs>
+              <rect width="400" height="260" fill="url(#grid-beat1)"/>
+
+              <!-- 4 work stations -->
+              {[0, 1, 2, 3].map((i) => {
+                const isTarget = i === 2; // station 12 = third station visually
+                const x = 30 + i * 90;
+                const stationNum = 10 + i * 2; // 10, 12, 14, 16
+                return (
+                  <g>
+                    <rect
+                      x={x}
+                      y="80"
+                      width="70"
+                      height="100"
+                      rx="4"
+                      fill={isTarget ? "rgba(245, 158, 11, 0.08)" : "rgba(39, 39, 42, 0.6)"}
+                      stroke={isTarget ? "var(--amber, #f59e0b)" : "var(--border, #3f3f46)"}
+                      stroke-width={isTarget ? "1.5" : "1"}
+                    />
+                    <rect
+                      x={x + 10}
+                      y="100"
+                      width="50"
+                      height="8"
+                      rx="1"
+                      fill={isTarget ? "var(--amber, #f59e0b)" : "var(--text-muted, #52525b)"}
+                    />
+                    <rect
+                      x={x + 10}
+                      y="118"
+                      width="32"
+                      height="4"
+                      rx="1"
+                      fill={isTarget ? "rgba(245, 158, 11, 0.6)" : "var(--text-muted, #52525b)"}
+                    />
+                    <text
+                      x={x + 35}
+                      y="200"
+                      text-anchor="middle"
+                      font-family="ui-monospace, monospace"
+                      font-size="11"
+                      font-weight="600"
+                      fill={isTarget ? "var(--amber, #f59e0b)" : "var(--text-muted, #a1a1aa)"}
+                    >
+                      {t.stationLabel} {stationNum}
+                    </text>
+                    {isTarget && (
+                      <g class="beats__beam">
+                        <rect
+                          x={x + 5}
+                          y="0"
+                          width="60"
+                          height="80"
+                          fill="url(#beam-grad)"
+                        />
+                        <circle cx={x + 35} cy="104" r="5" fill="var(--amber, #f59e0b)">
+                          <animate attributeName="opacity" values="1;0.3;1" dur="1.6s" repeatCount="indefinite"/>
+                        </circle>
+                        <text
+                          x={x + 35}
+                          y="70"
+                          text-anchor="middle"
+                          font-family="ui-monospace, monospace"
+                          font-size="10"
+                          font-weight="700"
+                          fill="var(--amber, #f59e0b)"
+                        >
+                          {t.scanLabel} · 400ms
+                        </text>
+                      </g>
+                    )}
+                  </g>
+                );
+              })}
+            </svg>
+          </div>
+
+          <!-- Beat 2: mono terminal log -->
+          <div class="beat beat--2 beat--visual" data-beat={2} aria-hidden="true">
+            <div class="terminal">
+              <div class="terminal__bar">
+                <span class="terminal__dot"></span>
+                <span class="terminal__dot"></span>
+                <span class="terminal__dot"></span>
+                <span class="terminal__title">sap-b1 · transactions.log</span>
+              </div>
+              <div class="terminal__body">
+                <div class="terminal__line">
+                  <span class="terminal__ts">14:22:17.401</span>
+                  <span class="terminal__ok">OK</span>
+                  <span>IGN1  GoodsIssue  batch=B-4471  qty=-1</span>
+                </div>
+                <div class="terminal__line">
+                  <span class="terminal__ts">14:22:17.612</span>
+                  <span class="terminal__ok">OK</span>
+                  <span>OWOR  status=Released → Pending</span>
+                </div>
+                <div class="terminal__line">
+                  <span class="terminal__ts">14:22:17.814</span>
+                  <span class="terminal__ok">OK</span>
+                  <span>OITM  stock  WH01 = 2 418 → 2 417</span>
+                </div>
+                <div class="terminal__line">
+                  <span class="terminal__ts">14:22:18.009</span>
+                  <span class="terminal__ok">OK</span>
+                  <span>OIBT  batch trace  PO-88231 → QM</span>
+                </div>
+                <div class="terminal__line terminal__line--cursor">
+                  <span class="terminal__ts">14:22:18.210</span>
+                  <span class="terminal__ok">OK</span>
+                  <span>APS   replan dispatch queue…<span class="terminal__caret">▮</span></span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Beat 3: OEE dial cluster -->
+          <div class="beat beat--3 beat--visual" data-beat={3}>
+            <div class="beats__oee-frame">
+              <OEEDials client:visible lang={lang} variant="scroll-linked" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile / reduced-motion fallback: stacked panels (no pin) -->
+  <div class="beats__stacked">
+    <p class="beats__eyebrow">{t.eyebrow}</p>
+    <h2 class="beats__heading">{t.heading}</h2>
+    <div class="beats__stacked-list">
+      {beats.map((b) => (
+        <article class="beats__stacked-item" data-beat={b.i}>
+          <div class="beat__index">0{b.i}</div>
+          <h3 class="beat__title">{b.title}</h3>
+          <p class="beat__copy">{b.copy}</p>
+        </article>
+      ))}
+      <div class="beats__stacked-oee">
+        <OEEDials client:visible lang={lang} variant="static" />
+      </div>
+    </div>
+  </div>
+
+  <!-- Industry morph selector after the pin exits -->
+  <div class="beats__industry">
+    <IndustryMorph client:visible lang={lang} />
+  </div>
+</section>
+
+<style>
+  .beats {
+    position: relative;
+    color: var(--text, #fafafa);
+    background: var(--bg, #0a0a0a);
+  }
+
+  /* ---------- Sticky-pin story (desktop) ---------- */
+  .beats__pin-outer {
+    position: relative;
+    min-height: 300vh;
+    display: none;
+  }
+  .beats__pin-inner {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+  }
+  .beats__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    width: 100%;
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 2rem 0 3rem;
+    height: 100%;
+    align-items: center;
+  }
+  .beats__eyebrow {
+    font-family: ui-monospace, "JetBrains Mono", monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--amber, #f59e0b);
+    margin: 0 0 1rem;
+  }
+  .beats__heading {
+    font-size: clamp(2rem, 3.5vw, 3rem);
+    font-weight: 700;
+    line-height: 1.1;
+    margin: 0 0 2.5rem;
+    color: var(--text, #fafafa);
+    max-width: 14ch;
+  }
+
+  /* Progress bar on left edge */
+  .beats__progress {
+    position: absolute;
+    left: 1.25rem;
+    top: 15%;
+    bottom: 15%;
+    width: 1px;
+    background: var(--border, #27272a);
+    z-index: 2;
+  }
+  .beats__progress-bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 1px;
+    height: 0%;
+    background: var(--amber, #f59e0b);
+    transform-origin: top;
+  }
+  @supports (animation-timeline: scroll()) {
+    .beats__progress-bar {
+      height: 100%;
+      transform: scaleY(0);
+      animation: fillProgress linear forwards;
+      animation-timeline: scroll(nearest);
+      animation-range: contain 0% contain 100%;
+    }
+    @keyframes fillProgress {
+      from { transform: scaleY(0); }
+      to   { transform: scaleY(1); }
+    }
+  }
+
+  /* Copy / visual stacked layers — absolute overlap */
+  .beats__copy-stack,
+  .beats__visuals {
+    position: relative;
+    min-height: 420px;
+  }
+  .beats__visuals {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .beat--copy,
+  .beat--visual {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  /* First beat visible by default so no-JS + no-scroll-timeline still shows content */
+  .beat--copy.beat--1,
+  .beat--visual.beat--1 {
+    opacity: 1;
+  }
+  .beat--visual {
+    align-items: center;
+  }
+
+  .beat__index {
+    font-family: ui-monospace, "JetBrains Mono", monospace;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    color: var(--amber, #f59e0b);
+    margin-bottom: 0.5rem;
+  }
+  .beat__title {
+    font-size: clamp(1.5rem, 2.4vw, 2rem);
+    font-weight: 700;
+    line-height: 1.2;
+    margin: 0 0 1rem;
+    color: var(--text, #fafafa);
+    max-width: 18ch;
+  }
+  .beat__copy {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: var(--text-muted, #a1a1aa);
+    margin: 0;
+    max-width: 42ch;
+  }
+
+  /* Native scroll-timeline fade for beats — pure CSS, no JS */
+  @supports (animation-timeline: scroll()) {
+    .beat--copy,
+    .beat--visual {
+      animation: beatFade linear both;
+      animation-timeline: scroll(nearest);
+    }
+    .beat--1 { animation-range: contain 0%   contain 33%; }
+    .beat--2 { animation-range: contain 25%  contain 66%; }
+    .beat--3 { animation-range: contain 58%  contain 100%; }
+
+    @keyframes beatFade {
+      0%   { opacity: 0; transform: translateY(8px); }
+      20%  { opacity: 1; transform: translateY(0);  }
+      80%  { opacity: 1; transform: translateY(0);  }
+      100% { opacity: 0; transform: translateY(-8px);}
+    }
+    /* Beat 1 stays visible at the very top */
+    .beat--1 {
+      animation-name: beatFadeFirst;
+    }
+    @keyframes beatFadeFirst {
+      0%   { opacity: 1; transform: translateY(0); }
+      60%  { opacity: 1; transform: translateY(0); }
+      100% { opacity: 0; transform: translateY(-8px); }
+    }
+    /* Beat 3 stays visible at the very bottom */
+    .beat--3 {
+      animation-name: beatFadeLast;
+    }
+    @keyframes beatFadeLast {
+      0%   { opacity: 0; transform: translateY(8px); }
+      60%  { opacity: 1; transform: translateY(0); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+  }
+
+  /* ---------- Beat 1 SVG frame ---------- */
+  .beats__svg {
+    width: 100%;
+    max-width: 480px;
+    height: auto;
+    border: 1px solid var(--border, #27272a);
+    border-radius: 6px;
+    background: rgba(10, 10, 10, 0.6);
+  }
+
+  /* ---------- Beat 2 terminal ---------- */
+  .terminal {
+    width: 100%;
+    max-width: 480px;
+    border: 1px solid var(--border, #27272a);
+    border-radius: 6px;
+    background: #0a0a0a;
+    overflow: hidden;
+    font-family: ui-monospace, "JetBrains Mono", "IBM Plex Mono", monospace;
+  }
+  .terminal__bar {
+    display: flex;
+    align-items: center;
+    gap: 0.375rem;
+    padding: 0.5rem 0.75rem;
+    background: #18181b;
+    border-bottom: 1px solid var(--border, #27272a);
+  }
+  .terminal__dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #3f3f46;
+  }
+  .terminal__title {
+    margin-left: 0.75rem;
+    font-size: 0.6875rem;
+    color: var(--text-muted, #71717a);
+    letter-spacing: 0.05em;
+  }
+  .terminal__body {
+    padding: 0.875rem 1rem;
+    font-size: 0.75rem;
+    line-height: 1.65;
+    color: var(--text, #e4e4e7);
+  }
+  .terminal__line {
+    display: flex;
+    gap: 0.75rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .terminal__ts {
+    color: var(--text-muted, #71717a);
+    font-variant-numeric: tabular-nums;
+  }
+  .terminal__ok {
+    color: var(--amber, #f59e0b);
+    font-weight: 700;
+  }
+  .terminal__caret {
+    display: inline-block;
+    color: var(--amber, #f59e0b);
+    margin-left: 2px;
+    animation: blink 1s steps(2) infinite;
+  }
+  @keyframes blink {
+    to { opacity: 0.2; }
+  }
+
+  /* ---------- Beat 3 OEE frame ---------- */
+  .beats__oee-frame {
+    border: 1px solid var(--border, #27272a);
+    border-radius: 6px;
+    background: rgba(10, 10, 10, 0.6);
+    padding: 0.5rem;
+  }
+
+  /* ---------- Mobile / reduced-motion fallback ---------- */
+  .beats__stacked {
+    display: block;
+    padding: 4rem 1.5rem;
+    max-width: 720px;
+    margin: 0 auto;
+  }
+  .beats__stacked-list {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+  }
+  .beats__stacked-item {
+    border-left: 2px solid var(--amber, #f59e0b);
+    padding: 0.25rem 0 0.25rem 1.25rem;
+  }
+  .beats__stacked-oee {
+    margin-top: 1.5rem;
+  }
+
+  /* ---------- Industry morph wrapper ---------- */
+  .beats__industry {
+    padding: 5rem 1.5rem 6rem;
+    border-top: 1px solid var(--border, #27272a);
+    border-bottom: 1px dashed rgba(245, 158, 11, 0.15);
+  }
+
+  /* ---------- Breakpoint: enable pin on >=768px ---------- */
+  @media (min-width: 768px) {
+    .beats__pin-outer {
+      display: block;
+    }
+    .beats__stacked {
+      display: none;
+    }
+  }
+
+  /* Respect reduced-motion: no pin, use stacked layout on every breakpoint */
+  @media (prefers-reduced-motion: reduce) {
+    .beats__pin-outer {
+      display: none !important;
+    }
+    .beats__stacked {
+      display: block !important;
+    }
+    .terminal__caret {
+      animation: none;
+    }
+  }
+</style>

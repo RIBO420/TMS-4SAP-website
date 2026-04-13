@@ -1,243 +1,52 @@
 ---
+import type { GetStaticPaths } from 'astro';
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import SectionHeader from '../../../components/ui/SectionHeader.astro';
 import CTABanner from '../../../components/ui/CTABanner.astro';
 import { withBase } from '../../../i18n/utils';
+import { posts as allPosts } from '@data/blog';
 
-interface BlogPost {
+export const getStaticPaths = (() => {
+  const locale = 'de';
+  return allPosts.map((p) => {
+    const localized = p.i18n[locale];
+    return {
+      params: { slug: p.slug },
+      props: {
+        slug: p.slug,
+        date: p.date,
+        author: p.author[locale],
+        title: localized.title,
+        description: localized.description,
+        category: localized.category,
+        content: localized.content,
+      },
+    };
+  });
+}) satisfies GetStaticPaths;
+
+interface Props {
   slug: string;
-  title: string;
-  description: string;
   date: string;
   author: string;
+  title: string;
+  description: string;
   category: string;
   content: string;
 }
 
-const posts: BlogPost[] = [
-  {
-    slug: 'what-is-mes-manufacturing-execution-system',
-    title: 'Was ist MES? Ein vollständiger Leitfaden für Manufacturing Execution Systeme',
-    description:
-      'Erfahren Sie, was ein Manufacturing Execution System (MES) leistet, warum es für moderne Fabriken wichtig ist und wie es die Lücke zwischen ERP-Planung und Shopfloor-Realität schließt.',
-    date: '2026-02-15',
-    author: 'TMS Redaktion',
-    category: 'Produkt',
-    content: `
-      <p>In der modernen Fertigung kann der Abstand zwischen einem Produktionsplan und dem, was tatsächlich auf dem Shopfloor passiert, überraschend groß sein. Aufträge werden im ERP eingeplant, aber Material kommt zu spät. Eine Maschine fällt mitten in einer Charge aus. Qualitätsprobleme werden erst nach der gesamten Schichtproduktion erkannt. Das Ergebnis: verpasste Termine, verschwendetes Material und frustrierte Kunden.</p>
-
-      <p>Ein <strong>Manufacturing Execution System (MES)</strong> existiert, um diese Lücke zu schließen. Es befindet sich zwischen Ihrer Enterprise-Resource-Planning-Ebene (ERP) und der physischen Produktionsumgebung und bietet Echtzeit-Transparenz über jeden Arbeitsgang, jedes Arbeitszentrum und jede produzierte Einheit.</p>
-
-      <h2>Was macht ein MES eigentlich?</h2>
-
-      <p>Im Kern erfasst, verwaltet und meldet ein MES Produktionsaktivitäten in Echtzeit. Anstatt sich auf Schichtberichte auf Papier oder manuelle Dateneingabe zu verlassen, zeichnet ein MES Ereignisse im Moment ihres Auftretens auf — Maschinenstarts, Bedieneranmeldungen, Materialverbrauch, Qualitätsprüfungen und Fertigmengen.</p>
-
-      <p>Die Kernfunktionen eines gut konzipierten MES umfassen:</p>
-
-      <ul>
-        <li><strong>Auftragsfreigabe</strong> — Freigabe von Produktionsaufträgen an den Shopfloor und Zuordnung zu bestimmten Arbeitszentren basierend auf aktueller Kapazität und Priorität.</li>
-        <li><strong>Echtzeit-Verfolgung</strong> — Überwachung des Auftragsfortschritts, der Maschinenzustände (Produktion, Stillstand, Störung) und der Bedieneraktivitäten in Echtzeit.</li>
-        <li><strong>Materialmanagement</strong> — Verfolgung des Rohmaterial- und Komponentenverbrauchs bei jedem Arbeitsgang, um Stücklistengenauigkeit sicherzustellen und Ausschuss zu reduzieren.</li>
-        <li><strong>Qualitätssicherung</strong> — Auslösung von Prüfpunkten an definierten Prozessschritten und Erfassung von Prüfergebnissen gegen Qualitätsspezifikationen.</li>
-        <li><strong>Leistungsanalyse</strong> — Automatische Berechnung der OEE (Overall Equipment Effectiveness), Zykluszeiten, Ausschussraten und anderer KPIs.</li>
-        <li><strong>Rückverfolgbarkeit</strong> — Aufbau einer vollständigen Genealogie, die fertige Produkte zurück zu Rohmaterialien, Bedienern, Maschinen und Prozessparametern verknüpft.</li>
-      </ul>
-
-      <h2>Warum die Lücke zwischen ERP und Shopfloor wichtig ist</h2>
-
-      <p>ERP-Systeme sind hervorragend in der Planung. Sie beherrschen Bedarfsprognosen, Beschaffung, Kapazitätsplanung und Finanzbuchhaltung. Aber ERP arbeitet auf einem Planungshorizont von Stunden, Tagen oder Wochen. Der Shopfloor arbeitet in Minuten und Sekunden.</p>
-
-      <p>Ohne ein MES begegnen Hersteller typischerweise mehreren Problemen:</p>
-
-      <ul>
-        <li><strong>Verzögertes Feedback</strong> — Produktionsdaten erreichen Planer Stunden oder sogar Tage nach dem Ereignis, was eine Reaktion auf Probleme in Echtzeit unmöglich macht.</li>
-        <li><strong>Ungenaue Bestände</strong> — Manuelle Buchung des Materialverbrauchs führt zu Abweichungen zwischen Systembestand und physischem Bestand.</li>
-        <li><strong>Versteckte Stillstände</strong> — Kurzstopps und Mikrostillstände werden nicht erfasst und verschleiern die tatsächliche Leistung der Produktionslinien.</li>
-        <li><strong>Compliance-Risiko</strong> — Branchen wie Automobil und Medizintechnik erfordern vollständige Rückverfolgbarkeit. Papierbasierte Aufzeichnungen sind fehleranfällig und schwer zu auditieren.</li>
-      </ul>
-
-      <p>Ein MES beseitigt diese blinden Flecken, indem es einen kontinuierlichen digitalen Faden von der Auftragsfreigabe bis zum Fertigprodukt erzeugt.</p>
-
-      <h2>Wie MES sich mit SAP Business One verbindet</h2>
-
-      <p>Für Hersteller, die SAP Business One nutzen, erfordert die Integration eines MES eine Lösung, die SAPs Sprache nativ spricht. Das TMS MES-Modul ist speziell für SAP Business One entwickelt. Es liest Produktionsaufträge, Stücklisten und Arbeitspläne direkt aus SAP und schreibt Fertigmeldungen, Materialverbrauch und Qualitätsergebnisse in Echtzeit zurück.</p>
-
-      <p>Diese bidirektionale Integration bedeutet: keine doppelte Dateneingabe, keine CSV-Importe und keine Synchronisierungsverzögerungen. Wenn ein Bediener eine Fertigmenge an einem Terminal auf dem Shopfloor meldet, wird der Bestand in SAP Business One innerhalb von Sekunden aktualisiert.</p>
-
-      <h2>Wichtige Vorteile der MES-Einführung</h2>
-
-      <p>Hersteller, die ein MES einsetzen, verzeichnen typischerweise messbare Verbesserungen in mehreren Dimensionen:</p>
-
-      <ul>
-        <li><strong>15-25% Steigerung der OEE</strong> — Durch die Sichtbarmachung von Stillständen und langsamen Zyklen können Teams Ursachen systematisch angehen.</li>
-        <li><strong>Reduzierung der Ausschussraten</strong> — Echtzeit-Qualitätsprüfungen erkennen Defekte früh im Prozess, bevor weiterer Wert hinzugefügt wird.</li>
-        <li><strong>Schnellere Auftragsabwicklung</strong> — Bessere Planung und Echtzeit-Umpriorisierung halten Aufträge in der Produktion in Bewegung, ohne unnötige Wartezeiten.</li>
-        <li><strong>Auditbereitschaft</strong> — Vollständige, zeitgestempelte Produktionsaufzeichnungen machen es einfach, auf Kundenaudits und behördliche Inspektionen zu reagieren.</li>
-        <li><strong>Fundierte Entscheidungsfindung</strong> — Produktionsleiter erhalten Dashboards mit Live-KPIs anstatt sich auf Bauchgefühl oder veraltete Tabellenkalkulationen zu verlassen.</li>
-      </ul>
-
-      <h2>Ist Ihre Fabrik bereit für MES?</h2>
-
-      <p>Wenn Ihr Produktionsteam noch auf Papier-Laufzettel, Whiteboards oder Tabellenkalkulationen am Schichtende setzt, arbeiten Sie mit einer erheblichen Informationsverzögerung. Ein MES ersetzt nicht Ihr ERP — es erweitert es auf den Shopfloor und gibt Ihnen die Echtzeit-Transparenz, die Sie benötigen, um in einem Markt zu bestehen, der kürzere Lieferzeiten, höhere Qualität und vollständige Rückverfolgbarkeit verlangt.</p>
-
-      <p>Das TMS MES-Modul für SAP Business One kann schrittweise eingeführt werden. Viele Kunden beginnen mit einer einzelnen Produktionslinie oder einem Arbeitszentrum, beweisen den Mehrwert und erweitern dann auf die gesamte Fertigung. Da es nativ auf SAP läuft, gibt es keine Middleware zu pflegen und kein Integrationsprojekt zu managen — nur eine direkte Verbindung von Ihrem Planungssystem zu Ihrer Produktionsrealität.</p>
-    `,
-  },
-  {
-    slug: 'iatf-16949-erp-automotive',
-    title: 'Wie ERP-Software die IATF 16949 Compliance in der Automobilindustrie unterstützt',
-    description:
-      'Entdecken Sie, wie integrierte ERP-Systeme Automobilherstellern helfen, die IATF 16949-Compliance durch Rückverfolgbarkeit, Qualitätsmanagement und auditfähige Dokumentation aufrechtzuerhalten.',
-    date: '2026-01-20',
-    author: 'TMS Redaktion',
-    category: 'Branche',
-    content: `
-      <p>IATF 16949 ist der internationale Qualitätsmanagementstandard für die Automobilindustrie. Entwickelt von der International Automotive Task Force in Zusammenarbeit mit ISO, definiert er die Anforderungen, die Tier-1-, Tier-2- und Tier-3-Zulieferer erfüllen müssen, um konsistente Qualität, kontinuierliche Verbesserung und Fehlervermeidung in ihren Fertigungsabläufen nachzuweisen.</p>
-
-      <p>Für Automobilzulieferer ist die Compliance nicht optional. OEMs wie Volkswagen, BMW, Stellantis und Toyota verlangen die IATF 16949-Zertifizierung als Voraussetzung für eine Geschäftsbeziehung. Der Verlust der Zertifizierung kann den Verlust von Aufträgen im Millionenwert bedeuten.</p>
-
-      <h2>Was IATF 16949 verlangt</h2>
-
-      <p>Der Standard baut auf ISO 9001 auf und fügt automobilspezifische Anforderungen in mehreren kritischen Bereichen hinzu:</p>
-
-      <ul>
-        <li><strong>Produktrückverfolgbarkeit</strong> — Jedes Fertigteil muss bis zu seinen Rohmaterialien, Produktionsprozessen, Bedienern und Prüfergebnissen rückverfolgbar sein.</li>
-        <li><strong>Prozesskontrolle</strong> — Fertigungsprozesse müssen definiert, dokumentiert, überwacht und kontrolliert werden. Abweichungen müssen Korrekturmaßnahmen auslösen.</li>
-        <li><strong>Lieferantenmanagement</strong> — Eingehende Materialien müssen geprüft und qualifiziert werden. Die Lieferantenleistung muss gemessen und überprüft werden.</li>
-        <li><strong>Messsystemanalyse (MSA)</strong> — Messgeräte und Messinstrumente müssen kalibriert und ihre Fähigkeit statistisch verifiziert werden.</li>
-        <li><strong>Abweichungsmanagement</strong> — Fehlerhafte Teile müssen identifiziert, separiert, bewertet und verfolgt werden. Ursachenanalysen (8D-Methodik) müssen durchgeführt werden.</li>
-        <li><strong>Kontinuierliche Verbesserung</strong> — Die Organisation muss systematische Bemühungen zur Reduzierung von Variation, Steigerung der Effizienz und Vermeidung des Wiederauftretens von Problemen nachweisen.</li>
-      </ul>
-
-      <h2>Wo ERP in die Compliance passt</h2>
-
-      <p>Ein ERP-System ist das operative Rückgrat eines Fertigungsunternehmens. Es verwaltet Kundenaufträge, Beschaffung, Produktionsplanung, Lager und Finanzen. Bei korrekter Konfiguration und Erweiterung mit fertigungsspezifischen Modulen wird ERP zur Single Source of Truth, auf die Auditoren bei Zertifizierungsbewertungen zurückgreifen.</p>
-
-      <p>So unterstützt ERP direkt die wichtigsten IATF 16949-Anforderungsbereiche:</p>
-
-      <h3>Rückverfolgbarkeit</h3>
-
-      <p>ERP-Systeme mit Chargen- und Seriennummernverwaltung können Materialien vom Wareneingang über die Produktion bis zum Versand verfolgen. Wenn ein Kunde einen Feldfehler meldet, ermöglicht das ERP-System dem Hersteller, jedes andere Teil zu identifizieren, das aus derselben Materialcharge, auf derselben Maschine, während derselben Schicht produziert wurde. Diese Fähigkeit ist essenziell für wirksame Containment- und Rückrufmaßnahmen.</p>
-
-      <h3>Dokumentenkontrolle</h3>
-
-      <p>IATF 16949 verlangt gelenkte Dokumente — Arbeitsanweisungen, Kontrollpläne, FMEAs und Prüfstandards. Ein ERP-System mit integriertem Dokumentenmanagement stellt sicher, dass Bediener auf dem Shopfloor immer auf die aktuelle Revision zugreifen. Wenn ein Dokument aktualisiert wird, wird die vorherige Version archiviert und die Änderungshistorie bewahrt.</p>
-
-      <h3>Qualitätsmanagement</h3>
-
-      <p>Integrierte Qualitätsmodule ermöglichen es Herstellern, Prüfpläne zu definieren, die an bestimmte Materialien, Arbeitsgänge oder Fertigprodukte gebunden sind. Prüfergebnisse werden gegen jeden Produktionsauftrag oder Wareneingang erfasst und erzeugen eine vollständige Qualitätshistorie. Statistische Prozesskontrollkarten (SPC) können automatisch generiert werden, was Qualitätsingenieuren Einblick in Prozesstrends gibt, bevor sie aus der Spezifikation driften.</p>
-
-      <h3>Korrektur- und Vorbeugemaßnahmen (CAPA)</h3>
-
-      <p>Wenn eine Abweichung erkannt wird, kann das ERP-System einen strukturierten Korrekturmaßnahmen-Workflow auslösen. Dies umfasst die Dokumentation des Problems, die Durchführung der Ursachenanalyse, die Definition von Korrekturmaßnahmen, die Zuweisung von Verantwortlichkeiten und die Verfolgung der Umsetzung. Der gesamte CAPA-Lebenszyklus wird im System dokumentiert und bietet Auditoren einen klaren Nachweis der Problemlösungsdisziplin der Organisation.</p>
-
-      <h3>Lieferantenbewertung</h3>
-
-      <p>ERP-Einkaufsdaten in Kombination mit Wareneingangsprüfungsergebnissen bieten eine quantitative Grundlage für die Lieferantenbewertung. Liefertreue, Qualitätsreklamationsraten und Preiswettbewerbsfähigkeit können über die Zeit verfolgt werden. Diese Daten unterstützen den Lieferantenüberprüfungsprozess, den IATF 16949 vorschreibt.</p>
-
-      <h2>TMS Qualitätsmanagement für SAP Business One</h2>
-
-      <p>Für SAP Business One-Nutzer in der Automobilzulieferkette erweitert das TMS Qualitätsmanagement-Modul (QM) das Standard-ERP um die spezifischen Funktionen, die IATF 16949 verlangt. Prüfpläne können auf Material-, Arbeitsgang- oder Fertigteilebene definiert werden. Ergebnisse werden direkt vom Shopfloor über MES-Terminals erfasst, was papierbasierte Qualitätsprotokolle eliminiert. SPC-Analyse läuft automatisch, und Abweichungen lösen strukturierte 8D-Workflows innerhalb des Systems aus.</p>
-
-      <p>In Kombination mit dem TMS MES-Modul für Echtzeit-Produktionsverfolgung und dem TMS PDM-Modul für Dokumenten- und Revisionskontrolle wird SAP Business One zur vollständig IATF 16949-fähigen Plattform — ohne die Kosten und Komplexität eines Tier-1-ERP-Systems.</p>
-
-      <h2>Vorbereitung auf Ihr nächstes Audit</h2>
-
-      <p>Auditoren suchen nach Nachweisen, dass Ihr Qualitätsmanagementsystem nicht nur dokumentiert, sondern aktiv genutzt wird. Ein ERP-System, das Produktionsdaten, Qualitätsprüfungen, Korrekturmaßnahmen und Lieferantenbewertungen in Echtzeit erfasst, liefert diesen Nachweis automatisch. Anstatt vor einem Audit in Hektik Aufzeichnungen aus Tabellenkalkulationen und Papierakten zusammenzustellen, kann Ihr Team die erforderlichen Berichte in Minuten generieren.</p>
-
-      <p>Wenn Ihr aktuelles System die Auditvorbereitung stressig macht, ist das ein Zeichen dafür, dass Ihre Werkzeuge Ihre Qualitätsprozesse nicht effektiv unterstützen. Die richtige ERP-Konfiguration — erweitert um Fertigungs- und Qualitätsmodule — verwandelt Compliance von einer Belastung in einen Wettbewerbsvorteil.</p>
-    `,
-  },
-  {
-    slug: 'industry-4-0-sap-business-one',
-    title: 'Industrie 4.0 und SAP Business One: Die Brücke schlagen mit TMS',
-    description:
-      'Erfahren Sie, wie TMS-Module SAP Business One in eine vollständige Industrie-4.0-Plattform mit Echtzeit-Datenerfassung, erweiterten Analysen und Smart-Manufacturing-Funktionen verwandeln.',
-    date: '2026-03-01',
-    author: 'TMS Redaktion',
-    category: 'Technik',
-    content: `
-      <p>Industrie 4.0 verspricht eine vernetzte, datengetriebene Fabrik, in der Maschinen miteinander kommunizieren, die Produktion sich in Echtzeit anpasst und Entscheidungen durch Analytik statt durch Intuition getroffen werden. Für große Unternehmen, die SAP S/4HANA mit dedizierten IT-Abteilungen und siebenstelligen Budgets betreiben, ist diese Vision erreichbar. Aber was ist mit den Tausenden kleinen und mittelständischen Herstellern, die SAP Business One nutzen?</p>
-
-      <p>SAP Business One ist ein ausgezeichnetes ERP für wachsende Hersteller. Es bewältigt Finanzen, Einkauf, Vertrieb, Lagerverwaltung und grundlegende Produktionsplanung. Allerdings wurde es von Haus aus nicht als Industrie-4.0-Plattform konzipiert. Es fehlt an Echtzeit-Shopfloor-Konnektivität, erweiterter Produktionsplanung und der Art von granularer Datenerfassung, die Smart Manufacturing erfordert.</p>
-
-      <p>Hier kommt TMS (The Manufacturing Suite) ins Spiel.</p>
-
-      <h2>Was Industrie 4.0 für Hersteller wirklich bedeutet</h2>
-
-      <p>Befreit vom Marketing-Hype lässt sich Industrie 4.0 auf einige praktische Fähigkeiten reduzieren, die messbaren Geschäftswert liefern:</p>
-
-      <ul>
-        <li><strong>Echtzeit-Datenerfassung</strong> — Wissen, was auf dem Shopfloor gerade passiert, nicht was gestern passiert ist.</li>
-        <li><strong>Maschinenkonnektivität</strong> — Daten direkt von SPSen, Sensoren und Maschinensteuerungen erfassen, anstatt sich auf manuelle Eingabe zu verlassen.</li>
-        <li><strong>Analytik und Visualisierung</strong> — Rohe Produktionsdaten in umsetzbare Erkenntnisse durch Dashboards, Trendanalysen und Ausnahmealarme transformieren.</li>
-        <li><strong>Geschlossener Regelkreis</strong> — Produktionsdaten nutzen, um automatisch Pläne anzupassen, Qualitätsprüfungen auszulösen oder Wartungsteams zu benachrichtigen.</li>
-        <li><strong>Digitale Rückverfolgbarkeit</strong> — Einen vollständigen digitalen Nachweis jedes Produkts, Prozesses und Parameters für Qualitäts- und Compliance-Zwecke führen.</li>
-      </ul>
-
-      <p>Keine dieser Fähigkeiten erfordert künstliche Intelligenz, Blockchain oder digitale Zwillinge. Sie erfordern eine solide Dateninfrastruktur, die damit beginnt, Ihr ERP mit Ihrem Shopfloor zu verbinden.</p>
-
-      <h2>Der TMS-Modulstack</h2>
-
-      <p>TMS erweitert SAP Business One um eine Suite von Modulen, die zusammen die praktischen Fähigkeiten von Industrie 4.0 liefern. Jedes Modul integriert sich nativ in SAP und teilt Stammdaten, Transaktionen und Geschäftslogik ohne Middleware oder manuelle Synchronisation.</p>
-
-      <h3>Betriebsdatenerfassung (BDE)</h3>
-
-      <p>Das BDE-Modul verbindet sich direkt mit Maschinen und Bedienerterminals auf dem Shopfloor. Es erfasst Maschinenzustände (Produktion, Stillstand, Rüsten, Störung), Bedieneranwesenheit, Fertigmengen und Ausschusszahlen. Daten fließen in Echtzeit in SAP, was Planern und Produktionsleitern ein Live-Bild der Fabrikleistung gibt.</p>
-
-      <p>BDE erfasst auch Zeitstempel bei jedem Arbeitsgang, was eine genaue Zykluszeitanalyse und die automatische Berechnung der OEE (Overall Equipment Effectiveness) über jedes Arbeitszentrum ermöglicht.</p>
-
-      <h3>Manufacturing Execution System (MES)</h3>
-
-      <p>Während BDE Daten erfasst, steuert MES die Ausführung von Produktionsaufträgen. Es übernimmt Auftragssequenzierung, Arbeitsgangmeldungen, Materialverbrauchsverfolgung und Qualitätsprüfpunkte. Bediener interagieren mit MES über Touchscreen-Terminals an ihren Arbeitsplätzen, scannen Barcodes zum Starten und Stoppen von Arbeitsgängen, melden Mengen und erfassen Prüfergebnisse.</p>
-
-      <p>MES stellt sicher, dass das in SAP Geplante auf dem Shopfloor korrekt ausgeführt wird — und dass jede Abweichung sofort erfasst und gemeldet wird.</p>
-
-      <h3>Erweiterte Planung und Steuerung (APS)</h3>
-
-      <p>SAP Business Ones eingebautes MRP (Materialbedarfsplanung) berechnet, was produziert werden muss und wann, berücksichtigt aber keine endlichen Kapazitätsbeschränkungen. Das TMS APS-Modul schließt diese Lücke mit einem visuellen, per Drag-and-Drop bedienbaren Planungsbrett, das Maschinenverfügbarkeit, Werkzeuge, Bedienerqualifikationen und Rüstzeiten berücksichtigt.</p>
-
-      <p>APS ermöglicht Planern, Was-wäre-wenn-Szenarien zu simulieren, Engpässe zu identifizieren, bevor sie auftreten, und Aufträge als Reaktion auf Eilaufträge oder Maschinenausfälle umzusequenzieren. Das Ergebnis ist ein realistischer, ausführbarer Produktionsplan statt einer optimistischen Wunschliste.</p>
-
-      <h3>Business Intelligence (BI)</h3>
-
-      <p>Daten ohne Analyse sind nur Rauschen. Das TMS BI-Modul transformiert Produktions- und Qualitätsdaten in visuelle Dashboards, Trenddiagramme und Ausnahmeberichte. Produktionsleiter können KPIs wie OEE, Ausschussraten, Liefertreue und Durchsatz über alle Arbeitszentren hinweg auf einem Bildschirm überwachen.</p>
-
-      <p>Da TMS BI Daten direkt aus SAP Business One liest, kombiniert es Produktionskennzahlen mit Finanz- und Vertriebsdaten. Das bedeutet, Sie können nicht nur analysieren, wie viel Sie produziert haben, sondern auch die Kosten pro Einheit, Marge pro Auftrag und Ressourcenauslastung — alles an einem Ort.</p>
-
-      <h2>Ein praktischer Weg zu Industrie 4.0</h2>
-
-      <p>Einer der größten Fehler, den Hersteller bei Industrie 4.0 machen, ist der Versuch, alles auf einmal zu tun. Ein effektiverer Ansatz ist, mit dem höchstwertigen Anwendungsfall zu beginnen und darauf aufzubauen.</p>
-
-      <p>Für die meisten Hersteller ist dieser Ausgangspunkt Transparenz. Man kann nicht verbessern, was man nicht messen kann. Die Einführung von BDE an Ihrer kritischsten Produktionslinie gibt Ihnen sofortige Einblicke in Maschinenleistung und Bedienerproduktivität. Von dort aus können Sie MES für die Ausführungssteuerung, APS für intelligentere Planung und BI für funktionsübergreifende Analytik hinzufügen.</p>
-
-      <p>Da alle TMS-Module dasselbe SAP Business One-Fundament teilen, baut jede Ergänzung auf den bereits vorhandenen Daten und Prozessen auf. Es ist nicht nötig, Ihr bestehendes System abzulösen oder ein mehrjähriges Transformationsprogramm zu starten. Industrie 4.0 ist für einen mittelständischen Hersteller eine Reihe praktischer, inkrementeller Verbesserungen — jede einzelne liefert eigenständig Mehrwert.</p>
-
-      <h2>Erste Schritte</h2>
-
-      <p>Wenn Sie SAP Business One nutzen und über Tabellenkalkulationen und papierbasierte Produktionsverfolgung hinausgehen möchten, bietet TMS einen klaren, bewährten Weg. Die Suite wird von zertifizierten SAP-Partnern in ganz Europa eingeführt und unterstützt Fertigungsabläufe in der diskreten Fertigung, Prozessfertigung und Auftragsfertigung.</p>
-
-      <p>Der erste Schritt ist typischerweise eine Shopfloor-Analyse, bei der ein TMS-Berater Ihre aktuellen Produktionsprozesse abbildet, die größten Datenlücken identifiziert und empfiehlt, welche Module zuerst eingeführt werden sollten. Von dort folgt die Implementierung einer agilen Methodik mit phasenweisen Go-Lives, die sicherstellt, dass Sie schnell Ergebnisse sehen, ohne die laufende Produktion zu stören.</p>
-    `,
-  },
-];
-
-export function getStaticPaths() {
-  return [
-    { params: { slug: 'what-is-mes-manufacturing-execution-system' } },
-    { params: { slug: 'iatf-16949-erp-automotive' } },
-    { params: { slug: 'industry-4-0-sap-business-one' } },
-  ];
-}
-
-const { slug } = Astro.params;
-const post = posts.find((p) => p.slug === slug);
-
-if (!post) {
-  return Astro.redirect(withBase('/de/blog'));
-}
-
-const relatedPosts = posts.filter((p) => p.slug !== slug);
+const post = Astro.props as Props;
+
+const relatedPosts = allPosts
+  .filter((p) => p.slug !== post.slug)
+  .map((p) => ({
+    slug: p.slug,
+    date: p.date,
+    author: p.author.de,
+    title: p.i18n.de.title,
+    description: p.i18n.de.description,
+    category: p.i18n.de.category,
+  }));
 
 const formattedDate = new Date(post.date).toLocaleDateString('de-DE', {
   year: 'numeric',

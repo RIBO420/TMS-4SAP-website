@@ -3,41 +3,19 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
 import HeroInner from '../../../components/ui/HeroInner.astro';
 import CTABanner from '../../../components/ui/CTABanner.astro';
 import { withBase } from '../../../i18n/utils';
+import { posts as allPosts } from '@data/blog';
 
 const categories = ['Alle', 'Product', 'Branche', 'Engineering', 'Bedrijf'] as const;
 
-const posts = [
-  {
-    slug: 'what-is-mes-manufacturing-execution-system',
-    title: 'Wat is MES? Een complete gids voor Manufacturing Execution Systems',
-    description:
-      'Ontdek wat een Manufacturing Execution System (MES) doet, waarom het belangrijk is voor moderne fabrieken en hoe het de kloof overbrugt tussen ERP-planning en de realiteit op de werkvloer.',
-    date: '2026-02-15',
-    author: 'TMS Redactie',
-    category: 'Product',
-    categoryLabel: 'Product',
-  },
-  {
-    slug: 'iatf-16949-erp-automotive',
-    title: 'Hoe ERP-software IATF 16949 compliance ondersteunt in de automotive',
-    description:
-      'Ontdek hoe geïntegreerde ERP-systemen automotiveproducenten helpen bij het naleven van IATF 16949 door traceerbaarheid, kwaliteitsmanagement en auditklare documentatie.',
-    date: '2026-01-20',
-    author: 'TMS Redactie',
-    category: 'Branche',
-    categoryLabel: 'Branche',
-  },
-  {
-    slug: 'industry-4-0-sap-business-one',
-    title: 'Industrie 4.0 en SAP Business One: de brug slaan met TMS',
-    description:
-      'Ontdek hoe TMS-modules SAP Business One transformeren tot een volledig Industrie 4.0-platform met real-time dataregistratie, geavanceerde analytics en slimme productiemogelijkheden.',
-    date: '2026-03-01',
-    author: 'TMS Redactie',
-    category: 'Engineering',
-    categoryLabel: 'Engineering',
-  },
-];
+const locale = 'nl';
+const posts = allPosts.map((p) => ({
+  slug: p.slug,
+  date: p.date,
+  author: p.author[locale],
+  title: p.i18n[locale].title,
+  description: p.i18n[locale].description,
+  category: p.i18n[locale].category,
+}));
 
 // Map Dutch category labels to lowercase filter keys
 const categoryFilterMap: Record<string, string> = {
@@ -99,7 +77,7 @@ const formattedDate = (date: string) =>
             <article class="blog-card" data-animate>
               <div class="blog-card-content">
                 <div class="blog-card-meta">
-                  <span class="blog-card-category">{post.categoryLabel}</span>
+                  <span class="blog-card-category">{post.category}</span>
                   <span class="blog-card-dot" aria-hidden="true"></span>
                   <time class="blog-card-date" datetime={post.date}>{formattedDate(post.date)}</time>
                 </div>

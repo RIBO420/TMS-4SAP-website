@@ -4,6 +4,8 @@
    ============================================ */
 
 /* --- Extended Custom Properties --- */
+/* Note: --success, --danger, --info, --warning and the --z-* scale
+   are defined in global.css :root. Extras below only. */
 :root {
   /* Spacing scale */
   --space-xs: 4px;
@@ -15,15 +17,11 @@
   --space-3xl: 64px;
   --space-4xl: 96px;
 
-  /* Semantic colors */
-  --success: #22c55e;
-  --error: #ef4444;
+  /* Legacy alias — prefer var(--danger) going forward */
+  --error: var(--danger);
 
-  /* Z-index scale */
-  --z-dropdown: 50;
+  /* Extra z-index stops used by utilities */
   --z-sticky: 80;
-  --z-nav: 100;
-  --z-modal: 200;
 }
 
 /* ============================================
@@ -299,7 +297,7 @@
   font-size: 0.875rem;
   font-weight: 500;
   color: var(--text-muted);
-  transition: all 0.2s var(--ease);
+  transition: transform 0.2s var(--ease), opacity 0.2s var(--ease), color 0.2s var(--ease), background-color 0.2s var(--ease), border-color 0.2s var(--ease), box-shadow 0.2s var(--ease);
 }
 
 .module-sidebar-link:hover {
@@ -375,7 +373,7 @@
   border: 1px solid var(--border);
   border-radius: var(--radius);
   padding: var(--space-lg);
-  transition: all 0.3s var(--ease);
+  transition: transform 0.3s var(--ease), opacity 0.3s var(--ease), color 0.3s var(--ease), background-color 0.3s var(--ease), border-color 0.3s var(--ease), box-shadow 0.3s var(--ease);
 }
 
 .feature-card:hover {
@@ -448,7 +446,7 @@
   font-size: 0.875rem;
   font-weight: 500;
   color: var(--text-muted);
-  transition: all 0.2s var(--ease);
+  transition: transform 0.2s var(--ease), opacity 0.2s var(--ease), color 0.2s var(--ease), background-color 0.2s var(--ease), border-color 0.2s var(--ease), box-shadow 0.2s var(--ease);
 }
 
 .related-module-link:hover {
@@ -480,7 +478,7 @@
   border: 1px solid var(--border);
   border-radius: var(--radius);
   padding: var(--space-lg);
-  transition: all 0.3s var(--ease);
+  transition: transform 0.3s var(--ease), opacity 0.3s var(--ease), color 0.3s var(--ease), background-color 0.3s var(--ease), border-color 0.3s var(--ease), box-shadow 0.3s var(--ease);
 }
 
 .challenge-card:hover {

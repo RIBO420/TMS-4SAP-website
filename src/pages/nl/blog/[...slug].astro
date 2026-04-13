@@ -1,243 +1,52 @@
 ---
+import type { GetStaticPaths } from 'astro';
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import SectionHeader from '../../../components/ui/SectionHeader.astro';
 import CTABanner from '../../../components/ui/CTABanner.astro';
 import { withBase } from '../../../i18n/utils';
+import { posts as allPosts } from '@data/blog';
 
-interface BlogPost {
+export const getStaticPaths = (() => {
+  const locale = 'nl';
+  return allPosts.map((p) => {
+    const localized = p.i18n[locale];
+    return {
+      params: { slug: p.slug },
+      props: {
+        slug: p.slug,
+        date: p.date,
+        author: p.author[locale],
+        title: localized.title,
+        description: localized.description,
+        category: localized.category,
+        content: localized.content,
+      },
+    };
+  });
+}) satisfies GetStaticPaths;
+
+interface Props {
   slug: string;
-  title: string;
-  description: string;
   date: string;
   author: string;
+  title: string;
+  description: string;
   category: string;
   content: string;
 }
 
-const posts: BlogPost[] = [
-  {
-    slug: 'what-is-mes-manufacturing-execution-system',
-    title: 'Wat is MES? Een complete gids voor Manufacturing Execution Systems',
-    description:
-      'Ontdek wat een Manufacturing Execution System (MES) doet, waarom het belangrijk is voor moderne fabrieken en hoe het de kloof overbrugt tussen ERP-planning en de realiteit op de werkvloer.',
-    date: '2026-02-15',
-    author: 'TMS Redactie',
-    category: 'Product',
-    content: `
-      <p>In de moderne maakindustrie kan de afstand tussen een productieplanning en wat er daadwerkelijk op de werkvloer gebeurt verrassend groot zijn. Orders worden ingepland in het ERP-systeem, maar materialen worden te laat geleverd. Een machine valt halverwege een batch uit. Kwaliteitsproblemen worden pas ontdekt nadat de volledige productie van een dienst is afgerond. Het resultaat: gemiste deadlines, verspilde materialen en gefrustreerde klanten.</p>
-
-      <p>Een <strong>Manufacturing Execution System (MES)</strong> is ontworpen om die kloof te dichten. Het bevindt zich tussen uw enterprise resource planning (ERP)-laag en de fysieke productieomgeving en biedt real-time zichtbaarheid in elke bewerking, elk werkcentrum en elk geproduceerd product.</p>
-
-      <h2>Wat doet een MES precies?</h2>
-
-      <p>In de kern registreert, beheert en rapporteert een MES productieactiviteiten op het moment dat ze plaatsvinden. In plaats van te vertrouwen op papieren rapportages aan het einde van een dienst of handmatige data-invoer, registreert een MES gebeurtenissen op het moment dat ze zich voordoen -- machinestarts, operatoraanmeldingen, materiaalverbruik, kwaliteitsinspecties en gereedgemelde hoeveelheden.</p>
-
-      <p>De belangrijkste functies van een goed ontworpen MES zijn:</p>
-
-      <ul>
-        <li><strong>Ordervrijgave</strong> -- Het vrijgeven van productieorders naar de werkvloer en het toewijzen aan specifieke werkcentra op basis van actuele capaciteit en prioriteit.</li>
-        <li><strong>Real-time tracking</strong> -- Het bewaken van ordervoortgang, machinestatus (in bedrijf, stilstand, storing) en operatoractiviteit in real time.</li>
-        <li><strong>Materiaalbeheer</strong> -- Het bijhouden van grondstof- en componentverbruik bij elke bewerking, wat zorgt voor nauwkeurige stuklijsten en minder verspilling.</li>
-        <li><strong>Kwaliteitsborging</strong> -- Het activeren van inspectiepunten bij gedefinieerde processtappen en het vastleggen van goed/afkeur-resultaten tegen kwaliteitsspecificaties.</li>
-        <li><strong>Prestatie-analyse</strong> -- Het automatisch berekenen van OEE (Overall Equipment Effectiveness), cyclustijden, uitvalpercentages en andere KPI's.</li>
-        <li><strong>Traceerbaarheid</strong> -- Het opbouwen van een compleet genealogierecord dat eindproducten koppelt aan grondstoffen, operators, machines en procesparameters.</li>
-      </ul>
-
-      <h2>Waarom de kloof tussen ERP en werkvloer ertoe doet</h2>
-
-      <p>ERP-systemen zijn uitstekend in planning. Ze verwerken vraagvoorspelling, inkoop, capaciteitsplanning en financiële rapportage. Maar ERP opereert op een planningshorizon van uren, dagen of weken. De werkvloer opereert in minuten en seconden.</p>
-
-      <p>Zonder MES stuiten producenten doorgaans op verschillende problemen:</p>
-
-      <ul>
-        <li><strong>Vertraagde terugkoppeling</strong> -- Productiedata bereikt planners uren of zelfs dagen na de feiten, waardoor het onmogelijk is om in real time op problemen te reageren.</li>
-        <li><strong>Onnauwkeurige voorraad</strong> -- Handmatig boeken van materiaalverbruik leidt tot afwijkingen tussen systeemvoorraad en fysieke voorraad.</li>
-        <li><strong>Verborgen stilstand</strong> -- Korte stops en micro-stilstanden worden niet geregistreerd, waardoor de werkelijke prestaties van productielijnen worden gemaskeerd.</li>
-        <li><strong>Compliancerisico</strong> -- Sectoren zoals automotive en medische apparatuur vereisen volledige traceerbaarheid. Papieren registraties zijn foutgevoelig en moeilijk te auditen.</li>
-      </ul>
-
-      <p>Een MES elimineert deze blinde vlekken door een continue digitale draad te creëren van ordervrijgave tot gereed product.</p>
-
-      <h2>Hoe MES verbinding maakt met SAP Business One</h2>
-
-      <p>Voor producenten die SAP Business One gebruiken, vereist het integreren van een MES een oplossing die native de taal van SAP spreekt. De TMS MES-module is speciaal gebouwd voor SAP Business One. Het leest productieorders, stuklijsten en bewerkingsplannen rechtstreeks uit SAP en schrijft gereedmeldingen, materiaalverbruik en kwaliteitsresultaten in real time terug.</p>
-
-      <p>Deze bidirectionele integratie betekent dat er geen dubbele data-invoer is, geen CSV-imports en geen synchronisatievertragingen. Wanneer een operator een gereedgemelde hoeveelheid rapporteert op een terminal op de werkvloer, wordt de voorraad in SAP Business One binnen seconden bijgewerkt.</p>
-
-      <h2>Belangrijkste voordelen van het implementeren van een MES</h2>
-
-      <p>Producenten die een MES inzetten, zien doorgaans meetbare verbeteringen op verschillende vlakken:</p>
-
-      <ul>
-        <li><strong>15-25% toename in OEE</strong> -- Door stilstand en trage cycli zichtbaar te maken, kunnen teams de grondoorzaken systematisch aanpakken.</li>
-        <li><strong>Verlaging van uitvalpercentages</strong> -- Real-time kwaliteitscontroles detecteren afwijkingen vroeg in het proces, voordat er meer waarde wordt toegevoegd.</li>
-        <li><strong>Snellere orderafronding</strong> -- Betere planning en real-time herprioritering houden orders in beweging door de productie zonder onnodige wachttijd.</li>
-        <li><strong>Auditgereedheid</strong> -- Complete, getimestampte productieregistraties maken het eenvoudig om te reageren op klantaudits en regelgevende inspecties.</li>
-        <li><strong>Onderbouwde besluitvorming</strong> -- Productiemanagers krijgen dashboards met live KPI's in plaats van te vertrouwen op onderbuikgevoel of verouderde spreadsheets.</li>
-      </ul>
-
-      <h2>Is uw fabriek klaar voor MES?</h2>
-
-      <p>Als uw productieteam nog steeds vertrouwt op papieren werkbonnen, whiteboards of spreadsheetupdates aan het einde van de dag, werkt u met een aanzienlijke informatievertraging. Een MES vervangt uw ERP niet -- het breidt het uit naar de werkvloer en geeft u de real-time zichtbaarheid die u nodig heeft om te concurreren in een markt die kortere levertijden, hogere kwaliteit en volledige traceerbaarheid eist.</p>
-
-      <p>De TMS MES-module voor SAP Business One kan stapsgewijs worden uitgerold. Veel klanten beginnen met een enkele productielijn of werkcentrum, bewijzen de meerwaarde en breiden vervolgens uit naar de gehele faciliteit. Omdat het native op SAP draait, is er geen middleware te onderhouden en geen integratieproject te managen -- alleen een directe verbinding van uw planningssysteem naar uw productiepraktijk.</p>
-    `,
-  },
-  {
-    slug: 'iatf-16949-erp-automotive',
-    title: 'Hoe ERP-software IATF 16949 compliance ondersteunt in de automotive',
-    description:
-      'Ontdek hoe geïntegreerde ERP-systemen automotiveproducenten helpen bij het naleven van IATF 16949 door traceerbaarheid, kwaliteitsmanagement en auditklare documentatie.',
-    date: '2026-01-20',
-    author: 'TMS Redactie',
-    category: 'Branche',
-    content: `
-      <p>IATF 16949 is de internationale kwaliteitsmanagementsstandaard voor de auto-industrie. Ontwikkeld door de International Automotive Task Force in samenwerking met ISO, definieert deze norm de eisen waaraan tier-one, tier-two en tier-three leveranciers moeten voldoen om consistente kwaliteit, continue verbetering en defectpreventie in hun productieprocessen aan te tonen.</p>
-
-      <p>Voor automotivetoeleveranciers is compliance niet optioneel. OEM's zoals Volkswagen, BMW, Stellantis en Toyota eisen IATF 16949-certificering als voorwaarde om zaken te doen. Het verlies van certificering kan het verlies van contracten ter waarde van miljoenen betekenen.</p>
-
-      <h2>Wat IATF 16949 vereist</h2>
-
-      <p>De standaard bouwt voort op ISO 9001 en voegt automotivespecifieke eisen toe op verschillende kritieke gebieden:</p>
-
-      <ul>
-        <li><strong>Producttraceerbaarheid</strong> -- Elk afgewerkt onderdeel moet traceerbaar zijn tot aan de grondstoffen, productieprocessen, operators en inspectieresultaten.</li>
-        <li><strong>Procesbeheersing</strong> -- Productieprocessen moeten gedefinieerd, gedocumenteerd, bewaakt en beheerst worden. Afwijkingen moeten corrigerende maatregelen initiëren.</li>
-        <li><strong>Leveranciersbeheer</strong> -- Inkomende materialen moeten geïnspecteerd en gekwalificeerd worden. Leveranciersprestaties moeten gemeten en beoordeeld worden.</li>
-        <li><strong>Meetsysteemanalyse (MSA)</strong> -- Meetinstrumenten moeten gekalibreerd zijn en hun capaciteit moet statistisch geverifieerd worden.</li>
-        <li><strong>Afwijkingsbeheer</strong> -- Defecte onderdelen moeten geïdentificeerd, afgezonderd, beoordeeld en gevolgd worden. Oorzaakanalyse (8D-methodiek) moet worden uitgevoerd.</li>
-        <li><strong>Continue verbetering</strong> -- De organisatie moet systematische inspanningen aantonen om variatie te verminderen, efficiëntie te verbeteren en herhaling van problemen te voorkomen.</li>
-      </ul>
-
-      <h2>Waar ERP past in compliance</h2>
-
-      <p>Een ERP-systeem is de operationele ruggengraat van een productiebedrijf. Het beheert verkooporders, inkoop, productieplanning, voorraad en financiën. Wanneer het juist geconfigureerd en uitgebreid is met productiespecifieke modules, wordt ERP de enige bron van waarheid waarop auditors vertrouwen tijdens certificeringsaudits.</p>
-
-      <p>Hieronder volgt hoe ERP direct elk belangrijk IATF 16949-vereistengebied ondersteunt:</p>
-
-      <h3>Traceerbaarheid</h3>
-
-      <p>ERP-systemen met batch- en serienummerbeheer kunnen materialen volgen van goederenontvangst via productie tot eindverzending. Wanneer een klant een veldstoring meldt, kan het ERP-systeem de producent helpen elk ander onderdeel te identificeren dat geproduceerd is uit dezelfde materiaalbatch, op dezelfde machine, tijdens dezelfde dienst. Deze capaciteit is essentieel voor effectieve indamming en terugroepacties.</p>
-
-      <h3>Documentbeheersing</h3>
-
-      <p>IATF 16949 vereist beheerste documenten -- werkinstructies, controlplannen, FMEA's en inspectienormen. Een ERP-systeem met geïntegreerd documentbeheer zorgt ervoor dat operators op de werkvloer altijd de actuele revisie raadplegen. Wanneer een document wordt bijgewerkt, wordt de vorige versie gearchiveerd en de wijzigingshistorie bewaard.</p>
-
-      <h3>Kwaliteitsmanagement</h3>
-
-      <p>Geïntegreerde kwaliteitsmodules stellen producenten in staat inspectieplannen te definiëren die gekoppeld zijn aan specifieke materialen, bewerkingen of eindproducten. Inspectieresultaten worden geregistreerd per productieorder of goederenontvangst, waardoor een complete kwaliteitshistorie ontstaat. Statistical Process Control (SPC)-grafieken kunnen automatisch worden gegenereerd, zodat kwaliteitstechnici inzicht krijgen in procestrends voordat deze buiten specificatie raken.</p>
-
-      <h3>Corrigerende en preventieve maatregelen (CAPA)</h3>
-
-      <p>Wanneer een afwijking wordt gedetecteerd, kan het ERP-systeem een gestructureerde workflow voor corrigerende maatregelen starten. Dit omvat het documenteren van het probleem, het uitvoeren van oorzaakanalyse, het definiëren van corrigerende maatregelen, het toewijzen van verantwoordelijkheden en het volgen van de afronding. De volledige CAPA-levenscyclus wordt vastgelegd in het systeem, waardoor auditors duidelijk bewijs krijgen van de probleemoplossende discipline van de organisatie.</p>
-
-      <h3>Leveranciersbeoordeling</h3>
-
-      <p>ERP-inkoopdata gecombineerd met ingangscontroleresultaten biedt een kwantitatieve basis voor leveranciersscoring. Leveringsprestaties, kwaliteitsafkeurpercentages en prijsconcurrentiekracht kunnen in de loop der tijd worden gevolgd. Deze data ondersteunt het leveranciersbeoordelingsproces dat IATF 16949 voorschrijft.</p>
-
-      <h2>TMS Quality Management voor SAP Business One</h2>
-
-      <p>Voor SAP Business One-gebruikers in de automotive toeleveringsketen breidt de TMS Quality Management (QM)-module het standaard ERP uit met de specifieke functionaliteiten die IATF 16949 vereist. Inspectieplannen kunnen worden gedefinieerd op materiaal-, bewerkings- of eindproductniveau. Resultaten worden rechtstreeks van de werkvloer geregistreerd via MES-terminals, waardoor papieren kwaliteitslogboeken overbodig worden. SPC-analyse draait automatisch en afwijkingen initiëren gestructureerde 8D-workflows binnen het systeem.</p>
-
-      <p>In combinatie met de TMS MES-module voor real-time productietracking en de TMS PDM-module voor document- en revisiebeheer, wordt SAP Business One een volledig IATF 16949-geschikt platform -- zonder de kosten en complexiteit van een tier-one ERP-systeem.</p>
-
-      <h2>Voorbereiding op uw volgende audit</h2>
-
-      <p>Auditors zoeken naar bewijs dat uw kwaliteitsmanagementsysteem niet alleen gedocumenteerd is, maar ook actief wordt gebruikt. Een ERP-systeem dat productiedata, kwaliteitsinspecties, corrigerende maatregelen en leveranciersbeoordelingen in real time vastlegt, levert dat bewijs automatisch. In plaats van voor een audit haastig gegevens bijeen te zoeken uit spreadsheets en papieren dossiers, kan uw team de vereiste rapportages in minuten genereren.</p>
-
-      <p>Als uw huidige systeem de auditvoorbereiding stressvol maakt, is dat een teken dat uw tooling uw kwaliteitsprocessen niet effectief ondersteunt. De juiste ERP-configuratie -- uitgebreid met productie- en kwaliteitsmodules -- verandert compliance van een last in een concurrentievoordeel.</p>
-    `,
-  },
-  {
-    slug: 'industry-4-0-sap-business-one',
-    title: 'Industrie 4.0 en SAP Business One: de brug slaan met TMS',
-    description:
-      'Ontdek hoe TMS-modules SAP Business One transformeren tot een volledig Industrie 4.0-platform met real-time dataregistratie, geavanceerde analytics en slimme productiemogelijkheden.',
-    date: '2026-03-01',
-    author: 'TMS Redactie',
-    category: 'Engineering',
-    content: `
-      <p>Industrie 4.0 belooft een verbonden, datagedreven fabriek waar machines met elkaar communiceren, productie zich in real time aanpast en beslissingen worden onderbouwd door analytics in plaats van intuïtie. Voor grote ondernemingen met SAP S/4HANA, dedicated IT-afdelingen en budgetten van zeven cijfers is deze visie haalbaar. Maar hoe zit het met de duizenden kleine en middelgrote producenten die SAP Business One gebruiken?</p>
-
-      <p>SAP Business One is een uitstekend ERP-systeem voor groeiende productiebedrijven. Het verwerkt financiën, inkoop, verkoop, voorraadbeheer en basale productieplanning. Maar out-of-the-box is het niet ontworpen als een Industrie 4.0-platform. Het mist real-time werkvloerconnectiviteit, geavanceerde productieplanning en het type gedetailleerde dataregistratie dat slimme productie vereist.</p>
-
-      <p>Hier komt TMS (The Manufacturing Suite) in beeld.</p>
-
-      <h2>Wat Industrie 4.0 werkelijk betekent voor producenten</h2>
-
-      <p>Ontdaan van de marketinghype komt Industrie 4.0 neer op een paar praktische mogelijkheden die meetbare bedrijfswaarde opleveren:</p>
-
-      <ul>
-        <li><strong>Real-time dataregistratie</strong> -- Weten wat er nu op de productievloer gebeurt, niet wat er gisteren is gebeurd.</li>
-        <li><strong>Machineconnectiviteit</strong> -- Data rechtstreeks ophalen uit PLC's, sensoren en machinebesturingen in plaats van te vertrouwen op handmatige invoer.</li>
-        <li><strong>Analytics en visualisatie</strong> -- Ruwe productiedata omzetten in bruikbare inzichten via dashboards, trendanalyse en waarschuwingsmeldingen.</li>
-        <li><strong>Gesloten feedbackloop</strong> -- Productiedata gebruiken om automatisch planningen aan te passen, kwaliteitscontroles te activeren of onderhoudsteams te waarschuwen.</li>
-        <li><strong>Digitale traceerbaarheid</strong> -- Een compleet digitaal dossier bijhouden van elk product, proces en elke parameter voor kwaliteits- en compliancedoeleinden.</li>
-      </ul>
-
-      <p>Geen van deze mogelijkheden vereist kunstmatige intelligentie, blockchain of digital twins. Ze vereisen een solide data-infrastructuur, en die begint bij het verbinden van uw ERP met uw productievloer.</p>
-
-      <h2>De TMS-modulestack</h2>
-
-      <p>TMS breidt SAP Business One uit met een suite van modules die samen de praktische mogelijkheden van Industrie 4.0 leveren. Elke module integreert native met SAP en deelt stamdata, transacties en bedrijfslogica zonder middleware of handmatige synchronisatie.</p>
-
-      <h3>Production Data Capture (PDC)</h3>
-
-      <p>De PDC-module maakt rechtstreeks verbinding met machines en operatorterminals op de werkvloer. Het registreert machinestatus (in bedrijf, stilstand, omstelling, storing), operatoraanwezigheid, geproduceerde hoeveelheden en uitvalaantallen. Data stroomt in real time naar SAP, zodat planners en productiemanagers een live beeld krijgen van de fabrieksprestaties.</p>
-
-      <p>PDC registreert ook tijdstempels bij elke bewerking, waardoor nauwkeurige cyclustijdanalyse en automatische berekening van OEE (Overall Equipment Effectiveness) per werkcentrum mogelijk worden.</p>
-
-      <h3>Manufacturing Execution System (MES)</h3>
-
-      <p>Waar PDC data registreert, beheert MES de uitvoering van productieorders. Het behandelt ordervolgorde, bewerkingsrapportage, materiaalverbruiktracking en handhaving van kwaliteitscontrolepunten. Operators werken met MES via touchscreenterminals op hun werkplek: ze scannen barcodes om bewerkingen te starten en stoppen, rapporteren hoeveelheden en registreren inspectieresultaten.</p>
-
-      <p>MES zorgt ervoor dat wat gepland is in SAP correct wordt uitgevoerd op de werkvloer -- en dat eventuele afwijkingen direct worden vastgelegd en gerapporteerd.</p>
-
-      <h3>Advanced Planning and Scheduling (APS)</h3>
-
-      <p>De ingebouwde MRP (Material Requirements Planning) van SAP Business One berekent wat er geproduceerd moet worden en wanneer, maar houdt geen rekening met eindige capaciteitsbeperkingen. De TMS APS-module vult deze leemte op met een visueel, drag-and-drop planningsbord dat rekening houdt met machinebeschikbaarheid, gereedschappen, operatorvaardigheden en omsteltijden.</p>
-
-      <p>APS stelt planners in staat what-if-scenario's te simuleren, knelpunten te identificeren voordat ze zich voordoen en orders opnieuw te ordenen als reactie op spoedorders of machinestoringen. Het resultaat is een realistische, uitvoerbare productieplanning in plaats van een optimistische wenslijst.</p>
-
-      <h3>Business Intelligence (BI)</h3>
-
-      <p>Data zonder analyse is slechts ruis. De TMS BI-module transformeert productie- en kwaliteitsdata in visuele dashboards, trendgrafieken en uitzonderingsrapportages. Productiemanagers kunnen KPI's zoals OEE, uitvalpercentages, leverbetrouwbaarheid en doorvoer van alle werkcentra bewaken vanuit één scherm.</p>
-
-      <p>Omdat TMS BI data rechtstreeks uit SAP Business One leest, combineert het productiemetrieken met financiële en commerciële data. Dit betekent dat u niet alleen kunt analyseren hoeveel u geproduceerd heeft, maar ook de kosten per eenheid, marge per order en bezettingsgraad -- allemaal op één plek.</p>
-
-      <h2>Een praktisch pad naar Industrie 4.0</h2>
-
-      <p>Een van de grootste fouten die producenten maken met Industrie 4.0 is alles tegelijk willen doen. Een effectievere aanpak is om te beginnen met de use case met de hoogste waarde en van daaruit verder te bouwen.</p>
-
-      <p>Voor de meeste producenten is dat startpunt zichtbaarheid. U kunt niet verbeteren wat u niet kunt meten. Het uitrollen van PDC op uw meest kritieke productielijn geeft u direct inzicht in machineprestaties en operatorproductiviteit. Van daaruit kunt u MES toevoegen voor uitvoeringscontrole, APS voor slimmere planning en BI voor crossfunctionele analytics.</p>
-
-      <p>Omdat alle TMS-modules dezelfde SAP Business One-basis delen, bouwt elke toevoeging voort op de data en processen die al aanwezig zijn. Het is niet nodig om uw bestaande systeem te vervangen of een meerjaren transformatieprogramma te starten. Industrie 4.0, voor een MKB-producent, is een reeks praktische, incrementele verbeteringen -- elk met een eigen opbrengst.</p>
-
-      <h2>Aan de slag</h2>
-
-      <p>Als u SAP Business One gebruikt en verder wilt gaan dan spreadsheets en papieren productieregistratie, biedt TMS een helder, bewezen pad. De suite wordt uitgerold door gecertificeerde SAP-partners in heel Europa en ondersteunt productieprocessen in discrete, procesmatige en engineer-to-order-omgevingen.</p>
-
-      <p>De eerste stap is doorgaans een werkvloerassessment waarbij een TMS-consultant uw huidige productieprocessen in kaart brengt, de grootste datahiaten identificeert en adviseert welke modules als eerste uitgerold moeten worden. Vervolgens verloopt de implementatie volgens een agile methodiek met gefaseerde go-lives, zodat u snel resultaten ziet zonder de lopende productie te verstoren.</p>
-    `,
-  },
-];
-
-export function getStaticPaths() {
-  return [
-    { params: { slug: 'what-is-mes-manufacturing-execution-system' } },
-    { params: { slug: 'iatf-16949-erp-automotive' } },
-    { params: { slug: 'industry-4-0-sap-business-one' } },
-  ];
-}
-
-const { slug } = Astro.params;
-const post = posts.find((p) => p.slug === slug);
-
-if (!post) {
-  return Astro.redirect(withBase('/nl/blog'));
-}
-
-const relatedPosts = posts.filter((p) => p.slug !== slug);
+const post = Astro.props as Props;
+
+const relatedPosts = allPosts
+  .filter((p) => p.slug !== post.slug)
+  .map((p) => ({
+    slug: p.slug,
+    date: p.date,
+    author: p.author.nl,
+    title: p.i18n.nl.title,
+    description: p.i18n.nl.description,
+    category: p.i18n.nl.category,
+  }));
 
 const formattedDate = new Date(post.date).toLocaleDateString('nl-NL', {
   year: 'numeric',

@@ -3,38 +3,19 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
 import HeroInner from '../../../components/ui/HeroInner.astro';
 import CTABanner from '../../../components/ui/CTABanner.astro';
 import { withBase } from '../../../i18n/utils';
+import { posts as allPosts } from '@data/blog';
 
 const categories = ['Alle', 'Produkt', 'Branche', 'Technik', 'Unternehmen'] as const;
 
-const posts = [
-  {
-    slug: 'what-is-mes-manufacturing-execution-system',
-    title: 'Was ist MES? Ein vollständiger Leitfaden für Manufacturing Execution Systeme',
-    description:
-      'Erfahren Sie, was ein Manufacturing Execution System (MES) leistet, warum es für moderne Fabriken wichtig ist und wie es die Lücke zwischen ERP-Planung und Shopfloor-Realität schließt.',
-    date: '2026-02-15',
-    author: 'TMS Redaktion',
-    category: 'Produkt',
-  },
-  {
-    slug: 'iatf-16949-erp-automotive',
-    title: 'Wie ERP-Software die IATF 16949 Compliance in der Automobilindustrie unterstützt',
-    description:
-      'Entdecken Sie, wie integrierte ERP-Systeme Automobilherstellern helfen, die IATF 16949-Compliance durch Rückverfolgbarkeit, Qualitätsmanagement und auditfähige Dokumentation aufrechtzuerhalten.',
-    date: '2026-01-20',
-    author: 'TMS Redaktion',
-    category: 'Branche',
-  },
-  {
-    slug: 'industry-4-0-sap-business-one',
-    title: 'Industrie 4.0 und SAP Business One: Die Brücke schlagen mit TMS',
-    description:
-      'Erfahren Sie, wie TMS-Module SAP Business One in eine vollständige Industrie-4.0-Plattform mit Echtzeit-Datenerfassung, erweiterten Analysen und Smart-Manufacturing-Funktionen verwandeln.',
-    date: '2026-03-01',
-    author: 'TMS Redaktion',
-    category: 'Technik',
-  },
-];
+const locale = 'de';
+const posts = allPosts.map((p) => ({
+  slug: p.slug,
+  date: p.date,
+  author: p.author[locale],
+  title: p.i18n[locale].title,
+  description: p.i18n[locale].description,
+  category: p.i18n[locale].category,
+}));
 ---
 
 <BaseLayout

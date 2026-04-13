@@ -1,0 +1,460 @@
+---
+// §1 — Act I: The Obsolete Plan
+// "Your Monday schedule is wrong by Tuesday lunch."
+// Hero is zero-JS. CSS-only entrance choreography with prefers-reduced-motion guard.
+// See HOMEPAGE-REDESIGN.md §1 Hero + Motion System.
+import { withBase } from "../../../i18n/utils";
+
+interface Props {
+  lang?: "en" | "nl" | "de";
+}
+const { lang = "en" } = Astro.props;
+
+const copy = {
+  en: {
+    eyebrow: "01 · PLAN",
+    h1: "Your Monday schedule is wrong by Tuesday lunch.",
+    sub: "Every shop floor runs on two schedules: the one in SAP, and the real one on the whiteboard.",
+    primary: "See the scheduler",
+    secondary: "Book walkthrough",
+    trust: "SAP-certified · ISA-95 L3+4 · IATF 16949 ready",
+    visualAlt: "Static snapshot of the TMS production scheduler with four machine rows and six scheduled jobs.",
+  },
+  nl: {
+    eyebrow: "01 · PLAN",
+    h1: "Je planning van maandag klopt niet meer na dinsdagmiddag.",
+    sub: "Elke werkvloer draait op twee schema's: één in SAP, en het echte op het whiteboard.",
+    primary: "Zie de planner",
+    secondary: "Technische walkthrough",
+    trust: "SAP-gecertificeerd · ISA-95 L3+4 · IATF 16949-ready",
+    visualAlt: "Statische weergave van de TMS-productieplanner met vier machinerijen en zes ingeplande opdrachten.",
+  },
+  de: {
+    eyebrow: "01 · PLAN",
+    h1: "Ihr Montagsplan stimmt schon Dienstagmittag nicht mehr.",
+    sub: "Jede Werkshalle läuft mit zwei Plänen: dem in SAP und dem echten am Whiteboard.",
+    primary: "Zum Planer",
+    secondary: "Technischer Walkthrough",
+    trust: "SAP-zertifiziert · ISA-95 L3+4 · IATF 16949 ready",
+    visualAlt: "Statischer Schnappschuss des TMS-Produktionsplaners mit vier Maschinenzeilen und sechs eingeplanten Aufträgen.",
+  },
+}[lang];
+
+const demoHref = withBase("/demo");
+
+// Static Gantt snapshot: 4 machines × 5 days, 6 pre-placed job blocks.
+// x is day column (0..4), w is duration in day-cells, row is machine index.
+type Block = { row: number; x: number; w: number; id: string; live?: boolean };
+const blocks: Block[] = [
+  { row: 0, x: 0.2, w: 1.4, id: "JOB-4817" },
+  { row: 0, x: 2.1, w: 1.3, id: "JOB-4821", live: true },
+  { row: 1, x: 0.6, w: 1.8, id: "JOB-4815" },
+  { row: 1, x: 3.0, w: 1.6, id: "JOB-4809" },
+  { row: 2, x: 1.4, w: 1.7, id: "JOB-4819" },
+  { row: 3, x: 0.0, w: 2.2, id: "JOB-4803" },
+];
+
+const ticker = [
+  "14:02 · M2 · JOB-4821 · cycle 47s · OK",
+  "14:02 · M1 · JOB-4817 · setup 12m · ...",
+  "14:01 · M3 · JOB-4815 · OEE 0.81 · ↑",
+  "14:01 · M4 · JOB-4819 · cycle 38s · OK",
+];
+
+const machineLabels = ["M1", "M2", "M3", "M4"];
+const dayLabels = ["MON", "TUE", "WED", "THU", "FRI"];
+---
+
+<section class="hero" data-section="1" data-lang={lang} aria-labelledby="hero-h1">
+  <div class="hero__inner">
+    <div class="hero__copy">
+      <p class="hero__eyebrow mono">{copy.eyebrow}</p>
+      <h1 id="hero-h1" class="hero__h1">{copy.h1}</h1>
+      <p class="hero__sub">{copy.sub}</p>
+      <div class="hero__ctas">
+        <a class="hero__cta hero__cta--primary" href="#scheduler">
+          {copy.primary}
+          <span aria-hidden="true" class="hero__cta-arrow">→</span>
+        </a>
+        <a class="hero__cta hero__cta--secondary" href={demoHref}>
+          {copy.secondary}
+        </a>
+      </div>
+      <p class="hero__trust mono">{copy.trust}</p>
+    </div>
+
+    <div class="hero__visual" role="img" aria-label={copy.visualAlt}>
+      <div class="gantt" aria-hidden="true">
+        <div class="gantt__header">
+          <span class="gantt__corner mono">WK 14</span>
+          {dayLabels.map((d) => <span class="gantt__day mono">{d}</span>)}
+        </div>
+        <div class="gantt__body">
+          {machineLabels.map((m, rowIdx) => (
+            <div class="gantt__row">
+              <span class="gantt__machine mono">{m}</span>
+              <div class="gantt__track">
+                {[0, 1, 2, 3, 4].map(() => <span class="gantt__cell"></span>)}
+                {blocks
+                  .filter((b) => b.row === rowIdx)
+                  .map((b) => (
+                    <span
+                      class={`gantt__block${b.live ? " gantt__block--live" : ""}`}
+                      style={`left:${(b.x / 5) * 100}%; width:${(b.w / 5) * 100}%;`}
+                    >
+                      <span class="gantt__block-id mono">{b.id}</span>
+                      {b.live && <span class="gantt__pulse" aria-hidden="true"></span>}
+                    </span>
+                  ))}
+              </div>
+            </div>
+          ))}
+        </div>
+        <div class="gantt__ticker" aria-hidden="true">
+          {ticker.map((line) => <div class="gantt__ticker-line mono">{line}</div>)}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    padding-block: 140px;
+    background: var(--bg, #09090b);
+    overflow: hidden;
+  }
+
+  .hero__inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding-inline: 24px;
+    display: grid;
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    gap: 64px;
+    align-items: center;
+  }
+
+  .hero__copy {
+    min-width: 0;
+  }
+
+  /* ---- Typography ---- */
+  .hero__eyebrow {
+    font-size: 0.75rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--amber, #f59e0b);
+    margin: 0 0 24px;
+    opacity: 0;
+  }
+
+  .hero__h1 {
+    font-size: clamp(2.25rem, 5.2vw, 4.25rem);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    font-weight: 700;
+    margin: 0 0 24px;
+    color: var(--text, #fafafa);
+    max-width: 18ch;
+    opacity: 0;
+  }
+
+  .hero__sub {
+    font-size: clamp(1rem, 1.2vw, 1.125rem);
+    line-height: 1.55;
+    color: var(--text-muted, #a1a1aa);
+    margin: 0 0 36px;
+    max-width: 52ch;
+    opacity: 0;
+  }
+
+  /* ---- CTAs ---- */
+  .hero__ctas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+
+  .hero__cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 14px 22px;
+    font-size: 0.9375rem;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    text-decoration: none;
+    border-radius: 2px;
+    border: 1px solid transparent;
+    transition: transform 150ms cubic-bezier(0.25, 1, 0.5, 1),
+      background 150ms cubic-bezier(0.25, 1, 0.5, 1),
+      border-color 150ms cubic-bezier(0.25, 1, 0.5, 1);
+    opacity: 0;
+  }
+
+  .hero__cta--primary {
+    background: var(--amber, #f59e0b);
+    color: #0a0a0a;
+    border-color: var(--amber, #f59e0b);
+  }
+  .hero__cta--primary:hover {
+    background: var(--amber-hover, #eab308);
+    transform: scale(1.02);
+  }
+  .hero__cta--primary:active {
+    transform: scale(0.98);
+  }
+
+  .hero__cta--secondary {
+    background: transparent;
+    color: var(--text, #fafafa);
+    border-color: var(--border, #232329);
+  }
+  .hero__cta--secondary:hover {
+    border-color: var(--border-hover, #33333b);
+    transform: scale(1.02);
+  }
+  .hero__cta--secondary:active {
+    transform: scale(0.98);
+  }
+
+  .hero__cta-arrow {
+    display: inline-block;
+    transition: transform 150ms cubic-bezier(0.25, 1, 0.5, 1);
+  }
+  .hero__cta--primary:hover .hero__cta-arrow {
+    transform: translateX(3px);
+  }
+
+  .hero__trust {
+    font-size: 0.75rem;
+    letter-spacing: 0.06em;
+    color: var(--text-dim, #71717a);
+    margin: 0;
+    opacity: 0;
+  }
+
+  /* ---- Visual (Gantt) ---- */
+  .hero__visual {
+    min-width: 0;
+    opacity: 0;
+    will-change: opacity, transform;
+  }
+
+  .gantt {
+    position: relative;
+    border: 1px solid var(--border, #232329);
+    background: color-mix(in oklch, var(--bg, #09090b) 88%, black);
+    padding: 20px 22px 0;
+    border-radius: 2px;
+  }
+
+  .gantt__header {
+    display: grid;
+    grid-template-columns: 44px repeat(5, 1fr);
+    gap: 0;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border, #232329);
+  }
+  .gantt__corner,
+  .gantt__day {
+    font-size: 0.625rem;
+    letter-spacing: 0.12em;
+    color: var(--text-dim, #71717a);
+  }
+  .gantt__day {
+    text-align: left;
+    padding-left: 6px;
+  }
+
+  .gantt__body {
+    padding-block: 12px 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .gantt__row {
+    display: grid;
+    grid-template-columns: 44px 1fr;
+    align-items: center;
+  }
+  .gantt__machine {
+    font-size: 0.6875rem;
+    color: var(--text-dim, #71717a);
+    letter-spacing: 0.08em;
+  }
+  .gantt__track {
+    position: relative;
+    height: 30px;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+  }
+  .gantt__cell {
+    border-left: 1px dashed rgba(255, 255, 255, 0.04);
+    height: 100%;
+  }
+  .gantt__cell:first-child {
+    border-left: none;
+  }
+
+  .gantt__block {
+    position: absolute;
+    top: 4px;
+    bottom: 4px;
+    background: rgba(245, 158, 11, 0.14);
+    border: 1px solid var(--amber, #f59e0b);
+    border-left: 3px solid var(--amber, #f59e0b);
+    display: flex;
+    align-items: center;
+    padding-inline: 8px;
+    overflow: hidden;
+    border-radius: 1px;
+  }
+  .gantt__block-id {
+    font-size: 0.625rem;
+    color: var(--amber, #f59e0b);
+    letter-spacing: 0.05em;
+    white-space: nowrap;
+  }
+
+  .gantt__block--live {
+    background: rgba(245, 158, 11, 0.22);
+  }
+  .gantt__pulse {
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--amber, #f59e0b);
+    box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.55);
+  }
+
+  .gantt__ticker {
+    position: relative;
+    border-top: 1px solid var(--border, #232329);
+    padding: 10px 2px 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 30%, black 70%, transparent 100%);
+    mask-image: linear-gradient(to bottom, transparent 0%, black 30%, black 70%, transparent 100%);
+  }
+  .gantt__ticker-line {
+    font-size: 0.6875rem;
+    color: var(--text-dim, #71717a);
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  /* ---- Motion (CSS-only, zero-JS) ---- */
+  @keyframes heroEnter {
+    from {
+      opacity: 0;
+      transform: translateY(16px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  @keyframes pulseDot {
+    0%,
+    100% {
+      box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.55);
+    }
+    50% {
+      box-shadow: 0 0 0 6px rgba(245, 158, 11, 0);
+    }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .hero__eyebrow {
+      animation: heroEnter 800ms cubic-bezier(0.16, 1, 0.3, 1) 0ms both;
+    }
+    .hero__h1 {
+      animation: heroEnter 800ms cubic-bezier(0.16, 1, 0.3, 1) 90ms both;
+    }
+    .hero__sub {
+      animation: heroEnter 800ms cubic-bezier(0.16, 1, 0.3, 1) 260ms both;
+    }
+    .hero__cta--primary {
+      animation: heroEnter 800ms cubic-bezier(0.16, 1, 0.3, 1) 400ms both;
+    }
+    .hero__cta--secondary {
+      animation: heroEnter 800ms cubic-bezier(0.16, 1, 0.3, 1) 470ms both;
+    }
+    .hero__trust {
+      animation: heroEnter 800ms cubic-bezier(0.16, 1, 0.3, 1) 560ms both;
+    }
+    .hero__visual {
+      animation: heroEnter 1000ms cubic-bezier(0.16, 1, 0.3, 1) 180ms both;
+    }
+    .gantt__pulse {
+      animation: pulseDot 2200ms cubic-bezier(0.16, 1, 0.3, 1) infinite;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero__eyebrow,
+    .hero__h1,
+    .hero__sub,
+    .hero__cta--primary,
+    .hero__cta--secondary,
+    .hero__trust,
+    .hero__visual {
+      opacity: 1;
+      transform: none;
+      animation: none;
+    }
+    .gantt__pulse {
+      animation: none;
+    }
+  }
+
+  /* ---- Responsive ---- */
+  @media (max-width: 960px) {
+    .hero {
+      padding-block: 96px;
+    }
+    .hero__inner {
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+    .hero__visual {
+      order: -1;
+      min-height: 240px;
+    }
+    .hero__h1 {
+      max-width: none;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .hero {
+      padding-block: 72px;
+    }
+    .hero__inner {
+      padding-inline: 20px;
+    }
+    .gantt {
+      padding: 16px 14px 0;
+    }
+    .gantt__header {
+      grid-template-columns: 36px repeat(5, 1fr);
+    }
+    .gantt__row {
+      grid-template-columns: 36px 1fr;
+    }
+    .gantt__block-id {
+      font-size: 0.5625rem;
+    }
+  }
+</style>

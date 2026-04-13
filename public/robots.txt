@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://ribo420.github.io/TMS-4SAP-website/sitemap-index.xml

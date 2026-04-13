@@ -1,5 +1,5 @@
 "use client";
-import { motion } from "motion/react";
+import { motion, useReducedMotion } from "motion/react";
 import type { ReactNode } from "react";
 
 interface Props {
@@ -15,6 +15,12 @@ export default function StaggerChildren({
   stagger = 0.08,
   delay = 0,
 }: Props) {
+  const prefersReducedMotion = useReducedMotion();
+
+  if (prefersReducedMotion) {
+    return <div className={className}>{children}</div>;
+  }
+
   return (
     <motion.div
       className={className}
@@ -43,6 +49,12 @@ export function StaggerItem({
   children: ReactNode;
   className?: string;
 }) {
+  const prefersReducedMotion = useReducedMotion();
+
+  if (prefersReducedMotion) {
+    return <div className={className} style={{ minWidth: 0 }}>{children}</div>;
+  }
+
   return (
     <motion.div
       className={className}

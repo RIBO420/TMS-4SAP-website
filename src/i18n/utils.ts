@@ -11,6 +11,7 @@ export const ui = {
     'nav.bookDemo': 'Book Demo',
     'nav.viewAllModules': 'View all modules',
     'nav.viewAllIndustries': 'View all industries',
+    'nav.toggleMenu': 'Toggle menu',
 
     // Module names
     'module.pps': 'Production Planning & Scheduling',
@@ -99,6 +100,7 @@ export const ui = {
     'nav.bookDemo': 'Demo aanvragen',
     'nav.viewAllModules': 'Alle modules bekijken',
     'nav.viewAllIndustries': 'Alle industrieën bekijken',
+    'nav.toggleMenu': 'Menu openen',
 
     // Module names
     'module.pps': 'Productieplanning & Scheduling',
@@ -187,6 +189,7 @@ export const ui = {
     'nav.bookDemo': 'Demo buchen',
     'nav.viewAllModules': 'Alle Module anzeigen',
     'nav.viewAllIndustries': 'Alle Branchen anzeigen',
+    'nav.toggleMenu': 'Menü öffnen',
 
     // Module names
     'module.pps': 'Produktionsplanung & Steuerung',
@@ -288,6 +291,17 @@ export function getLocalizedPath(path: string, lang: Lang): string {
 /** Prefix a path with the configured base URL */
 export function withBase(path: string): string {
   return `${base}${path}`;
+}
+
+/** Strip the configured base URL prefix from an absolute pathname.
+ *  `Astro.url.pathname` includes the site base (e.g. `/TMS-4SAP-website/modules/`),
+ *  which breaks locale-aware helpers that expect a root-relative path. */
+export function stripBase(pathname: string): string {
+  if (!base) return pathname;
+  if (pathname === base) return '/';
+  if (pathname.startsWith(base + '/')) return pathname.slice(base.length);
+  if (pathname.startsWith(base)) return pathname.slice(base.length) || '/';
+  return pathname;
 }
 
 export function t(lang: Lang, key: string): string {

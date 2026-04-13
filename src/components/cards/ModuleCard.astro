@@ -1,8 +1,8 @@
 ---
-import type { Module } from "@data/modules";
+import type { ModuleData } from "@data/modules";
 
 interface Props {
-  module: Module;
+  module: ModuleData;
 }
 
 const { module } = Astro.props;
@@ -25,20 +25,19 @@ const svgIcon = iconMap[module.icon] || iconMap["layout-dashboard"];
 const cardClasses = [
   "module-card",
   module.featured ? "module-featured" : "",
-  module.wide ? "module-wide" : "",
 ]
   .filter(Boolean)
   .join(" ");
 ---
 
-<a href={href} class={cardClasses} data-animate>
-  <div class="module-icon">
+<a href={href} class={cardClasses} data-animate aria-label={module.title}>
+  <div class="module-icon" aria-hidden="true">
     <Fragment set:html={svgIcon} />
   </div>
-  <span class="module-abbr">{module.abbr}</span>
-  <h3>{module.name}</h3>
+  <h3>{module.title}</h3>
+  <span class="module-abbr" aria-hidden="true">{module.abbr}</span>
   <p>{module.description}</p>
-  <span class="module-link">
+  <span class="module-link" aria-hidden="true">
     Learn more
     <svg
       width="14"

@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
-import { useInView, animate } from "motion/react";
+import { useInView, animate, useReducedMotion } from "motion/react";
 
 interface Stat {
   value: string;
@@ -12,11 +12,16 @@ interface Props {
 }
 
 function AnimatedValue({ value }: { value: string }) {
+  const prefersReducedMotion = useReducedMotion();
   const ref = useRef<HTMLSpanElement>(null);
   const isInView = useInView(ref, { once: true, margin: "-40px" });
   const [display, setDisplay] = useState(value);
 
   useEffect(() => {
+    if (prefersReducedMotion) {
+      setDisplay(value);
+      return;
+    }
     if (!isInView || !ref.current) return;
 
     // Try to extract a number from the value
@@ -40,7 +45,7 @@ function AnimatedValue({ value }: { value: string }) {
     });
 
     return () => controls.stop();
-  }, [isInView, value]);
+  }, [isInView, value, prefersReducedMotion]);
 
   return <span ref={ref} className="stat-value">{display}</span>;
 }

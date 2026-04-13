@@ -32,8 +32,9 @@ const breadcrumbs = [
   </section>
 
   <!-- All Modules Grid -->
-  <section class="section" id="modules-grid">
+  <section class="section" id="modules-grid" aria-labelledby="all-modules-heading">
     <div class="container">
+      <h2 id="all-modules-heading" class="sr-only">All Modules</h2>
       <div class="modules-grid">
         {modules.map((mod) => (
           <ModuleCard module={mod} />
@@ -96,6 +97,18 @@ const breadcrumbs = [
 </BaseLayout>
 
 <style>
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
   /* Pillars / Integrated approach grid */
   .integrated-section {
     border-top: 1px solid var(--border);

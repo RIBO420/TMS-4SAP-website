@@ -20,12 +20,51 @@
   --amber-glow: rgba(245, 158, 11, 0.06);
   --font-heading: 'Plus Jakarta Sans', system-ui, sans-serif;
   --font-body: 'DM Sans', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, 'SF Mono', 'Cascadia Mono', 'Roboto Mono', monospace;
   --radius-sm: 8px;
   --radius: 12px;
   --radius-lg: 16px;
   --radius-xl: 24px;
   --ease: cubic-bezier(0.4, 0, 0.2, 1);
   --ease-out: cubic-bezier(0, 0, 0.2, 1);
+
+  /* Semantic colors */
+  --success: #22c55e;
+  --danger:  #ef4444;
+  --info:    #3b82f6;
+  --warning: #f59e0b;
+
+  /* Z-index scale */
+  --z-base: 1;
+  --z-dropdown: 10;
+  --z-nav: 100;
+  --z-modal: 1000;
+  --z-skip: 9999;
+}
+
+/* --- JetBrains Mono (self-hosted) --- */
+@font-face {
+  font-family: 'JetBrains Mono';
+  src: url('/TMS-4SAP-website/fonts/jetbrains-mono-regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'JetBrains Mono';
+  src: url('/TMS-4SAP-website/fonts/jetbrains-mono-bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+.mono,
+code,
+kbd,
+samp,
+pre {
+  font-family: var(--font-mono);
+  font-feature-settings: 'calt' 0, 'liga' 0;
 }
 
 /* --- Reset --- */
@@ -38,9 +77,41 @@
 }
 
 html {
+  color-scheme: dark;
   scroll-behavior: smooth;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+/* --- Focus management (WCAG 2.4.7) --- */
+:focus { outline: none; }
+a:focus-visible,
+button:focus-visible,
+[role="button"]:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+summary:focus-visible,
+[tabindex]:not([tabindex="-1"]):focus-visible {
+  outline: 2px solid var(--amber);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* Skip link (WCAG 2.4.1) */
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  background: var(--amber);
+  color: #000;
+  padding: 12px 20px;
+  z-index: var(--z-skip);
+  font-weight: 600;
+  border-radius: 0 0 8px 0;
+}
+.skip-link:focus {
+  left: 0;
 }
 
 body {
@@ -112,8 +183,9 @@ h2 {
   font-weight: 500;
   font-size: 0.9375rem;
   padding: 12px 24px;
+  min-height: 44px;
   border-radius: var(--radius-sm);
-  transition: all 0.2s var(--ease);
+  transition: transform 0.2s var(--ease), opacity 0.2s var(--ease), color 0.2s var(--ease), background-color 0.2s var(--ease), border-color 0.2s var(--ease), box-shadow 0.2s var(--ease);
   white-space: nowrap;
   cursor: pointer;
 }
@@ -171,9 +243,9 @@ h2 {
   top: 0;
   left: 0;
   right: 0;
-  z-index: 100;
+  z-index: var(--z-nav);
   padding: 16px 0;
-  transition: all 0.3s var(--ease);
+  transition: transform 0.3s var(--ease), opacity 0.3s var(--ease), color 0.3s var(--ease), background-color 0.3s var(--ease), border-color 0.3s var(--ease), box-shadow 0.3s var(--ease);
 }
 
 .nav.scrolled {
@@ -254,7 +326,7 @@ h2 {
   height: 2px;
   background: var(--text);
   border-radius: 2px;
-  transition: all 0.3s var(--ease);
+  transition: transform 0.3s var(--ease), opacity 0.3s var(--ease), color 0.3s var(--ease), background-color 0.3s var(--ease), border-color 0.3s var(--ease), box-shadow 0.3s var(--ease);
 }
 
 .hamburger::before,
@@ -537,7 +609,7 @@ h2 {
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
   padding: 28px;
-  transition: all 0.3s var(--ease);
+  transition: transform 0.3s var(--ease), opacity 0.3s var(--ease), color 0.3s var(--ease), background-color 0.3s var(--ease), border-color 0.3s var(--ease), box-shadow 0.3s var(--ease);
   display: flex;
   flex-direction: column;
   gap: 12px;
@@ -614,7 +686,7 @@ h2 {
   font-weight: 500;
   color: var(--amber);
   margin-top: 4px;
-  transition: gap 0.2s var(--ease);
+  transition: transform 0.2s var(--ease);
   cursor: pointer;
   min-height: 44px;
 }
@@ -856,7 +928,6 @@ h2 {
   font-size: 0.9375rem;
   color: var(--text);
   transition: border-color 0.2s var(--ease);
-  outline: none;
 }
 
 .form-group input::placeholder,

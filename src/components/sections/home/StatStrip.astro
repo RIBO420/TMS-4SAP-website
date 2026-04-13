@@ -1,0 +1,335 @@
+---
+// §2 — Stat strip: four massive numbers, credentials row below.
+// Spec: HOMEPAGE-REDESIGN.md §2 "Stat strip — Archetype I (mega numbers, no cards)"
+// Numbers sourced from src/data/stats.ts (25+ years / 500+ implementations /
+// 30+ countries) + 9 modules counted from src/data/modules.ts.
+// Count-up animation is driven by an inline IntersectionObserver script so
+// the SSR HTML still contains the final value (e.g. "25+") as a single text
+// node — good for search crawlers, no-JS users, and smoke tests.
+import ScrollReveal from "@components/motion/ScrollReveal";
+import { modules } from "@data/modules";
+
+interface Props {
+  lang?: "en" | "nl" | "de";
+}
+const { lang = "en" } = Astro.props;
+
+const copy = {
+  en: {
+    eyebrow: "02 · CREDENTIALS",
+    labels: ["YEARS", "IMPLEMENTATIONS", "COUNTRIES", "MODULES"],
+    credentials: "ISA-95 levels 3 + 4  ·  IATF 16949 ready  ·  SAP-certified",
+  },
+  nl: {
+    eyebrow: "02 · REFERENTIES",
+    labels: ["JAAR", "IMPLEMENTATIES", "LANDEN", "MODULES"],
+    credentials: "ISA-95 niveau 3 + 4  ·  IATF 16949 ready  ·  SAP-gecertificeerd",
+  },
+  de: {
+    eyebrow: "02 · REFERENZEN",
+    labels: ["JAHRE", "IMPLEMENTIERUNGEN", "LÄNDER", "MODULE"],
+    credentials: "ISA-95 Ebenen 3 + 4  ·  IATF 16949 ready  ·  SAP-zertifiziert",
+  },
+}[lang];
+
+// Numbers come from stats.ts verbatim (25+ / 500+ / 30+) plus modules.length (9).
+const moduleCount = modules.length;
+const items = [
+  { value: "25", suffix: "+", label: copy.labels[0] },
+  { value: "500", suffix: "+", label: copy.labels[1] },
+  { value: "30", suffix: "+", label: copy.labels[2] },
+  { value: String(moduleCount), suffix: "", label: copy.labels[3] },
+];
+
+// Stagger offsets in seconds — 80ms per column per HOMEPAGE-REDESIGN.md §Motion.
+const staggerMs = 80;
+
+// Split credentials on the middle-dot separator so we can colour the dots amber.
+const credentialParts = copy.credentials.split(/\s·\s/);
+---
+
+<section
+  class="stat-strip"
+  data-section="2"
+  data-lang={lang}
+  aria-labelledby="stat-strip-heading"
+>
+  <h2 id="stat-strip-heading" class="visually-hidden">
+    {copy.eyebrow}
+  </h2>
+
+  <div class="stat-strip__inner">
+    <ol class="stat-strip__grid" role="list">
+      {
+        items.map((item, i) => (
+          <li class="stat-strip__cell">
+            <ScrollReveal
+              client:visible
+              delay={(i * staggerMs) / 1000}
+              direction="up"
+              className="stat-strip__cell-inner"
+            >
+              <div class="stat-strip__number-row">
+                <span
+                  class="stat-strip__number"
+                  data-stat-counter
+                  data-target={item.value}
+                  data-suffix={item.suffix}
+                >{item.value}{item.suffix}</span>
+              </div>
+              <span class="stat-strip__label">{item.label}</span>
+            </ScrollReveal>
+          </li>
+        ))
+      }
+    </ol>
+
+    <ScrollReveal
+      client:visible
+      delay={(items.length * staggerMs) / 1000 + 0.15}
+      direction="up"
+      className="stat-strip__credentials-wrap"
+    >
+      <p class="stat-strip__credentials">
+        {credentialParts.map((part, i) => (
+          <>
+            {i > 0 && <span class="stat-strip__cred-sep" aria-hidden="true"> · </span>}
+            <span>{part}</span>
+          </>
+        ))}
+      </p>
+    </ScrollReveal>
+  </div>
+</section>
+
+<script>
+  // Count-up enhancement for §2 Stat strip.
+  // SSR already renders the final value (e.g. "25+") — on hydration we
+  // split the suffix out, colour it amber, and animate the numeric portion
+  // from 0 to target when the element enters the viewport.
+  const counters = document.querySelectorAll<HTMLElement>("[data-stat-counter]");
+  if (counters.length) {
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    counters.forEach((el) => {
+      const target = parseInt(el.dataset.target || "0", 10);
+      const suffix = el.dataset.suffix || "";
+      // Rebuild the DOM: <span data-num>0</span><span suffix>+</span>
+      el.textContent = "";
+      const numSpan = document.createElement("span");
+      numSpan.className = "stat-strip__num-value";
+      numSpan.textContent = reduce ? String(target) : "0";
+      el.appendChild(numSpan);
+      if (suffix) {
+        const sufSpan = document.createElement("span");
+        sufSpan.className = "stat-strip__suffix";
+        sufSpan.setAttribute("aria-hidden", "true");
+        sufSpan.textContent = suffix;
+        sufSpan.style.opacity = reduce ? "1" : "0";
+        sufSpan.style.transition = "opacity 280ms cubic-bezier(0.25,1,0.5,1)";
+        el.appendChild(sufSpan);
+      }
+    });
+
+    const animate = (el: HTMLElement) => {
+      const target = parseInt(el.dataset.target || "0", 10);
+      const numSpan = el.querySelector<HTMLElement>(".stat-strip__num-value");
+      const sufSpan = el.querySelector<HTMLElement>(".stat-strip__suffix");
+      if (!numSpan) return;
+      if (reduce) {
+        numSpan.textContent = String(target);
+        if (sufSpan) sufSpan.style.opacity = "1";
+        return;
+      }
+      const duration = 1400;
+      const start = performance.now();
+      const tick = (now: number) => {
+        const t = Math.min(1, (now - start) / duration);
+        // easeOutQuart — matches MOTION.enter from @lib/motion
+        const eased = 1 - Math.pow(1 - t, 4);
+        numSpan.textContent = String(Math.round(target * eased));
+        if (t < 1) requestAnimationFrame(tick);
+        else if (sufSpan) sufSpan.style.opacity = "1";
+      };
+      requestAnimationFrame(tick);
+    };
+
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            animate(entry.target as HTMLElement);
+            io.unobserve(entry.target);
+          }
+        });
+      },
+      { rootMargin: "-40px" }
+    );
+
+    counters.forEach((el) => io.observe(el));
+  }
+</script>
+
+<style>
+  .stat-strip {
+    padding-block: 88px;
+    background: var(--bg, #0a0a0a);
+    color: var(--text, #fafafa);
+    /* Flat — no cards, no borders, no container backgrounds. */
+  }
+
+  .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  .stat-strip__inner {
+    max-width: 1280px;
+    width: min(1280px, 92vw);
+    margin-inline: auto;
+  }
+
+  .stat-strip__grid {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 64px;
+    align-items: start;
+  }
+
+  .stat-strip__cell {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    min-width: 0;
+  }
+
+  /* ScrollReveal wraps in a motion.div — make it fill the cell so layout works. */
+  .stat-strip__cell-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    width: 100%;
+  }
+
+  .stat-strip__number-row {
+    display: flex;
+    align-items: baseline;
+    gap: 2px;
+    font-family: var(--font-heading, "Inter", system-ui, sans-serif);
+    font-size: clamp(48px, 6vw, 80px);
+    line-height: 0.95;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--text, #fafafa);
+  }
+
+  .stat-strip__number {
+    display: inline-flex;
+    align-items: baseline;
+    font: inherit;
+    color: inherit;
+    letter-spacing: inherit;
+    line-height: inherit;
+    /* font-variant-numeric: tabular-nums; */
+    font-variant-numeric: tabular-nums;
+  }
+
+  .stat-strip__number :global(.stat-strip__num-value) {
+    font: inherit;
+    color: inherit;
+  }
+
+  .stat-strip__number :global(.stat-strip__suffix),
+  .stat-strip__suffix {
+    color: var(--amber, #f59e0b);
+    font: inherit;
+    margin-left: 2px;
+  }
+
+  .stat-strip__label {
+    font-family: var(
+      --font-mono,
+      "JetBrains Mono",
+      ui-monospace,
+      SFMono-Regular,
+      monospace
+    );
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-muted, #a1a1aa);
+    line-height: 1.2;
+  }
+
+  .stat-strip__credentials-wrap {
+    margin-top: 56px;
+    display: flex;
+    justify-content: center;
+  }
+
+  .stat-strip__credentials {
+    margin: 0;
+    font-family: var(
+      --font-mono,
+      "JetBrains Mono",
+      ui-monospace,
+      SFMono-Regular,
+      monospace
+    );
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--text-muted, #a1a1aa);
+    text-align: center;
+    letter-spacing: 0.02em;
+  }
+
+  .stat-strip__cred-sep {
+    color: var(--amber, #f59e0b);
+  }
+
+  /* Responsive: tablet 2×2, mobile single column */
+  @media (max-width: 900px) {
+    .stat-strip {
+      padding-block: 72px;
+    }
+    .stat-strip__grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 48px 32px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .stat-strip {
+      padding-block: 56px;
+    }
+    .stat-strip__grid {
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+    .stat-strip__number-row {
+      font-size: clamp(44px, 12vw, 64px);
+    }
+    .stat-strip__credentials-wrap {
+      margin-top: 40px;
+    }
+    .stat-strip__credentials {
+      font-size: 13px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    /* ScrollReveal + AnimatedCounter both short-circuit their own animations
+       via useReducedMotion(). Nothing extra to disable here. */
+  }
+</style>

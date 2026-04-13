@@ -1,5 +1,5 @@
 "use client";
-import { motion } from "motion/react";
+import { motion, useReducedMotion } from "motion/react";
 
 interface Props {
   text: string;
@@ -21,8 +21,23 @@ export default function AnimatedText({
   stagger = 0.05,
   accent,
 }: Props) {
+  const prefersReducedMotion = useReducedMotion();
   const words = text.split(" ");
   const accentWords = accent ? accent.split(" ") : [];
+
+  if (prefersReducedMotion) {
+    return (
+      <Tag className={className}>
+        {text}
+        {accent && (
+          <>
+            <br />
+            <span style={{ color: "var(--amber)" }}>{accent}</span>
+          </>
+        )}
+      </Tag>
+    );
+  }
 
   return (
     <Tag className={className}>
@@ -37,9 +52,10 @@ export default function AnimatedText({
             delay: delay + i * stagger,
             ease: [0.25, 0.1, 0.25, 1],
           }}
-          style={{ display: "inline-block", marginRight: "0.3em" }}
+          style={{ display: "inline-block" }}
         >
           {word}
+          {i < words.length - 1 ? "\u00A0" : ""}
         </motion.span>
       ))}
       {accent && (
@@ -58,11 +74,11 @@ export default function AnimatedText({
               }}
               style={{
                 display: "inline-block",
-                marginRight: "0.3em",
                 color: "var(--amber)",
               }}
             >
               {word}
+              {i < accentWords.length - 1 ? "\u00A0" : ""}
             </motion.span>
           ))}
         </>

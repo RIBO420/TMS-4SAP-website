@@ -1,0 +1,81 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { withBase } from '../../i18n/utils';
+---
+
+<BaseLayout
+  title="Pagina niet gevonden | TMS 4SAP"
+  description="De pagina die u zoekt kan niet worden gevonden. Ga terug naar de homepagina of ontdek onze modules."
+  lang="nl"
+>
+  <section class="not-found">
+    <div class="container">
+      <p class="eyebrow">Fout 404</p>
+      <h1>We konden die pagina niet vinden.</h1>
+      <p class="lead">
+        De link is mogelijk verbroken of de pagina is verplaatst. Laten we u
+        weer op weg helpen.
+      </p>
+      <div class="actions">
+        <a class="btn btn-primary" href={withBase('/nl/')}>Terug naar home</a>
+        <a class="btn btn-secondary" href={withBase('/nl/modules/')}>Modules ontdekken</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .not-found {
+    padding: 8rem 1.5rem;
+    text-align: center;
+  }
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+  }
+  .eyebrow {
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--color-accent, #e63946);
+    margin-bottom: 1rem;
+  }
+  h1 {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    line-height: 1.1;
+    margin-bottom: 1.25rem;
+  }
+  .lead {
+    font-size: 1.125rem;
+    color: var(--color-text-muted, #64748b);
+    margin-bottom: 2rem;
+  }
+  .actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    text-decoration: none;
+    font-weight: 600;
+    transition: transform 0.15s ease;
+  }
+  .btn:hover {
+    transform: translateY(-1px);
+  }
+  .btn-primary {
+    background: var(--color-accent, #e63946);
+    color: #fff;
+  }
+  .btn-secondary {
+    background: transparent;
+    color: var(--color-text, #0f172a);
+    border: 1px solid currentColor;
+  }
+</style>

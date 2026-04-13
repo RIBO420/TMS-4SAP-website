@@ -1,0 +1,99 @@
+---
+// §4 — Drag one job. Watch the rest of the week re-plan.
+// Hero-grade interactive Gantt. Widget lives in src/components/widgets/ProductionScheduler.tsx
+import ProductionScheduler from "@components/widgets/ProductionScheduler.tsx";
+
+interface Props {
+  lang?: "en" | "nl" | "de";
+}
+const { lang = "en" } = Astro.props;
+
+const copy = {
+  en: {
+    eyebrow: "04 · PRODUCE",
+    h2: "Drag one job. Watch the rest of the week re-plan.",
+    sub: "This is the real PPS scheduler running on a dummy routing. Try it.",
+    hint: "Drag a block on desktop — or tab into the grid and use arrow keys.",
+    disclaimer: "Simulation — representative data.",
+  },
+  nl: {
+    eyebrow: "04 · PRODUCEER",
+    h2: "Versleep één order. Zie de rest van de week opnieuw plannen.",
+    sub: "Dit is de echte PPS-planner, draaiend op een demo-routing. Probeer het.",
+    hint: "Sleep een blok op desktop — of gebruik Tab en de pijltjestoetsen.",
+    disclaimer: "Simulatie — representatieve data.",
+  },
+  de: {
+    eyebrow: "04 · PRODUZIEREN",
+    h2: "Einen Auftrag verschieben. Die ganze Woche plant sich neu.",
+    sub: "Das ist der echte PPS-Planer mit einer Demo-Route. Probieren Sie es aus.",
+    hint: "Ziehen Sie am Desktop einen Block — oder tabben Sie hinein und nutzen Sie die Pfeiltasten.",
+    disclaimer: "Simulation — repräsentative Daten.",
+  },
+}[lang];
+---
+
+<section
+  id="scheduler"
+  class="home-section home-section--scheduler"
+  data-section="4"
+  data-lang={lang}
+>
+  <div class="scheduler-inner">
+    <header class="scheduler-header">
+      <p class="section-label">{copy.eyebrow}</p>
+      <h2>{copy.h2}</h2>
+      <p class="sub">{copy.sub}</p>
+    </header>
+    <ProductionScheduler
+      client:visible
+      lang={lang}
+      hint={copy.hint}
+      disclaimer={copy.disclaimer}
+    />
+  </div>
+</section>
+
+<style>
+  .home-section--scheduler {
+    padding-block: 140px;
+    background: var(--bg, #000);
+    border-bottom: 1px solid var(--border, rgba(255, 255, 255, 0.08));
+  }
+  .scheduler-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding-inline: 24px;
+  }
+  .scheduler-header {
+    margin-bottom: 48px;
+  }
+  .section-label {
+    font-family: var(--font-mono, ui-monospace, "JetBrains Mono", monospace);
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--amber, #f59e0b);
+    margin: 0 0 1rem;
+  }
+  .scheduler-header h2 {
+    font-size: clamp(1.75rem, 3.5vw, 2.75rem);
+    font-weight: 700;
+    margin: 0 0 1rem;
+    max-width: 820px;
+    line-height: 1.1;
+    color: var(--text, #fafafa);
+  }
+  .sub {
+    color: var(--text-muted, #a1a1aa);
+    max-width: 640px;
+    margin: 0;
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+  @media (max-width: 768px) {
+    .home-section--scheduler {
+      padding-block: 80px;
+    }
+  }
+</style>

@@ -1,6 +1,6 @@
 ---
 import { defaultLang, type Lang } from '../../i18n/config';
-import { t, getLocalizedPath } from '../../i18n/utils';
+import { t, getLocalizedPath, withBase, stripBase } from '../../i18n/utils';
 import LanguageSwitcher from './LanguageSwitcher.astro';
 
 interface Props {
@@ -9,7 +9,7 @@ interface Props {
 
 const { lang = defaultLang } = Astro.props;
 
-const currentPath = Astro.url.pathname;
+const currentPath = stripBase(Astro.url.pathname);
 
 function isActive(href: string): boolean {
   if (href === '/' || href === `/${lang}`) return currentPath === '/' || currentPath === `/${lang}`;
@@ -48,7 +48,7 @@ const lp = (path: string) => getLocalizedPath(path, lang);
   <div class="container nav-inner">
     <!-- Logo -->
     <a href={lp('/')} class="logo" aria-label="TMS 4SAP - Home">
-      <img src={`${import.meta.env.BASE_URL}logo.jpeg`} alt="" class="logo-icon" width="32" height="32" />
+      <img src={withBase('/logo.jpeg')} alt="" class="logo-icon" width="32" height="32" />
       <div class="logo-text">
         <span class="logo-name">TMS</span>
         <span class="logo-sub">4SAP</span>
@@ -108,10 +108,13 @@ const lp = (path: string) => getLocalizedPath(path, lang);
     </div>
 
     <!-- Mobile toggle -->
-    <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle menu" aria-expanded="false">
+    <button class="mobile-toggle" id="mobileToggle" aria-label={t(lang, 'nav.toggleMenu') || (lang === 'nl' ? 'Menu openen' : lang === 'de' ? 'Menü öffnen' : 'Toggle menu')} aria-expanded="false" aria-controls="mobileMenu">
       <span class="hamburger"></span>
     </button>
   </div>
+
+  <!-- Mobile menu backdrop -->
+  <div class="nav-backdrop" data-nav-backdrop aria-hidden="true"></div>
 
   <!-- Mega-menu panels (desktop) -->
   <div class="nav-mega" data-mega-panel="modules">
@@ -232,25 +235,93 @@ const lp = (path: string) => getLocalizedPath(path, lang);
   import { initNav } from '../../scripts/nav.js';
   initNav();
 
-  /* ---- Mobile UX enhancements ---- */
+  /* ---- Mobile UX enhancements: focus trap, Escape, backdrop, body scroll lock ---- */
   function initMobileEnhancements() {
-    const mobileToggle = document.getElementById('mobileToggle');
+    const mobileToggle = document.getElementById('mobileToggle') as HTMLButtonElement | null;
     const mobileMenu = document.getElementById('mobileMenu');
+    const backdrop = document.querySelector('[data-nav-backdrop]') as HTMLElement | null;
     if (!mobileToggle || !mobileMenu) return;
 
     let savedScrollY = 0;
+    let previouslyFocused: HTMLElement | null = null;
 
-    /* Body scroll lock: prevent background scroll when menu is open */
+    const focusableSelector = [
+      'a[href]',
+      'button:not([disabled])',
+      'input:not([disabled])',
+      'select:not([disabled])',
+      'textarea:not([disabled])',
+      '[tabindex]:not([tabindex="-1"])',
+    ].join(',');
+
+    function getFocusables(): HTMLElement[] {
+      if (!mobileMenu) return [];
+      return Array.from(mobileMenu.querySelectorAll<HTMLElement>(focusableSelector)).filter(
+        (el) => el.offsetParent !== null || el.getClientRects().length > 0
+      );
+    }
+
+    function onKeyDown(e: KeyboardEvent) {
+      if (!mobileMenu || !mobileMenu.classList.contains('mobile-open')) return;
+
+      if (e.key === 'Escape') {
+        e.preventDefault();
+        closeMenu();
+        return;
+      }
+
+      if (e.key === 'Tab') {
+        const focusables = getFocusables();
+        if (focusables.length === 0) return;
+        const first = focusables[0];
+        const last = focusables[focusables.length - 1];
+        const active = document.activeElement as HTMLElement | null;
+
+        if (e.shiftKey && active === first) {
+          e.preventDefault();
+          last.focus();
+        } else if (!e.shiftKey && active === last) {
+          e.preventDefault();
+          first.focus();
+        }
+      }
+    }
+
+    function closeMenu() {
+      if (!mobileToggle || !mobileMenu) return;
+      mobileToggle.setAttribute('aria-expanded', 'false');
+      mobileToggle.classList.remove('open');
+      mobileMenu.classList.remove('mobile-open');
+      if (backdrop) backdrop.classList.remove('open');
+      // Return focus to the trigger
+      if (previouslyFocused && typeof previouslyFocused.focus === 'function') {
+        previouslyFocused.focus();
+      } else {
+        mobileToggle.focus();
+      }
+    }
+
+    /* Body scroll lock + focus trap wiring: observe menu class toggles */
     const lockObserver = new MutationObserver(() => {
       const isOpen = mobileMenu.classList.contains('mobile-open');
       if (isOpen) {
         savedScrollY = window.scrollY;
         document.body.classList.add('mobile-menu-open');
         document.body.style.top = `-${savedScrollY}px`;
+        if (backdrop) backdrop.classList.add('open');
+        previouslyFocused = mobileToggle;
+        document.addEventListener('keydown', onKeyDown);
+        // Move focus into the menu for screen readers / keyboard users
+        requestAnimationFrame(() => {
+          const focusables = getFocusables();
+          if (focusables.length) focusables[0].focus();
+        });
       } else {
         document.body.classList.remove('mobile-menu-open');
         document.body.style.top = '';
         window.scrollTo(0, savedScrollY);
+        if (backdrop) backdrop.classList.remove('open');
+        document.removeEventListener('keydown', onKeyDown);
       }
     });
 
@@ -258,6 +329,13 @@ const lp = (path: string) => getLocalizedPath(path, lang);
       attributes: true,
       attributeFilter: ['class'],
     });
+
+    /* Backdrop click to close */
+    if (backdrop) {
+      backdrop.addEventListener('click', () => {
+        if (mobileMenu.classList.contains('mobile-open')) closeMenu();
+      });
+    }
 
     /* Toggle aria-expanded on mobile mega-section triggers */
     mobileMenu.querySelectorAll('[data-mobile-mega]').forEach((btn) => {
@@ -268,44 +346,24 @@ const lp = (path: string) => getLocalizedPath(path, lang);
         btn.setAttribute('aria-expanded', String(isExpanded));
       });
     });
+
+    /* Keep mega-menu trigger aria-expanded in sync with .open/.active class */
+    document.querySelectorAll('[data-mega-trigger]').forEach((trigger) => {
+      const panelId = trigger.getAttribute('data-mega-trigger');
+      const panel = document.querySelector(`[data-mega-panel="${panelId}"]`);
+      if (!panel) return;
+      const sync = () => {
+        const open = panel.classList.contains('open');
+        trigger.setAttribute('aria-expanded', String(open));
+      };
+      const panelObserver = new MutationObserver(sync);
+      panelObserver.observe(panel, { attributes: true, attributeFilter: ['class'] });
+      sync();
+    });
   }
 
   initMobileEnhancements();
   document.addEventListener('astro:page-load', initMobileEnhancements);
-</script>
-
-<script>
-function initScrollSpy() {
-  // Only run on homepage
-  if (window.location.pathname !== '/' && !window.location.pathname.match(/^\/(en|nl|de)\/?$/)) return;
-
-  const sections = document.querySelectorAll('section[id]');
-  if (!sections.length) return;
-
-  const navLinks = document.querySelectorAll('.nav-link');
-
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          const id = entry.target.id;
-          navLinks.forEach((link) => {
-            // Only affect section-linked nav items (not mega triggers)
-            if (link.getAttribute('href')?.includes('#' + id)) {
-              link.classList.add('active');
-            }
-          });
-        }
-      });
-    },
-    { rootMargin: '-20% 0px -70% 0px' }
-  );
-
-  sections.forEach((section) => observer.observe(section));
-}
-
-initScrollSpy();
-document.addEventListener('astro:page-load', initScrollSpy);
 </script>
 
 <style>
@@ -605,6 +663,27 @@ document.addEventListener('astro:page-load', initScrollSpy);
 
   .mega-item:hover .mega-item-name {
     color: var(--text);
+  }
+
+  /* ---- Mobile backdrop ---- */
+  .nav-backdrop {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: transparent;
+    z-index: 90;
+    cursor: pointer;
+  }
+
+  .nav-backdrop.open {
+    display: block;
+  }
+
+  @media (min-width: 961px) {
+    .nav-backdrop,
+    .nav-backdrop.open {
+      display: none !important;
+    }
   }
 
   /* ---- Mobile menu ---- */

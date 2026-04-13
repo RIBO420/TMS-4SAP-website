@@ -3,7 +3,7 @@ import '../styles/global.css';
 import Nav from '../components/global/Nav.astro';
 import Footer from '../components/global/Footer.astro';
 import { defaultLang, languages, type Lang } from '../i18n/config';
-import { getLocalizedPath } from '../i18n/utils';
+import { getLocalizedPath, stripBase } from '../i18n/utils';
 
 interface Props {
   title: string;
@@ -20,9 +20,10 @@ const {
 } = Astro.props;
 
 const canonicalUrl = new URL(Astro.url.pathname, Astro.site);
+const ogImageUrl = new URL(ogImage, Astro.site).href;
 
-// Build hreflang alternate URLs
-const currentPathStripped = Astro.url.pathname.replace(/^\/(en|nl|de)(\/|$)/, '/');
+// Build hreflang alternate URLs — strip base AND locale prefix
+const currentPathStripped = stripBase(Astro.url.pathname).replace(/^\/(en|nl|de)(\/|$)/, '/');
 const langCodes = Object.keys(languages) as Lang[];
 ---
 
@@ -44,12 +45,12 @@ const langCodes = Object.keys(languages) as Lang[];
     const altUrl = new URL(altPath, Astro.site);
     return <link rel="alternate" hreflang={l} href={altUrl.href} />;
   })}
-  <link rel="alternate" hreflang="x-default" href={new URL(currentPathStripped, Astro.site).href} />
+  <link rel="alternate" hreflang="x-default" href={new URL(getLocalizedPath(currentPathStripped, defaultLang), Astro.site).href} />
 
   <!-- Open Graph -->
   <meta property="og:title" content={title} />
   <meta property="og:description" content={description} />
-  <meta property="og:image" content={ogImage} />
+  <meta property="og:image" content={ogImageUrl} />
   <meta property="og:url" content={canonicalUrl} />
   <meta property="og:type" content="website" />
 
@@ -57,10 +58,37 @@ const langCodes = Object.keys(languages) as Lang[];
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content={title} />
   <meta name="twitter:description" content={description} />
-  <meta name="twitter:image" content={ogImage} />
+  <meta name="twitter:image" content={ogImageUrl} />
+
+  <!-- Organization JSON-LD -->
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "TMS 4SAP",
+    "url": Astro.site?.href,
+    "logo": new URL(`${import.meta.env.BASE_URL}logo.jpeg`, Astro.site).href,
+    "description": "Manufacturing ERP suite built natively on SAP Business One",
+    "sameAs": []
+  })} />
+
+  <!-- JetBrains Mono (self-hosted) -->
+  <link
+    rel="preload"
+    href={`${import.meta.env.BASE_URL}fonts/jetbrains-mono-regular.woff2`}
+    as="font"
+    type="font/woff2"
+    crossorigin
+  />
+  <link
+    rel="preload"
+    href={`${import.meta.env.BASE_URL}fonts/jetbrains-mono-bold.woff2`}
+    as="font"
+    type="font/woff2"
+    crossorigin
+  />
 
   <!-- Typography: Plus Jakarta Sans + DM Sans -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
     href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300..700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
@@ -68,6 +96,7 @@ const langCodes = Object.keys(languages) as Lang[];
   />
 </head>
 <body>
+  <a href="#main-content" class="skip-link">Skip to content</a>
   <Nav lang={lang} />
 
   <main id="main-content">

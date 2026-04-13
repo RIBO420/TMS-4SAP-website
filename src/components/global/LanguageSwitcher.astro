@@ -1,5 +1,6 @@
 ---
 import { languages, defaultLang, type Lang } from '../../i18n/config';
+import { getLocalizedPath } from '../../i18n/utils';
 
 interface Props {
   lang?: Lang;
@@ -9,11 +10,9 @@ interface Props {
 const { lang = 'en', currentPath = '/' } = Astro.props;
 
 function getPathForLang(targetLang: Lang): string {
-  // Strip any existing lang prefix
-  const stripped = currentPath.replace(/^\/(en|nl|de)(\/|$)/, '/');
-  if (targetLang === defaultLang) return stripped || '/';
-  if (stripped === '/') return `/${targetLang}`;
-  return `/${targetLang}${stripped}`;
+  // Strip any existing locale prefix, then let getLocalizedPath prepend base + locale.
+  const cleaned = currentPath.replace(/^\/(en|nl|de)(\/|$)/, '/') || '/';
+  return getLocalizedPath(cleaned, targetLang);
 }
 
 const langEntries = Object.entries(languages) as [Lang, string][];
@@ -24,9 +23,9 @@ const langEntries = Object.entries(languages) as [Lang, string][];
     <>
       {i > 0 && <span class="lang-sep" aria-hidden="true">|</span>}
       {code === lang ? (
-        <span class="lang-link lang-active" aria-current="true">{code.toUpperCase()}</span>
+        <span class="lang-link lang-active" aria-current="true" lang={code}>{code.toUpperCase()}</span>
       ) : (
-        <a href={getPathForLang(code)} class="lang-link">{code.toUpperCase()}</a>
+        <a href={getPathForLang(code)} class="lang-link" hreflang={code} lang={code}>{code.toUpperCase()}</a>
       )}
     </>
   ))}

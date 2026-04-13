@@ -1,0 +1,560 @@
+---
+// §6 — Nine modules. One spine.
+// Spec: HOMEPAGE-REDESIGN.md §6 "9-Module horizontal track — Archetype E".
+// Full-bleed native horizontal scroller with scroll-snap, progress rail,
+// keyboard arrow nudges. All 9 modules sourced from src/data/modules.ts.
+import ScrollReveal from "@components/motion/ScrollReveal";
+import {
+  StaggerGroup,
+  StaggerItem,
+} from "@components/motion/StaggerContext";
+import { modules } from "@data/modules";
+import { withBase } from "../../../i18n/utils";
+
+interface Props {
+  lang?: "en" | "nl" | "de";
+}
+const { lang = "en" } = Astro.props;
+
+const copy = {
+  en: {
+    eyebrow: "06 · BREADTH",
+    heading: "Nine modules. One spine.",
+    sub: "One database. One user session. Every module reads and writes the same SAP Business One tables.",
+    learn: "Learn",
+    scrollHint: "Scroll for more modules",
+    progressLabel: "Module track scroll progress",
+    listLabel: "TMS modules",
+  },
+  nl: {
+    eyebrow: "06 · BREEDTE",
+    heading: "Negen modules. Eén ruggengraat.",
+    sub: "Eén database. Eén gebruikerssessie. Elke module leest en schrijft dezelfde SAP Business One tabellen.",
+    learn: "Meer",
+    scrollHint: "Scrol voor meer modules",
+    progressLabel: "Modulebaan scrollvoortgang",
+    listLabel: "TMS modules",
+  },
+  de: {
+    eyebrow: "06 · BREITE",
+    heading: "Neun Module. Ein Rückgrat.",
+    sub: "Eine Datenbank. Eine Benutzersitzung. Jedes Modul liest und schreibt die gleichen SAP Business One Tabellen.",
+    learn: "Mehr",
+    scrollHint: "Scrollen für mehr Module",
+    progressLabel: "Modulbahn Scroll-Fortschritt",
+    listLabel: "TMS Module",
+  },
+}[lang];
+
+// Language-prefixed module base path
+const modulePrefix =
+  lang === "en" ? "/modules/" : `/${lang}/modules/`;
+
+// Stable 2-clause descriptions derived from tagline (verb-first, short).
+// We keep the tagline from modules.ts — it is already verb-first and concise.
+const cards = modules.map((m, i) => ({
+  num: String(i + 1).padStart(2, "0"),
+  abbr: m.abbr,
+  title: m.title,
+  tagline: m.tagline,
+  href: withBase(`${modulePrefix}${m.slug}`),
+  icon: m.icon,
+}));
+---
+
+<section
+  class="module-track"
+  data-section="6"
+  data-lang={lang}
+  aria-labelledby="module-track-heading"
+>
+  <div class="module-track__head">
+    <ScrollReveal client:visible direction="up" className="module-track__eyebrow-wrap">
+      <p class="module-track__eyebrow">{copy.eyebrow}</p>
+    </ScrollReveal>
+    <ScrollReveal
+      client:visible
+      direction="up"
+      delay={0.08}
+      as="h2"
+      className="module-track__heading"
+    >
+      <span id="module-track-heading">{copy.heading}</span>
+    </ScrollReveal>
+    <ScrollReveal client:visible direction="up" delay={0.16} className="module-track__sub-wrap">
+      <p class="module-track__sub">{copy.sub}</p>
+    </ScrollReveal>
+  </div>
+
+  <div class="module-track__shell">
+    <StaggerGroup client:visible className="module-track__stagger" stagger={0.08}>
+      <ol
+        class="module-track__scroller"
+        role="list"
+        aria-label={copy.listLabel}
+        tabindex="0"
+        data-scroller
+      >
+        {
+          cards.map((card) => (
+            <li class="module-track__item">
+              <StaggerItem client:visible direction="up" className="module-track__item-inner">
+                <a class="module-card" href={card.href}>
+                  <span class="module-card__num">{card.num}</span>
+                  <span class="module-card__meta">
+                    <span class="module-card__abbr">{card.abbr}</span>
+                    <span class="module-card__title">{card.title}</span>
+                  </span>
+                  <span class="module-card__desc">{card.tagline}</span>
+                  <span class="module-card__cta" aria-hidden="true">
+                    {copy.learn} <span class="module-card__arrow">&rarr;</span>
+                  </span>
+                </a>
+              </StaggerItem>
+            </li>
+          ))
+        }
+      </ol>
+    </StaggerGroup>
+
+    <div class="module-track__hint" data-hint aria-hidden="true">
+      <span class="module-track__hint-text">{copy.scrollHint}</span>
+      <span class="module-track__hint-chev">&rsaquo;</span>
+    </div>
+
+    <div
+      class="module-track__rail"
+      role="progressbar"
+      aria-label={copy.progressLabel}
+      aria-valuemin="0"
+      aria-valuemax="100"
+      aria-valuenow="0"
+      data-rail
+    >
+      <div class="module-track__rail-fill" data-rail-fill></div>
+    </div>
+  </div>
+</section>
+
+<script>
+  // Native horizontal scroller enhancements:
+  //   1. Progress rail updates via scroll listener (CSS var --scroll-progress).
+  //   2. Left/Right arrow keys nudge by one card width + gap when focused.
+  //   3. Scroll hint fades out after the first interaction.
+  const tracks = document.querySelectorAll<HTMLElement>(".module-track");
+
+  tracks.forEach((section) => {
+    const scroller = section.querySelector<HTMLElement>("[data-scroller]");
+    const rail = section.querySelector<HTMLElement>("[data-rail]");
+    const railFill = section.querySelector<HTMLElement>("[data-rail-fill]");
+    const hint = section.querySelector<HTMLElement>("[data-hint]");
+    if (!scroller || !rail || !railFill) return;
+
+    let interacted = false;
+    const markInteracted = () => {
+      if (interacted) return;
+      interacted = true;
+      if (hint) hint.classList.add("is-hidden");
+    };
+
+    const updateProgress = () => {
+      const max = scroller.scrollWidth - scroller.clientWidth;
+      const progress = max > 0 ? Math.min(1, Math.max(0, scroller.scrollLeft / max)) : 0;
+      scroller.style.setProperty("--scroll-progress", String(progress));
+      railFill.style.transform = `scaleX(${progress})`;
+      rail.setAttribute("aria-valuenow", String(Math.round(progress * 100)));
+    };
+
+    // Measure card width + gap for keyboard stepping.
+    const getStep = () => {
+      const first = scroller.querySelector<HTMLElement>(".module-track__item");
+      if (!first) return 320;
+      const style = window.getComputedStyle(scroller);
+      const gap = parseFloat(style.columnGap || style.gap || "24") || 24;
+      return first.getBoundingClientRect().width + gap;
+    };
+
+    scroller.addEventListener("scroll", () => {
+      updateProgress();
+      markInteracted();
+    }, { passive: true });
+
+    scroller.addEventListener("keydown", (e: KeyboardEvent) => {
+      if (e.key !== "ArrowLeft" && e.key !== "ArrowRight") return;
+      e.preventDefault();
+      const step = getStep();
+      const dir = e.key === "ArrowRight" ? 1 : -1;
+      scroller.scrollBy({ left: dir * step, behavior: "smooth" });
+      markInteracted();
+    });
+
+    scroller.addEventListener("pointerdown", markInteracted, { passive: true });
+    scroller.addEventListener("touchstart", markInteracted, { passive: true });
+
+    // Initial sync (and after fonts/layout settle)
+    updateProgress();
+    window.addEventListener("resize", updateProgress, { passive: true });
+  });
+</script>
+
+<style>
+  .module-track {
+    /* Full bleed against any parent container. */
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+    padding-block: 120px;
+    background: var(--bg, #0a0a0a);
+    color: var(--text, #fafafa);
+    overflow: hidden;
+  }
+
+  .module-track__head {
+    width: min(1280px, 92vw);
+    margin-inline: auto;
+    padding-inline: 24px;
+    margin-bottom: 56px;
+  }
+
+  .module-track__eyebrow {
+    margin: 0 0 16px;
+    font-family: var(
+      --font-mono,
+      "JetBrains Mono",
+      ui-monospace,
+      SFMono-Regular,
+      monospace
+    );
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--amber, #f59e0b);
+  }
+
+  .module-track__heading {
+    margin: 0 0 20px;
+    font-family: var(--font-heading, "Inter", system-ui, sans-serif);
+    font-size: clamp(32px, 4.2vw, 56px);
+    line-height: 1.05;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--text, #fafafa);
+  }
+
+  .module-track__sub {
+    margin: 0;
+    max-width: 640px;
+    font-size: clamp(15px, 1.2vw, 18px);
+    line-height: 1.55;
+    color: var(--text-muted, #a1a1aa);
+  }
+
+  /* Shell that holds scroller + rail + hint */
+  .module-track__shell {
+    position: relative;
+  }
+
+  /* Wrapper from StaggerGroup — it renders its own motion.div */
+  .module-track__stagger {
+    display: block;
+  }
+
+  /* The actual native horizontal scroller */
+  .module-track__scroller {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: 24px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    /* Align first/last cards with the 1280px container left/right edge. */
+    padding-inline: calc((100vw - min(1280px, 92vw)) / 2 + 24px);
+    padding-block: 4px 24px;
+    scrollbar-width: thin;
+    scrollbar-color: var(--amber, #f59e0b) transparent;
+    outline: none;
+  }
+
+  .module-track__scroller:focus-visible {
+    outline: 2px solid var(--amber, #f59e0b);
+    outline-offset: 4px;
+    border-radius: 4px;
+  }
+
+  .module-track__scroller::-webkit-scrollbar {
+    height: 6px;
+  }
+  .module-track__scroller::-webkit-scrollbar-thumb {
+    background: rgba(245, 158, 11, 0.4);
+    border-radius: 3px;
+  }
+  .module-track__scroller::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .module-track__item {
+    flex: 0 0 auto;
+    width: 320px;
+    scroll-snap-align: start;
+  }
+
+  .module-track__item-inner {
+    height: 100%;
+  }
+
+  /* ---------- Card ---------- */
+  .module-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    width: 320px;
+    height: 440px;
+    padding: 28px 28px 24px;
+    background: var(--bg-card, #111113);
+    border: 1px solid var(--border, rgba(255, 255, 255, 0.08));
+    color: var(--text, #fafafa);
+    text-decoration: none;
+    transition:
+      border-color 220ms cubic-bezier(0.25, 1, 0.5, 1),
+      transform 220ms cubic-bezier(0.25, 1, 0.5, 1),
+      box-shadow 220ms cubic-bezier(0.25, 1, 0.5, 1);
+  }
+
+  .module-card:hover,
+  .module-card:focus-visible {
+    border-color: var(--amber, #f59e0b);
+    outline: none;
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
+  }
+
+  .module-card:focus-visible {
+    outline: 2px solid var(--amber, #f59e0b);
+    outline-offset: 2px;
+  }
+
+  .module-card__num {
+    display: block;
+    font-family: var(
+      --font-mono,
+      "JetBrains Mono",
+      ui-monospace,
+      SFMono-Regular,
+      monospace
+    );
+    font-size: 52px;
+    line-height: 1;
+    font-weight: 500;
+    color: var(--amber, #f59e0b);
+    letter-spacing: -0.02em;
+  }
+
+  .module-card__meta {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .module-card__abbr {
+    font-family: var(
+      --font-mono,
+      "JetBrains Mono",
+      ui-monospace,
+      SFMono-Regular,
+      monospace
+    );
+    font-size: 13px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-muted, #a1a1aa);
+  }
+
+  .module-card__title {
+    font-family: var(--font-heading, "Inter", system-ui, sans-serif);
+    font-size: 22px;
+    line-height: 1.2;
+    font-weight: 600;
+    color: var(--text, #fafafa);
+    letter-spacing: -0.01em;
+  }
+
+  .module-card__desc {
+    font-size: 14px;
+    line-height: 1.55;
+    color: var(--text-muted, #a1a1aa);
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .module-card__cta {
+    margin-top: auto;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(
+      --font-mono,
+      "JetBrains Mono",
+      ui-monospace,
+      SFMono-Regular,
+      monospace
+    );
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--amber, #f59e0b);
+    transition: transform 150ms cubic-bezier(0.25, 1, 0.5, 1);
+  }
+
+  .module-card:hover .module-card__arrow {
+    transform: translateX(3px);
+  }
+
+  .module-card__arrow {
+    display: inline-block;
+    transition: transform 150ms cubic-bezier(0.25, 1, 0.5, 1);
+  }
+
+  /* ---------- Scroll hint ---------- */
+  .module-track__hint {
+    position: absolute;
+    right: 24px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    pointer-events: none;
+    color: var(--amber, #f59e0b);
+    font-family: var(
+      --font-mono,
+      "JetBrains Mono",
+      ui-monospace,
+      SFMono-Regular,
+      monospace
+    );
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    opacity: 0.85;
+    transition: opacity 300ms cubic-bezier(0.25, 1, 0.5, 1);
+  }
+
+  .module-track__hint.is-hidden {
+    opacity: 0;
+  }
+
+  .module-track__hint-chev {
+    font-size: 22px;
+    line-height: 1;
+    animation: module-track-chev 1.6s ease-in-out infinite;
+  }
+
+  @keyframes module-track-chev {
+    0%,
+    100% {
+      transform: translateX(0);
+    }
+    50% {
+      transform: translateX(4px);
+    }
+  }
+
+  /* ---------- Progress rail ---------- */
+  .module-track__rail {
+    width: min(1280px, 92vw);
+    margin: 24px auto 0;
+    height: 2px;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 1px;
+    overflow: hidden;
+  }
+
+  .module-track__rail-fill {
+    width: 100%;
+    height: 100%;
+    background: var(--amber, #f59e0b);
+    transform-origin: left center;
+    transform: scaleX(0);
+    transition: transform 120ms linear;
+  }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width: 1024px) {
+    .module-track {
+      padding-block: 96px;
+    }
+    .module-track__item,
+    .module-card {
+      width: 260px;
+    }
+    .module-card {
+      height: 360px;
+      padding: 24px;
+    }
+    .module-card__num {
+      font-size: 42px;
+    }
+    .module-card__title {
+      font-size: 19px;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .module-track {
+      padding-block: 72px;
+    }
+    .module-track__head {
+      margin-bottom: 40px;
+    }
+    .module-track__scroller {
+      gap: 16px;
+      padding-inline: 24px;
+    }
+    .module-track__item,
+    .module-card {
+      width: 240px;
+    }
+    .module-card {
+      height: 320px;
+      padding: 20px;
+    }
+    .module-card__num {
+      font-size: 36px;
+    }
+    .module-card__title {
+      font-size: 17px;
+    }
+    .module-card__desc {
+      font-size: 13px;
+    }
+    .module-track__hint {
+      display: none;
+    }
+  }
+
+  /* At 375px show 1.2 cards (hint that there's more) via ~84vw card width. */
+  @media (max-width: 420px) {
+    .module-track__item,
+    .module-card {
+      width: min(240px, 82vw);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .module-track__hint-chev {
+      animation: none;
+    }
+    .module-card,
+    .module-card__arrow,
+    .module-card__cta {
+      transition: none;
+    }
+    .module-track__scroller {
+      scroll-behavior: auto;
+    }
+  }
+</style>
